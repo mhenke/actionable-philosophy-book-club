@@ -1,7 +1,6 @@
-# Meeting Notes: Kickoff & Introductions (Meeting 00)
+# Meeting 00: Kickoff & Introductions
 
 **Date:** April 29, 2026
-**Facilitator:** [Name]
 
 ## High-Level Summary
 Initial kickoff meeting to establish goals, distribute materials, and agree on the book club format.

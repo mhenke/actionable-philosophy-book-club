@@ -1,7 +1,6 @@
-# Meeting Notes: Deep Systems (Meeting 01)
+# Meeting 01: Deep Systems
 
 **Date:** May 13, 2026
-**Facilitator:** [Name]
 
 ## High-Level Summary
 A foundational deep dive into Chapter 2 of "A Philosophy of Software Design." We explored the "Complexity Waterfall" and the tension between tactical speed and strategic depth.

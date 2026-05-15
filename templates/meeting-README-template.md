@@ -1,7 +1,6 @@
-# Meeting Notes: [Topic] (Meeting XX)
+# Meeting XX: [Topic]
 
 **Date:** [TBD]
-**Facilitator:** [Name]
 
 ## High-Level Summary
 [Brief overview of the meeting's significance]

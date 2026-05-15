@@ -1,7 +1,6 @@
-# Meeting Notes: Deep Modules & Complexity Sinks (Meeting 02)
+# Meeting 02: Deep Modules & Complexity Sinks
 
 **Date:** May 27, 2026
-**Facilitator:** [Name]
 
 ## High-Level Summary
 Exploring the core of Ousterhout's philosophy: how to design "deep" modules that simplify the rest of the system by acting as complexity sinks.

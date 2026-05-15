@@ -1,7 +1,6 @@
-# Meeting Notes: [Chapter/Topic] (Meeting 03)
+# Meeting 03: Layered Abstractions
 
 **Date:** June 10, 2026
-**Facilitator:** [Name]
 
 ## High-Level Summary
 [Brief overview of the meeting]
