@@ -36,52 +36,41 @@
         .swiss-caps { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 500; }
         .swiss-light { text-transform: uppercase; letter-spacing: -0.01em; font-weight: 300; }
 
-        .loop-container {
+        .hero-cover {
             position: relative;
-            height: 400px;
-            overflow: hidden;
+            height: 85vh;
+            min-height: 600px;
             background: var(--white);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .loop-canvas {
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
         }
         .complexity-loops {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 140%;
-            height: 140%;
-            opacity: 0.8;
+            width: 130%;
+            height: 130%;
+            opacity: 0.95;
             pointer-events: none;
         }
 
         .banner-bar {
             background-color: var(--banner);
             color: var(--white);
-            padding: 1.5rem 2rem;
+            padding: 2.5rem 3rem;
             display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            md:flex-row;
-            md:items-baseline;
-            md:justify-content: space-between;
+            align-items: baseline;
+            justify-content: flex-start;
+            gap: 2.5rem;
         }
-        @media (min-width: 768px) {
-            .banner-bar { flex-direction: row; align-items: baseline; justify-content: space-between; }
-        }
-
-        .loop-gradient {
-            height: 4px;
-            width: 100%;
-            background: linear-gradient(90deg, 
-                var(--spectrum-1) 0%, 
-                var(--spectrum-2) 20%, 
-                var(--spectrum-3) 40%, 
-                var(--spectrum-4) 60%, 
-                var(--spectrum-5) 80%, 
-                var(--spectrum-6) 100%
-            );
-        }
-
+        
         .card {
             background: var(--white);
             border: 1px solid rgba(0,0,0,0.05);
@@ -94,7 +83,7 @@
         .btn {
             display: inline-flex;
             align-items: center;
-            padding: 10px 24px;
+            padding: 12px 24px;
             background: var(--banner);
             color: var(--white);
             font-weight: 500;
@@ -132,29 +121,53 @@
     <!-- Dashboard View -->
     <div id="dashboard-view">
         <header class="mb-20">
-            <div class="loop-container">
-                <svg class="complexity-loops" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Layered organic loops mimicking the cover art -->
-                    <g opacity="0.6">
-                        <path d="M100,300 C150,100 350,100 400,300 C450,500 650,500 700,300" stroke="var(--spectrum-1)" stroke-width="2" />
-                        <path d="M150,250 C200,50 400,50 450,250 C500,450 700,450 750,250" stroke="var(--spectrum-2)" stroke-width="1.5" />
-                        <path d="M50,350 C100,150 300,150 350,350 C400,550 600,550 650,350" stroke="var(--spectrum-3)" stroke-width="1" />
-                        <path d="M200,200 C250,0 450,0 500,200 C550,400 750,400 800,200" stroke="var(--spectrum-4)" stroke-width="2" />
-                        <path d="M0,400 C50,200 250,200 300,400 C350,600 550,600 600,400" stroke="var(--spectrum-5)" stroke-width="1.5" />
-                        <path d="M250,150 C300,-50 500,-50 550,150 C600,350 800,350 850,150" stroke="var(--spectrum-6)" stroke-width="1" />
-                        <!-- Added scribbles for texture -->
-                        <path d="M400,300 Q450,200 500,300 T600,300" stroke="var(--spectrum-2)" stroke-width="0.5" opacity="0.4" />
-                        <path d="M200,300 Q250,400 300,300 T400,300" stroke="var(--spectrum-4)" stroke-width="0.5" opacity="0.4" />
-                        <path d="M300,200 C350,100 450,400 500,300" stroke="var(--spectrum-3)" stroke-width="0.8" />
-                        <path d="M450,400 C400,500 300,200 250,300" stroke="var(--spectrum-5)" stroke-width="0.8" />
-                    </g>
-                </svg>
+            <div class="hero-cover">
+                <div class="loop-canvas">
+                    <svg class="complexity-loops" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Ultra-dense organic loops following the spectrum -->
+                        <g opacity="0.8">
+                            <!-- Layer 1: Navy Foundation -->
+                            <path d="M200,300 C220,100 380,100 400,300 C420,500 580,500 600,300" stroke="var(--spectrum-1)" stroke-width="1.5" />
+                            <path d="M210,310 C230,120 370,120 390,310 C410,480 590,480 610,310" stroke="var(--spectrum-1)" stroke-width="1" />
+                            <path d="M190,290 C210,80 390,80 410,290 C430,520 570,520 590,290" stroke="var(--spectrum-1)" stroke-width="0.8" />
+                            
+                            <!-- Layer 2: Blue Transition -->
+                            <path d="M150,250 C180,50 420,50 450,250 C480,450 720,450 750,250" stroke="var(--spectrum-2)" stroke-width="1.2" />
+                            <path d="M160,260 C190,70 410,70 440,260 C470,430 710,430 740,260" stroke="var(--spectrum-2)" stroke-width="0.6" />
+                            <path d="M140,240 C170,30 430,30 460,240 C490,470 730,470 760,240" stroke="var(--spectrum-2)" stroke-width="1.5" />
+                            
+                            <!-- Layer 3: Steel & Teal Depth -->
+                            <path d="M100,350 C140,150 360,150 400,350 C440,550 660,550 700,350" stroke="var(--spectrum-3)" stroke-width="1" />
+                            <path d="M300,200 C350,20 550,20 600,200 C650,380 850,380 900,200" stroke="var(--spectrum-3)" stroke-width="0.7" />
+                            <path d="M50,400 C100,200 300,200 350,400 C400,600 600,600 650,400" stroke="var(--spectrum-4)" stroke-width="1.2" />
+                            <path d="M250,150 C300,-40 500,-40 550,150 C600,340 800,340 850,150" stroke="var(--spectrum-4)" stroke-width="2" />
+                            
+                            <!-- Layer 4: Sage & Seafoam Edges -->
+                            <path d="M0,300 C50,80 250,80 300,300 C350,520 550,520 600,300" stroke="var(--spectrum-5)" stroke-width="1" />
+                            <path d="M400,100 C450,220 550,-20 600,100" stroke="var(--spectrum-5)" stroke-width="0.8" />
+                            <path d="M300,450 C350,250 550,250 600,450 C650,650 850,650 900,450" stroke="var(--spectrum-6)" stroke-width="1.5" />
+                            <path d="M100,100 C150,-70 250,270 300,100" stroke="var(--spectrum-6)" stroke-width="0.6" />
+                            <path d="M700,500 C750,400 850,600 900,500" stroke="var(--spectrum-6)" stroke-width="0.4" />
+
+                            <!-- Texture: Circular Scribbles -->
+                            <path d="M300,300 m-60,0 a60,60 0 1,0 120,0 a60,60 0 1,0 -120,0" stroke="var(--spectrum-1)" stroke-width="0.2" opacity="0.3" />
+                            <path d="M320,310 m-70,0 a70,70 0 1,0 140,0 a70,70 0 1,0 -140,0" stroke="var(--spectrum-2)" stroke-width="0.1" opacity="0.2" />
+                            <path d="M400,280 m-40,0 a40,40 0 1,0 80,0 a40,40 0 1,0 -80,0" stroke="var(--spectrum-3)" stroke-width="0.2" opacity="0.3" />
+                            <path d="M420,290 m-50,0 a50,50 0 1,0 100,0 a50,50 0 1,0 -100,0" stroke="var(--spectrum-4)" stroke-width="0.1" opacity="0.2" />
+                            
+                            <!-- Additional Fluid Connectors -->
+                            <path d="M350,250 C370,160 430,340 450,250" stroke="var(--spectrum-3)" stroke-width="0.4" />
+                            <path d="M420,350 C400,440 340,220 320,310" stroke="var(--spectrum-5)" stroke-width="0.4" />
+                            <path d="M200,400 Q400,600 600,400" stroke="var(--spectrum-6)" stroke-width="0.2" opacity="0.5" />
+                        </g>
+                    </svg>
+                </div>
+                <div class="banner-bar">
+                    <h1 class="text-xl md:text-3xl swiss-caps">A Philosophy of Software Design</h1>
+                    <span class="text-xs md:text-sm swiss-light opacity-90">John Ousterhout</span>
+                </div>
             </div>
-            <div class="banner-bar">
-                <h1 class="text-2xl md:text-3xl swiss-caps">A Philosophy of Software Design</h1>
-                <span class="text-sm swiss-light opacity-80">John Ousterhout</span>
-            </div>
-            <div class="p-8 md:p-16 max-w-5xl mx-auto">
+            <div class="px-8 md:px-16 py-12 max-w-5xl mx-auto">
                 <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-4 block opacity-40">The Book Club Dashboard</span>
                 <p class="text-2xl md:text-4xl font-light tracking-tight leading-tight max-w-3xl">A technical inquiry into the depth of software design and the cognitive load of AI-assisted systems.</p>
             </div>
@@ -217,9 +230,9 @@
                 <div class="space-y-6">
                     <!-- Meeting 01 -->
                     <div class="p-6 md:p-8 bg-white border border-black/5 rounded flex flex-col md:flex-row md:items-center gap-6 group hover:border-spectrum-2 transition-all">
-                        <div class="md:w-32">
+                        <div class="md:w-32 flex items-baseline justify-between md:block">
                             <span class="text-[10px] font-bold opacity-40 block">01 / 05 / 26</span>
-                            <span class="text-[8px] font-bold opacity-20 uppercase tracking-widest">APoSD.2026.01</span>
+                            <span class="text-[8px] font-bold opacity-20 uppercase tracking-widest md:mt-1 block">APoSD.2026.01</span>
                         </div>
                         <div class="flex-grow">
                             <h4 class="text-2xl font-bold uppercase tracking-tight group-hover:text-spectrum-2 transition-colors mb-4 md:mb-0">Deep Systems</h4>
@@ -233,9 +246,9 @@
 
                     <!-- Meeting 00 -->
                     <div class="p-6 md:p-8 bg-white border border-black/5 rounded flex flex-col md:flex-row md:items-center gap-6 group hover:border-spectrum-2 transition-all">
-                        <div class="md:w-32">
+                        <div class="md:w-32 flex items-baseline justify-between md:block">
                             <span class="text-[10px] font-bold opacity-40 block">29 / 04 / 26</span>
-                            <span class="text-[8px] font-bold opacity-20 uppercase tracking-widest">APoSD.2026.00</span>
+                            <span class="text-[8px] font-bold opacity-20 uppercase tracking-widest md:mt-1 block">APoSD.2026.00</span>
                         </div>
                         <div class="flex-grow">
                             <h4 class="text-2xl font-bold uppercase tracking-tight group-hover:text-spectrum-2 transition-colors mb-4 md:mb-0">The Kickoff</h4>
@@ -286,9 +299,9 @@
 
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
-        <div class="loop-gradient"></div>
+        <div class="loop-gradient" style="height: 6px;"></div>
         <div class="banner-bar mb-20">
-            <a href="#" id="back-to-dashboard" class="text-xs swiss-caps hover:text-spectrum-5 transition-all">&larr; Back</a>
+            <a href="#" id="back-to-dashboard" class="text-xs swiss-caps hover:text-spectrum-5 transition-all">&larr; Back to Dashboard</a>
             <span class="text-xs swiss-light opacity-80">APoSD Proceedings</span>
         </div>
 
@@ -316,7 +329,7 @@
             reader.classList.remove('hidden-view');
             window.scrollTo(0, 0);
 
-            content.innerHTML = `<div class="py-20 animate-pulse"><div class="h-12 w-3/4 skeleton mb-8"></div><div class="h-4 w-full skeleton mb-4"></div><div class="h-4 w-5/6 skeleton mb-4"></div></div>`;
+            content.innerHTML = `<div class="py-20 animate-pulse"><div class="h-12 w-3/4 skeleton mb-8 rounded"></div><div class="h-4 w-full skeleton mb-4 rounded"></div><div class="h-4 w-5/6 skeleton mb-4 rounded"></div></div>`;
 
             try {
                 const response = await fetch(path);
