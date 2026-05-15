@@ -1,6 +1,6 @@
 # Meeting Notes: [Chapter/Topic] (Meeting 04)
 
-**Date:** June 10, 2026, Noon
+**Date:** June 24, 2026
 **Facilitator:** [Name]
 
 ## High-Level Summary
