@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: oklch(65% 0.15 250);
@@ -19,89 +19,105 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--surface);
             color: var(--text);
-            line-height: 1.5;
+            line-height: 1.6;
         }
         .accent-text { color: var(--accent); }
         .accent-bg { background-color: var(--accent); }
         .status-done { color: var(--done); }
         .card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
         .card:active { transform: scale(0.98); }
         .btn {
             display: inline-flex;
             align-items: center;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 700;
             font-size: 0.875rem;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
         }
         .btn-primary {
             background-color: var(--accent);
             color: white;
         }
+        .btn-primary:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
         .btn-outline {
-            border: 2px solid var(--accent);
+            border: 2px solid oklch(90% 0.01 250);
+            color: var(--text);
+            opacity: 0.8;
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
             color: var(--accent);
+            opacity: 1;
         }
     </style>
 </head>
-<body class="p-4 md:p-8 max-w-3xl mx-auto">
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
 
-    <header class="mb-12">
-        <h1 class="text-3xl font-bold tracking-tight mb-2">📖 Actionable Philosophy</h1>
-        <p class="text-lg opacity-80">Engineering book club focusing on <span class="font-semibold italic">A Philosophy of Software Design</span> and AI-assisted craft.</p>
+    <header class="mb-20">
+        <h1 class="text-4xl font-black tracking-tighter mb-3">📖 Actionable Philosophy</h1>
+        <p class="text-xl opacity-60 max-w-2xl">Engineering book club focusing on <span class="font-bold italic text-[oklch(65%_0.15_250)]">A Philosophy of Software Design</span> and AI-assisted craft.</p>
     </header>
 
-    <main class="space-y-12">
+    <main class="space-y-24">
         
         <!-- Meeting 02 (Next) -->
-        <section class="card p-6 border-l-8 border-[oklch(65%_0.15_250)]">
-            <div class="flex justify-between items-start mb-6">
+        <section class="card p-8 border-l-8 border-[oklch(65%_0.15_250)]">
+            <div class="flex justify-between items-start mb-8 text-balance">
                 <div>
-                    <span class="text-xs font-bold uppercase tracking-wider opacity-60">Meeting 02 &bull; Next Session</span>
-                    <h2 class="text-3xl font-bold mt-1">Deep Modules & Complexity Sink</h2>
+                    <span class="text-[10px] font-black uppercase tracking-[0.25em] opacity-40">Meeting 02 &bull; Next Session</span>
+                    <h2 class="text-4xl font-black mt-2 tracking-tight">Deep Modules & Complexity Sink</h2>
                 </div>
-                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">UPCOMING</span>
+                <span class="bg-blue-100 text-blue-800 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border border-blue-200">UPCOMING</span>
             </div>
             
-            <div class="bg-blue-50 p-5 rounded-xl mb-8 border border-blue-100">
-                <p class="text-xs font-bold text-blue-900 uppercase tracking-widest mb-2 opacity-70">Key Takeaway Preview</p>
-                <p class="text-blue-900 text-lg leading-relaxed italic">"A well-designed module is a **complexity sink**: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
+            <div class="bg-blue-50/50 p-8 rounded-2xl mb-10 border border-blue-100 shadow-inner relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full bg-blue-200 opacity-50"></div>
+                <p class="text-[10px] font-black text-blue-900 uppercase tracking-[0.2em] mb-4 opacity-50">Key Takeaway Preview</p>
+                <p class="text-blue-900 text-2xl leading-snug italic font-medium">"A well-designed module is a **complexity sink**: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
             </div>
 
-            <div class="space-y-4">
+            <div class="space-y-8">
                 <!-- Main Meeting README -->
-                <a href="meetings/meeting-02/" class="btn btn-primary w-full justify-center py-4 text-base">
+                <a href="meetings/meeting-02/" class="btn btn-primary w-full justify-center py-6 text-lg shadow-xl shadow-blue-500/20 active:shadow-none transition-all">
                     View Meeting README & Agenda
                 </a>
 
                 <!-- Assets (Inline List) -->
-                <div class="space-y-2">
-                    <h4 class="text-[10px] font-black uppercase tracking-widest opacity-40 mb-2">Meeting Assets</h4>
+                <div class="space-y-4">
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] opacity-30 mb-2">Upcoming Assets</h4>
                     
-                    <!-- Asset Row (TBD) -->
-                    <div class="flex items-center justify-between p-3 bg-gray-50 border border-dashed border-gray-200 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl">📊</span>
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold text-gray-400 italic">Slides: Chapters 5–8 (TBD)</span>
-                                <span class="text-[10px] uppercase tracking-wider opacity-50 font-semibold">Available before meeting</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Asset Row (TBD) -->
+                        <div class="flex items-center justify-between p-4 bg-gray-50/50 border border-dashed border-gray-200 rounded-xl opacity-60 cursor-not-allowed">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-xl">📊</span>
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-bold text-gray-400 italic">Slides: Chapters 5–8 (TBD)</span>
+                                    <span class="text-[9px] uppercase tracking-wider opacity-60 font-black">Ready before meeting</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Asset Row (TBD) -->
-                    <div class="flex items-center justify-between p-3 bg-gray-50 border border-dashed border-gray-200 rounded-lg opacity-60 cursor-not-allowed">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-xl">🎬</span>
-                            <div class="flex flex-col">
-                                <span class="text-sm font-bold text-gray-400 italic">Video: Complexity Sink (TBD)</span>
-                                <span class="text-[10px] uppercase tracking-wider opacity-50 font-semibold">Available after meeting</span>
+                        <!-- Asset Row (TBD) -->
+                        <div class="flex items-center justify-between p-4 bg-gray-50/50 border border-dashed border-gray-200 rounded-xl opacity-60 cursor-not-allowed">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-xl">🎬</span>
+                                <div class="flex flex-col">
+                                    <span class="text-sm font-bold text-gray-400 italic">Video: Complexity Sink (TBD)</span>
+                                    <span class="text-[9px] uppercase tracking-wider opacity-60 font-black">Ready after meeting</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,102 +126,111 @@
         </section>
 
         <!-- Past Sessions Section -->
-        <div>
-            <h3 class="text-sm font-bold uppercase tracking-[0.2em] opacity-40 mb-6 flex items-center">
-                <span class="mr-4">Past Sessions</span>
-                <div class="h-px bg-gray-200 flex-grow"></div>
+        <div class="pt-8">
+            <h3 class="text-[10px] font-black uppercase tracking-[0.4em] opacity-30 mb-12 flex items-center">
+                <span class="mr-8">Historical Context</span>
+                <div class="h-[1px] bg-gray-200 flex-grow"></div>
             </h3>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
                 <!-- Meeting 01 -->
-                <div class="flex flex-col">
-                    <div class="flex justify-between items-center mb-4">
-                        <h4 class="text-lg font-bold">01. Deep Systems</h4>
-                        <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded uppercase">Verified</span>
+                <div class="flex flex-col group">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="text-2xl font-black tracking-tight underline decoration-4 decoration-blue-100 underline-offset-8">01. Deep Systems</h4>
+                        <span class="text-[9px] font-black bg-green-50 text-green-700 px-3 py-1 rounded-full uppercase tracking-widest border border-green-100">Verified</span>
                     </div>
                     
-                    <div class="space-y-2">
+                    <div class="space-y-4">
                         <!-- Asset Row -->
-                        <div class="flex items-center justify-between group">
-                            <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-sm font-semibold opacity-70 group-hover:opacity-100 group-hover:text-[oklch(65%_0.15_250)] transition-all flex items-center">
-                                <span class="mr-2">🎬</span> Video: Architects
+                        <div class="flex items-center justify-between group/row p-1 -mx-1 rounded-lg transition-colors hover:bg-white hover:shadow-sm">
+                            <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-sm font-bold opacity-60 group-hover/row:opacity-100 group-hover/row:text-[oklch(65%_0.15_250)] transition-all flex items-center">
+                                <span class="mr-4 filter grayscale group-hover/row:grayscale-0 transition-all opacity-50 group-hover/row:opacity-100">🎬</span> Video: Architects
                             </a>
-                            <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download class="opacity-60 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-1" title="Download MP4">
+                            <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download class="opacity-40 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-2 bg-gray-50 rounded-full hover:bg-blue-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                             </a>
                         </div>
                         <!-- Asset Row -->
-                        <div class="flex items-center justify-between group">
-                            <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-sm font-semibold opacity-70 group-hover:opacity-100 group-hover:text-[oklch(65%_0.15_250)] transition-all flex items-center">
-                                <span class="mr-2">📊</span> Slides: Deep Systems
+                        <div class="flex items-center justify-between group/row p-1 -mx-1 rounded-lg transition-colors hover:bg-white hover:shadow-sm">
+                            <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-sm font-bold opacity-60 group-hover/row:opacity-100 group-hover/row:text-[oklch(65%_0.15_250)] transition-all flex items-center">
+                                <span class="mr-4 filter grayscale group-hover/row:grayscale-0 transition-all opacity-50 group-hover/row:opacity-100">📊</span> Slides: Deep Systems
                             </a>
-                            <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download class="opacity-60 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-1" title="Download PPTX">
+                            <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download class="opacity-40 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-2 bg-gray-50 rounded-full hover:bg-blue-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                             </a>
                         </div>
-                        <a href="meetings/meeting-01/" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-[oklch(65%_0.15_250)] pt-2 block transition-colors">Read Full Notes &rarr;</a>
+                        <a href="meetings/meeting-01/" class="text-[10px] font-black text-gray-400 uppercase tracking-[0.25em] hover:text-[oklch(65%_0.15_250)] pt-6 block transition-colors">Full Notes &rarr;</a>
                     </div>
                 </div>
 
                 <!-- Meeting 00 -->
-                <div class="flex flex-col">
-                    <div class="flex justify-between items-center mb-4">
-                        <h4 class="text-lg font-bold">00. Kickoff</h4>
-                        <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded uppercase">Verified</span>
+                <div class="flex flex-col group border-l-0 md:border-l md:border-gray-100 md:pl-16">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="text-2xl font-black tracking-tight underline decoration-4 decoration-blue-100 underline-offset-8">00. Kickoff</h4>
+                        <span class="text-[9px] font-black bg-green-50 text-green-700 px-3 py-1 rounded-full uppercase tracking-widest border border-green-100">Verified</span>
                     </div>
                     
-                    <div class="space-y-2">
+                    <div class="space-y-4">
                         <!-- Asset Row -->
-                        <div class="flex items-center justify-between group">
-                            <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-sm font-semibold opacity-70 group-hover:opacity-100 group-hover:text-[oklch(65%_0.15_250)] transition-all flex items-center">
-                                <span class="mr-2">🎬</span> Video: Kickoff
+                        <div class="flex items-center justify-between group/row p-1 -mx-1 rounded-lg transition-colors hover:bg-white hover:shadow-sm">
+                            <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-sm font-bold opacity-60 group-hover/row:opacity-100 group-hover/row:text-[oklch(65%_0.15_250)] transition-all flex items-center">
+                                <span class="mr-4 filter grayscale group-hover/row:grayscale-0 transition-all opacity-50 group-hover/row:opacity-100">🎬</span> Video: Kickoff
                             </a>
-                            <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download class="opacity-60 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-1" title="Download MP4">
+                            <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download class="opacity-40 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-2 bg-gray-50 rounded-full hover:bg-blue-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                             </a>
                         </div>
                         <!-- Asset Row -->
-                        <div class="flex items-center justify-between group">
-                            <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="text-sm font-semibold opacity-70 group-hover:opacity-100 group-hover:text-[oklch(65%_0.15_250)] transition-all flex items-center">
-                                <span class="mr-2">📊</span> Slides: Kickoff
+                        <div class="flex items-center justify-between group/row p-1 -mx-1 rounded-lg transition-colors hover:bg-white hover:shadow-sm">
+                            <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="text-sm font-bold opacity-60 group-hover/row:opacity-100 group-hover/row:text-[oklch(65%_0.15_250)] transition-all flex items-center">
+                                <span class="mr-4 filter grayscale group-hover/row:grayscale-0 transition-all opacity-50 group-hover/row:opacity-100">📊</span> Slides: Kickoff
                             </a>
-                            <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" download class="opacity-60 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-1" title="Download PPTX">
+                            <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" download class="opacity-40 hover:opacity-100 hover:text-[oklch(65%_0.15_250)] transition-all p-2 bg-gray-50 rounded-full hover:bg-blue-50">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                             </a>
                         </div>
-                        <a href="meetings/meeting-00/" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-[oklch(65%_0.15_250)] pt-2 block transition-colors">Read Full Notes &rarr;</a>
+                        <a href="meetings/meeting-00/" class="text-[10px] font-black text-gray-400 uppercase tracking-[0.25em] hover:text-[oklch(65%_0.15_250)] pt-6 block transition-colors">Full Notes &rarr;</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <hr class="border-gray-100">
-
-        <!-- Resources Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <a href="docs/glossary.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden">
-                <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">📚</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">Glossary</span>
-            </a>
-            <a href="docs/design-principles.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden">
-                <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">⚖️</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">Principles</span>
-            </a>
-            <a href="templates/prompts/" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden border-2">
-                <div class="absolute top-0 right-0 bg-[oklch(65%_0.15_250)] text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-tighter">Meta-Skill</div>
-                <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">🤖</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">AI Prompts</span>
-            </a>
-            <a href="meetings/meeting-99-new/" class="card p-4 flex flex-col items-center justify-center hover:border-orange-400 transition-all group relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-orange-500 text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-tighter animate-pulse">7 NEW ITEMS</div>
-                <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">📂</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">Inbox</span>
-            </a>
+        <!-- Resources Section -->
+        <div class="pt-12">
+            <h3 class="text-[10px] font-black uppercase tracking-[0.4em] opacity-30 mb-10 flex items-center">
+                <span class="mr-8">Knowledge Base</span>
+                <div class="h-[1px] bg-gray-200 flex-grow"></div>
+            </h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-8">
+                <a href="docs/glossary.md" class="card p-6 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden">
+                    <span class="text-4xl mb-4 group-hover:scale-125 transition-transform duration-500">📚</span>
+                    <span class="text-[9px] font-black uppercase tracking-[0.3em] opacity-40 group-hover:opacity-100 transition-opacity text-center">Glossary</span>
+                </a>
+                <a href="docs/design-principles.md" class="card p-6 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden">
+                    <span class="text-4xl mb-4 group-hover:scale-125 transition-transform duration-500">⚖️</span>
+                    <span class="text-[9px] font-black uppercase tracking-[0.3em] opacity-40 group-hover:opacity-100 transition-opacity text-center">Principles</span>
+                </a>
+                <a href="templates/prompts/" class="card p-6 flex flex-col items-center justify-center border-2 border-[oklch(65%_0.15_250)] hover:bg-[oklch(98%_0.005_250)] transition-all group relative overflow-hidden shadow-2xl shadow-blue-500/10">
+                    <div class="absolute top-0 right-0 bg-[oklch(65%_0.15_250)] text-white text-[7px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-[0.2em] shadow-lg">META-SKILL</div>
+                    <span class="text-4xl mb-4 group-hover:scale-125 transition-transform duration-500">🤖</span>
+                    <span class="text-[9px] font-black uppercase tracking-[0.3em] opacity-70 text-center">AI Prompts</span>
+                </a>
+                <a href="meetings/meeting-99-new/" class="card p-6 flex flex-col items-center justify-center hover:border-orange-400 transition-all group relative overflow-hidden shadow-2xl shadow-orange-500/10">
+                    <div class="absolute top-0 right-0 bg-orange-500 text-white text-[7px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-[0.2em] animate-pulse shadow-lg">7 NEW</div>
+                    <span class="text-4xl mb-4 group-hover:scale-125 transition-transform duration-500 text-orange-600/50 group-hover:text-orange-600 transition-colors">📂</span>
+                    <span class="text-[9px] font-black uppercase tracking-[0.3em] opacity-40 group-hover:opacity-100 transition-opacity text-center text-orange-700">Inbox</span>
+                </a>
+            </div>
         </div>
     </main>
 
-    <footer class="mt-16 pt-8 border-t border-gray-200 text-center text-sm opacity-50">
-        <p>Built for Actionable Philosophy Book Club &bull; Spare Time Excellence</p>
+    <footer class="mt-32 py-20 border-t border-gray-100 text-center">
+        <p class="text-[10px] font-black uppercase tracking-[0.5em] opacity-20">Built for Actionable Philosophy Book Club</p>
+        <div class="flex items-center justify-center space-x-4 mt-6">
+            <div class="h-px w-8 bg-gray-200"></div>
+            <p class="text-[9px] font-black text-[oklch(65%_0.15_250)] uppercase tracking-[0.3em]">SPARE TIME EXCELLENCE &bull; 2026</p>
+            <div class="h-px w-8 bg-gray-200"></div>
+        </div>
     </footer>
 
 </body>
