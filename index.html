@@ -36,13 +36,37 @@
         .swiss-caps { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 500; }
         .swiss-light { text-transform: uppercase; letter-spacing: -0.01em; font-weight: 300; }
 
+        .loop-container {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background: var(--white);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .complexity-loops {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 140%;
+            height: 140%;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
         .banner-bar {
             background-color: var(--banner);
             color: var(--white);
             padding: 1.5rem 2rem;
             display: flex;
-            align-items: baseline;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 0.5rem;
+            md:flex-row;
+            md:items-baseline;
+            md:justify-content: space-between;
+        }
+        @media (min-width: 768px) {
+            .banner-bar { flex-direction: row; align-items: baseline; justify-content: space-between; }
         }
 
         .loop-gradient {
@@ -108,7 +132,24 @@
     <!-- Dashboard View -->
     <div id="dashboard-view">
         <header class="mb-20">
-            <div class="loop-gradient"></div>
+            <div class="loop-container">
+                <svg class="complexity-loops" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Layered organic loops mimicking the cover art -->
+                    <g opacity="0.6">
+                        <path d="M100,300 C150,100 350,100 400,300 C450,500 650,500 700,300" stroke="var(--spectrum-1)" stroke-width="2" />
+                        <path d="M150,250 C200,50 400,50 450,250 C500,450 700,450 750,250" stroke="var(--spectrum-2)" stroke-width="1.5" />
+                        <path d="M50,350 C100,150 300,150 350,350 C400,550 600,550 650,350" stroke="var(--spectrum-3)" stroke-width="1" />
+                        <path d="M200,200 C250,0 450,0 500,200 C550,400 750,400 800,200" stroke="var(--spectrum-4)" stroke-width="2" />
+                        <path d="M0,400 C50,200 250,200 300,400 C350,600 550,600 600,400" stroke="var(--spectrum-5)" stroke-width="1.5" />
+                        <path d="M250,150 C300,-50 500,-50 550,150 C600,350 800,350 850,150" stroke="var(--spectrum-6)" stroke-width="1" />
+                        <!-- Added scribbles for texture -->
+                        <path d="M400,300 Q450,200 500,300 T600,300" stroke="var(--spectrum-2)" stroke-width="0.5" opacity="0.4" />
+                        <path d="M200,300 Q250,400 300,300 T400,300" stroke="var(--spectrum-4)" stroke-width="0.5" opacity="0.4" />
+                        <path d="M300,200 C350,100 450,400 500,300" stroke="var(--spectrum-3)" stroke-width="0.8" />
+                        <path d="M450,400 C400,500 300,200 250,300" stroke="var(--spectrum-5)" stroke-width="0.8" />
+                    </g>
+                </svg>
+            </div>
             <div class="banner-bar">
                 <h1 class="text-2xl md:text-3xl swiss-caps">A Philosophy of Software Design</h1>
                 <span class="text-sm swiss-light opacity-80">John Ousterhout</span>
