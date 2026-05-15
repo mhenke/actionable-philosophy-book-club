@@ -1,9 +1,9 @@
-# Meeting 04: [Chapter/Topic]
+# Meeting 04: Defining Errors & Designing Twice
 
 **Date:** June 24, 2026
 
 ## High-Level Summary
-A curated synthesis of the design trade-offs, philosophical tensions, and tactical takeaways surfaced during this session.
+A focused investigation into Chapters 10 through 15 of "A Philosophy of Software Design." We analyze the strategic mandate to "Define Errors Out of Existence" and explore the practice of "Designing it Twice" as a fundamental tool for sharpening architectural judgment.
 
 ## Agenda (60 Minutes)
 1. **Refresher Video (5-10 min):** Watch the short summary/refresher video for the current chapters.
