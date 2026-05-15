@@ -1,13 +1,21 @@
-# Meeting 00: Introduction & Setting the Stage
-**Date:** [Original Date if known, else placeholder]
+# Meeting Notes: Kickoff & Introductions (Meeting 00)
 
-## Goal
-Establish the vision for the Actionable Philosophy Book Club and set the ground rules for collaboration.
+**Date:** 2026-05-15
+**Facilitator:** [Name]
 
 ## High-Level Summary
-Initial gathering to discuss why we are here and what we hope to achieve by studying software philosophy through the lens of AI-assisted development.
+Initial kickoff meeting to establish goals, distribute materials, and agree on the book club format.
+
+## Agenda
+- [x] **Introductions:** Getting to know the members.
+- [x] **Book Club Goals:** Defining what we want to achieve.
+- [x] **Process Discussion:** Agreeing on how we want to conduct the meetings.
+- [x] **Book Distribution:** Handing out physical/digital copies of "A Philosophy of Software Design".
 
 ## Discussion Points
-- Motivation for the club.
-- Selection of the first book/topic.
-- Repository and workflow overview.
+- Discussion on cadence and frequency.
+- Agreement on "low-ceremony" approach.
+
+## Resources
+- [Slides](slides/00-Strategic-Design-for-the-AI-Era.pptx)
+- [Recordings](recordings/00-The-Complexity-Governor.mp4)

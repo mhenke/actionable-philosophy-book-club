@@ -1,18 +1,24 @@
-# Meeting Notes: Initial Setup & Vision
+# Meeting Notes: [Chapter/Topic] (Meeting 01)
 
-**Date:** 2026-05-15
-**Facilitator:** Gemini CLI
+**Date:** [TBD]
+**Facilitator:** [Name]
 
 ## High-Level Summary
-Kick off the Actionable Philosophy Book Club and establish the repository structure.
+[Brief overview of the meeting]
+
+## Agenda (60 Minutes)
+1. **Refresher Video (15-20 min):** Watch the short summary/refresher video for the current chapters.
+2. **Discussion (30 min):** Open discussion using the slide deck as a guide.
+3. **Wrap-up (Last 10 min):**
+   - **Future Planning:** Decide next meeting's agenda.
+   - **Retrospective:** What is going good? What do we want to tweak?
 
 ## Discussion Points
-- Bootstrapped repository with AI assistance.
-- Defined structure for meetings and documentation.
+- 
 
 ## Action Items
-- [x] Create repository structure.
-- [x] Add initial documentation and templates.
+- [ ] 
 
 ## Resources
-- [Repository README](../../README.md)
+- [Slides](slides/01-Architecting-Deep-Systems.pptx)
+- [Recordings](recordings/01-The-Architects-of-Complexity.mp4)
