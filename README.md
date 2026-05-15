@@ -4,6 +4,12 @@ A low-friction repository for the **Actionable Philosophy Book Club**, focusing 
 
 ---
 
+<p align="center">
+  <img src="docs/resources/book-cover.jpg" width="400" alt="A Philosophy of Software Design by John Ousterhout">
+</p>
+
+---
+
 ## 🚀 Interactive Dashboard
 For the best experience, including mobile-optimized navigation, meeting agendas, and instant slide previews, visit our dashboard:
 
