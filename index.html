@@ -8,140 +8,126 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --surface: oklch(23% 0.05 264);       /* Deep Navy #1A1F35 */
-            --surface-elevated: oklch(28% 0.08 264); /* Dark Blue #1E2B4A */
-            --text-primary: oklch(93% 0.01 264);  /* Off-White #E8EAF0 */
-            --text-muted: oklch(67% 0.04 264);    /* Cool Gray #8A9BB0 */
-            --accent: oklch(73.5% 0.12 85);       /* Warm Amber #C8A96E */
-            --accent-muted: oklch(45% 0.08 264);  /* Muted Steel Blue #3D5A80 */
+            --surface: oklch(98% 0.01 85);        /* Warm Paper #FCFAF7 */
+            --surface-elevated: oklch(96% 0.01 85); /* Slightly darker paper #F5F2ED */
+            --text-primary: oklch(25% 0.02 264);   /* Ink Black #1A1C21 */
+            --text-muted: oklch(55% 0.02 264);     /* Graphite Gray #70757D */
+            --accent: oklch(65% 0.15 85);          /* Deep Amber/Gold #B8860B */
+            --border: oklch(0% 0 0 / 0.1);         /* Thin Ink Line */
         }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Newsreader', serif;
             background-color: var(--surface);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
         }
-        h1, h2, h3, h4, .serif { font-family: 'Newsreader', serif; }
+        h1, h2, h3, h4, .sans { font-family: 'IBM Plex Sans', sans-serif; }
         
         .card {
             background-color: var(--surface-elevated);
-            border-radius: 20px;
-            border: 1px solid oklch(100% 0 0 / 0.05);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 4px; /* Sharper, more professional */
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
         }
         .card:hover {
-            border-color: oklch(100% 0 0 / 0.15);
-            transform: translateY(-4px);
-            box-shadow: 0 25px 50px -12px oklch(0% 0 0 / 0.5);
+            border-color: var(--accent);
+            background-color: white;
         }
         
         .btn {
             display: inline-flex;
             align-items: center;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 700;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: 'IBM Plex Sans', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
         }
         .btn-primary {
-            background-color: var(--accent);
-            color: oklch(15% 0.05 264); /* Dark contrast */
+            background-color: var(--text-primary);
+            color: white;
         }
         .btn-primary:hover {
-            filter: brightness(1.1);
-            transform: scale(1.02);
+            background-color: var(--accent);
+            transform: translateY(-1px);
         }
         
-        .tracking-book { letter-spacing: 0.15em; } /* Drastically reduced to prevent character breakage on small text */
+        .tracking-book { letter-spacing: 0.1em; font-family: 'IBM Plex Sans', sans-serif; }
         .text-accent { color: var(--accent); }
         .border-accent { border-color: var(--accent); }
-
-        /* Reader Styles & Transitions */
-        #dashboard-view, #reader-view {
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-out;
-        }
-        .view-transitioning {
-            opacity: 0;
-            transform: translateY(10px);
-            pointer-events: none;
-        }
-
-        .prose h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; margin-bottom: 2rem; font-style: italic; line-height: 1; letter-spacing: -0.02em; }
-        .prose h2 { font-size: 2.25rem; font-weight: 800; margin-top: 4rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem; color: var(--accent); }
-        .prose h3 { font-size: 1.5rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 1rem; font-style: italic; opacity: 0.9; }
-        .prose p { margin-bottom: 1.5rem; opacity: 0.8; font-size: 1.125rem; }
-        .prose ul { margin-bottom: 2rem; list-style-type: none; padding-left: 0; }
-        .prose li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; opacity: 0.8; }
-        .prose li::before { content: "—"; position: absolute; left: 0; color: var(--accent); opacity: 0.4; }
-        .prose strong { color: white; font-weight: 700; }
-        .prose blockquote { border-left: 4px solid var(--accent); padding-left: 2rem; font-style: italic; margin: 3rem 0; opacity: 0.9; font-size: 1.25rem; color: var(--text-primary); }
-        .prose a { color: var(--accent) !important; text-decoration: underline; text-decoration-color: rgba(200, 169, 110, 0.4); text-underline-offset: 4px; transition: all 0.2s; font-weight: 700; }
-        .prose a:hover { text-decoration-color: var(--accent); opacity: 1; filter: brightness(1.2); }
-        .prose code { background: rgba(255,255,255,0.05); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.9em; font-family: monospace; }
         
-        [v-cloak] { display: none; }
+        /* Global Link Styling */
+        a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.2s; }
+        a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* Reader Styles */
+        .prose h1 { font-size: clamp(3rem, 10vw, 5rem); font-weight: 800; margin-bottom: 2rem; line-height: 1; letter-spacing: -0.04em; color: var(--text-primary); }
+        .prose h2 { font-size: 2rem; font-weight: 700; margin-top: 4rem; margin-bottom: 1.5rem; font-family: 'IBM Plex Sans', sans-serif; color: var(--text-primary); border-top: 2px solid var(--text-primary); pt-8; }
+        .prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; font-family: 'IBM Plex Sans', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
+        .prose p { margin-bottom: 1.8rem; font-size: 1.2rem; }
+        .prose blockquote { border-left: 2px solid var(--accent); padding-left: 2.5rem; font-style: italic; margin: 4rem 0; color: var(--text-primary); font-size: 1.4rem; }
+        .prose a { color: var(--text-primary) !important; text-decoration: none; border-bottom: 2px solid var(--accent); font-weight: 600; }
+        .prose a:hover { background-color: oklch(95% 0.1 85 / 0.1); }
+        
         .hidden-view { display: none !important; }
     </style>
 </head>
-<body class="p-6 md:p-16 max-w-5xl mx-auto">
+<body class="p-6 md:p-24 max-w-4xl mx-auto"> <!-- Centered, narrower reading column -->
 
     <!-- Dashboard View -->
     <div id="dashboard-view">
-        <header class="mb-32 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-12">
-            <div class="max-w-2xl">
-                <h1 class="text-7xl font-black tracking-tighter mb-6 italic leading-none">Actionable Philosophy</h1>
-                <p class="text-2xl opacity-80 text-[var(--text-muted)] serif font-medium">An engineering book club exploring the depth of <span class="text-white italic">software design</span> and AI-assisted craftsmanship.</p>
-            </div>
-            <div class="hidden md:block text-right">
-                <span class="text-[10px] font-black tracking-book opacity-80 block mb-2 text-[var(--text-muted)]">ESTABLISHED</span>
-                <span class="text-xl font-bold text-accent">APRIL 2026</span>
+        <header class="mb-32 border-b-4 border-black pb-12">
+            <div class="max-w-3xl">
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-4 block sans opacity-60">Proceedings of the</span>
+                <h1 class="text-7xl font-bold tracking-tighter mb-8 leading-none sans uppercase">Actionable<br>Philosophy</h1>
+                <p class="text-2xl serif italic leading-relaxed text-[var(--text-muted)]">A methodical inquiry into the depth of software design and the cognitive load of AI-assisted systems.</p>
             </div>
         </header>
 
-        <main class="space-y-40">
+        <main class="space-y-48">
             <!-- Meeting 02 (Next) -->
-            <section class="relative">
-                <div class="mb-16">
-                    <span class="text-[11px] font-black tracking-book text-accent uppercase mb-4 block">Next Session &bull; Meeting 02</span>
-                    <h2 class="text-6xl font-black tracking-tight leading-none mb-8">Deep Modules & <br>Complexity Sink</h2>
-                    <div class="h-1 w-24 bg-accent/20 rounded-full"></div>
+            <section>
+                <div class="flex items-center space-x-6 mb-12">
+                    <span class="px-3 py-1 bg-black text-white text-[9px] font-bold uppercase tracking-widest sans">Vol. 01 / No. 02</span>
+                    <div class="h-px bg-black/10 flex-grow"></div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest sans text-accent">Next Session</span>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
-                    <div class="lg:col-span-3 space-y-12">
-                        <blockquote class="text-white text-4xl leading-tight font-medium italic serif relative">
-                            <span class="absolute -left-12 top-0 text-accent opacity-20 text-8xl leading-none font-serif">“</span>
-                            A well-designed module is a <span class="text-accent not-italic font-black underline decoration-accent/30 underline-offset-8">complexity sink</span>: it takes on internal implementation suffering so the rest of the system can stay simple.
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <div class="lg:col-span-8">
+                        <h2 class="text-6xl font-bold tracking-tighter mb-12 sans leading-tight">Complexity Sinks: <br>The Strategic Module</h2>
+                        
+                        <blockquote class="mb-16">
+                            “A well-designed module is a <span class="text-accent not-italic font-bold">complexity sink</span>: it takes on internal implementation suffering so the rest of the system can stay simple.”
                         </blockquote>
 
-                        <a href="#p=meetings/meeting-02/README.md" class="btn btn-primary px-10 py-6 text-xl shadow-2xl shadow-accent/10 font-sans group">
-                            View Agenda & Discussion Guide
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-5 h-5 ml-4 group-hover:translate-x-1 transition-transform"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                        <a href="#p=meetings/meeting-02/README.md" class="btn btn-primary text-sm group">
+                            Full Discussion Agenda
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 ml-3"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                         </a>
                     </div>
 
-                    <div class="lg:col-span-2 space-y-8">
-                        <h3 class="text-[10px] font-black tracking-book opacity-80 uppercase text-[var(--text-muted)]">Available Materials</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between p-5 bg-white/5 border-2 border-dashed border-white/10 rounded-2xl">
-                                <div class="flex items-center space-x-5">
-                                    <span class="text-2xl opacity-60">📊</span>
-                                    <div class="flex flex-col">
-                                        <span class="text-sm font-bold text-gray-500 italic uppercase tracking-widest font-sans">Slides</span>
-                                        <span class="text-[8px] font-black tracking-widest text-accent/80 uppercase mt-1">Awaiting Signal</span>
-                                    </div>
+                    <div class="lg:col-span-4 border-l border-black/5 pl-12 space-y-8">
+                        <h3 class="text-[10px] font-bold tracking-widest uppercase sans opacity-50">Reference Materials</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-4 group cursor-help">
+                                <span class="text-xl opacity-40">📊</span>
+                                <div>
+                                    <span class="block text-xs font-bold uppercase sans leading-none mb-1">Slide Deck</span>
+                                    <span class="text-[9px] font-medium italic opacity-60">Awaiting Signal</span>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between p-5 bg-white/5 border-2 border-dashed border-white/10 rounded-2xl">
-                                <div class="flex items-center space-x-5">
-                                    <span class="text-2xl opacity-60">🎬</span>
-                                    <div class="flex flex-col">
-                                        <span class="text-sm font-bold text-gray-500 italic uppercase tracking-widest font-sans">Video</span>
-                                        <span class="text-[8px] font-black tracking-widest text-accent/80 uppercase mt-1">Awaiting Signal</span>
-                                    </div>
+                            <div class="flex items-center space-x-4 group cursor-help">
+                                <span class="text-xl opacity-40">🎬</span>
+                                <div>
+                                    <span class="block text-xs font-bold uppercase sans leading-none mb-1">Video Record</span>
+                                    <span class="text-[9px] font-medium italic opacity-60">Awaiting Signal</span>
                                 </div>
                             </div>
                         </div>
@@ -149,129 +135,81 @@
                 </div>
             </section>
 
-            <!-- Section Break -->
-            <div class="flex items-center justify-center py-20">
-                <div class="h-px bg-accent/10 w-full max-w-xs"></div>
-                <span class="mx-8 text-accent/20 serif italic text-2xl">§</span>
-                <div class="h-px bg-accent/10 w-full max-w-xs"></div>
-            </div>
-
-            <!-- Past Sessions Section -->
+            <!-- The Archive -->
             <div>
-                <h3 class="text-[10px] font-black tracking-book opacity-80 mb-20 flex items-center text-[var(--text-muted)]">
-                    <span class="mr-12 uppercase">THE ARCHIVE</span>
-                    <div class="h-px bg-white/10 flex-grow"></div>
-                </h3>
+                <h3 class="text-[10px] font-bold tracking-widest uppercase sans border-b border-black pb-4 mb-16">The Archive</h3>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-24">
+                <div class="space-y-16">
                     <!-- Meeting 01 -->
-                    <div class="group">
-                        <div class="flex justify-between items-start mb-10 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-[9px] font-black tracking-book text-accent/80 uppercase block mb-2">SESSION 01</span>
-                                <h4 class="text-4xl font-black tracking-tight serif group-hover:text-accent transition-colors">Deep Systems</h4>
+                    <div class="flex flex-col md:flex-row md:items-start gap-8 group">
+                        <span class="text-[10px] font-bold sans w-24 opacity-40 pt-2">01 / 05 / 26</span>
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-baseline mb-4">
+                                <h4 class="text-3xl font-bold sans group-hover:text-accent transition-colors">Deep Systems</h4>
+                                <span class="text-[9px] font-bold sans uppercase tracking-widest opacity-30">Peer Verified</span>
                             </div>
-                            <span class="text-[9px] font-black bg-white/5 text-accent px-3 py-1 rounded-full uppercase tracking-widest border border-accent/20 shadow-lg shadow-accent/5">Verified</span>
-                        </div>
-                        <div class="space-y-8">
-                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
-                                    <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">🎬</span> Video Recording
+                            <div class="flex flex-wrap gap-x-8 gap-y-4">
+                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
+                                    <span class="mr-2">🎬</span> Video Recording
                                 </a>
-                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
+                                    <span class="mr-2">📊</span> Slide Deck
                                 </a>
+                                <a href="#p=meetings/meeting-01/README.md" class="text-[10px] font-bold uppercase sans text-accent">View Synthesis &rarr;</a>
                             </div>
-                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
-                                    <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">📊</span> Slide Deck
-                                </a>
-                                <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                                </a>
-                            </div>
-                            <a href="#p=meetings/meeting-01/README.md" class="text-[10px] font-black text-accent/80 hover:text-accent pt-4 block transition-all uppercase">VIEW SYNTHESIS &rarr;</a>
                         </div>
                     </div>
 
                     <!-- Meeting 00 -->
-                    <div class="group border-l-0 md:border-l md:border-white/5 md:pl-24">
-                        <div class="flex justify-between items-start mb-10 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-[9px] font-black tracking-book text-accent/80 uppercase block mb-2">SESSION 00</span>
-                                <h4 class="text-4xl font-black tracking-tight serif group-hover:text-accent transition-colors">The Kickoff</h4>
+                    <div class="flex flex-col md:flex-row md:items-start gap-8 group">
+                        <span class="text-[10px] font-bold sans w-24 opacity-40 pt-2">29 / 04 / 26</span>
+                        <div class="flex-grow">
+                            <div class="flex justify-between items-baseline mb-4">
+                                <h4 class="text-3xl font-bold sans group-hover:text-accent transition-colors">The Kickoff</h4>
+                                <span class="text-[9px] font-bold sans uppercase tracking-widest opacity-30">Peer Verified</span>
                             </div>
-                            <span class="text-[9px] font-black bg-white/5 text-accent px-3 py-1 rounded-full uppercase tracking-widest border border-accent/20 shadow-lg shadow-accent/5">Verified</span>
-                        </div>
-                        <div class="space-y-8">
-                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
-                                    <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">🎬</span> Video Recording
+                            <div class="flex flex-wrap gap-x-8 gap-y-4">
+                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
+                                    <span class="mr-2">🎬</span> Video Recording
                                 </a>
-                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
+                                    <span class="mr-2">📊</span> Slide Deck
                                 </a>
+                                <a href="#p=meetings/meeting-00/README.md" class="text-[10px] font-bold uppercase sans text-accent">View Synthesis &rarr;</a>
                             </div>
-                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
-                                    <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">📊</span> Slide Deck
-                                </a>
-                                <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                                </a>
-                            </div>
-                            <a href="#p=meetings/meeting-00/README.md" class="text-[10px] font-black text-accent/80 hover:text-accent pt-4 block transition-all uppercase">VIEW SYNTHESIS &rarr;</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Knowledge Section -->
-            <div>
-                <h3 class="text-[10px] font-black tracking-book opacity-80 mb-16 flex items-center text-[var(--text-muted)]">
-                    <span class="mr-12 uppercase">THE KNOWLEDGE BASE</span>
-                    <div class="h-px bg-white/10 flex-grow"></div>
-                </h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-6 gap-16">
-                    <!-- Meta Skill -->
-                    <a href="#p=templates/prompts/README.md" class="md:col-span-3 card p-12 flex flex-col justify-center border-t-4 border-accent relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 group-hover:scale-150 transition-all duration-700">
-                            <span class="text-9xl">🤖</span>
-                        </div>
-                        <span class="text-[10px] font-black tracking-book text-accent uppercase mb-8 block">Project Infrastructure</span>
-                        <h4 class="text-5xl font-black serif mb-6 italic leading-none">AI Prompt Library</h4>
-                        <p class="text-xl opacity-80 text-[var(--text-muted)] font-medium serif leading-relaxed">Standardized mental frameworks for distilling deep design insights through automated reasoners.</p>
-                    </a>
-                    
-                    <!-- Inbox -->
-                    <a href="#p=meetings/meeting-99-new/README.md" class="md:col-span-3 card p-12 flex flex-col justify-center border-t-4 border-orange-500/50 bg-orange-500/5 relative group overflow-hidden">
-                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 group-hover:scale-150 transition-all duration-700 text-orange-500">
-                            <span class="text-9xl">📂</span>
-                        </div>
-                        <div class="flex justify-between items-start mb-8">
-                            <span class="text-[10px] font-black tracking-book text-orange-400 uppercase">Input Stream</span>
-                            <span class="text-[9px] font-black font-sans bg-orange-500 text-black px-3 py-1 rounded-full animate-pulse shadow-2xl shadow-orange-500/20 uppercase tracking-widest">7 Items Queued</span>
-                        </div>
-                        <h4 class="text-5xl font-black serif mb-6 italic leading-none">The Inbox</h4>
-                        <p class="text-xl opacity-80 text-orange-200 font-medium serif leading-relaxed">Unsorted discussion logs, raw assets, and emergent design philosophy waiting for modular synthesis.</p>
-                    </a>
-
-                    <!-- Docs List -->
-                    <div class="md:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-12 border-t border-white/5 pt-16">
-                        <a href="#p=docs/glossary.md" class="group flex items-center space-x-8">
-                            <span class="text-5xl opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">📚</span>
-                            <div>
-                                <span class="text-2xl font-black serif block group-hover:text-accent transition-colors leading-none mb-2 italic">Glossary of Depth</span>
-                                <span class="text-[10px] font-black tracking-book opacity-80 uppercase font-sans text-[var(--text-muted)]">A Taxonomy of Complexity</span>
-                            </div>
+            <!-- Knowledge Base -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 pt-24 border-t-2 border-black">
+                <div>
+                    <h3 class="text-[10px] font-bold tracking-widest uppercase sans mb-8">Infrastructure</h3>
+                    <div class="space-y-12">
+                        <a href="#p=templates/prompts/README.md" class="block group">
+                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic">AI Prompt Library</h4>
+                            <p class="text-sm opacity-60 serif leading-relaxed">Standardized mental frameworks for distilling deep design insights through automated reasoners.</p>
                         </a>
-                        <a href="#p=docs/design-principles.md" class="group flex items-center space-x-8">
-                            <span class="text-5xl opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">⚖️</span>
-                            <div>
-                                <span class="text-2xl font-black serif block group-hover:text-accent transition-colors leading-none mb-2 italic">Design Principles</span>
-                                <span class="text-[10px] font-black tracking-book opacity-80 uppercase font-sans text-[var(--text-muted)]">The Strategic Mandates</span>
+                        <a href="#p=docs/glossary.md" class="block group">
+                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic">Glossary of Depth</h4>
+                            <p class="text-sm opacity-60 serif leading-relaxed">A rigorous taxonomy of software complexity and modular boundaries.</p>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-[10px] font-bold tracking-widest uppercase sans mb-8">Current Research</h3>
+                    <div class="space-y-12">
+                        <a href="#p=meetings/meeting-99-new/README.md" class="block group p-6 bg-accent/5 border border-accent/20 rounded">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-2xl font-bold sans group-hover:text-accent italic">The Inbox</h4>
+                                <span class="text-[8px] font-bold sans bg-accent text-white px-2 py-0.5 rounded">7 NEW</span>
                             </div>
+                            <p class="text-sm opacity-60 serif leading-relaxed">Unsorted discussion logs and emergent design philosophy waiting for modular synthesis.</p>
+                        </a>
+                        <a href="#p=docs/design-principles.md" class="block group">
+                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic">Strategic Mandates</h4>
+                            <p class="text-sm opacity-60 serif leading-relaxed">The immutable principles governing our technical decision-making.</p>
                         </a>
                     </div>
                 </div>
@@ -281,26 +219,19 @@
 
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
-        <nav class="mb-24 flex items-center justify-between">
-            <a href="#" id="back-to-dashboard" class="text-[10px] font-black tracking-book uppercase opacity-80 hover:opacity-100 hover:text-accent transition-all text-[var(--text-muted)]">&larr; Back to Dashboard</a>
-            <span class="text-[10px] font-black tracking-book opacity-80 uppercase text-[var(--text-muted)]">APoSD Library</span>
+        <nav class="mb-32 flex items-center justify-between border-b border-black/10 pb-8">
+            <a href="#" id="back-to-dashboard" class="text-[10px] font-bold tracking-widest uppercase sans opacity-40 hover:opacity-100 transition-all">&larr; Dashboard</a>
+            <span class="text-[10px] font-bold tracking-[0.3em] uppercase sans opacity-20">Proceedings / Vol. 01</span>
         </nav>
 
         <article id="markdown-content" class="prose max-w-none">
             <!-- Content injected here -->
-            <div class="flex flex-col items-center justify-center py-40">
-                <span class="text-accent animate-pulse font-black tracking-book uppercase">Distilling Content...</span>
-            </div>
         </article>
     </div>
 
-    <footer class="mt-64 py-24 border-t border-white/5 text-center">
-        <p class="text-[10px] font-black tracking-book opacity-80 mb-10 uppercase text-[var(--text-muted)]">PRODUCED FOR THE ACTIONABLE PHILOSOPHY BOOK CLUB</p>
-        <div class="flex items-center justify-center space-x-6">
-            <div class="h-px w-16 bg-white/5"></div>
-            <p class="text-[11px] font-black text-accent tracking-[0.5em] uppercase">Spare Time Excellence &bull; 2026</p>
-            <div class="h-px w-16 bg-white/5"></div>
-        </div>
+    <footer class="mt-64 pt-24 border-t border-black/10 flex flex-col md:flex-row justify-between items-center gap-8">
+        <p class="text-[10px] font-bold tracking-widest uppercase sans opacity-30">Actionable Philosophy Book Club &bull; 2026</p>
+        <p class="text-[10px] font-bold tracking-[0.5em] uppercase sans text-accent">Spare Time Excellence</p>
     </footer>
 
     <script>
@@ -316,12 +247,6 @@
         });
 
         async function loadPage(path) {
-            // Initiate transition
-            dashboard.classList.add('view-transitioning');
-            reader.classList.add('view-transitioning');
-
-            await new Promise(r => setTimeout(r, 150)); // Sync with CSS timing
-
             dashboard.classList.add('hidden-view');
             reader.classList.remove('hidden-view');
             window.scrollTo(0, 0);
@@ -343,32 +268,18 @@
                 });
 
             } catch (err) {
-                content.innerHTML = `
-                    <div class="text-center py-20">
-                        <h2 class="text-4xl font-black serif text-accent mb-4 italic">Analysis Interrupted</h2>
-                        <p class="opacity-80 font-sans uppercase tracking-widest text-[10px] text-[var(--text-muted)]">The requested document could not be modularized: ${err.message}</p>
-                        <a href="#" class="btn btn-primary mt-8 font-sans">Return to Dashboard</a>
-                    </div>
-                `;
-            } finally {
-                // End transition
-                reader.classList.remove('view-transitioning');
+                content.innerHTML = `<h2 class='sans text-accent italic'>Error: ${err.message}</h2>`;
             }
         }
 
         function handleRoute() {
             const hash = window.location.hash;
             if (hash.startsWith('#p=')) {
-                const path = hash.substring(3);
-                loadPage(path);
+                loadPage(hash.substring(3));
             } else {
-                reader.classList.add('view-transitioning');
-                setTimeout(() => {
-                    dashboard.classList.remove('hidden-view');
-                    reader.classList.add('hidden-view');
-                    dashboard.classList.remove('view-transitioning');
-                    window.scrollTo(0, 0);
-                }, 150);
+                dashboard.classList.remove('hidden-view');
+                reader.classList.add('hidden-view');
+                window.scrollTo(0, 0);
             }
         }
 
@@ -378,7 +289,6 @@
             window.location.hash = '';
         });
 
-        // Initial route check
         handleRoute();
     </script>
 </body>
