@@ -1,31 +1,39 @@
 # Design
 
 ## Theme
-Physical Scene: An engineer late at night, reading a physical copy of "A Philosophy of Software Design" under a warm desk lamp. The interface should feel like an extension of that physical object—sophisticated, dark-mode first, and authoritative.
+Physical Scene: A clean, well-lit minimalist workspace. The interface is a literal digital extension of the "A Philosophy of Software Design" physical book cover—technical, precise, and approachable. It uses the "Complexity Governor" organic loops as a central system metaphor.
 
 ## Colors
-- **Strategy:** Sophisticated Dark (APoSD Book Palette)
-- **Background (Deep Navy):** `oklch(23% 0.05 264)`
-- **Surface (Dark Blue):** `oklch(28% 0.08 264)`
-- **Text (Off-White):** `oklch(93% 0.01 264)`
-- **Text Muted (Cool Gray):** `oklch(67% 0.04 264)`
-- **Accent (Warm Amber):** `oklch(73.5% 0.12 85)`
-- **Accent Secondary (Steel Blue):** `oklch(45% 0.08 264)`
+- **Strategy:** True APoSD Cover Palette
+- **Background (Near White):** `#F7F7F7`
+- **Banner (Dark Charcoal):** `#222222`
+- **Text Primary:** `#222222`
+- **Text Muted:** `#666666`
+- **White:** `#FFFFFF`
 
+### The Loops Spectrum (Accents)
+- **Deep Navy:** `#1A3A5C`
+- **Medium Blue:** `#2B6CB0`
+- **Steel Blue:** `#4BA3C7`
+- **Teal:** `#48BDB8`
+- **Seafoam:** `#72C9A8`
+- **Light Sage:** `#A8D8B9`
 
 ## Typography
-- **Headline Font:** Inter (or system sans-serif) - Bold, tight tracking.
-- **Body Font:** Inter - Readable, optimized for mobile screens.
-- **Scale:** 1.25 ratio (Major Third) to ensure clear hierarchy on small screens.
+- **Typeface:** Inter (Swiss/International Style)
+- **Title Style:** All-caps, Medium weight, tight tracking (`-0.02em`).
+- **Author/Metadata Style:** All-caps, Light/Thin weight, smaller scale.
+- **Body Style:** Clean, high-legibility sans-serif. No serifs.
+- **Scale:** Modular hierarchy based on weight contrast over size variation.
 
 ## Components
-- **Meeting Card:** A compact, high-utility card showing status, topic, and direct-action buttons for Video/Audio/Slides.
-- **Asset List:** A structured list with icons for different file types (.mp4, .m4a, .pptx, .md).
-- **PowerPoint Viewer:** Use Microsoft Office Online for high-fidelity rendering of slide decks (See [ADR 001](docs/adr/0001-powerpoint-viewer-selection.md)).
-- **Sticky Navigation:** A simple top-bar for quick access to the "Inbox" and "Docs".
-
+- **Banner Bar:** Full-width charcoal block with white Swiss typography.
+- **Organic Loops:** SVG-based "Complexity Governor" illustration with layered transparency and spectrum colors.
+- **Material Cards:** Flat white cards with 1px borders and spectrum hover states.
+- **Bibliographic Footer:** Solid charcoal anchor mirroring the cover's structural balance.
 
 ## Layout
-- Single-column flow optimized for mobile.
-- Generous vertical rhythm to separate meeting sessions.
-- Maximum line length of 65ch for readability.
+- Single-column flow with generous whitespace.
+- "Complexity Governor" visual fills the upper 40% of the viewport.
+- Maximum line length of 70ch for comfortable reading.
+- Large, thumb-friendly touch targets for mobile media access.
