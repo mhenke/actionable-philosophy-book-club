@@ -183,21 +183,23 @@
 
         <!-- Resources Grid -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <a href="docs/glossary.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group">
+            <a href="docs/glossary.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden">
                 <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">📚</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity">Glossary</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">Glossary</span>
             </a>
-            <a href="docs/design-principles.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group">
+            <a href="docs/design-principles.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden">
                 <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">⚖️</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity">Principles</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">Principles</span>
             </a>
-            <a href="templates/prompts/" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group">
+            <a href="templates/prompts/" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group relative overflow-hidden border-2">
+                <div class="absolute top-0 right-0 bg-[oklch(65%_0.15_250)] text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-tighter">Meta-Skill</div>
                 <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">🤖</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity">AI Prompts</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">AI Prompts</span>
             </a>
-            <a href="meetings/meeting-99-new/" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all group">
+            <a href="meetings/meeting-99-new/" class="card p-4 flex flex-col items-center justify-center hover:border-orange-400 transition-all group relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-orange-500 text-white text-[8px] font-black px-2 py-0.5 rounded-bl-lg uppercase tracking-tighter animate-pulse">7 NEW ITEMS</div>
                 <span class="text-2xl mb-2 group-hover:scale-110 transition-transform">📂</span>
-                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity">Inbox</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50 group-hover:opacity-100 transition-opacity text-center">Inbox</span>
             </a>
         </div>
     </main>
