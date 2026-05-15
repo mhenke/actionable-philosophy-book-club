@@ -19,3 +19,11 @@ Initial kickoff meeting to establish goals, distribute materials, and agree on t
 ## Resources
 - [Slides](slides/00-Strategic-Design-for-the-AI-Era.pptx)
 - [Recordings](recordings/00-The-Complexity-Governor.mp4)
+
+## Folder Contents
+- recordings/
+  - 00-The-Complexity-Governor.mp4
+- resources/
+- slides/
+  - 00-Strategic-Design-for-the-AI-Era.pptx
+

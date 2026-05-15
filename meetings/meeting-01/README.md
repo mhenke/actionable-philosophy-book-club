@@ -22,3 +22,16 @@
 ## Resources
 - [Slides](slides/01-Architecting-Deep-Systems.pptx)
 - [Recordings](recordings/01-The-Architects-of-Complexity.mp4)
+
+## Folder Contents
+- 01-essential-questions.md
+- 01-non-obvious-insights.md
+- recordings/
+  - 01-The-Architects-of-Complexity.mp4
+  - 01-The-Clean-Code-Paradox-Architecting-Deep-Systems.mp4
+- resources/
+  - 01-Architecture-of-Simplicity.png
+  - 01-Choose-Your-Adventure.png
+- slides/
+  - 01-Architecting-Deep-Systems.pptx
+

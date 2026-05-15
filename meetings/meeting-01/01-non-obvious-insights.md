@@ -1,9 +1,23 @@
-Based on the primary text and supplemental sources for Chapters 1–4, the most counter-intuitive findings center on the idea that "clean-looking" code can actually be a symptom of a failing system. The following four questions are designed to challenge common industry assumptions by applying Ousterhout’s strategic lens:
-1. Does your "Clean" code suffer from "Classitis"?
-The Assumption: If a class or method is small and easy to read, it is inherently good. The Challenge: Ousterhout argues that the act of breaking logic into many small pieces (a core Clean Code heuristic) often creates "shallow" modules. Critical Thinking Question: If we measure the complexity of a system by the total cognitive load required to understand it, at what point does the cost of managing the connections between small classes outweigh the cost of a slightly longer, "deeper" class that hides its own implementation?
-2. Is your "Tactical Tornado" actually the most expensive person on the team?
-The Assumption: The developer who closes the most tickets in the shortest amount of time is the highest performer. The Challenge: The text introduces the "Tactical Tornado"—a prolific coder whose speed comes from ignoring design and leaving behind "kludges." Critical Thinking Question: If "Strategic Programming" requires a 10–20% upfront time investment to prevent "Change Amplification," how do we shift a culture that rewards the immediate visibility of a bug fix over the invisible prevention of a "Unknown Unknown"?
-3. Can a 500-line class be "simpler" than ten 50-line classes?
-The Assumption: Shorter files and methods are always simpler than longer ones. The Challenge: Complexity is defined by Dependencies and Obscurity. If ten small classes are tightly coupled (Information Leakage), a developer must keep all ten in their head to make a single change. Critical Thinking Question: Based on the "Deep Module" principle, how can a large class with a simple interface actually reduce a developer's cognitive load more effectively than a fragmented architecture that forces the user to understand internal implementation details?
-4. Is AI-generated code creating a "Shallow Fragmentation" crisis?
-The Assumption: AI tools make development faster and better by handling boilerplate and small-scale logic. The Challenge: Supplemental research suggests AI is a "Tactical Tornado" by default—it is excellent at "Clean Code" surface aesthetics (naming, small functions) but struggles with the structural depth required for long-term evolvability. Critical Thinking Question: If we use AI to accelerate implementation, are we inadvertently accelerating the rate at which our system reaches a state of "Change Amplification," and how does the human role change if we must now act primarily as "Complexity Allocators" rather than code writers?
+# Non-Obvious Insights: Chapters 1–4
+
+Based on the primary text and supplemental sources for Chapters 1–4, the most counter-intuitive findings center on the idea that "clean-looking" code can actually be a symptom of a failing system. 
+
+## 1. Does your "Clean" code suffer from "Classitis"?
+- **The Assumption:** If a class or method is small and easy to read, it is inherently good. 
+- **The Challenge:** Ousterhout argues that the act of breaking logic into many small pieces (a core Clean Code heuristic) often creates "shallow" modules. 
+- **Insight:** If we measure the complexity of a system by the total cognitive load required to understand it, at what point does the cost of managing the connections between small classes outweigh the cost of a slightly longer, "deeper" class that hides its own implementation?
+
+## 2. Is your "Tactical Tornado" actually the most expensive person on the team?
+- **The Assumption:** The developer who closes the most tickets in the shortest amount of time is the highest performer. 
+- **The Challenge:** The text introduces the "Tactical Tornado"—a prolific coder whose speed comes from ignoring design and leaving behind "kludges." 
+- **Insight:** If "Strategic Programming" requires a 10–20% upfront time investment to prevent "Change Amplification," how do we shift a culture that rewards the immediate visibility of a bug fix over the invisible prevention of a "Unknown Unknown"?
+
+## 3. Can a 500-line class be "simpler" than ten 50-line classes?
+- **The Assumption:** Shorter files and methods are always simpler than longer ones. 
+- **The Challenge:** Complexity is defined by Dependencies and Obscurity. If ten small classes are tightly coupled (Information Leakage), a developer must keep all ten in their head to make a single change. 
+- **Insight:** Based on the "Deep Module" principle, how can a large class with a simple interface actually reduce a developer's cognitive load more effectively than a fragmented architecture that forces the user to understand internal implementation details?
+
+## 4. Is AI-generated code creating a "Shallow Fragmentation" crisis?
+- **The Assumption:** AI tools make development faster and better by handling boilerplate and small-scale logic. 
+- **The Challenge:** AI is a "Tactical Tornado" by default—it is excellent at "Clean Code" surface aesthetics (naming, small functions) but struggles with the structural depth required for long-term evolvability. 
+- **Insight:** If we use AI to accelerate implementation, are we inadvertently accelerating the rate at which our system reaches a state of "Change Amplification," and how does the human role change if we must now act primarily as "Complexity Allocators" rather than code writers?

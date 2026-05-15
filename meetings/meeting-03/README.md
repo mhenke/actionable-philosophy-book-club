@@ -22,3 +22,9 @@
 ## Resources
 - [Slides](slides/)
 - [Recordings](recordings/)
+
+## Folder Contents
+- recordings/
+- resources/
+- slides/
+

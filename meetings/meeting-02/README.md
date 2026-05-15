@@ -22,3 +22,12 @@
 ## Resources
 - [Slides](slides/)
 - [Recordings](recordings/)
+
+## Folder Contents
+- 02-essential-questions.md
+- 02-non-obvious-insights.md
+- recordings/
+- resources/
+  - 02-Four-Strategies.png
+- slides/
+

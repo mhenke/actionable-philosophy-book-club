@@ -1,11 +1,28 @@
-To capture the central meaning of the first four chapters of A Philosophy of Software Design and the supplemental materials, these five essential questions focus on the shift from local code production to global system design.
-1. How does the "Complexity Waterfall" redefine the goal of a developer?
-Traditional programming often focuses on completing features (Tactical), but Ousterhout argues that complexity is incremental and cumulative. This question asks: If complexity is the result of thousands of small "kludges" rather than one big mistake, how does the definition of a "good developer" change from one who writes working code quickly to one who manages the system’s long-term "Change Amplification" and "Cognitive Load"?
-2. Is the "Clean Code" heuristic of small functions actually creating "Classitis"?
-A central tension in the materials is the conflict between making units small (Clean Code) and making units "Deep" (Ousterhout). This question explores whether the mechanical act of breaking code into tiny, 5-line functions actually reduces complexity or simply moves it to the interface level, creating a "shallow" system where the overhead of managing connections outweighs the logic of the functions themselves.
-3. What is the "Tactical Tornado" and why is it rewarded in modern engineering cultures?
-The supplemental sources describe the "Tactical Tornado" as a prolific programmer who gets things done fast but leaves a wake of destruction. This question analyzes the organizational conflict: Why do many corporate and AI-driven environments prioritize the speed of the "Tornado" over the "Strategic Programmer," and what are the specific long-term costs of this trade-off?
-4. How do "Unknown Unknowns" act as the most dangerous symptom of complexity?
-While "Change Amplification" is visible and "Cognitive Load" is felt, "Unknown Unknowns" (not knowing which parts of the system must be modified to complete a task) are often invisible until a bug occurs. This question asks: How do specific design choices—like information leakage or obscure dependencies—directly create these "Unknown Unknowns," and how does "Strategic Programming" proactively eliminate them?
-5. In an era of AI-generated code, who owns the "Structural Integrity" of the system?
-The supplemental PDF on AI Modularity suggests that LLMs are "Tactical Tornadoes" by default, producing code that looks clean but lacks depth. This question addresses the future of the role: If an AI can handle the "Tactical What" (writing the implementation), how must the human engineer pivot to focus exclusively on the "Philosophical Why" (defining abstraction boundaries and managing the global complexity budget)?
+# Five Essential Questions: Chapters 1–4
+
+To capture the central meaning of the first four chapters of *A Philosophy of Software Design* and the supplemental materials, these five essential questions focus on the shift from local code production to global system design.
+
+## 1. How does the "Complexity Waterfall" redefine the goal of a developer?
+Traditional programming often focuses on completing features (Tactical), but Ousterhout argues that complexity is incremental and cumulative. 
+
+**Critical Thinking:** If complexity is the result of thousands of small "kludges" rather than one big mistake, how does the definition of a "good developer" change from one who writes working code quickly to one who manages the system’s long-term "Change Amplification" and "Cognitive Load"?
+
+## 2. Is the "Clean Code" heuristic of small functions actually creating "Classitis"?
+A central tension in the materials is the conflict between making units small (Clean Code) and making units "Deep" (Ousterhout). 
+
+**Critical Thinking:** Does the mechanical act of breaking code into tiny, 5-line functions actually reduce complexity or simply move it to the interface level, creating a "shallow" system where the overhead of managing connections outweighs the logic of the functions themselves?
+
+## 3. What is the "Tactical Tornado" and why is it rewarded in modern engineering cultures?
+The supplemental sources describe the "Tactical Tornado" as a prolific programmer who gets things done fast but leaves a wake of destruction. 
+
+**Critical Thinking:** Why do many corporate and AI-driven environments prioritize the speed of the "Tornado" over the "Strategic Programmer," and what are the specific long-term costs of this trade-off?
+
+## 4. How do "Unknown Unknowns" act as the most dangerous symptom of complexity?
+While "Change Amplification" is visible and "Cognitive Load" is felt, "Unknown Unknowns" (not knowing which parts of the system must be modified to complete a task) are often invisible until a bug occurs. 
+
+**Critical Thinking:** How do specific design choices—like information leakage or obscure dependencies—directly create these "Unknown Unknowns," and how does "Strategic Programming" proactively eliminate them?
+
+## 5. In an era of AI-generated code, who owns the "Structural Integrity" of the system?
+The supplemental PDF on AI Modularity suggests that LLMs are "Tactical Tornadoes" by default, producing code that looks clean but lacks depth. 
+
+**Critical Thinking:** If an AI can handle the "Tactical What" (writing the implementation), how must the human engineer pivot to focus exclusively on the "Philosophical Why" (defining abstraction boundaries and managing the global complexity budget)?
