@@ -34,7 +34,7 @@ A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This
 ## Session Materials
 - [02-essential-questions.md](02-essential-questions.md)
 - [02-non-obvious-insights.md](02-non-obvious-insights.md)
-- [recordings/](recordings/)
+- Recordings (Coming Soon)
 - [resources/](resources/)
   - [02-Four-Strategies.png](resources/02-Four-Strategies.png)
-- [slides/](slides/)
+- Slides (Coming Soon)

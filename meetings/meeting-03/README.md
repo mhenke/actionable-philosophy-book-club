@@ -19,6 +19,6 @@ A curated synthesis of the design trade-offs, philosophical tensions, and tactic
 - [ ] 
 
 ## Session Materials
-- [recordings/](recordings/)
-- [resources/](resources/)
-- [slides/](slides/)
+- Recordings (Coming Soon)
+- Resources (Coming Soon)
+- Slides (Coming Soon)
