@@ -57,69 +57,115 @@
         <p class="text-lg opacity-80">Engineering book club focusing on <span class="font-semibold italic">A Philosophy of Software Design</span> and AI-assisted craft.</p>
     </header>
 
-    <main class="space-y-8">
+    <main class="space-y-12">
         
         <!-- Meeting 02 (Next) -->
         <section class="card p-6 border-l-8 border-[oklch(65%_0.15_250)]">
-            <div class="flex justify-between items-start mb-4">
+            <div class="flex justify-between items-start mb-6">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-wider opacity-60">Meeting 02 &bull; Next Session</span>
-                    <h2 class="text-2xl font-bold mt-1">Deep Modules & Complexity Sink</h2>
+                    <h2 class="text-3xl font-bold mt-1">Deep Modules & Complexity Sink</h2>
                 </div>
-                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded">UPCOMING</span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">UPCOMING</span>
             </div>
             
-            <div class="bg-blue-50 p-4 rounded-lg mb-6">
-                <p class="text-sm font-semibold text-blue-900 mb-1">Key Takeaway Preview:</p>
-                <p class="text-blue-800 italic">"A well-designed module is a **complexity sink**: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
+            <div class="bg-blue-50 p-5 rounded-xl mb-8 border border-blue-100">
+                <p class="text-xs font-bold text-blue-900 uppercase tracking-widest mb-2 opacity-70">Key Takeaway Preview</p>
+                <p class="text-blue-900 text-lg leading-relaxed italic">"A well-designed module is a **complexity sink**: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
             </div>
 
-            <div class="flex flex-wrap gap-3">
-                <a href="meetings/meeting-02/" class="btn btn-primary">View Agenda</a>
-                <span class="inline-block" title="Coming soon: Recording will be uploaded after the meeting.">
-                    <button class="btn btn-outline opacity-50 cursor-not-allowed" disabled>Video (TBD)</button>
-                </span>
-                <span class="inline-block" title="Coming soon: Slides will be uploaded before the meeting.">
-                    <button class="btn btn-outline opacity-50 cursor-not-allowed" disabled>Slides (TBD)</button>
-                </span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a href="meetings/meeting-02/" class="btn btn-primary justify-center py-4 text-base">
+                    View Meeting README
+                </a>
+                <div class="flex gap-2">
+                    <button class="btn btn-outline opacity-40 cursor-not-allowed flex-grow justify-center" disabled>Video (TBD)</button>
+                    <button class="btn btn-outline opacity-40 cursor-not-allowed flex-grow justify-center" disabled>Slides (TBD)</button>
+                </div>
             </div>
         </section>
 
-        <!-- Past Meetings Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <!-- Meeting 01 (Done) -->
-            <section class="card p-6 opacity-80">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider opacity-60">Meeting 01</span>
-                        <h2 class="text-xl font-bold mt-1">Deep Systems & Complexity</h2>
+        <!-- Past Sessions Section -->
+        <div>
+            <h3 class="text-sm font-bold uppercase tracking-[0.2em] opacity-40 mb-6 flex items-center">
+                <span class="mr-4">Past Sessions</span>
+                <div class="h-px bg-gray-200 flex-grow"></div>
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Meeting 01 -->
+                <div class="flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-lg font-bold">01. Deep Systems</h4>
+                        <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded uppercase">Verified</span>
                     </div>
-                    <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-0.5 rounded">DONE</span>
+                    
+                    <div class="space-y-2">
+                        <!-- Asset Row -->
+                        <div class="flex items-center justify-between group">
+                            <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-sm font-semibold opacity-70 group-hover:opacity-100 group-hover:text-[oklch(65%_0.15_250)] transition-all flex items-center">
+                                <span class="mr-2">🎬</span> Video: Architects
+                            </a>
+                            <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download class="opacity-0 group-hover:opacity-40 hover:!opacity-100 transition-opacity p-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                            </a>
+                        </div>
+                        <!-- Asset Row -->
+                        <div class="flex items-center justify-between group">
+                            <a href="https://github.com/mhenke/actionable-philosophy-book-club/blob/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-sm font-semibold opacity-70 group-hover:opacity-100 group-hover:text-[oklch(65%_0.15_250)] transition-all flex items-center">
+                                <span class="mr-2">📊</span> Slides: Deep Systems
+                            </a>
+                            <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download class="opacity-0 group-hover:opacity-40 hover:!opacity-100 transition-opacity p-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                            </a>
+                        </div>
+                        <a href="meetings/meeting-01/" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-[oklch(65%_0.15_250)] pt-2 block transition-colors">Read Full Notes &rarr;</a>
+                    </div>
                 </div>
-                
-                <div class="flex flex-wrap gap-3">
-                    <a href="meetings/meeting-01/" class="text-xs font-semibold text-blue-600 hover:underline">Notes</a>
-                    <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-xs font-semibold text-gray-500 hover:underline">Video</a>
-                    <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" class="text-xs font-semibold text-gray-500 hover:underline">Slides</a>
-                </div>
-            </section>
 
-            <!-- Meeting 00 (Done) -->
-            <section class="card p-6 opacity-80">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-wider opacity-60">Meeting 00</span>
-                        <h2 class="text-xl font-bold mt-1">Foundations & Goals</h2>
+                <!-- Meeting 00 -->
+                <div class="flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="text-lg font-bold">00. Kickoff</h4>
+                        <span class="text-[10px] font-bold bg-green-100 text-green-700 px-2 py-0.5 rounded uppercase">Verified</span>
                     </div>
-                    <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-0.5 rounded">DONE</span>
+                    
+                    <div class="space-y-2">
+                        <!-- Asset Row -->
+                        <div class="flex items-center justify-between group">
+                            <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-sm font-semibold opacity-70 group-hover:opacity-100 group-hover:text-[oklch(65%_0.15_250)] transition-all flex items-center">
+                                <span class="mr-2">🎬</span> Video: Kickoff
+                            </a>
+                            <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download class="opacity-0 group-hover:opacity-40 hover:!opacity-100 transition-opacity p-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                            </a>
+                        </div>
+                        <a href="meetings/meeting-00/" class="text-[11px] font-bold text-gray-400 uppercase tracking-widest hover:text-[oklch(65%_0.15_250)] pt-2 block transition-colors">Read Full Notes &rarr;</a>
+                    </div>
                 </div>
-                
-                <div class="flex flex-wrap gap-3">
-                    <a href="meetings/meeting-00/" class="text-xs font-semibold text-blue-600 hover:underline">Notes</a>
-                    <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-xs font-semibold text-gray-500 hover:underline">Video</a>
-                </div>
-            </section>
+            </div>
         </div>
+
+        <!-- Resources Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <a href="docs/glossary.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all">
+                <span class="text-2xl mb-2">📚</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Glossary</span>
+            </a>
+            <a href="docs/design-principles.md" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all">
+                <span class="text-2xl mb-2">⚖️</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Principles</span>
+            </a>
+            <a href="templates/prompts/" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all">
+                <span class="text-2xl mb-2">🤖</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">AI Prompts</span>
+            </a>
+            <a href="meetings/meeting-99-new/" class="card p-4 flex flex-col items-center justify-center hover:border-[oklch(65%_0.15_250)] transition-all">
+                <span class="text-2xl mb-2">📂</span>
+                <span class="text-[10px] font-black uppercase tracking-widest opacity-50">Inbox</span>
+            </a>
+        </div>
+    </main>
 
         <hr class="border-gray-200">
 
