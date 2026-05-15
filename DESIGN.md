@@ -18,7 +18,9 @@ Physical Scene: An engineer standing on a train platform at 8:00 AM, looking at 
 ## Components
 - **Meeting Card:** A compact, high-utility card showing status, topic, and direct-action buttons for Video/Audio/Slides.
 - **Asset List:** A structured list with icons for different file types (.mp4, .m4a, .pptx, .md).
+- **PowerPoint Viewer:** Use Microsoft Office Online for high-fidelity rendering of slide decks (See [ADR 001](docs/adr/0001-powerpoint-viewer-selection.md)).
 - **Sticky Navigation:** A simple top-bar for quick access to the "Inbox" and "Docs".
+
 
 ## Layout
 - Single-column flow optimized for mobile.
