@@ -1,17 +1,16 @@
-# Meeting Notes: [Chapter/Topic] (Meeting 02)
+# Meeting Notes: Deep Modules & Complexity Sinks (Meeting 02)
 
 **Date:** May 27, 2026
 **Facilitator:** [Name]
 
 ## High-Level Summary
-[Brief overview of the meeting]
+Exploring the core of Ousterhout's philosophy: how to design "deep" modules that simplify the rest of the system by acting as complexity sinks.
 
 ## Agenda (60 Minutes)
-1. **Refresher Video (5-10 min):** Watch the short summary/refresher video for the current chapters.
-2. **Discussion (30 min):** Open discussion using the slide deck as a guide.
+1. **Refresher Video (5-10 min):** "The Responsibility of Suffering" — why great modules take on complexity.
+2. **Discussion (30 min):** Identifying "pass-through methods" and "decorators" in our current codebase.
 3. **Wrap-up (Last 10 min):**
-   - **Future Planning:** Decide next meeting's agenda.
-   - **Retrospective:** What is going good? What do we want to tweak?
+   - **Action Item Review:** Book club book thank you cards.
 
 ## Discussion Points
 

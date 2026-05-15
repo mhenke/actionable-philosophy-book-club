@@ -1,17 +1,16 @@
-# Meeting Notes: [Chapter/Topic] (Meeting 01)
+# Meeting Notes: Deep Systems (Meeting 01)
 
 **Date:** May 13, 2026
 **Facilitator:** [Name]
 
 ## High-Level Summary
-[Brief overview of the meeting]
+A foundational deep dive into Chapter 2 of "A Philosophy of Software Design." We explored the "Complexity Waterfall" and the tension between tactical speed and strategic depth.
 
 ## Agenda (60 Minutes)
-1. **Refresher Video (5-10 min):** Watch the short summary/refresher video for the current chapters.
-2. **Discussion (30 min):** Open discussion using the slide deck as a guide.
+1. **Refresher Video (5-10 min):** "The Architects of Complexity" — visualizing the shallow vs. deep module gap.
+2. **Discussion (30 min):** Core debate on "Classitis" and why small functions aren't always clean.
 3. **Wrap-up (Last 10 min):**
-   - **Future Planning:** Decide next meeting's agenda.
-   - **Retrospective:** What is going good? What do we want to tweak?
+   - **Retrospective:** Moving beyond tactical tornados in our PRs.
 
 ## Discussion Points
 
