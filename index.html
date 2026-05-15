@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actionable Philosophy Book Club Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: oklch(65% 0.15 250);
+            --surface: oklch(98% 0.005 250);
+            --text: oklch(20% 0.01 250);
+            --done: oklch(70% 0.12 145);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--surface);
+            color: var(--text);
+            line-height: 1.5;
+        }
+        .accent-text { color: var(--accent); }
+        .accent-bg { background-color: var(--accent); }
+        .status-done { color: var(--done); }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:active { transform: scale(0.98); }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: background-color 0.2s;
+        }
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+        .btn-outline {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-3xl mx-auto">
+
+    <header class="mb-12">
+        <h1 class="text-3xl font-bold tracking-tight mb-2">📖 Actionable Philosophy</h1>
+        <p class="text-lg opacity-80">Engineering book club focusing on <span class="font-semibold italic">A Philosophy of Software Design</span> and AI-assisted craft.</p>
+    </header>
+
+    <main class="space-y-8">
+        
+        <!-- Meeting 01 (Next) -->
+        <section class="card p-6 border-l-8 border-[oklch(65%_0.15_250)]">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider opacity-60">Meeting 01 &bull; Next Session</span>
+                    <h2 class="text-2xl font-bold mt-1">Deep Systems & Complexity</h2>
+                </div>
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded">UPCOMING</span>
+            </div>
+            
+            <div class="bg-blue-50 p-4 rounded-lg mb-6">
+                <p class="text-sm font-semibold text-blue-900 mb-1">Key Takeaway Preview:</p>
+                <p class="text-blue-800 italic">"Is your 'Clean Code' heuristic of small functions actually creating 'Classitis' by moving complexity to the interface?"</p>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+                <a href="meetings/meeting-01/" class="btn btn-primary">View Agenda</a>
+                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="btn btn-outline">Watch Video</a>
+                <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" class="btn btn-outline">Download Slides</a>
+            </div>
+        </section>
+
+        <!-- Meeting 00 (Done) -->
+        <section class="card p-6 opacity-80">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider opacity-60">Meeting 00 &bull; Kickoff</span>
+                    <h2 class="text-xl font-bold mt-1">Foundations & Goals</h2>
+                </div>
+                <span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-0.5 rounded">DONE</span>
+            </div>
+            
+            <div class="flex flex-wrap gap-3">
+                <a href="meetings/meeting-00/" class="btn btn-outline border-gray-300 text-gray-600">Review Notes</a>
+                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-xs font-semibold text-gray-500 hover:underline py-2">Watch Recording</a>
+            </div>
+        </section>
+
+        <hr class="border-gray-200">
+
+        <!-- Other Resources -->
+        <section class="grid grid-cols-2 gap-4">
+            <a href="docs/glossary.md" class="card p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50">
+                <span class="text-2xl mb-1">📚</span>
+                <span class="font-bold text-sm">Glossary</span>
+            </a>
+            <a href="docs/design-principles.md" class="card p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50">
+                <span class="text-2xl mb-1">⚖️</span>
+                <span class="font-bold text-sm">Principles</span>
+            </a>
+            <a href="templates/prompts/" class="card p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50">
+                <span class="text-2xl mb-1">🤖</span>
+                <span class="font-bold text-sm">AI Prompts</span>
+            </a>
+            <a href="meetings/meeting-99-new/" class="card p-4 flex flex-col items-center justify-center text-center hover:bg-gray-50">
+                <span class="text-2xl mb-1">📂</span>
+                <span class="font-bold text-sm">Inbox</span>
+            </a>
+        </section>
+
+    </main>
+
+    <footer class="mt-16 pt-8 border-t border-gray-200 text-center text-sm opacity-50">
+        <p>Built for Actionable Philosophy Book Club &bull; Spare Time Excellence</p>
+    </footer>
+
+</body>
+</html>
