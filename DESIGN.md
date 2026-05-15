@@ -1,14 +1,17 @@
 # Design
 
 ## Theme
-Physical Scene: An engineer standing on a train platform at 8:00 AM, looking at their phone in bright morning light, trying to quickly download the latest podcast episode before their commute begins.
+Physical Scene: An engineer late at night, reading a physical copy of "A Philosophy of Software Design" under a warm desk lamp. The interface should feel like an extension of that physical object—sophisticated, dark-mode first, and authoritative.
 
 ## Colors
-- **Strategy:** Restrained (with high-contrast accents for utility)
-- **Primary (Accent):** `oklch(65% 0.15 250)` (A technical, engaging blue)
-- **Neutral (Surface):** `oklch(98% 0.005 250)` (Light mode primary for high-visibility)
-- **Neutral (Text):** `oklch(20% 0.01 250)` (Deep indigo-tinted dark gray)
-- **Status (Done):** `oklch(70% 0.12 145)` (Clear, value-driven green)
+- **Strategy:** Sophisticated Dark (APoSD Book Palette)
+- **Background (Deep Navy):** `oklch(23% 0.05 264)`
+- **Surface (Dark Blue):** `oklch(28% 0.08 264)`
+- **Text (Off-White):** `oklch(93% 0.01 264)`
+- **Text Muted (Cool Gray):** `oklch(67% 0.04 264)`
+- **Accent (Warm Amber):** `oklch(73.5% 0.12 85)`
+- **Accent Secondary (Steel Blue):** `oklch(45% 0.08 264)`
+
 
 ## Typography
 - **Headline Font:** Inter (or system sans-serif) - Bold, tight tracking.
