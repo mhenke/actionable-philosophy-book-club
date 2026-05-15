@@ -9,6 +9,7 @@ A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This
 1. **Refresher Video (5-10 min):** "The Responsibility of Suffering" — why great modules take on complexity.
 2. **Discussion (30 min):** Identifying "pass-through methods" and "decorators" in our current codebase.
 3. **Wrap-up (Last 10 min):**
+   - **Future Planning:** Decide next meeting reading/topic.
    - **Action Item Review:** Book club book thank you cards.
 
 ## Discussion Points

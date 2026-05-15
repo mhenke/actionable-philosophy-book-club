@@ -9,7 +9,7 @@ A curated synthesis of the design trade-offs, philosophical tensions, and tactic
 1. **Refresher Video (5-10 min):** Watch the summary for current chapters.
 2. **Discussion (30 min):** Open debate using the slides as a guide.
 3. **Wrap-up (Last 10 min):**
-   - **Future Planning:** Decide next session topic.
+   - **Future Planning:** Decide next meeting reading/topic.
    - **Retrospective:** Continuous improvement of the club.
 
 ## Discussion Points

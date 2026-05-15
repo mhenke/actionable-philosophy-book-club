@@ -9,6 +9,7 @@ A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software 
 1. **Refresher Video (5-10 min):** "The Architects of Complexity" — visualizing the shallow vs. deep module gap.
 2. **Discussion (30 min):** Core debate on "Classitis" and why small functions aren't always clean.
 3. **Wrap-up (Last 10 min):**
+   - **Future Planning:** Decide next meeting reading/topic.
    - **Retrospective:** Moving beyond tactical tornados in our PRs.
 
 ## Discussion Points
