@@ -24,7 +24,6 @@
 - [Recordings](recordings/)
 
 ## Folder Contents
-- recordings/
-- resources/
-- slides/
-
+- [recordings/](recordings/)
+- [resources/](resources/)
+- [slides/](slides/)

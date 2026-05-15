@@ -24,10 +24,9 @@
 - [Recordings](recordings/)
 
 ## Folder Contents
-- 02-essential-questions.md
-- 02-non-obvious-insights.md
-- recordings/
-- resources/
-  - 02-Four-Strategies.png
-- slides/
-
+- [02-essential-questions.md](02-essential-questions.md)
+- [02-non-obvious-insights.md](02-non-obvious-insights.md)
+- [recordings/](recordings/)
+- [resources/](resources/)
+  - [02-Four-Strategies.png](resources/02-Four-Strategies.png)
+- [slides/](slides/)

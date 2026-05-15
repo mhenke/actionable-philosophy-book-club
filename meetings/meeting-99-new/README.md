@@ -51,13 +51,13 @@ Success is not completing the book. Success is:
 We are using this book to challenge assumptions about software design—not to enforce dogma. If it stops being useful, we stop.
 
 ## Folder Contents
-- recordings/
-  - Clean-Code-versus-Deep-Software-Design-deep-dive.m4a
-  - Ousterhout-versus-Uncle-Bob-on-software-design-critique.m4a
-  - Ousterhout-versus-Uncle-Bob-on-software-design-deep-dive.m4a
-- resources/
-  - martin-john-debate-infograph.png
-- slides/
-  - Architectural-Civil-War.pptx
-  - Software-Design-Noir.pptx
-  - The-Deep-Temple-Quest.pptx
+- [recordings/](recordings/)
+  - [Clean-Code-versus-Deep-Software-Design-deep-dive.m4a](recordings/Clean-Code-versus-Deep-Software-Design-deep-dive.m4a)
+  - [Ousterhout-versus-Uncle-Bob-on-software-design-critique.m4a](recordings/Ousterhout-versus-Uncle-Bob-on-software-design-critique.m4a)
+  - [Ousterhout-versus-Uncle-Bob-on-software-design-deep-dive.m4a](recordings/Ousterhout-versus-Uncle-Bob-on-software-design-deep-dive.m4a)
+- [resources/](resources/)
+  - [martin-john-debate-infograph.png](resources/martin-john-debate-infograph.png)
+- [slides/](slides/)
+  - [Architectural-Civil-War.pptx](slides/Architectural-Civil-War.pptx)
+  - [Software-Design-Noir.pptx](slides/Software-Design-Noir.pptx)
+  - [The-Deep-Temple-Quest.pptx](slides/The-Deep-Temple-Quest.pptx)
