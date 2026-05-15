@@ -55,7 +55,7 @@
             transform: scale(1.02);
         }
         
-        .tracking-book { letter-spacing: 0.4em; }
+        .tracking-book { letter-spacing: 0.15em; } /* Drastically reduced to prevent character breakage on small text */
         .text-accent { color: var(--accent); }
         .border-accent { border-color: var(--accent); }
 
@@ -93,10 +93,10 @@
         <header class="mb-32 flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-12">
             <div class="max-w-2xl">
                 <h1 class="text-7xl font-black tracking-tighter mb-6 italic leading-none">Actionable Philosophy</h1>
-                <p class="text-2xl opacity-40 serif font-medium">An engineering book club exploring the depth of <span class="text-white italic">software design</span> and AI-assisted craftsmanship.</p>
+                <p class="text-2xl opacity-80 text-[var(--text-muted)] serif font-medium">An engineering book club exploring the depth of <span class="text-white italic">software design</span> and AI-assisted craftsmanship.</p>
             </div>
             <div class="hidden md:block text-right">
-                <span class="text-[10px] font-black tracking-book opacity-20 block mb-2">ESTABLISHED</span>
+                <span class="text-[10px] font-black tracking-book opacity-80 block mb-2 text-[var(--text-muted)]">ESTABLISHED</span>
                 <span class="text-xl font-bold text-accent">APRIL 2026</span>
             </div>
         </header>
@@ -124,14 +124,14 @@
                     </div>
 
                     <div class="lg:col-span-2 space-y-8">
-                        <h3 class="text-[10px] font-black tracking-book opacity-20 uppercase">Available Materials</h3>
+                        <h3 class="text-[10px] font-black tracking-book opacity-80 uppercase text-[var(--text-muted)]">Available Materials</h3>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between p-5 bg-white/5 border-2 border-dashed border-white/10 rounded-2xl">
                                 <div class="flex items-center space-x-5">
-                                    <span class="text-2xl opacity-40">📊</span>
+                                    <span class="text-2xl opacity-60">📊</span>
                                     <div class="flex flex-col">
                                         <span class="text-sm font-bold text-gray-500 italic uppercase tracking-widest font-sans">Slides</span>
-                                        <span class="text-[8px] font-black tracking-widest text-accent/60 uppercase mt-1">Awaiting Signal</span>
+                                        <span class="text-[8px] font-black tracking-widest text-accent/80 uppercase mt-1">Awaiting Signal</span>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                     <span class="text-2xl opacity-60">🎬</span>
                                     <div class="flex flex-col">
                                         <span class="text-sm font-bold text-gray-500 italic uppercase tracking-widest font-sans">Video</span>
-                                        <span class="text-[8px] font-black tracking-widest text-accent/60 uppercase mt-1">Awaiting Signal</span>
+                                        <span class="text-[8px] font-black tracking-widest text-accent/80 uppercase mt-1">Awaiting Signal</span>
                                     </div>
                                 </div>
                             </div>
@@ -158,98 +158,69 @@
 
             <!-- Past Sessions Section -->
             <div>
-                <h3 class="text-[10px] font-black tracking-book opacity-70 mb-20 flex items-center text-[var(--text-muted)]">
+                <h3 class="text-[10px] font-black tracking-book opacity-80 mb-20 flex items-center text-[var(--text-muted)]">
                     <span class="mr-12 uppercase">THE ARCHIVE</span>
                     <div class="h-px bg-white/10 flex-grow"></div>
                 </h3>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-24">
-                    <!-- Meeting 02 -->
+                    <!-- Meeting 01 -->
                     <div class="group">
                         <div class="flex justify-between items-start mb-10 border-b border-white/5 pb-6">
                             <div>
-                                <span class="text-[9px] font-black tracking-book text-accent/50 uppercase block mb-2">SESSION 02</span>
-                                <h4 class="text-4xl font-black tracking-tight serif group-hover:text-accent transition-colors">Complexity Sinks</h4>
-                            </div>
-                            <span class="text-[9px] font-black bg-white/5 text-accent px-3 py-1 rounded-full uppercase tracking-widest border border-accent/20 shadow-lg shadow-accent/5">Verified</span>
-                        </div>
-                        <div class="space-y-8">
-                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <span class="text-sm font-bold opacity-20 flex items-center tracking-book font-sans uppercase italic">
-                                    <span class="mr-5 scale-125 opacity-30">🎬</span> Video Processing
-                                </span>
-                            </div>
-                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <span class="text-sm font-bold opacity-20 flex items-center tracking-book font-sans uppercase italic">
-                                    <span class="mr-5 scale-125 opacity-30">📊</span> Slides Uploading
-                                </span>
-                            </div>
-                            <a href="#p=meetings/meeting-02/README.md" class="text-[10px] font-black text-accent/40 hover:text-accent pt-4 block transition-all uppercase">VIEW SYNTHESIS &rarr;</a>
-                        </div>
-                    </div>
-
-                    <!-- Meeting 01 -->
-                    <div class="group border-l-0 md:border-l md:border-white/5 md:pl-24">
-                        <div class="flex justify-between items-start mb-10 border-b border-white/5 pb-6">
-                            <div>
-                                <span class="text-[9px] font-black tracking-book text-accent/50 uppercase block mb-2">SESSION 01</span>
+                                <span class="text-[9px] font-black tracking-book text-accent/80 uppercase block mb-2">SESSION 01</span>
                                 <h4 class="text-4xl font-black tracking-tight serif group-hover:text-accent transition-colors">Deep Systems</h4>
                             </div>
                             <span class="text-[9px] font-black bg-white/5 text-accent px-3 py-1 rounded-full uppercase tracking-widest border border-accent/20 shadow-lg shadow-accent/5">Verified</span>
                         </div>
                         <div class="space-y-8">
                             <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-sm font-bold opacity-40 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase tracking-book">
+                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
                                     <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">🎬</span> Video Recording
                                 </a>
-                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download class="opacity-20 hover:opacity-100 hover:text-accent transition-all p-2">
+                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                                 </a>
                             </div>
                             <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-sm font-bold opacity-40 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase tracking-book">
+                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
                                     <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">📊</span> Slide Deck
                                 </a>
-                                <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download class="opacity-20 hover:opacity-100 hover:text-accent transition-all p-2">
+                                <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                                 </a>
                             </div>
-                            <a href="#p=meetings/meeting-01/README.md" class="text-[10px] font-black text-accent/40 hover:text-accent pt-4 block transition-all uppercase">VIEW SYNTHESIS &rarr;</a>
+                            <a href="#p=meetings/meeting-01/README.md" class="text-[10px] font-black text-accent/80 hover:text-accent pt-4 block transition-all uppercase">VIEW SYNTHESIS &rarr;</a>
                         </div>
                     </div>
-                </div>
 
-                <!-- Meeting 00 Row -->
-                <div class="mt-24 pt-24 border-t border-white/5">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-24">
-                        <!-- Meeting 00 -->
-                        <div class="group">
-                            <div class="flex justify-between items-start mb-10 border-b border-white/5 pb-6">
-                                <div>
-                                    <span class="text-[9px] font-black tracking-book text-accent/50 uppercase block mb-2">SESSION 00</span>
-                                    <h4 class="text-4xl font-black tracking-tight serif group-hover:text-accent transition-colors">The Kickoff</h4>
-                                </div>
-                                <span class="text-[9px] font-black bg-white/5 text-accent px-3 py-1 rounded-full uppercase tracking-widest border border-accent/20 shadow-lg shadow-accent/5">Verified</span>
+                    <!-- Meeting 00 -->
+                    <div class="group border-l-0 md:border-l md:border-white/5 md:pl-24">
+                        <div class="flex justify-between items-start mb-10 border-b border-white/5 pb-6">
+                            <div>
+                                <span class="text-[9px] font-black tracking-book text-accent/80 uppercase block mb-2">SESSION 00</span>
+                                <h4 class="text-4xl font-black tracking-tight serif group-hover:text-accent transition-colors">The Kickoff</h4>
                             </div>
-                            <div class="space-y-8">
-                                <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                    <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-sm font-bold opacity-40 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase tracking-book">
-                                        <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">🎬</span> Video Recording
-                                    </a>
-                                    <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download class="opacity-20 hover:opacity-100 hover:text-accent transition-all p-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                                    </a>
-                                </div>
-                                <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
-                                    <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="text-sm font-bold opacity-70 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
-                                        <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">📊</span> Slide Deck
-                                    </a>
-                                    <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" download class="opacity-20 hover:opacity-100 hover:text-accent transition-all p-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                                    </a>
-                                </div>
-                                <a href="#p=meetings/meeting-00/README.md" class="text-[10px] font-black text-accent/40 hover:text-accent pt-4 block transition-all uppercase">VIEW SYNTHESIS &rarr;</a>
+                            <span class="text-[9px] font-black bg-white/5 text-accent px-3 py-1 rounded-full uppercase tracking-widest border border-accent/20 shadow-lg shadow-accent/5">Verified</span>
+                        </div>
+                        <div class="space-y-8">
+                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
+                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
+                                    <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">🎬</span> Video Recording
+                                </a>
+                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                                </a>
                             </div>
+                            <div class="flex items-center justify-between p-2 -mx-2 rounded-xl hover:bg-white/5 transition-all group/row">
+                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="text-sm font-bold opacity-80 group-hover/row:opacity-100 transition-all flex items-center font-sans uppercase text-[var(--text-muted)]">
+                                    <span class="mr-5 filter grayscale group-hover/row:grayscale-0 transition-all scale-125">📊</span> Slide Deck
+                                </a>
+                                <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" download class="opacity-60 hover:opacity-100 hover:text-accent transition-all p-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                                </a>
+                            </div>
+                            <a href="#p=meetings/meeting-00/README.md" class="text-[10px] font-black text-accent/80 hover:text-accent pt-4 block transition-all uppercase">VIEW SYNTHESIS &rarr;</a>
                         </div>
                     </div>
                 </div>
@@ -257,7 +228,7 @@
 
             <!-- Knowledge Section -->
             <div>
-                <h3 class="text-[10px] font-black tracking-book opacity-20 mb-16 flex items-center">
+                <h3 class="text-[10px] font-black tracking-book opacity-80 mb-16 flex items-center text-[var(--text-muted)]">
                     <span class="mr-12 uppercase">THE KNOWLEDGE BASE</span>
                     <div class="h-px bg-white/10 flex-grow"></div>
                 </h3>
@@ -265,17 +236,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-6 gap-16">
                     <!-- Meta Skill -->
                     <a href="#p=templates/prompts/README.md" class="md:col-span-3 card p-12 flex flex-col justify-center border-t-4 border-accent relative overflow-hidden group">
-                        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 group-hover:scale-150 transition-all duration-700">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 group-hover:scale-150 transition-all duration-700">
                             <span class="text-9xl">🤖</span>
                         </div>
                         <span class="text-[10px] font-black tracking-book text-accent uppercase mb-8 block">Project Infrastructure</span>
                         <h4 class="text-5xl font-black serif mb-6 italic leading-none">AI Prompt Library</h4>
-                        <p class="text-xl opacity-40 font-medium serif leading-relaxed">Standardized mental frameworks for distilling deep design insights through automated reasoners.</p>
+                        <p class="text-xl opacity-80 text-[var(--text-muted)] font-medium serif leading-relaxed">Standardized mental frameworks for distilling deep design insights through automated reasoners.</p>
                     </a>
                     
                     <!-- Inbox -->
                     <a href="#p=meetings/meeting-99-new/README.md" class="md:col-span-3 card p-12 flex flex-col justify-center border-t-4 border-orange-500/50 bg-orange-500/5 relative group overflow-hidden">
-                        <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 group-hover:scale-150 transition-all duration-700 text-orange-500">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-30 group-hover:scale-150 transition-all duration-700 text-orange-500">
                             <span class="text-9xl">📂</span>
                         </div>
                         <div class="flex justify-between items-start mb-8">
@@ -283,23 +254,23 @@
                             <span class="text-[9px] font-black font-sans bg-orange-500 text-black px-3 py-1 rounded-full animate-pulse shadow-2xl shadow-orange-500/20 uppercase tracking-widest">7 Items Queued</span>
                         </div>
                         <h4 class="text-5xl font-black serif mb-6 italic leading-none">The Inbox</h4>
-                        <p class="text-xl opacity-40 font-medium serif leading-relaxed text-orange-100">Unsorted discussion logs, raw assets, and emergent design philosophy waiting for modular synthesis.</p>
+                        <p class="text-xl opacity-80 text-orange-200 font-medium serif leading-relaxed">Unsorted discussion logs, raw assets, and emergent design philosophy waiting for modular synthesis.</p>
                     </a>
 
                     <!-- Docs List -->
                     <div class="md:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-12 border-t border-white/5 pt-16">
                         <a href="#p=docs/glossary.md" class="group flex items-center space-x-8">
-                            <span class="text-5xl opacity-20 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">📚</span>
+                            <span class="text-5xl opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">📚</span>
                             <div>
                                 <span class="text-2xl font-black serif block group-hover:text-accent transition-colors leading-none mb-2 italic">Glossary of Depth</span>
-                                <span class="text-[10px] font-black tracking-book opacity-40 uppercase font-sans text-[var(--text-muted)]">A Taxonomy of Complexity</span>
+                                <span class="text-[10px] font-black tracking-book opacity-80 uppercase font-sans text-[var(--text-muted)]">A Taxonomy of Complexity</span>
                             </div>
                         </a>
                         <a href="#p=docs/design-principles.md" class="group flex items-center space-x-8">
-                            <span class="text-5xl opacity-20 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">⚖️</span>
+                            <span class="text-5xl opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">⚖️</span>
                             <div>
                                 <span class="text-2xl font-black serif block group-hover:text-accent transition-colors leading-none mb-2 italic">Design Principles</span>
-                                <span class="text-[10px] font-black tracking-book opacity-20 uppercase font-sans">The Strategic Mandates</span>
+                                <span class="text-[10px] font-black tracking-book opacity-80 uppercase font-sans text-[var(--text-muted)]">The Strategic Mandates</span>
                             </div>
                         </a>
                     </div>
@@ -311,8 +282,8 @@
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
         <nav class="mb-24 flex items-center justify-between">
-            <a href="#" id="back-to-dashboard" class="text-[10px] font-black tracking-book uppercase opacity-30 hover:opacity-100 hover:text-accent transition-all">&larr; Back to Dashboard</a>
-            <span class="text-[10px] font-black tracking-book opacity-10 uppercase">APoSD Library</span>
+            <a href="#" id="back-to-dashboard" class="text-[10px] font-black tracking-book uppercase opacity-80 hover:opacity-100 hover:text-accent transition-all text-[var(--text-muted)]">&larr; Back to Dashboard</a>
+            <span class="text-[10px] font-black tracking-book opacity-80 uppercase text-[var(--text-muted)]">APoSD Library</span>
         </nav>
 
         <article id="markdown-content" class="prose max-w-none">
@@ -324,7 +295,7 @@
     </div>
 
     <footer class="mt-64 py-24 border-t border-white/5 text-center">
-        <p class="text-[10px] font-black tracking-book opacity-30 mb-10 uppercase text-[var(--text-muted)]">PRODUCED FOR THE ACTIONABLE PHILOSOPHY BOOK CLUB</p>
+        <p class="text-[10px] font-black tracking-book opacity-80 mb-10 uppercase text-[var(--text-muted)]">PRODUCED FOR THE ACTIONABLE PHILOSOPHY BOOK CLUB</p>
         <div class="flex items-center justify-center space-x-6">
             <div class="h-px w-16 bg-white/5"></div>
             <p class="text-[11px] font-black text-accent tracking-[0.5em] uppercase">Spare Time Excellence &bull; 2026</p>
@@ -375,7 +346,7 @@
                 content.innerHTML = `
                     <div class="text-center py-20">
                         <h2 class="text-4xl font-black serif text-accent mb-4 italic">Analysis Interrupted</h2>
-                        <p class="opacity-40 font-sans uppercase tracking-widest text-[10px]">The requested document could not be modularized: ${err.message}</p>
+                        <p class="opacity-80 font-sans uppercase tracking-widest text-[10px] text-[var(--text-muted)]">The requested document could not be modularized: ${err.message}</p>
                         <a href="#" class="btn btn-primary mt-8 font-sans">Return to Dashboard</a>
                     </div>
                 `;
@@ -411,55 +382,4 @@
         handleRoute();
     </script>
 </body>
-</html>
-</html>
-oute();
-    </script>
-</body>
-</html>
-</html>
-          <div class="text-center py-20">
-                        <h2 class="text-4xl font-black serif text-accent mb-4 italic">Analysis Interrupted</h2>
-                        <p class="opacity-40 font-sans uppercase tracking-widest text-[10px]">The requested document could not be modularized: ${err.message}</p>
-                        <a href="#" class="btn btn-primary mt-8 font-sans">Return to Dashboard</a>
-                    </div>
-                `;
-            } finally {
-                // End transition
-                reader.classList.remove('view-transitioning');
-            }
-        }
-
-        function handleRoute() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#p=')) {
-                const path = hash.substring(3);
-                loadPage(path);
-            } else {
-                reader.classList.add('view-transitioning');
-                setTimeout(() => {
-                    dashboard.classList.remove('hidden-view');
-                    reader.classList.add('hidden-view');
-                    dashboard.classList.remove('view-transitioning');
-                    window.scrollTo(0, 0);
-                }, 150);
-            }
-        }
-
-        window.addEventListener('hashchange', handleRoute);
-        document.getElementById('back-to-dashboard').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.location.hash = '';
-        });
-
-        // Initial route check
-        handleRoute();
-    </script>
-</body>
-</html>
-</html>
-oute();
-    </script>
-</body>
-</html>
 </html>
