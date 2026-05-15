@@ -3,7 +3,7 @@
 **Date:** April 29, 2026
 
 ## High-Level Summary
-Initial kickoff meeting to establish goals, distribute materials, and agree on the book club format.
+Initial kickoff meeting to establish goals, distribute materials, and align on a low-ceremony framework for exploring software design depth.
 
 ## Agenda
 - [x] **Introductions:** Getting to know the members.
