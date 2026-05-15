@@ -31,7 +31,7 @@
 *   *See full details in [02-non-obvious-insights.md](02-non-obvious-insights.md)*
 
 ## Action Items
-- [ ] 
+- [ ] Send thank you card for books
 
 ## Session Materials
 - [02-essential-questions.md](02-essential-questions.md)
