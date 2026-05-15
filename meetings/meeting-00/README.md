@@ -1,6 +1,6 @@
 # Meeting Notes: Kickoff & Introductions (Meeting 00)
 
-**Date:** 2026-05-15
+**Date:** April 15, 2026
 **Facilitator:** [Name]
 
 ## High-Level Summary

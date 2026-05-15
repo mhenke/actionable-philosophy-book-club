@@ -1,6 +1,6 @@
 # Meeting Notes: [Chapter/Topic] (Meeting 03)
 
-**Date:** [TBD]
+**Date:** May 27, 2026, Noon
 **Facilitator:** [Name]
 
 ## High-Level Summary
