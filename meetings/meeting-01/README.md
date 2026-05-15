@@ -19,11 +19,7 @@
 ## Action Items
 - [ ] 
 
-## Resources
-- [Slides](slides/01-Architecting-Deep-Systems.pptx)
-- [Recordings](recordings/01-The-Architects-of-Complexity.mp4)
-
-## Folder Contents
+## Session Materials
 - [01-essential-questions.md](01-essential-questions.md)
 - [01-non-obvious-insights.md](01-non-obvious-insights.md)
 - [recordings/](recordings/)

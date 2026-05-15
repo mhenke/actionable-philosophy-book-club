@@ -50,7 +50,7 @@ Success is not completing the book. Success is:
 ## Honest Positioning
 We are using this book to challenge assumptions about software design—not to enforce dogma. If it stops being useful, we stop.
 
-## Folder Contents
+## Session Materials
 - [recordings/](recordings/)
   - [Clean-Code-versus-Deep-Software-Design-deep-dive.m4a](recordings/Clean-Code-versus-Deep-Software-Design-deep-dive.m4a)
   - [Ousterhout-versus-Uncle-Bob-on-software-design-critique.m4a](recordings/Ousterhout-versus-Uncle-Bob-on-software-design-critique.m4a)

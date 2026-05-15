@@ -16,11 +16,7 @@ Initial kickoff meeting to establish goals, distribute materials, and agree on t
 - Discussion on cadence and frequency.
 - Agreement on "low-ceremony" approach.
 
-## Resources
-- [Slides](slides/00-Strategic-Design-for-the-AI-Era.pptx)
-- [Recordings](recordings/00-The-Complexity-Governor.mp4)
-
-## Folder Contents
+## Session Materials
 - [recordings/](recordings/)
   - [00-The-Complexity-Governor.mp4](recordings/00-The-Complexity-Governor.mp4)
 - [resources/](resources/)

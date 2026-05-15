@@ -19,11 +19,7 @@
 ## Action Items
 - [ ] 
 
-## Resources
-- [Slides](slides/)
-- [Recordings](recordings/)
-
-## Folder Contents
+## Session Materials
 - [02-essential-questions.md](02-essential-questions.md)
 - [02-non-obvious-insights.md](02-non-obvious-insights.md)
 - [recordings/](recordings/)

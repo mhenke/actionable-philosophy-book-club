@@ -19,11 +19,7 @@
 ## Action Items
 - [ ] 
 
-## Resources
-- [Slides](slides/)
-- [Recordings](recordings/)
-
-## Folder Contents
+## Session Materials
 - [recordings/](recordings/)
 - [resources/](resources/)
 - [slides/](slides/)
