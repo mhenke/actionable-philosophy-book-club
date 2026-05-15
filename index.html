@@ -14,8 +14,8 @@
             --surface: oklch(98% 0.01 85);        /* Warm Paper #FCFAF7 */
             --surface-elevated: oklch(96% 0.01 85); /* Slightly darker paper #F5F2ED */
             --text-primary: oklch(25% 0.02 264);   /* Ink Black #1A1C21 */
-            --text-muted: oklch(55% 0.02 264);     /* Graphite Gray #70757D */
-            --accent: oklch(65% 0.15 85);          /* Deep Amber/Gold #B8860B */
+            --text-muted: oklch(50% 0.02 264);     /* Darker Graphite for A11y */
+            --accent: oklch(55% 0.12 85);          /* Darkened Gold #8B6B00 for 4.5:1 contrast */
             --border: oklch(0% 0 0 / 0.1);         /* Thin Ink Line */
         }
         body {
@@ -23,6 +23,7 @@
             background-color: var(--surface);
             color: var(--text-primary);
             line-height: 1.7;
+            font-size: 18px; /* Slightly larger for journal feel */
             -webkit-font-smoothing: antialiased;
         }
         h1, h2, h3, h4, .sans { font-family: 'IBM Plex Sans', sans-serif; }
@@ -41,13 +42,14 @@
         .btn {
             display: inline-flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 4px;
             font-weight: 600;
             font-family: 'IBM Plex Sans', sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             transition: all 0.2s;
+            cursor: pointer;
         }
         .btn-primary {
             background-color: var(--text-primary);
@@ -67,67 +69,77 @@
         a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
         /* Reader Styles */
-        .prose h1 { font-size: clamp(3rem, 10vw, 5rem); font-weight: 800; margin-bottom: 2rem; line-height: 1; letter-spacing: -0.04em; color: var(--text-primary); }
-        .prose h2 { font-size: 2rem; font-weight: 700; margin-top: 4rem; margin-bottom: 1.5rem; font-family: 'IBM Plex Sans', sans-serif; color: var(--text-primary); border-top: 2px solid var(--text-primary); pt-8; }
-        .prose h3 { font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 1rem; font-family: 'IBM Plex Sans', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
-        .prose p { margin-bottom: 1.8rem; font-size: 1.2rem; }
-        .prose blockquote { border-left: 2px solid var(--accent); padding-left: 2.5rem; font-style: italic; margin: 4rem 0; color: var(--text-primary); font-size: 1.4rem; }
+        .prose h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; margin-bottom: 2rem; line-height: 1.1; letter-spacing: -0.04em; color: var(--text-primary); }
+        .prose h2 { font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1.5rem; font-family: 'IBM Plex Sans', sans-serif; color: var(--text-primary); border-top: 1px solid var(--border); padding-top: 2rem; }
+        .prose h3 { font-size: 1.1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; font-family: 'IBM Plex Sans', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; }
+        .prose p { margin-bottom: 1.5rem; font-size: 1.125rem; }
+        .prose blockquote { border-left: 3px solid var(--accent); padding-left: 2rem; font-style: italic; margin: 3rem 0; color: var(--text-muted); font-size: 1.25rem; }
         .prose a { color: var(--text-primary) !important; text-decoration: none; border-bottom: 2px solid var(--accent); font-weight: 600; }
         .prose a:hover { background-color: oklch(95% 0.1 85 / 0.1); }
+        .prose code { background: var(--surface-elevated); padding: 0.2rem 0.4rem; border-radius: 4px; font-size: 0.85em; font-family: 'IBM Plex Mono', monospace; border: 1px solid var(--border); }
         
         .hidden-view { display: none !important; }
+
+        /* Loading Skeleton */
+        .skeleton { background: linear-gradient(90deg, var(--surface-elevated) 25%, var(--surface) 50%, var(--surface-elevated) 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
-<body class="p-6 md:p-24 max-w-4xl mx-auto"> <!-- Centered, narrower reading column -->
+<body class="p-6 md:p-16 lg:p-24 max-w-5xl mx-auto">
 
     <!-- Dashboard View -->
     <div id="dashboard-view">
-        <header class="mb-32 border-b-4 border-black pb-12">
+        <header class="mb-24 border-b-4 border-black pb-12">
             <div class="max-w-3xl">
-                <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-4 block sans opacity-60">Proceedings of the</span>
-                <h1 class="text-7xl font-bold tracking-tighter mb-8 leading-none sans uppercase">Actionable<br>Philosophy</h1>
-                <p class="text-2xl serif italic leading-relaxed text-[var(--text-muted)]">A methodical inquiry into the depth of software design and the cognitive load of AI-assisted systems.</p>
+                <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-4 block sans text-[var(--text-muted)]">Proceedings of the</span>
+                <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-8 leading-none sans uppercase">Actionable<br>Philosophy</h1>
+                <p class="text-xl md:text-2xl serif italic leading-relaxed text-[var(--text-muted)]">A methodical inquiry into the depth of software design and the cognitive load of AI-assisted systems.</p>
             </div>
         </header>
 
-        <main class="space-y-48">
+        <main class="space-y-32 md:space-y-48">
             <!-- Meeting 02 (Next) -->
             <section>
                 <div class="flex items-center space-x-6 mb-12">
-                    <span class="px-3 py-1 bg-black text-white text-[9px] font-bold uppercase tracking-widest sans">Vol. 01 / No. 02</span>
+                    <span class="px-3 py-1 bg-black text-white text-[9px] font-bold uppercase tracking-widest sans whitespace-nowrap">Vol. 01 / No. 02</span>
                     <div class="h-px bg-black/10 flex-grow"></div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest sans text-accent">Next Session</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest sans text-accent whitespace-nowrap">Next Session</span>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
                     <div class="lg:col-span-8">
-                        <h2 class="text-6xl font-bold tracking-tighter mb-12 sans leading-tight">Complexity Sinks: <br>The Strategic Module</h2>
+                        <div class="flex items-center space-x-4 mb-4 text-[9px] font-bold sans text-[var(--text-muted)] uppercase tracking-widest">
+                            <span>Cite as: APoSD.2026.02</span>
+                            <span>•</span>
+                            <span>Est. Read: 12 min</span>
+                        </div>
+                        <h2 class="text-5xl md:text-7xl font-bold tracking-tighter mb-12 sans leading-tight">Complexity Sinks: <br>The Strategic Module</h2>
                         
-                        <blockquote class="mb-16">
+                        <blockquote class="mb-16 border-l-4 border-accent pl-8 md:pl-12">
                             “A well-designed module is a <span class="text-accent not-italic font-bold">complexity sink</span>: it takes on internal implementation suffering so the rest of the system can stay simple.”
                         </blockquote>
 
-                        <a href="#p=meetings/meeting-02/README.md" class="btn btn-primary text-sm group">
+                        <a href="#p=meetings/meeting-02/README.md" class="btn btn-primary text-sm group w-full md:w-auto justify-center shadow-lg shadow-black/5 hover:shadow-xl transition-all">
                             Full Discussion Agenda
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 ml-3"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                         </a>
                     </div>
 
-                    <div class="lg:col-span-4 border-l border-black/5 pl-12 space-y-8">
+                    <div class="lg:col-span-4 border-l-0 lg:border-l border-black/5 lg:pl-12 pt-12 lg:pt-0 space-y-8">
                         <h3 class="text-[10px] font-bold tracking-widest uppercase sans opacity-50">Reference Materials</h3>
-                        <div class="space-y-6">
-                            <div class="flex items-center space-x-4 group cursor-help">
-                                <span class="text-xl opacity-40">📊</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
+                            <div class="flex items-center space-x-4 p-4 bg-white/50 border border-black/5 rounded group cursor-help transition-all hover:border-accent/30">
+                                <span class="text-2xl">📊</span>
                                 <div>
                                     <span class="block text-xs font-bold uppercase sans leading-none mb-1">Slide Deck</span>
-                                    <span class="text-[9px] font-medium italic opacity-60">Awaiting Signal</span>
+                                    <span class="text-[9px] font-medium italic text-[var(--text-muted)]">Awaiting Signal</span>
                                 </div>
                             </div>
-                            <div class="flex items-center space-x-4 group cursor-help">
-                                <span class="text-xl opacity-40">🎬</span>
+                            <div class="flex items-center space-x-4 p-4 bg-white/50 border border-black/5 rounded group cursor-help transition-all hover:border-accent/30">
+                                <span class="text-2xl">🎬</span>
                                 <div>
                                     <span class="block text-xs font-bold uppercase sans leading-none mb-1">Video Record</span>
-                                    <span class="text-[9px] font-medium italic opacity-60">Awaiting Signal</span>
+                                    <span class="text-[9px] font-medium italic text-[var(--text-muted)]">Awaiting Signal</span>
                                 </div>
                             </div>
                         </div>
@@ -139,43 +151,59 @@
             <div>
                 <h3 class="text-[10px] font-bold tracking-widest uppercase sans border-b border-black pb-4 mb-16">The Archive</h3>
                 
-                <div class="space-y-16">
+                <div class="space-y-12">
                     <!-- Meeting 01 -->
-                    <div class="flex flex-col md:flex-row md:items-start gap-8 group">
-                        <span class="text-[10px] font-bold sans w-24 opacity-40 pt-2">01 / 05 / 26</span>
+                    <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 group border-b border-black/5 pb-12">
+                        <div class="flex items-center justify-between md:flex-col md:items-start md:w-32">
+                            <span class="text-[10px] font-bold sans text-[var(--text-muted)]">01 / 05 / 26</span>
+                            <span class="text-[8px] font-bold sans opacity-30 uppercase tracking-widest md:mt-2">APoSD.2026.01</span>
+                        </div>
                         <div class="flex-grow">
-                            <div class="flex justify-between items-baseline mb-4">
-                                <h4 class="text-3xl font-bold sans group-hover:text-accent transition-colors">Deep Systems</h4>
-                                <span class="text-[9px] font-bold sans uppercase tracking-widest opacity-30">Peer Verified</span>
+                            <div class="flex justify-between items-baseline mb-6">
+                                <h4 class="text-3xl md:text-4xl font-bold sans group-hover:text-accent transition-colors">Deep Systems</h4>
+                                <span class="hidden md:inline text-[9px] font-bold sans uppercase tracking-widest text-[var(--text-muted)]">Peer Verified</span>
                             </div>
-                            <div class="flex flex-wrap gap-x-8 gap-y-4">
-                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
-                                    <span class="mr-2">🎬</span> Video Recording
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="p-4 bg-white/50 border border-black/5 rounded text-[10px] font-bold uppercase sans hover:bg-white hover:border-accent flex items-center justify-between transition-all">
+                                    <span class="flex items-center"><span class="mr-3">🎬</span> Video</span>
+                                    <span class="text-[var(--text-muted)] text-[9px]">42 min</span>
                                 </a>
-                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
-                                    <span class="mr-2">📊</span> Slide Deck
+                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="p-4 bg-white/50 border border-black/5 rounded text-[10px] font-bold uppercase sans hover:bg-white hover:border-accent flex items-center justify-between transition-all">
+                                    <span class="flex items-center"><span class="mr-3">📊</span> Slides</span>
+                                    <span class="text-[var(--text-muted)] text-[9px]">12MB</span>
                                 </a>
-                                <a href="#p=meetings/meeting-01/README.md" class="text-[10px] font-bold uppercase sans text-accent">View Synthesis &rarr;</a>
+                                <a href="#p=meetings/meeting-01/README.md" class="p-4 bg-white/50 border border-accent/20 rounded text-[10px] font-bold uppercase sans text-accent hover:bg-accent hover:text-white flex items-center justify-between transition-all">
+                                    <span>Read Synthesis</span>
+                                    <span>&rarr;</span>
+                                </a>
                             </div>
                         </div>
                     </div>
 
                     <!-- Meeting 00 -->
-                    <div class="flex flex-col md:flex-row md:items-start gap-8 group">
-                        <span class="text-[10px] font-bold sans w-24 opacity-40 pt-2">29 / 04 / 26</span>
+                    <div class="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 group border-b border-black/5 pb-12">
+                        <div class="flex items-center justify-between md:flex-col md:items-start md:w-32">
+                            <span class="text-[10px] font-bold sans text-[var(--text-muted)]">29 / 04 / 26</span>
+                            <span class="text-[8px] font-bold sans opacity-30 uppercase tracking-widest md:mt-2">APoSD.2026.00</span>
+                        </div>
                         <div class="flex-grow">
-                            <div class="flex justify-between items-baseline mb-4">
-                                <h4 class="text-3xl font-bold sans group-hover:text-accent transition-colors">The Kickoff</h4>
-                                <span class="text-[9px] font-bold sans uppercase tracking-widest opacity-30">Peer Verified</span>
+                            <div class="flex justify-between items-baseline mb-6">
+                                <h4 class="text-3xl md:text-4xl font-bold sans group-hover:text-accent transition-colors">The Kickoff</h4>
+                                <span class="hidden md:inline text-[9px] font-bold sans uppercase tracking-widest text-[var(--text-muted)]">Peer Verified</span>
                             </div>
-                            <div class="flex flex-wrap gap-x-8 gap-y-4">
-                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
-                                    <span class="mr-2">🎬</span> Video Recording
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="p-4 bg-white/50 border border-black/5 rounded text-[10px] font-bold uppercase sans hover:bg-white hover:border-accent flex items-center justify-between transition-all">
+                                    <span class="flex items-center"><span class="mr-3">🎬</span> Video</span>
+                                    <span class="text-[var(--text-muted)] text-[9px]">28 min</span>
                                 </a>
-                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="text-[10px] font-bold uppercase sans opacity-60 hover:opacity-100 flex items-center">
-                                    <span class="mr-2">📊</span> Slide Deck
+                                <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="p-4 bg-white/50 border border-black/5 rounded text-[10px] font-bold uppercase sans hover:bg-white hover:border-accent flex items-center justify-between transition-all">
+                                    <span class="flex items-center"><span class="mr-3">📊</span> Slides</span>
+                                    <span class="text-[var(--text-muted)] text-[9px]">8MB</span>
                                 </a>
-                                <a href="#p=meetings/meeting-00/README.md" class="text-[10px] font-bold uppercase sans text-accent">View Synthesis &rarr;</a>
+                                <a href="#p=meetings/meeting-00/README.md" class="p-4 bg-white/50 border border-accent/20 rounded text-[10px] font-bold uppercase sans text-accent hover:bg-accent hover:text-white flex items-center justify-between transition-all">
+                                    <span>Read Synthesis</span>
+                                    <span>&rarr;</span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -188,28 +216,28 @@
                     <h3 class="text-[10px] font-bold tracking-widest uppercase sans mb-8">Infrastructure</h3>
                     <div class="space-y-12">
                         <a href="#p=templates/prompts/README.md" class="block group">
-                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic">AI Prompt Library</h4>
-                            <p class="text-sm opacity-60 serif leading-relaxed">Standardized mental frameworks for distilling deep design insights through automated reasoners.</p>
+                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic transition-colors">AI Prompt Library</h4>
+                            <p class="text-sm text-[var(--text-muted)] serif leading-relaxed">Standardized mental frameworks for distilling deep design insights through automated reasoners.</p>
                         </a>
                         <a href="#p=docs/glossary.md" class="block group">
-                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic">Glossary of Depth</h4>
-                            <p class="text-sm opacity-60 serif leading-relaxed">A rigorous taxonomy of software complexity and modular boundaries.</p>
+                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic transition-colors">Glossary of Depth</h4>
+                            <p class="text-sm text-[var(--text-muted)] serif leading-relaxed">A rigorous taxonomy of software complexity and modular boundaries.</p>
                         </a>
                     </div>
                 </div>
                 <div>
                     <h3 class="text-[10px] font-bold tracking-widest uppercase sans mb-8">Current Research</h3>
                     <div class="space-y-12">
-                        <a href="#p=meetings/meeting-99-new/README.md" class="block group p-6 bg-accent/5 border border-accent/20 rounded">
+                        <a href="#p=meetings/meeting-99-new/README.md" class="block group p-6 bg-accent/5 border border-accent/20 rounded hover:bg-accent/10 transition-all">
                             <div class="flex justify-between items-start mb-2">
                                 <h4 class="text-2xl font-bold sans group-hover:text-accent italic">The Inbox</h4>
-                                <span class="text-[8px] font-bold sans bg-accent text-white px-2 py-0.5 rounded">7 NEW</span>
+                                <span class="text-[8px] font-bold sans bg-accent text-white px-2 py-0.5 rounded shadow-sm">7 NEW</span>
                             </div>
-                            <p class="text-sm opacity-60 serif leading-relaxed">Unsorted discussion logs and emergent design philosophy waiting for modular synthesis.</p>
+                            <p class="text-sm text-[var(--text-muted)] serif leading-relaxed">Unsorted discussion logs and emergent design philosophy waiting for modular synthesis.</p>
                         </a>
                         <a href="#p=docs/design-principles.md" class="block group">
-                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic">Strategic Mandates</h4>
-                            <p class="text-sm opacity-60 serif leading-relaxed">The immutable principles governing our technical decision-making.</p>
+                            <h4 class="text-2xl font-bold sans group-hover:text-accent mb-2 italic transition-colors">Strategic Mandates</h4>
+                            <p class="text-sm text-[var(--text-muted)] serif leading-relaxed">The immutable principles governing our technical decision-making.</p>
                         </a>
                     </div>
                 </div>
@@ -219,9 +247,11 @@
 
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
-        <nav class="mb-32 flex items-center justify-between border-b border-black/10 pb-8">
-            <a href="#" id="back-to-dashboard" class="text-[10px] font-bold tracking-widest uppercase sans opacity-40 hover:opacity-100 transition-all">&larr; Dashboard</a>
-            <span class="text-[10px] font-bold tracking-[0.3em] uppercase sans opacity-20">Proceedings / Vol. 01</span>
+        <nav class="mb-24 flex items-center justify-between border-b border-black/10 pb-8">
+            <a href="#" id="back-to-dashboard" class="text-[10px] font-bold tracking-widest uppercase sans text-[var(--text-muted)] hover:text-accent transition-all flex items-center">
+                <span class="mr-2">&larr;</span> Dashboard
+            </a>
+            <span class="text-[10px] font-bold tracking-[0.3em] uppercase sans opacity-20 hidden md:inline">Proceedings / Vol. 01</span>
         </nav>
 
         <article id="markdown-content" class="prose max-w-none">
@@ -230,8 +260,11 @@
     </div>
 
     <footer class="mt-64 pt-24 border-t border-black/10 flex flex-col md:flex-row justify-between items-center gap-8">
-        <p class="text-[10px] font-bold tracking-widest uppercase sans opacity-30">Actionable Philosophy Book Club &bull; 2026</p>
-        <p class="text-[10px] font-bold tracking-[0.5em] uppercase sans text-accent">Spare Time Excellence</p>
+        <p class="text-[10px] font-bold tracking-widest uppercase sans text-[var(--text-muted)]">Actionable Philosophy Book Club &bull; 2026</p>
+        <div class="flex items-center space-x-4">
+            <div class="h-px w-8 bg-black/10"></div>
+            <p class="text-[10px] font-bold tracking-[0.5em] uppercase sans text-accent">Spare Time Excellence</p>
+        </div>
     </footer>
 
     <script>
@@ -251,6 +284,19 @@
             reader.classList.remove('hidden-view');
             window.scrollTo(0, 0);
 
+            // Loading Skeleton
+            content.innerHTML = `
+                <div class="space-y-8 animate-pulse">
+                    <div class="h-20 w-3/4 skeleton rounded"></div>
+                    <div class="space-y-4">
+                        <div class="h-4 w-full skeleton rounded"></div>
+                        <div class="h-4 w-5/6 skeleton rounded"></div>
+                        <div class="h-4 w-4/6 skeleton rounded"></div>
+                    </div>
+                    <div class="h-64 w-full skeleton rounded"></div>
+                </div>
+            `;
+
             try {
                 const response = await fetch(path);
                 if (!response.ok) throw new Error('File not found');
@@ -268,7 +314,13 @@
                 });
 
             } catch (err) {
-                content.innerHTML = `<h2 class='sans text-accent italic'>Error: ${err.message}</h2>`;
+                content.innerHTML = `
+                    <div class="py-20 text-center">
+                        <h2 class="sans text-accent italic text-4xl mb-4">Analysis Interrupted</h2>
+                        <p class="sans uppercase tracking-widest text-[10px] opacity-60">The requested document could not be modularized: ${err.message}</p>
+                        <a href="#" class="btn btn-primary mt-8 inline-flex">Return to Dashboard</a>
+                    </div>
+                `;
             }
         }
 
