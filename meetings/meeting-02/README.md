@@ -3,7 +3,7 @@
 **Date:** May 27, 2026
 
 ## High-Level Summary
-A deep dive into Chapters 4, 5, and 6 of "A Philosophy of Software Design." This session focuses on the anatomy of "Deep Modules"—architectural complexity sinks that take on internal suffering to provide simple, powerful interfaces for the rest of the system.
+A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This session focuses on the anatomy of "Deep Modules"—architectural complexity sinks that take on internal suffering to provide simple, powerful interfaces for the rest of the system.
 
 ## Agenda (60 Minutes)
 1. **Refresher Video (5-10 min):** "The Responsibility of Suffering" — why great modules take on complexity.

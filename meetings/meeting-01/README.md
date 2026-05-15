@@ -3,7 +3,7 @@
 **Date:** May 13, 2026
 
 ## High-Level Summary
-A foundational deep dive into Chapters 1 and 2 of "A Philosophy of Software Design." This session explored the "Complexity Waterfall"—identifying the symptoms of unknown unknowns and cognitive load—and established the critical distinction between tactical speed and strategic depth.
+A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software Design." This session explored the "Complexity Waterfall"—identifying the symptoms of unknown unknowns and cognitive load—and established the critical distinction between tactical speed and strategic depth.
 
 ## Agenda (60 Minutes)
 1. **Refresher Video (5-10 min):** "The Architects of Complexity" — visualizing the shallow vs. deep module gap.

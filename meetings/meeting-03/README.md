@@ -1,9 +1,9 @@
-# Meeting 03: Layered Abstractions
+# Meeting 03: [Topic TBD]
 
-**Date:** June 10, 2026
+**Date:** TBD
 
 ## High-Level Summary
-A strategic exploration of Chapters 7, 8, and 9 of "A Philosophy of Software Design." This session investigates the mechanics of Layered Abstractions—identifying red flags like "pass-through methods" and defining how different layers must provide fundamentally different abstractions.
+A curated synthesis of the design trade-offs, philosophical tensions, and tactical takeaways surfaced during this session.
 
 ## Agenda (60 Minutes)
 1. **Refresher Video (5-10 min):** Watch the short summary/refresher video for the current chapters.
