@@ -82,4 +82,44 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#markdown-content')).toHaveAttribute('aria-busy', 'false');
     });
 
+    test('reader status announces loaded and unavailable states', async ({ page }) => {
+        await page.route('**/meetings/meeting-01/README.md', route =>
+            route.fulfill({ body: '# Loaded' })
+        );
+
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForSelector('#markdown-content h1');
+        await expect(page.locator('#reader-status')).toHaveText('Document loaded.');
+
+        await page.route('**/meetings/meeting-00/README.md', route =>
+            route.fulfill({ status: 404, body: '' })
+        );
+        await page.goto('/#p=meetings/meeting-00/README.md');
+        await page.waitForLoadState('networkidle');
+        await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
+    });
+
+    test('card active state does not add scale transform on link press', async ({ page }) => {
+        await page.goto('/');
+
+        const hasCardActiveScale = await page.evaluate(() => {
+            for (const sheet of Array.from(document.styleSheets)) {
+                let rules;
+                try {
+                    rules = sheet.cssRules;
+                } catch {
+                    continue;
+                }
+                for (const rule of Array.from(rules)) {
+                    if (rule.selectorText === '.card:active' && rule.style.transform.includes('scale')) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+
+        expect(hasCardActiveScale).toBe(false);
+    });
+
 });

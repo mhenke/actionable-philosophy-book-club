@@ -39,6 +39,9 @@
             --wash-5: rgba(114,201,168,0.04);
             --wash-2-border: rgba(43,108,176,0.12);
             --wash-3-border: rgba(75,163,199,0.12);
+            --wash-2-strong-border: rgba(43,108,176,0.15);
+            --wash-2-icon: rgba(43,108,176,0.10);
+            --wash-3-icon: rgba(75,163,199,0.10);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -97,7 +100,6 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 24px -8px rgba(75,163,199,0.2);
         }
-        .card:active { transform: scale(0.99); }
 
         .btn {
             display: inline-flex;
@@ -230,7 +232,7 @@
 
         @media (prefers-reduced-motion: reduce) {
             .card, .btn, a { transition: none !important; }
-            .card:hover, .card:active { transform: none; }
+            .card:hover { transform: none; }
             .btn-primary:hover, .btn-primary:active { transform: none; }
             .asset-link:active, .asset-dl:active { transform: none; opacity: 1; }
         }
@@ -260,13 +262,13 @@
                     <span class="shrink-0 text-[9px] font-bold uppercase tracking-widest bg-spectrum-2 text-white px-3 py-1">Upcoming</span>
                 </div>
 
-                <div class="bg-[rgba(43,108,176,0.06)] border border-[rgba(43,108,176,0.15)] p-5 mb-7">
+                <div class="border p-5 mb-7" style="background: var(--wash-2); border-color: var(--wash-2-strong-border);">
                     <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
                     <p class="text-lg leading-snug italic text-banner">"A well-designed module is a <strong class="not-italic font-bold">complexity sink</strong>: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
                 </div>
 
                 <div class="space-y-5">
-                    <a href="#p=meetings/meeting-02/README.md" class="btn btn-primary w-full py-4 text-[0.9375rem]">
+                    <a href="#p=meetings/meeting-02/README.md" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]" data-prefetch-path="meetings/meeting-02/README.md">
                         View Agenda &amp; Discussion Guide
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                     </a>
@@ -274,15 +276,15 @@
                     <div>
                         <p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted mb-3">Upcoming Materials</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="flex items-center gap-3 p-4 bg-[rgba(43,108,176,0.04)] border" style="border-color: var(--wash-2-border)">
-                                <span class="icon-pill bg-[rgba(43,108,176,0.1)]" aria-hidden="true">📊</span>
+                            <div class="flex items-center gap-3 p-4 border" style="background: var(--wash-2); border-color: var(--wash-2-border);">
+                                <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true">📊</span>
                                 <div>
                                     <p class="text-sm font-semibold text-muted">Slide Deck</p>
                                     <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready before meeting</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3 p-4 bg-[rgba(75,163,199,0.04)] border" style="border-color: var(--wash-3-border)">
-                                <span class="icon-pill bg-[rgba(75,163,199,0.1)]" aria-hidden="true">🎬</span>
+                            <div class="flex items-center gap-3 p-4 border" style="background: var(--wash-3); border-color: var(--wash-3-border);">
+                                <span class="icon-pill" style="background: var(--wash-3-icon);" aria-hidden="true">🎬</span>
                                 <div>
                                     <p class="text-sm font-semibold text-muted">Video Recording</p>
                                     <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready after meeting</p>
@@ -358,6 +360,7 @@
         const dashboard = document.getElementById('dashboard-view');
         const reader    = document.getElementById('reader-view');
         const content   = document.getElementById('markdown-content');
+        const readerStatus = document.getElementById('reader-status');
         const mdCache   = new Map();  // Session markdown cache
 
         // Meeting data manifest
@@ -414,10 +417,26 @@
                 .then(text => {
                     mdCache.set(path, text);
                 })
-                .catch(err => {
+                .catch(() => {
                     // Silent fail: prefetch is an optimization, not critical
                     // User will just experience normal fetch latency if they click
                 });
+        }
+
+        function attachPrefetchListeners() {
+            // Attach prefetch listeners to all elements with data-prefetch-path attribute
+            document.querySelectorAll('[data-prefetch-path]').forEach(element => {
+                element.addEventListener('pointerenter', () => {
+                    const path = element.getAttribute('data-prefetch-path');
+                    if (path && isSafeRepoPath(path)) {
+                        prefetchMarkdown(path);
+                    }
+                });
+            });
+        }
+
+        function hasPlaceholderAssetPath(path) {
+            return /FILENAME/i.test(path);
         }
 
         function renderArchiveCards() {
@@ -433,8 +452,17 @@
                 'spectrum-3': '#4BA3C7',
             };
             
-            MEETINGS.filter(m => m.status === 'done').forEach(meeting => {
+            MEETINGS
+                .filter(m =>
+                    m.status === 'done' &&
+                    !hasPlaceholderAssetPath(m.video.file) &&
+                    !hasPlaceholderAssetPath(m.slides.file)
+                )
+                .forEach(meeting => {
                 const colorValue = colorMap[meeting.color];
+                const metadataColor = (meeting.color === 'spectrum-1' || meeting.color === 'spectrum-2')
+                    ? colorValue
+                    : colorMap['spectrum-2'];
                 
                 const card = document.createElement('div');
                 card.className = 'card p-6 border-t-2';
@@ -444,7 +472,7 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-3">
                         <div>
-                            <span class="text-[9px] font-semibold uppercase tracking-[0.25em] block mb-1" style="color: ${colorValue}">${meeting.session} &bull; ${meeting.date}</span>
+                            <span class="text-[9px] font-semibold uppercase tracking-[0.25em] block mb-1" style="color: ${metadataColor}">${meeting.session} &bull; ${meeting.date}</span>
                             <h4 class="text-xl font-bold tracking-tight">${meeting.title}</h4>
                         </div>
                         <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color: var(--banner)">Done</span>
@@ -471,16 +499,6 @@
                 `;
                 
                 archiveContainer.appendChild(card);
-            });
-            
-            // Attach prefetch listeners to meeting notes links
-            document.querySelectorAll('.meeting-notes-link[data-prefetch-path]').forEach(link => {
-                link.addEventListener('pointerenter', () => {
-                    const path = link.getAttribute('data-prefetch-path');
-                    if (path && isSafeRepoPath(path)) {
-                        prefetchMarkdown(path);
-                    }
-                });
             });
         }
 
@@ -513,6 +531,7 @@
             reader.classList.remove('hidden-view');
             reader.focus({ preventScroll: true });
             window.scrollTo(0, 0);
+            readerStatus.textContent = 'Loading document...';
             content.setAttribute('aria-busy', 'true');
             content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading&hellip;</div>';
 
@@ -552,6 +571,7 @@
                         }
                     }
                 });
+                readerStatus.textContent = 'Document loaded.';
             } catch (err) {
                 console.warn('loadPage failed:', err);
                 const wrap = document.createElement('div');
@@ -561,6 +581,7 @@
                 p.textContent = 'Document unavailable.';
                 wrap.appendChild(p);
                 content.replaceChildren(wrap);
+                readerStatus.textContent = 'Document unavailable.';
             } finally {
                 content.setAttribute('aria-busy', 'false');
             }
@@ -569,6 +590,7 @@
         function showDashboard() {
             dashboard.classList.remove('hidden-view');
             reader.classList.add('hidden-view');
+            readerStatus.textContent = '';
             window.scrollTo(0, 0);
         }
 
@@ -588,6 +610,8 @@
 
         // Expose for tests
         window.isSafeRepoPath = isSafeRepoPath;
+        window.prefetchMarkdown = prefetchMarkdown;
+        window.mdCache = mdCache;
 
         window.addEventListener('hashchange', handleRoute);
         document.getElementById('back-to-dashboard').addEventListener('click', e => {
@@ -596,6 +620,7 @@
         });
 
         renderArchiveCards();
+        attachPrefetchListeners();
 
         // Apply will-change dynamically on card hover for performance
         // Must be after renderArchiveCards() to include dynamically created archive cards
