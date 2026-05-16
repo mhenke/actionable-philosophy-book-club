@@ -45,6 +45,13 @@ if [ -z "$SLUG" ]; then
     exit 1
 fi
 
+BASENAME=$(basename "$INPUT")
+if [[ ! "$BASENAME" =~ ^[A-Za-z0-9._-]+$ ]]; then
+    echo "Error: filename must contain only [A-Za-z0-9._-] characters" >&2
+    echo "Rename the file before using this script." >&2
+    exit 1
+fi
+
 # Infer category from extension
 EXT="${INPUT##*.}"
 EXT_LOWER="${EXT,,}"
@@ -141,13 +148,14 @@ echo "Done."
 # If this was detected as an alternate, record provenance in a simple JSON manifest
 if [ "$IS_ALTERNATE" = true ]; then
     MANIFEST_FILE="${MEETING_DIR}/asset-manifest.json"
-    python3 - <<PY
+    FILENAME_ENV="$FILENAME" SOURCE_FILENAME_ENV="$SOURCE_FILENAME" MANIFEST_FILE_ENV="$MANIFEST_FILE" \
+    python3 - <<'PY'
 import json, os
-mf = '${MANIFEST_FILE}'
+mf = os.environ['MANIFEST_FILE_ENV']
 entry = {
-  '${FILENAME}': {
+  os.environ['FILENAME_ENV']: {
     'variant': 'alternate',
-    'source_filename': '${SOURCE_FILENAME}'
+    'source_filename': os.environ['SOURCE_FILENAME_ENV']
   }
 }
 if os.path.exists(mf):
