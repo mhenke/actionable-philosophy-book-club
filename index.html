@@ -409,7 +409,7 @@
                 video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Recap', variant: 'canonical' },
                 slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [
-                    { type: 'summary', label: 'Video Recap Alt', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4' },
+                    { type: 'alternate', label: 'Video Recap Alt', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4' },
                     { type: 'deep-dive', label: 'Why Clean Code Rots Your Codebase', file: 'meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a' },
                     { type: 'debate', label: 'Deep Modules vs Small Functions', file: 'meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a' },
                     { type: 'critique', label: 'General Purpose Design Stops Information Leaks', file: 'meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a' }
@@ -431,7 +431,7 @@
                 video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Recap', variant: 'canonical' },
                 slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [
-                    { type: 'summary', label: 'Video Recap Alt', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
+                    { type: 'alternate', label: 'Video Recap Alt', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
                     { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a' },
                     { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a' },
                     { type: 'critique', label: 'How Tactical Programming Creates Complexity', file: 'meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a' }
@@ -534,17 +534,18 @@
                 const altItems = [];
                 if (meeting.video && meeting.video.variant === 'alternate') altItems.push(meeting.video);
                 (meeting.podcasts || []).forEach(p => { if (p.variant === 'alternate') altItems.push(p); });
-                if (altItems.length > 0) {
+                
+                altItems.forEach(a => {
+                    const icon = a.file.endsWith('.mp4') ? '🎬' : '🎙';
                     rows.push(`
                         <div class="asset-row" data-testid="${meeting.id}-alternate">
-                            ${altItems.map(a => `
-                                <div style="display:inline-block;margin-right:0.75rem;">
-                                    <a href="${a.file}" class="asset-link">${a.label}</a>
-                                    <a href="${a.file}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
-                                </div>
-                            `).join('')}
+                            <a href="${a.file}" class="asset-link">
+                                <span class="icon-pill" style="background: var(--wash-3-border);">${icon}</span>
+                                ${a.label}
+                            </a>
+                            <a href="${a.file}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
                         </div>`);
-                }
+                });
             } else {
                 rows.push(placeholderRow('🎬', 'Video Recap', 'Coming Soon'));
             }
@@ -562,7 +563,7 @@
                 rows.push(placeholderRow('📊', 'Slide Deck', 'Coming Soon'));
             }
 
-            (meeting.podcasts || []).forEach(pod => {
+            (meeting.podcasts || []).filter(p => p.variant !== 'alternate' && p.type !== 'alternate').forEach(pod => {
                 const cfg = podcastConfig[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
                 rows.push(`
                     <div class="asset-row">
@@ -637,7 +638,7 @@
                         <a href="${meeting.slides.file}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
                     </div>` : '';
 
-                const podcastRows = (meeting.podcasts || []).filter(p => p.variant !== 'alternate').map(pod => {
+                const podcastRows = (meeting.podcasts || []).filter(p => p.variant !== 'alternate' && p.type !== 'alternate').map(pod => {
                     const cfg = podcastConfig[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
                     return `
                     <div class="asset-row">
@@ -663,15 +664,17 @@
                 const altItems = [];
                 if (meeting.video && meeting.video.variant === 'alternate') altItems.push(meeting.video);
                 (meeting.podcasts || []).forEach(p => { if (p.variant === 'alternate') altItems.push(p); });
-                const altRows = altItems.length > 0 ? `
+                const altRows = altItems.map(a => {
+                    const icon = a.file.endsWith('.mp4') ? '🎬' : '🎙';
+                    return `
                     <div class="asset-row" data-testid="${meeting.id}-alternate">
-                        ${altItems.map(a => `
-                            <div style="display:inline-block;margin-right:0.75rem;">
-                                <a href="${a.file}" class="asset-link">${a.label}</a>
-                                <a href="${a.file}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
-                            </div>
-                        `).join('')}
-                    </div>` : '';
+                        <a href="${a.file}" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-3-border);">${icon}</span>
+                            ${a.label}
+                        </a>
+                        <a href="${a.file}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
+                    </div>`;
+                }).join('');
 
                 const card = document.createElement('div');
                 card.className = 'card p-6 border-t-2';
@@ -848,6 +851,13 @@ nce
         });
 
         handleRoute();
+    </script>
+</body>
+</html>
+  </script>
+</body>
+</html>
+
     </script>
 </body>
 </html>
