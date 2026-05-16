@@ -11,25 +11,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --surface: #F7F7F7;            /* Near White */
-            --banner: #222222;             /* Charcoal */
+            --surface: #F7F7F7;            /* Cover background */
+            --banner: #222222;             /* Dark charcoal title bar */
             --text-primary: #222222;
-            --text-muted: #545454;         /* Darker for WCAG AA Contrast (5.8:1) */
+            --text-muted: #545454;
             --white: #FFFFFF;
             
-            /* Design Tokens (Extracted) */
-            --surface-low: rgba(0,0,0,0.05);
-            --border-low: rgba(0,0,0,0.08);
-            --text-dim: 0.5;
-            --text-ghost: 0.3;
-            
-            /* The Loops Spectrum */
-            --spectrum-1: #1A3A5C; /* Deep Navy */
-            --spectrum-2: #2B6CB0; /* Medium Blue */
-            --spectrum-3: #4BA3C7; /* Steel Blue */
+            /* The Loops Spectrum (Literal hexes) */
+            --spectrum-1: #1A3A5C; /* Deep navy */
+            --spectrum-2: #2B6CB0; /* Medium blue */
+            --spectrum-3: #4BA3C7; /* Steel blue */
             --spectrum-4: #48BDB8; /* Teal */
             --spectrum-5: #72C9A8; /* Seafoam */
-            --spectrum-6: #A8D8B9; /* Light Sage */
+            --spectrum-6: #A8D8B9; /* Light sage */
+
+            --border-low: rgba(0,0,0,0.06);
+            --text-dim: 0.5;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -39,15 +36,25 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        .swiss-caps { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 500; }
-        .swiss-light { text-transform: uppercase; letter-spacing: -0.01em; font-weight: 300; }
+        /* Swiss/International Typographic System */
+        .swiss-caps { 
+            text-transform: uppercase; 
+            letter-spacing: -0.04em; /* Polish: Tighter tracking for Swiss feel */
+            font-weight: 500; /* Medium weight for titles */
+        }
+        .swiss-light { 
+            text-transform: uppercase; 
+            letter-spacing: -0.01em; 
+            font-weight: 300; /* Light weight for author/metadata */
+        }
 
-        .hero-cover {
-            position: relative;
-            background: var(--white);
+        .banner-bar {
+            background-color: var(--banner);
+            color: var(--white);
+            padding: 2rem 3rem;
             display: flex;
-            flex-direction: column;
-            border-bottom: 1px solid var(--border-low);
+            align-items: baseline;
+            justify-content: space-between;
         }
         
         .spectrum-bar {
@@ -63,166 +70,109 @@
             );
         }
 
-        .banner-bar {
-            background-color: var(--banner);
-            color: var(--white);
-            padding: 2rem 3rem;
-            display: flex;
-            align-items: baseline;
-            justify-content: flex-start;
-            gap: 2.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+        header.sticky {
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
         }
         
-        /* Adapt: Fluid Typography */
         .hero-statement {
-            font-size: clamp(1.5rem, 5vw, 3.75rem);
+            font-size: clamp(1.5rem, 5vw, 3rem);
             font-weight: 300;
             letter-spacing: -0.02em;
             line-height: 1.1;
-        }
-
-        /* P2: Improved Reader Navigation */
-        .reader-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: var(--banner);
-            color: var(--white);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            max-width: 32ch; /* Polish: Controlled measure */
         }
 
         .card {
             background: var(--white);
             border: 1px solid var(--border-low);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            outline: none;
         }
-        .card:hover, .card:focus-within {
+        .card:hover {
             border-color: var(--spectrum-3);
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px -12px rgba(0,0,0,0.15);
-        }
-        .card:focus-within {
-            box-shadow: 0 0 0 3px rgba(75, 163, 199, 0.4); /* Polish: Spectrum focus ring */
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.1);
         }
         
         .btn {
             display: inline-flex;
             align-items: center;
-            padding: 14px 32px;            /* Adapt: Generous touch target */
+            padding: 14px 32px;
             background: var(--banner);
             color: var(--white);
-            font-weight: 500;
-            text-transform: uppercase;
             font-size: 0.75rem;
+            text-transform: uppercase;
             letter-spacing: 0.05em;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            transition: all 0.2s;
         }
         .btn:hover {
             background: var(--spectrum-1);
-            transform: scale(1.02);
+            transform: translateY(-1px);
         }
-        
-        /* Global Link Styling */
-        a { color: inherit; text-decoration: none; transition: all 0.2s ease-out; }
-        a:hover { color: var(--spectrum-2); }
 
         .archive-accent {
-            width: 4px;
-            height: 1.5rem; /* Polish: Optical alignment with header baseline */
-            border-radius: 1px;
+            width: 6px; /* Polish: Bolder accent */
+            height: 1.5rem;
             flex-shrink: 0;
+            border-radius: 1px;
         }
 
         /* Reader Styles */
-        .prose { font-family: 'Inter', sans-serif; color: #333; max-width: 70ch; margin: 0 auto; }
-        .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; margin-bottom: 2rem; line-height: 1; letter-spacing: -0.04em; color: var(--banner); text-transform: uppercase; }
-        .prose h2 { font-size: 1.25rem; font-weight: 600; margin-top: 3rem; margin-bottom: 1rem; text-transform: uppercase; border-bottom: 2px solid var(--banner); padding-bottom: 0.5rem; }
-        .prose h3 { font-size: 1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; text-transform: uppercase; color: var(--spectrum-2); }
-        .prose p { margin-bottom: 1.5rem; font-size: 1.1rem; line-height: 1.7; }
-        .prose blockquote { border-left: 4px solid var(--spectrum-4); padding-left: 2rem; font-style: normal; margin: 3rem 0; color: var(--text-muted); font-size: 1.25rem; }
-        .prose a { color: var(--spectrum-2) !important; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
-        .prose code { background: #eee; padding: 0.2rem 0.4rem; border-radius: 2px; font-size: 0.9em; font-family: monospace; }
+        .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
+        .prose h1 { font-size: clamp(2.5rem, 10vw, 5rem); font-weight: 500; text-transform: uppercase; letter-spacing: -0.05em; line-height: 0.85; margin-bottom: 4rem; color: var(--banner); }
+        .prose h2 { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 5rem; border-top: 1px solid var(--banner); padding-top: 1.5rem; margin-bottom: 2rem; }
+        .prose p { font-size: 1.25rem; font-weight: 300; line-height: 1.6; margin-bottom: 2rem; color: #444; }
+        .prose blockquote { border-left: 4px solid var(--spectrum-4); padding-left: 2.5rem; margin: 4rem 0; font-size: 1.75rem; font-weight: 300; font-style: italic; color: var(--text-muted); line-height: 1.3; }
         
         .hidden-view { display: none !important; }
-
-        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #f7f7f7 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body class="p-0">
 
     <!-- Dashboard View -->
     <div id="dashboard-view">
-        <header class="mb-20">
-            <div class="hero-cover">
-                <div class="spectrum-bar"></div>
-                <div class="py-24 md:py-40 px-8 md:px-16 max-w-5xl mx-auto w-full">
-                    <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-8 block" style="opacity: var(--text-dim);">Proceedings of the</span>
-                    <h2 class="hero-statement italic max-w-4xl mb-16">A methodical inquiry into the depth of software design and the cognitive load of AI-assisted systems.</h2>
-                    <div class="h-px w-24" style="background: var(--surface-low);"></div>
-                </div>
-                <div class="banner-bar">
-                    <h1 class="text-xl md:text-3xl swiss-caps">A Philosophy of Software Design</h1>
-                    <span class="text-xs md:text-sm swiss-light" style="opacity: 0.9;">John Ousterhout</span>
-                </div>
+        <header class="sticky top-0 z-50">
+            <div class="banner-bar">
+                <h1 class="text-xl md:text-3xl swiss-caps">A Philosophy of Software Design</h1>
+                <span class="text-xs md:text-sm swiss-light">John Ousterhout</span>
             </div>
+            <div class="spectrum-bar"></div>
         </header>
 
-        <main class="px-8 md:px-16 max-w-5xl mx-auto space-y-32 pb-48">
-            <!-- Meeting 02 (Next) -->
+        <main class="px-8 md:px-16 max-w-6xl mx-auto space-y-48 py-32 pb-64">
+            <!-- Next Session -->
             <section>
-                <div class="flex items-center space-x-6 mb-12">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-spectrum-1">Vol. 01 / No. 02</span>
-                    <div class="h-px flex-grow" style="background: var(--surface-low);"></div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-spectrum-4">Next Session</span>
+                <div class="flex items-center space-x-8 mb-20">
+                    <span class="text-[10px] swiss-caps text-spectrum-1 tracking-widest">Meeting 02</span>
+                    <div class="h-px flex-grow bg-black/10"></div>
+                    <span class="text-[10px] swiss-caps text-spectrum-4 tracking-widest">Next Session</span>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-20 lg:gap-32">
                     <div class="lg:col-span-8">
-                        <div class="flex items-center space-x-4 mb-6 text-[9px] font-bold text-muted uppercase tracking-widest">
-                            <span>Cite: APoSD.2026.02</span>
-                            <span>&bull;</span>
-                            <span>Read: 12 min</span>
-                        </div>
-                        <h2 class="text-4xl md:text-7xl font-bold tracking-tighter mb-12 leading-none uppercase">Complexity Sinks</h2>
+                        <h2 class="text-6xl md:text-9xl swiss-caps mb-16 leading-[0.8]">Complexity Sinks</h2>
                         
-                        <blockquote class="mb-16 border-l-4 border-spectrum-4 pl-8 md:pl-12 text-xl font-light text-muted italic leading-relaxed">
-                            &ldquo;A well-designed module is a <span class="text-banner not-italic font-bold">complexity sink</span>: it takes on internal implementation suffering so the rest of the system can stay simple.&rdquo;
+                        <blockquote class="mb-20 border-l-4 border-spectrum-4 pl-12 text-3xl font-light text-muted italic leading-tight">
+                            &ldquo;A well-designed module is a <span class="text-banner not-italic font-medium">complexity sink</span>: it takes on internal implementation suffering so the rest of the system can stay simple.&rdquo;
                         </blockquote>
 
-                        <a href="#p=meetings/meeting-02/README.md" class="btn group w-full md:w-auto justify-center">
-                            Discussion Agenda
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                        <a href="#p=meetings/meeting-02/README.md" class="btn group">
+                            Open Agenda
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-3 h-3 ml-4 group-hover:translate-x-1 transition-transform"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                         </a>
                     </div>
 
-                    <div class="lg:col-span-4 lg:border-l border-black/5 lg:pl-12 pt-8 lg:pt-0 space-y-8">
-                        <h3 class="text-[10px] font-bold tracking-widest uppercase" style="opacity: var(--text-dim);">Materials</h3>
-                        <div class="grid grid-cols-1 gap-4">
-                            <div class="flex items-center justify-between p-5 bg-white border border-black/5 rounded group cursor-help transition-all hover:border-spectrum-3" 
-                                 role="region" aria-label="Slide Deck - Awaiting Signal">
-                                <div class="flex items-center space-x-4">
-                                    <span class="text-xl">📊</span>
-                                    <span class="text-xs font-bold uppercase leading-none">Slide Deck</span>
-                                </div>
-                                <span class="text-[9px] font-medium italic" style="opacity: var(--text-dim);">Awaiting Signal</span>
+                    <div class="lg:col-span-4 lg:border-l border-black/10 lg:pl-20 space-y-16">
+                        <h3 class="text-[11px] swiss-caps opacity-30 tracking-[0.2em]">Materials</h3>
+                        <div class="space-y-6">
+                            <div class="p-8 bg-white border border-black/5 flex items-center justify-between group cursor-help hover:border-spectrum-3 transition-colors">
+                                <span class="text-xs swiss-caps font-bold">Slide Deck</span>
+                                <span class="text-[10px] swiss-light italic opacity-40">Awaiting Signal</span>
                             </div>
-                            <div class="flex items-center justify-between p-5 bg-white border border-black/5 rounded group cursor-help transition-all hover:border-spectrum-3"
-                                 role="region" aria-label="Video Record - Awaiting Signal">
-                                <div class="flex items-center space-x-4">
-                                    <span class="text-xl">🎬</span>
-                                    <span class="text-xs font-bold uppercase leading-none">Video Record</span>
-                                </div>
-                                <span class="text-[9px] font-medium italic" style="opacity: var(--text-dim);">Awaiting Signal</span>
+                            <div class="p-8 bg-white border border-black/5 flex items-center justify-between group cursor-help hover:border-spectrum-3 transition-colors">
+                                <span class="text-xs swiss-caps font-bold">Video Record</span>
+                                <span class="text-[10px] swiss-light italic opacity-40">Awaiting Signal</span>
                             </div>
                         </div>
                     </div>
@@ -231,94 +181,68 @@
 
             <!-- The Archive -->
             <div>
-                <h3 class="text-[10px] font-bold tracking-widest uppercase border-b-2 border-banner pb-4 mb-16">The Archive</h3>
-                
-                <div class="space-y-8">
-                    <!-- Meeting 01 -->
-                    <div class="p-8 md:p-10 bg-white border border-black/5 rounded flex flex-col md:flex-row md:items-center gap-8 group card" 
-                         role="region" aria-label="Meeting 01 Archive Entry">
-                        <div class="md:w-32 flex items-baseline justify-between md:block">
-                            <span class="text-[10px] font-bold text-muted block" style="opacity: var(--text-dim);">01 / 05 / 26</span>
-                            <span class="text-[8px] font-bold text-muted uppercase tracking-widest md:mt-2 block" style="opacity: var(--text-ghost);">APoSD.2026.01</span>
+                <h3 class="text-[11px] swiss-caps border-b-2 border-banner pb-6 mb-20 tracking-[0.3em]">The Archive</h3>
+                <div class="grid grid-cols-1 gap-12">
+                    <div class="p-12 card flex flex-col md:flex-row md:items-center gap-12">
+                        <div class="md:w-40">
+                            <span class="text-[11px] swiss-caps text-muted mb-2 block">01 / 05 / 26</span>
+                            <span class="text-[9px] swiss-light opacity-30">APoSD.2026.01</span>
                         </div>
-                        <div class="flex items-center gap-6 flex-grow">
+                        <div class="flex items-center gap-8 flex-grow">
                             <div class="archive-accent bg-spectrum-2"></div>
-                            <h4 class="text-3xl font-bold uppercase tracking-tight group-hover:text-spectrum-2 transition-colors">Deep Systems</h4>
+                            <h4 class="text-5xl swiss-caps">Deep Systems</h4>
                         </div>
-                        <div class="flex flex-wrap gap-3">
-                            <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="px-6 py-3 bg-surface text-[9px] font-bold uppercase hover:bg-spectrum-1 hover:text-white rounded transition-all min-h-[44px] flex items-center">🎬 Video (42m)</a>
-                            <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" class="px-6 py-3 bg-surface text-[9px] font-bold uppercase hover:bg-spectrum-1 hover:text-white rounded transition-all min-h-[44px] flex items-center">📊 Slides (12MB)</a>
-                            <a href="#p=meetings/meeting-01/README.md" class="px-6 py-3 bg-banner text-white text-[9px] font-bold uppercase hover:bg-spectrum-4 rounded transition-all min-h-[44px] flex items-center">Read Synthesis &rarr;</a>
+                        <div class="flex gap-6">
+                            <a href="#p=meetings/meeting-01/README.md" class="btn">Synthesis</a>
                         </div>
                     </div>
 
-                    <!-- Meeting 00 -->
-                    <div class="p-8 md:p-10 bg-white border border-black/5 rounded flex flex-col md:flex-row md:items-center gap-8 group card" 
-                         role="region" aria-label="Meeting 00 Archive Entry">
-                        <div class="md:w-32 flex items-baseline justify-between md:block">
-                            <span class="text-[10px] font-bold text-muted block" style="opacity: var(--text-dim);">29 / 04 / 26</span>
-                            <span class="text-[8px] font-bold text-muted uppercase tracking-widest md:mt-2 block" style="opacity: var(--text-ghost);">APoSD.2026.00</span>
+                    <div class="p-12 card flex flex-col md:flex-row md:items-center gap-12">
+                        <div class="md:w-40">
+                            <span class="text-[11px] swiss-caps text-muted mb-2 block">29 / 04 / 26</span>
+                            <span class="text-[9px] swiss-light opacity-30">APoSD.2026.00</span>
                         </div>
-                        <div class="flex items-center gap-6 flex-grow">
+                        <div class="flex items-center gap-8 flex-grow">
                             <div class="archive-accent bg-spectrum-1"></div>
-                            <h4 class="text-3xl font-bold uppercase tracking-tight group-hover:text-spectrum-2 transition-colors">The Kickoff</h4>
+                            <h4 class="text-5xl swiss-caps">The Kickoff</h4>
                         </div>
-                        <div class="flex flex-wrap gap-3">
-                            <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="px-6 py-3 bg-surface text-[9px] font-bold uppercase hover:bg-spectrum-1 hover:text-white rounded transition-all min-h-[44px] flex items-center">🎬 Video (28m)</a>
-                            <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" class="px-6 py-3 bg-surface text-[9px] font-bold uppercase hover:bg-spectrum-1 hover:text-white rounded transition-all min-h-[44px] flex items-center">📊 Slides (8MB)</a>
-                            <a href="#p=meetings/meeting-00/README.md" class="px-6 py-3 bg-banner text-white text-[9px] font-bold uppercase hover:bg-spectrum-4 rounded transition-all min-h-[44px] flex items-center">Read Synthesis &rarr;</a>
+                        <div class="flex gap-6">
+                            <a href="#p=meetings/meeting-00/README.md" class="btn">Synthesis</a>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Knowledge Base -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 pt-24 border-t-2 border-banner">
-                <div class="space-y-10">
-                    <h3 class="text-[10px] font-bold tracking-widest uppercase" style="opacity: var(--text-dim);">Infrastructure</h3>
-                    <div class="grid grid-cols-1 gap-6">
-                        <a href="#p=templates/prompts/README.md" class="p-8 bg-white border border-black/5 rounded group hover:border-spectrum-3 transition-all card">
-                            <h4 class="text-xl font-bold uppercase mb-3 group-hover:text-spectrum-3">AI Prompt Library</h4>
-                            <p class="text-xs text-muted leading-relaxed">Standardized frameworks for distilling deep design insights.</p>
-                        </a>
-                        <a href="#p=docs/glossary.md" class="p-8 bg-white border border-black/5 rounded group hover:border-spectrum-3 transition-all card">
-                            <h4 class="text-xl font-bold uppercase mb-3 group-hover:text-spectrum-3">Glossary of Depth</h4>
-                            <p class="text-xs text-muted leading-relaxed">A rigorous taxonomy of software complexity.</p>
-                        </a>
-                    </div>
-                </div>
-                <div class="space-y-10">
-                    <h3 class="text-[10px] font-bold tracking-widest uppercase" style="opacity: var(--text-dim);">Research</h3>
-                    <div class="grid grid-cols-1 gap-6">
-                        <a href="#p=meetings/meeting-99-new/README.md" class="p-8 bg-white border border-spectrum-4 rounded group hover:shadow-xl transition-all card">
-                            <div class="flex justify-between items-start mb-3">
-                                <h4 class="text-xl font-bold uppercase group-hover:text-spectrum-4">The Inbox</h4>
-                                <span class="text-[8px] font-bold bg-spectrum-4 text-white px-2 py-1 rounded shadow-sm">7 NEW</span>
-                            </div>
-                            <p class="text-xs text-muted leading-relaxed">Unsorted logs and emergent design philosophy.</p>
-                        </a>
-                        <a href="#p=docs/design-principles.md" class="p-8 bg-white border border-black/5 rounded group hover:border-spectrum-3 transition-all card">
-                            <h4 class="text-xl font-bold uppercase mb-3 group-hover:text-spectrum-3">Strategic Mandates</h4>
-                            <p class="text-xs text-muted leading-relaxed">The immutable principles governing technical decisions.</p>
-                        </a>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-24 pt-32 border-t-4 border-banner">
+                <a href="#p=docs/glossary.md" class="group block">
+                    <h4 class="text-lg swiss-caps mb-4 group-hover:text-spectrum-3 transition-colors">Glossary</h4>
+                    <p class="text-xs swiss-light text-muted leading-relaxed">A rigorous taxonomy of software complexity.</p>
+                </a>
+                <a href="#p=docs/design-principles.md" class="group block">
+                    <h4 class="text-lg swiss-caps mb-4 group-hover:text-spectrum-3 transition-colors">Principles</h4>
+                    <p class="text-xs swiss-light text-muted leading-relaxed">The immutable principles governing technical decisions.</p>
+                </a>
+                <a href="#p=templates/prompts/README.md" class="group block">
+                    <h4 class="text-lg swiss-caps mb-4 group-hover:text-spectrum-3 transition-colors">Prompt Lib</h4>
+                    <p class="text-xs swiss-light text-muted leading-relaxed">Standardized frameworks for distilling deep insights.</p>
+                </a>
             </div>
         </main>
     </div>
 
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
-        <div class="reader-nav">
-            <a href="#" id="back-to-dashboard" class="p-4 -m-4 text-xs swiss-caps hover:text-spectrum-6 transition-all flex items-center min-h-[44px]">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+        <div class="banner-bar">
+            <a href="#" id="back-to-dashboard" class="text-xs swiss-caps flex items-center hover:text-spectrum-6 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-3"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
                 Dashboard
             </a>
-            <span class="text-[10px] swiss-light tracking-[0.2em]" style="opacity: var(--text-dim);">Synthesis Reader</span>
+            <span class="text-[10px] swiss-light">Synthesis Reader</span>
         </div>
         <div class="spectrum-bar" style="height: 2px;"></div>
 
-        <article id="markdown-content" class="prose px-8 pt-24 pb-48">
+        <article id="markdown-content" class="prose px-8 pt-32 pb-64">
             <!-- Content injected here -->
         </article>
     </div>
