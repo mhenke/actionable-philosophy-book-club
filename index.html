@@ -548,6 +548,111 @@
             return /^(meetings|assets)\/[A-Za-z0-9._/-]+\.(mp4|m4a|pptx|pdf|png|jpg|jpeg)$/i.test(path);
         }
 
+        // Shared rendering constants
+        const PODCAST_CONFIG = {
+            'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
+            'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
+            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
+        };
+
+        const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
+
+        function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
+            const rows = [];
+
+            if (meeting.video && isSafeAssetPath(meeting.video.file)) {
+                rows.push(`
+                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical">
+                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
+                            ${escapeHTML(meeting.video.label)}
+                        </a>
+                        <a href="${escapeHTML(meeting.video.file)}" download
+                           aria-label="Download video — ${escapeHTML(meeting.session)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+
+                (meeting.podcasts || [])
+                    .filter(p => p.variant === 'alternate' || p.type === 'alternate')
+                    .forEach(alt => {
+                        if (!isSafeAssetPath(alt.file)) return;
+                        const altIcon = alt.file.endsWith('.mp4') ? '🎬' : '🎙';
+                        rows.push(`
+                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-alternate">
+                        <a href="${escapeHTML(alt.file)}" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${altIcon}</span>
+                            ${escapeHTML(alt.label || 'Alternate Recording')}
+                            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted ml-auto">Alt</span>
+                        </a>
+                        <a href="${escapeHTML(alt.file)}" download
+                           aria-label="Download alternate — ${escapeHTML(meeting.session)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+                    });
+            } else if (includePlaceholders) {
+                rows.push(`
+                    <div class="asset-row opacity-50">
+                        <span class="asset-link cursor-default">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
+                            Video Recording <span class="text-[9px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                        </span>
+                    </div>`);
+            }
+
+            if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
+                rows.push(`
+                    <div class="asset-row">
+                        <a href="${buildOfficeViewerURL(meeting.slides.file)}" target="_blank" rel="noopener" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
+                            ${escapeHTML(meeting.slides.label)}
+                        </a>
+                        <a href="${escapeHTML(meeting.slides.file)}" download
+                           aria-label="Download slides — ${escapeHTML(meeting.session)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+            } else if (includePlaceholders) {
+                rows.push(`
+                    <div class="asset-row opacity-50">
+                        <span class="asset-link cursor-default">
+                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
+                            Slide Deck <span class="text-[9px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                        </span>
+                    </div>`);
+            }
+
+            (meeting.podcasts || [])
+                .filter(p => p.variant !== 'alternate' && p.type !== 'alternate')
+                .forEach(pod => {
+                    if (!isSafeAssetPath(pod.file)) return;
+                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type) };
+                    rows.push(`
+                    <div class="asset-row">
+                        <a href="${escapeHTML(pod.file)}" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
+                            ${escapeHTML(pod.label)}
+                            <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
+                        </a>
+                        <a href="${escapeHTML(pod.file)}" download
+                           aria-label="Download ${escapeHTML(pod.label)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+                });
+
+            const resourceStrip = (meeting.resources || []).length > 0
+                ? `<div class="resource-strip">${
+                    (meeting.resources || [])
+                        .filter(r => isSafeAssetPath(r.file))
+                        .map(res => `
+                        <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener" class="resource-thumb">
+                            <img src="${escapeHTML(res.file)}" alt="${escapeHTML(res.label)}" loading="lazy" width="200" height="80">
+                            <span>${escapeHTML(res.label)}</span>
+                        </a>`).join('')}
+                </div>`
+                : '';
+
+            return { rows, resourceStrip };
+        }
+
         function renderUpcomingMaterials() {
             const container = document.getElementById('upcoming-materials-container');
             if (!container) return;
@@ -668,7 +773,6 @@
             });
             window.__domPurifyHooksInstalled = true;
         }
-        }
 
         async function loadPage(path) {
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
@@ -777,10 +881,12 @@
         }
 
         // Expose for tests
+        // Expose for tests
         window.isSafeRepoPath = isSafeRepoPath;
         window.prefetchMarkdown = prefetchMarkdown;
         window.mdCache = mdCache;
-        // Expose MEETINGS for integration tests
+        window.renderUpcomingMaterials = renderUpcomingMaterials;
+        window.renderArchiveCards = renderArchiveCards;
         window.MEETINGS = MEETINGS;
 
         window.addEventListener('hashchange', handleRoute);

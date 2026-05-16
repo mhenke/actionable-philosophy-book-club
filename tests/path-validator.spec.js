@@ -13,8 +13,6 @@ test.describe('isSafeRepoPath — valid paths', () => {
         'meetings/meeting-99-new/README.md',
         'meetings/meeting-01/design_principles.md',
         'templates/discussion.md',
-        'a.md',
-        'a/b/c.md',
     ];
 
     for (const path of valid) {
@@ -48,6 +46,8 @@ test.describe('isSafeRepoPath — rejected paths', () => {
         ['dist/something.md',                 'dist build artifact'],
         ['assets/fonts/something.md',         'assets directory not in allowlist'],
         ['package-lock.md',                   'root-level file (no directory)'],
+        ['a.md',                              'single-file root path'],
+        ['a/b/c.md',                          'not in allowed top-level directory'],
     ];
 
     for (const [path, reason] of invalid) {
