@@ -36,8 +36,13 @@ test.describe('Manifest Rendering', () => {
         await expect(container).toBeVisible();
     });
 
-    test('upcoming card shows resource thumbnails', async ({ page }) => {
+    test('upcoming card shows coming soon placeholders and resource thumbnails', async ({ page }) => {
         await page.goto('/');
+        const upcomingPlaceholders = page.locator('#upcoming-materials-container').getByText('Coming Soon');
+        await expect(upcomingPlaceholders).toHaveCount(2);
+        const placeholderText = await upcomingPlaceholders.allTextContents();
+        expect(placeholderText.every(t => /coming soon/i.test(t))).toBe(true);
+
         const upcomingThumbLabels = page.locator('#upcoming-materials-container .resource-thumb span');
         await expect(upcomingThumbLabels).toHaveCount(2);
         const texts = await upcomingThumbLabels.allTextContents();

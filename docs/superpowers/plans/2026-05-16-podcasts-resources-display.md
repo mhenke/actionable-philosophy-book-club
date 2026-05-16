@@ -327,6 +327,8 @@ git commit -m "feat: add podcast rows and resource thumbnails to archive cards"
 
 The static "Upcoming Materials" placeholder grid in the upcoming card is replaced by a `<div id="upcoming-materials-container">` and a `renderUpcomingMaterials()` function. The card header, Key Takeaway, and CTA button remain static since they contain bespoke content (title, quote). Only the materials section is dynamic.
 
+For upcoming meetings, missing video and slide assets should render as "Coming Soon" placeholders rather than disappearing entirely.
+
 **Files:**
 - Modify: `index.html` (the static upcoming card HTML, currently lines ~259–277, and the script block)
 

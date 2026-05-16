@@ -108,7 +108,7 @@ The strip only renders when `resources.length > 0`.
 
 The static Next Session card is converted to render from the first `MEETINGS` entry with `status: 'upcoming'`, using the same `renderArchiveCards`-style logic. This removes the hardcoded HTML duplication and ensures podcast rows and resource thumbnails appear automatically as files are added.
 
-The existing "Upcoming Materials" placeholder tiles (Slide Deck / Video Recording) are replaced by the dynamic asset rows, which show real links when files exist and are omitted when `null`.
+The existing "Upcoming Materials" placeholder tiles are replaced by dynamic rows. For upcoming sessions, missing video and slide assets render as "Coming Soon" placeholders, while real links appear only when the files are available.
 
 ---
 
