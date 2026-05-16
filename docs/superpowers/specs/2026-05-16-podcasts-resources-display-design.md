@@ -25,7 +25,7 @@ All meeting assets follow a consistent pattern:
 | Critique podcast | `NN-<Slug>-critique.(mp4\|m4a)` | `01-Ousterhout-Uncle-Bob-critique.m4a` |
 | Debate podcast | `NN-<Slug>-debate.(mp4\|m4a)` | `01-Ousterhout-Uncle-Bob-debate.m4a` |
 | Slides | `NN-<Slug>.pptx` | `01-Architecting-Deep-Systems.pptx` |
-| Resource image | `NN-<Slug>.png` | `01-Choose-Your-Adventure.png` |
+| Resource image | `NN-<Slug>.png` | `01-choose-your-adventure.png` |
 
 **Type suffix** (`-deep-dive`, `-critique`, `-debate`) is the machine-readable signal that distinguishes podcast recordings from main session recordings. Files without a type suffix in `recordings/` are treated as the primary session video.
 
@@ -53,8 +53,8 @@ The `MEETINGS` array in `index.html` gains two new fields per entry:
     { type: 'debate',    label: 'Ousterhout vs Uncle Bob',    file: 'meetings/meeting-01/recordings/01-Ousterhout-Uncle-Bob-debate.m4a' }
   ],
   resources: [
-    { label: 'Architecture of Simplicity', file: 'meetings/meeting-01/resources/01-Architecture-of-Simplicity.png' },
-    { label: 'Choose Your Adventure',      file: 'meetings/meeting-01/resources/01-Choose-Your-Adventure.png' }
+    { label: 'Architecture of Simplicity', file: 'meetings/meeting-01/resources/01-architecture-of-simplicity.png' },
+    { label: 'Choose Your Adventure',      file: 'meetings/meeting-01/resources/01-choose-your-adventure.png' }
   ]
 }
 ```

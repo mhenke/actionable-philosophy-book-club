@@ -36,11 +36,13 @@ test.describe('Manifest Rendering', () => {
         await expect(container).toBeVisible();
     });
 
-    test('upcoming card shows resource thumbnail for Four Strategies', async ({ page }) => {
+    test('upcoming card shows resource thumbnails', async ({ page }) => {
         await page.goto('/');
-        const upcomingThumb = page.locator('#upcoming-materials-container .resource-thumb');
-        await expect(upcomingThumb).toHaveCount(1);
-        await expect(upcomingThumb.locator('span')).toContainText('Four Strategies');
+        const upcomingThumbLabels = page.locator('#upcoming-materials-container .resource-thumb span');
+        await expect(upcomingThumbLabels).toHaveCount(2);
+        const texts = await upcomingThumbLabels.allTextContents();
+        expect(texts.some(t => /Four Strategies/i.test(t))).toBe(true);
+        expect(texts.some(t => /Choose Your Next Meeting/i.test(t))).toBe(true);
     });
 
     test('archive cards and upcoming container both present on dashboard', async ({ page }) => {

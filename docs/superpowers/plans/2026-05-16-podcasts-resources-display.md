@@ -83,7 +83,7 @@ Find and replace the entire `const MEETINGS = [...]` block with:
                 slides: null,
                 podcasts: [],
                 resources: [
-                    { label: 'Four Strategies', file: 'meetings/meeting-02/resources/02-Four-Strategies.png' }
+                    { label: 'Four Strategies', file: 'meetings/meeting-02/resources/02-four-strategies.png' }
                 ]
             },
             {
@@ -101,8 +101,8 @@ Find and replace the entire `const MEETINGS = [...]` block with:
                     { type: 'deep-dive', label: 'Clean Code Paradox', file: 'meetings/meeting-01/recordings/01-Clean-Code-Paradox-deep-dive.mp4' }
                 ],
                 resources: [
-                    { label: 'Architecture of Simplicity', file: 'meetings/meeting-01/resources/01-Architecture-of-Simplicity.png' },
-                    { label: 'Choose Your Adventure',      file: 'meetings/meeting-01/resources/01-Choose-Your-Adventure.png' }
+                    { label: 'Architecture of Simplicity', file: 'meetings/meeting-01/resources/01-architecture-of-simplicity.png' },
+                    { label: 'Choose Your Adventure',      file: 'meetings/meeting-01/resources/01-choose-your-adventure.png' }
                 ]
             },
             {
@@ -808,7 +808,7 @@ All meeting assets follow this pattern:
 | Critique podcast | `NN-<Slug>-critique.(mp4\|m4a)` | `01-Ousterhout-Uncle-Bob-critique.m4a` |
 | Debate podcast | `NN-<Slug>-debate.(mp4\|m4a)` | `01-Ousterhout-Uncle-Bob-debate.m4a` |
 | Slides | `NN-<Slug>.pptx` | `01-Architecting-Deep-Systems.pptx` |
-| Resource image | `NN-<Slug>.png` | `01-Choose-Your-Adventure.png` |
+| Resource image | `NN-<Slug>.png` | `01-choose-your-adventure.png` |
 
 `NN` is the zero-padded meeting number (`00`, `01`, `02`…).
 
