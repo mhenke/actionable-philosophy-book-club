@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actionable Philosophy Book Club Dashboard</title>
     <link rel="stylesheet" href="dist/tailwind.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/marked@5.1.2/marked.min.js"
+      integrity="sha384-tP9zQHkeb4OfJ9PanaUpV7hxoPxP8KY4mYVYu+FK51pzcM3/idOlmVlA4kPO2SL2"
+      crossorigin="anonymous"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"
       integrity="sha384-eEu5CTj3qGvu9PdJuS+YlkNi7d2XxQROAFYOr59zgObtlcux1ae1Il3u7jvdCSWu"
@@ -83,7 +86,6 @@
         .card {
             background: var(--white);
             border: 1px solid var(--border-low);
-            will-change: transform;
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -504,6 +506,16 @@
         document.getElementById('back-to-dashboard').addEventListener('click', e => {
             e.preventDefault();
             window.location.hash = '';
+        });
+
+        // Apply will-change dynamically on card hover for performance
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('pointerenter', () => {
+                card.style.willChange = 'transform';
+            });
+            card.addEventListener('pointerleave', () => {
+                card.style.willChange = '';
+            });
         });
 
         handleRoute();
