@@ -4,27 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Actionable Philosophy Book Club Dashboard</title>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              banner:       '#222222',
-              surface:      '#F7F7F7',
-              muted:        '#545454',
-              'spectrum-1': '#1A3A5C',
-              'spectrum-2': '#2B6CB0',
-              'spectrum-3': '#4BA3C7',
-              'spectrum-4': '#48BDB8',
-              'spectrum-5': '#72C9A8',
-              'spectrum-6': '#A8D8B9',
-            }
-          }
-        }
-      }
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="dist/tailwind.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"
+      integrity="sha384-eEu5CTj3qGvu9PdJuS+YlkNi7d2XxQROAFYOr59zgObtlcux1ae1Il3u7jvdCSWu"
+      crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -412,6 +397,16 @@
 
         marked.setOptions({ gfm: true, breaks: true });
 
+        function isSafeRepoPath(p) {
+            if (typeof p !== 'string' || p.length === 0 || p.length > 256) return false;
+            if (!p.endsWith('.md')) return false;
+            if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;   // any scheme
+            if (p.startsWith('//') || p.startsWith('/')) return false; // protocol-relative, absolute
+            if (p.startsWith('.') || p.includes('..')) return false;   // traversal
+            if (/[\\\x00-\x1f]/.test(p)) return false;           // control chars, backslash
+            return /^[A-Za-z0-9._\-/]+$/.test(p);
+        }
+
         function renderFileTree(ul, prefix) {
             Array.from(ul.children).forEach((li, i, arr) => {
                 const isLast = i === arr.length - 1;
@@ -438,7 +433,10 @@
                 const response = await fetch(path);
                 if (!response.ok) throw new Error('File not found');
                 const text = await response.text();
-                content.innerHTML = marked.parse(text);
+                content.innerHTML = DOMPurify.sanitize(marked.parse(text), {
+                    FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
+                    FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput']
+                });
 
                 content.querySelectorAll('a').forEach(link => {
                     const href = link.getAttribute('href');
@@ -462,20 +460,36 @@
                     }
                 });
             } catch (err) {
-                content.innerHTML = `<div class="py-12 text-center"><p class="text-sm uppercase tracking-widest text-muted">Could not load: ${err.message}</p></div>`;
+                console.warn('loadPage failed:', err);
+                const wrap = document.createElement('div');
+                wrap.className = 'py-12 text-center';
+                const p = document.createElement('p');
+                p.className = 'text-sm uppercase tracking-widest text-muted';
+                p.textContent = 'Document unavailable.';
+                wrap.appendChild(p);
+                content.replaceChildren(wrap);
             } finally {
                 content.setAttribute('aria-busy', 'false');
             }
         }
 
+        function showDashboard() {
+            dashboard.classList.remove('hidden-view');
+            reader.classList.add('hidden-view');
+            window.scrollTo(0, 0);
+        }
+
         function handleRoute() {
             const hash = window.location.hash;
             if (hash.startsWith('#p=')) {
-                loadPage(hash.substring(3));
+                const path = decodeURIComponent(hash.substring(3));
+                if (!isSafeRepoPath(path)) {
+                    showDashboard();
+                    return;
+                }
+                loadPage(path);
             } else {
-                dashboard.classList.remove('hidden-view');
-                reader.classList.add('hidden-view');
-                window.scrollTo(0, 0);
+                showDashboard();
             }
         }
 

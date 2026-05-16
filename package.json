@@ -1,0 +1,13 @@
+{
+  "name": "actionable-philosophy-book-club",
+  "version": "1.0.0",
+  "description": "Static SPA for philosophy book club meetings",
+  "type": "module",
+  "scripts": {
+    "build:css": "tailwindcss -i src/input.css -o dist/tailwind.css --minify --content index.html",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
