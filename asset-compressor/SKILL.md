@@ -72,6 +72,13 @@ bash scripts/rename_asset.sh <file> --meeting NN --slug <kebab-slug> [--type dee
 - `--type` — required for podcast recordings (`.mp4`/`.m4a`). Omit for primary session recordings.
 - `--dry-run` — preview the rename without moving anything.
 
+**Alternate asset detection:**
+
+If the source filename contains `-alt`, `_alt`, `-alternate`, or `_alternate`, the script treats the file as an "alternate" version. It will:
+
+- Emit a target filename with an additional `-alternate` suffix (e.g. `01-slug-alternate.mp4`).
+- Record provenance in `meetings/meeting-NN/asset-manifest.json` with `variant: 'alternate'` and `source_filename` set to the original filename.
+
 **Example — rename a new podcast:**
 
 ```bash

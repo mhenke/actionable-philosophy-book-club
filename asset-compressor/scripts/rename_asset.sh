@@ -98,6 +98,24 @@ else
     FILENAME="${MEETING_PAD}-${SLUG}.${EXT_LOWER}"
 fi
 
+# Detect alternate filename patterns (-alt, _alt, -alternate, _alternate)
+BASENAME=$(basename "$INPUT")
+IS_ALTERNATE=false
+if [[ "$BASENAME" =~ (-|_)(alt|alternate)(\.|_|-|$) ]]; then
+    IS_ALTERNATE=true
+    SOURCE_FILENAME="$BASENAME"
+    echo "Detected alternate asset: $SOURCE_FILENAME"
+fi
+
+# If alternate adjust target filename to include -alternate suffix
+if [ "$IS_ALTERNATE" = true ]; then
+    if [[ "$FILENAME" == *."${EXT_LOWER}" ]]; then
+        FILENAME="${FILENAME%.*}-alternate.${EXT_LOWER}"
+    else
+        FILENAME="${FILENAME}-alternate"
+    fi
+fi
+
 TARGET_DIR="${MEETING_DIR}/${SUBDIR}"
 TARGET="${TARGET_DIR}/${FILENAME}"
 
@@ -117,4 +135,34 @@ fi
 
 mkdir -p "$TARGET_DIR"
 mv "$INPUT" "$TARGET"
+
 echo "Done."
+
+# If this was detected as an alternate, record provenance in a simple JSON manifest
+if [ "$IS_ALTERNATE" = true ]; then
+    MANIFEST_FILE="${MEETING_DIR}/asset-manifest.json"
+    python3 - <<PY
+import json, os
+mf = '${MANIFEST_FILE}'
+entry = {
+  '${FILENAME}': {
+    'variant': 'alternate',
+    'source_filename': '${SOURCE_FILENAME}'
+  }
+}
+if os.path.exists(mf):
+    try:
+        with open(mf, 'r') as f:
+            data = json.load(f)
+    except Exception:
+        data = {}
+else:
+    data = {}
+# Merge
+for k,v in entry.items():
+    data[k] = v
+with open(mf, 'w') as f:
+    json.dump(data, f, indent=2)
+print('Wrote manifest:', mf)
+PY
+fi
