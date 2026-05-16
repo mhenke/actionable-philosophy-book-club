@@ -27,7 +27,7 @@ A muted blue → teal → sage green gradient spectrum on white.
 ## Typography: Swiss / International Style
 Zero decorative type. Hierarchy is achieved entirely through **weight contrast** rather than size or color variation.
 
-- **Typeface:** Prefer the system font stack (ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans', 'Liberation Sans', sans-serif). If Inter is required for brand fidelity, self-host Inter font files and add an @font-face block in the CSS; avoid external Google Fonts to keep CSP strict and privacy-friendly.
+- **Typeface:** System font stack (ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans', 'Liberation Sans', sans-serif). This ensures zero-latency rendering and matches the "Zero Ceremony" mandate. Inter font files are self-hosted in `assets/fonts/` as a fallback for specific brand-critical elements if needed.
 - **Titles (Large/Primary):** All-caps, **Medium weight**, tight tracking (`-0.04em`).
 - **Author/Metadata:** All-caps, **Light/Thin weight**, set noticeably smaller or to the right of titles.
 - **Body:** Sans-serif, high-legibility, standard case. Line length capped at **65–75ch**.

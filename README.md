@@ -19,7 +19,7 @@ For the best experience, including mobile-optimized navigation, meeting agendas,
 
 ## 📂 Repository at a Glance
 
-*   **[`meetings/`](meetings/)**: Historical notes, slides, and recordings for every session.
+*   **[`meetings/`](meetings/)**: Historical notes, slides, and video recaps for every session.
 *   **[`docs/`](docs/)**: Design principles, glossary, and architectural decisions.
 *   **[`templates/`](templates/)**: Scaffolding for new meetings and AI prompt templates.
 *   **[`asset-compressor/`](asset-compressor/)**: Custom AI tool for optimizing repository media.
