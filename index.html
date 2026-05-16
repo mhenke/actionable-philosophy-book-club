@@ -180,6 +180,11 @@
         .prose ul ul { list-style-type: circle; margin-top: 0.25rem; margin-bottom: 0.25rem; }
         .prose ol { list-style-type: decimal; margin-bottom: 1.25rem; padding-left: 1.5rem; }
         .prose li { margin-bottom: 0.4rem; color: var(--text-muted); }
+        /* Indent bullet lists that sit under h3 subheaders */
+        .prose h3 + ul { padding-left: 2.25rem; }
+        /* Task list items (- [ ]) — show only the checkbox, not disc + square */
+        .prose li:has(input[type="checkbox"]) { list-style-type: none; margin-left: -0.25rem; }
+        .prose input[type="checkbox"] { margin-right: 0.5rem; accent-color: var(--spectrum-2); }
         .prose strong { color: var(--text-primary); font-weight: 600; }
         .prose blockquote { background: rgba(72,189,184,0.06); border: 1px solid rgba(72,189,184,0.2); padding: 1.25rem 1.75rem; margin: 2rem 0; font-style: italic; color: var(--text-muted); }
         .prose a { color: var(--spectrum-2); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
