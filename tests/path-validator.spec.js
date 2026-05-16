@@ -11,8 +11,7 @@ test.describe('isSafeRepoPath — valid paths', () => {
         'docs/design-principles.md',
         'templates/prompts/README.md',
         'meetings/meeting-99-new/README.md',
-        'a.md',
-        'a/b/c.md',
+        'templates/discussion.md',
     ];
 
     for (const path of valid) {
@@ -42,6 +41,10 @@ test.describe('isSafeRepoPath — rejected paths', () => {
         ['meetings/meeting-01/README.md.exe', 'double extension'],
         ['a'.repeat(257) + '.md',             'path over 256 chars'],
         ['.hidden/README.md',                 'starts with dot'],
+        ['node_modules/lodash/README.md',     'node_modules directory'],
+        ['dist/something.md',                 'dist build artifact'],
+        ['assets/fonts/something.md',         'assets directory not in allowlist'],
+        ['package-lock.md',                   'root-level file (no directory)'],
     ];
 
     for (const [path, reason] of invalid) {

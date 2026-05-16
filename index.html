@@ -6,12 +6,11 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
     <link rel="stylesheet" href="dist/tailwind.css">
-    <link rel="stylesheet" href="assets/fonts/fonts.css">
-    <script
+    <script defer
       src="https://cdn.jsdelivr.net/npm/marked@5.1.2/marked.min.js"
       integrity="sha384-tP9zQHkeb4OfJ9PanaUpV7hxoPxP8KY4mYVYu+FK51pzcM3/idOlmVlA4kPO2SL2"
       crossorigin="anonymous"></script>
-    <script
+    <script defer
       src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"
       integrity="sha384-eEu5CTj3qGvu9PdJuS+YlkNi7d2XxQROAFYOr59zgObtlcux1ae1Il3u7jvdCSWu"
       crossorigin="anonymous"></script>
@@ -289,6 +288,10 @@
     </style>
 </head>
 <body>
+    <a href="#main-content"
+       class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:bg-white focus:text-spectrum-1 focus:font-semibold focus:shadow-lg">
+        Skip to main content
+    </a>
 
     <!-- Dashboard View -->
     <div id="dashboard-view">
@@ -300,7 +303,7 @@
             <div class="spectrum-bar"></div>
         </header>
 
-        <main class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 pt-14 pb-24">
+        <main id="main-content" tabindex="-1" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 py-10 pb-24">
 
             <!-- Next Session -->
             <section class="card p-6 md:p-8 border-t-4 border-spectrum-2">
@@ -329,10 +332,10 @@
 
             <!-- Archive -->
             <div>
-                <h3 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
+                <h2 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     The Archive
                     <span class="spectrum-rule"></span>
-                </h3>
+                </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="archive-cards-container">
                     <!-- Cards rendered by JavaScript -->
@@ -341,10 +344,10 @@
 
             <!-- Knowledge Base -->
             <div>
-                <h3 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
+                <h2 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     Knowledge Base
                     <span class="spectrum-rule"></span>
-                </h3>
+                </h2>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
                         <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true">📚</span>
@@ -489,8 +492,6 @@
             }
         ];
 
-        marked.use({ gfm: true, breaks: true });
-
         function prefetchMarkdown(path) {
             // Fire-and-forget: fetch markdown into cache if not already cached
             if (mdCache.has(path)) return; // Already cached, nothing to do
@@ -521,8 +522,127 @@
             });
         }
 
-        function hasPlaceholderAssetPath(path) {
-            return /FILENAME/i.test(path);
+        function escapeHTML(s) {
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[c]));
+        }
+
+        function isSafeAssetPath(p) {
+            if (typeof p !== 'string' || p.length === 0 || p.length > 256) return false;
+            if (p.includes('..')) return false;
+            return /^(meetings|assets)\/[A-Za-z0-9._\-/]+\.(mp4|m4a|pptx|pdf|png|jpg|jpeg|webp)$/i.test(p);
+        }
+
+        // Shared rendering constants
+        const PODCAST_CONFIG = {
+            'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
+            'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
+            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
+        };
+
+        const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
+
+        function buildOfficeViewerURL(path) {
+            if (!isSafeAssetPath(path)) return '#';
+            const src = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/' + path;
+            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(src);
+        }
+
+        function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
+            const rows = [];
+
+            if (meeting.video && isSafeAssetPath(meeting.video.file)) {
+                rows.push(`
+                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical">
+                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
+                            ${escapeHTML(meeting.video.label)}
+                        </a>
+                        <a href="${escapeHTML(meeting.video.file)}" download
+                           aria-label="Download video — ${escapeHTML(meeting.session)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+
+                (meeting.podcasts || [])
+                    .filter(p => p.variant === 'alternate' || p.type === 'alternate')
+                    .forEach(alt => {
+                        if (!isSafeAssetPath(alt.file)) return;
+                        const altIcon = alt.file.endsWith('.mp4') ? '🎬' : '🎙';
+                        rows.push(`
+                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-alternate">
+                        <a href="${escapeHTML(alt.file)}" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${altIcon}</span>
+                            ${escapeHTML(alt.label || 'Alternate Recording')}
+                            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted ml-auto">Alt</span>
+                        </a>
+                        <a href="${escapeHTML(alt.file)}" download
+                           aria-label="Download alternate — ${escapeHTML(meeting.session)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+                    });
+            } else if (includePlaceholders) {
+                rows.push(`
+                    <div class="asset-row opacity-50">
+                        <span class="asset-link cursor-default">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
+                            Video Recording <span class="text-[9px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                        </span>
+                    </div>`);
+            }
+
+            if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
+                rows.push(`
+                    <div class="asset-row">
+                        <a href="${buildOfficeViewerURL(meeting.slides.file)}" target="_blank" rel="noopener" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
+                            ${escapeHTML(meeting.slides.label)}
+                        </a>
+                        <a href="${escapeHTML(meeting.slides.file)}" download
+                           aria-label="Download slides — ${escapeHTML(meeting.session)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+            } else if (includePlaceholders) {
+                rows.push(`
+                    <div class="asset-row opacity-50">
+                        <span class="asset-link cursor-default">
+                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
+                            Slide Deck <span class="text-[9px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                        </span>
+                    </div>`);
+            }
+
+            (meeting.podcasts || [])
+                .filter(p => p.variant !== 'alternate' && p.type !== 'alternate')
+                .forEach(pod => {
+                    if (!isSafeAssetPath(pod.file)) return;
+                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
+                    rows.push(`
+                    <div class="asset-row">
+                        <a href="${escapeHTML(pod.file)}" class="asset-link">
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
+                            ${escapeHTML(pod.label)}
+                            <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
+                        </a>
+                        <a href="${escapeHTML(pod.file)}" download
+                           aria-label="Download ${escapeHTML(pod.label)}"
+                           class="asset-dl">${DL_ICON}</a>
+                    </div>`);
+                });
+
+            const resourceStrip = (meeting.resources || []).length > 0
+                ? `<div class="resource-strip">${
+                    (meeting.resources || [])
+                        .filter(r => isSafeAssetPath(r.file))
+                        .map(res => `
+                        <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener" class="resource-thumb">
+                            <img src="${escapeHTML(res.file)}" alt="${escapeHTML(res.label)}" loading="lazy" width="200" height="80">
+                            <span>${escapeHTML(res.label)}</span>
+                        </a>`).join('')}
+                </div>`
+                : '';
+
+            return { rows, resourceStrip };
         }
 
         function escapeHTML(value) {
@@ -544,107 +664,13 @@
         function renderUpcomingMaterials() {
             const container = document.getElementById('upcoming-materials-container');
             if (!container) return;
-
             const meeting = MEETINGS.find(m => m.status === 'upcoming');
             if (!meeting) return;
-
-            const podcastConfig = {
-                'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
-                'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
-                'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
-            };
-
-            const dlIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
-
-            const rows = [];
-            const placeholderRow = (icon, label, copy) => `
-                <div class="asset-row">
-                    <div class="asset-link">
-                        <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">${icon}</span>
-                        <div>
-                            <div>${label}</div>
-                            <div class="text-[9px] text-muted font-semibold mt-0.5">${copy}</div>
-                        </div>
-                    </div>
-                </div>`;
-
-            if (meeting.video) {
-                if (isSafeAssetPath(meeting.video.file)) {
-                    // Canonical video row
-                    rows.push(`
-                        <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical">
-                            <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
-                                <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                                ${escapeHTML(meeting.video.label)}
-                            </a>
-                            <a href="${escapeHTML(meeting.video.file)}" download aria-label="Download video recap" class="asset-dl">${dlIcon}</a>
-                        </div>`);
-                    // Render any alternates associated with this meeting (e.g., variant==='alternate')
-                    const altItems = [];
-                    if (meeting.video.variant === 'alternate') altItems.push(meeting.video);
-                    (meeting.podcasts || []).forEach(p => { if (p.variant === 'alternate') altItems.push(p); });
-
-                    altItems.filter(a => isSafeAssetPath(a.file)).forEach(a => {
-                        const icon = a.file.endsWith('.mp4') ? '🎬' : '🎙';
-                        rows.push(`
-                            <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-alternate">
-                                <a href="${escapeHTML(a.file)}" class="asset-link">
-                                    <span class="icon-pill" style="background: var(--wash-3-border);">${icon}</span>
-                                    ${escapeHTML(a.label)}
-                                </a>
-                                <a href="${escapeHTML(a.file)}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
-                            </div>`);
-                    });
-                }
-            } else {
-                rows.push(placeholderRow('🎬', 'Video Recap', 'Coming Soon'));
-            }
-
-            if (meeting.slides) {
-                if (isSafeAssetPath(meeting.slides.file)) {
-                    rows.push(`
-                        <div class="asset-row">
-                            <a href="${escapeHTML(`https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/${meeting.slides.file}`)}" target="_blank" rel="noopener" class="asset-link">
-                                <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                                ${escapeHTML(meeting.slides.label)}
-                            </a>
-                            <a href="${escapeHTML(meeting.slides.file)}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
-                        </div>`);
-                }
-            } else {
-                rows.push(placeholderRow('📊', 'Slide Deck', 'Coming Soon'));
-            }
-
-            (meeting.podcasts || [])
-                .filter(p => p.variant !== 'alternate' && p.type !== 'alternate' && isSafeAssetPath(p.file))
-                .forEach(pod => {
-                    const cfg = podcastConfig[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
-                    rows.push(`
-                        <div class="asset-row">
-                            <a href="${escapeHTML(pod.file)}" class="asset-link">
-                                <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                                ${escapeHTML(pod.label)}
-                                <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
-                            </a>
-                            <a href="${escapeHTML(pod.file)}" download aria-label="Download ${escapeHTML(pod.label)}" class="asset-dl">${dlIcon}</a>
-                        </div>`);
-                });
-
-            const safeResources = (meeting.resources || []).filter(res => isSafeAssetPath(res.file));
-            const resourceStrip = safeResources.length > 0 ? `
-                <div class="resource-strip">
-                    ${safeResources.map(res => `
-                    <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener" class="resource-thumb">
-                        <img src="${escapeHTML(res.file)}" alt="${escapeHTML(res.label)}" loading="lazy">
-                        <span>${escapeHTML(res.label)}</span>
-                    </a>`).join('')}
-                </div>` : '';
-
+            const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
             if (rows.length === 0 && !resourceStrip) {
-                container.innerHTML = `<p class="text-[9px] font-semibold text-muted">Materials available closer to the meeting.</p>`;
+                container.innerHTML = `<p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted">Materials available closer to the meeting.</p>`;
                 return;
             }
-
             container.innerHTML = rows.join('') + resourceStrip;
         }
 
@@ -658,81 +684,17 @@
                 'spectrum-1': '#1A3A5C',
                 'spectrum-2': '#2B6CB0',
                 'spectrum-3': '#4BA3C7',
+                'spectrum-4': '#48BDB8',
+                'spectrum-5': '#72C9A8',
+                'spectrum-6': '#A8D8B9',
             };
-
-            const podcastConfig = {
-                'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
-                'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
-                'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
-            };
-
-            const dlIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
 
             MEETINGS.filter(m => m.status === 'done').forEach(meeting => {
-                const colorValue = colorMap[meeting.color];
+                const colorValue = colorMap[meeting.color] || colorMap['spectrum-1'];
                 const metadataColor = (meeting.color === 'spectrum-1' || meeting.color === 'spectrum-2')
-                    ? colorValue
-                    : colorMap['spectrum-2'];
+                    ? colorValue : colorMap['spectrum-2'];
 
-                // Canonical video row for archive
-                const videoRow = meeting.video && isSafeAssetPath(meeting.video.file) ? `
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical">
-                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            ${escapeHTML(meeting.video.label)}
-                        </a>
-                        <a href="${escapeHTML(meeting.video.file)}" download aria-label="Download video recap" class="asset-dl">${dlIcon}</a>
-                    </div>` : '';
-
-                const slidesRow = meeting.slides && isSafeAssetPath(meeting.slides.file) ? `
-                    <div class="asset-row">
-                        <a href="${escapeHTML(`https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/${meeting.slides.file}`)}" target="_blank" rel="noopener" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            ${escapeHTML(meeting.slides.label)}
-                        </a>
-                        <a href="${escapeHTML(meeting.slides.file)}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
-                    </div>` : '';
-
-                const podcastRows = (meeting.podcasts || [])
-                    .filter(p => p.variant !== 'alternate' && p.type !== 'alternate' && isSafeAssetPath(p.file))
-                    .map(pod => {
-                        const cfg = podcastConfig[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
-                        return `
-                    <div class="asset-row">
-                        <a href="${escapeHTML(pod.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                            ${escapeHTML(pod.label)}
-                            <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
-                        </a>
-                        <a href="${escapeHTML(pod.file)}" download aria-label="Download ${escapeHTML(pod.label)}" class="asset-dl">${dlIcon}</a>
-                    </div>`;
-                    }).join('');
-
-                const safeResources = (meeting.resources || []).filter(res => isSafeAssetPath(res.file));
-                const resourceStrip = safeResources.length > 0 ? `
-                    <div class="resource-strip">
-                        ${safeResources.map(res => `
-                        <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener" class="resource-thumb">
-                            <img src="${escapeHTML(res.file)}" alt="${escapeHTML(res.label)}" loading="lazy">
-                            <span>${escapeHTML(res.label)}</span>
-                        </a>`).join('')}
-                    </div>` : '';
-
-                // Build alternates listing (preserve as a compact sub-row)
-                const altItems = [];
-                if (meeting.video && meeting.video.variant === 'alternate') altItems.push(meeting.video);
-                (meeting.podcasts || []).forEach(p => { if (p.variant === 'alternate') altItems.push(p); });
-                const altRows = altItems.filter(a => isSafeAssetPath(a.file)).map(a => {
-                    const icon = a.file.endsWith('.mp4') ? '🎬' : '🎙';
-                    return `
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-alternate">
-                        <a href="${escapeHTML(a.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);">${icon}</span>
-                            ${escapeHTML(a.label)}
-                        </a>
-                        <a href="${escapeHTML(a.file)}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
-                    </div>`;
-                }).join('');
+                const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
 
                 const card = document.createElement('div');
                 card.className = 'card p-6 border-t-2';
@@ -743,14 +705,11 @@
                     <div class="flex justify-between items-start mb-5 gap-3">
                         <div>
                             <span class="text-[9px] font-semibold uppercase tracking-[0.25em] block mb-1" style="color:${metadataColor}">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
-                            <h4 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h4>
+                            <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
                         </div>
                         <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
                     </div>
-                    ${videoRow}
-                    ${altRows}
-                    ${slidesRow}
-                    ${podcastRows}
+                    ${rows.join('')}
                     ${resourceStrip}
                     <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color:${colorValue}" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
                 `;
@@ -760,13 +719,16 @@
         }
 
         function isSafeRepoPath(p) {
-            if (typeof p !== 'string' || p.length === 0 || p.length > 256) return false;
+            if (!p || typeof p !== 'string') return false;
+            if (p.length === 0 || p.length > 256) return false;
             if (!p.endsWith('.md')) return false;
-            if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;   // any scheme
-            if (p.startsWith('//') || p.startsWith('/')) return false; // protocol-relative, absolute
-            if (p.startsWith('.') || p.includes('..')) return false;   // traversal
-            if (/[\\\x00-\x1f]/.test(p)) return false;           // control chars, backslash
-            return /^[A-Za-z0-9._\-/]+$/.test(p);
+            if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;
+            if (p.startsWith('//') || p.startsWith('/')) return false;
+            if (p.startsWith('.') || p.includes('..')) return false;
+            if (!/^[A-Za-z0-9._\-/]+$/.test(p)) return false;
+            // Allowlist: only paths under known content directories
+            const firstSegment = p.split('/')[0];
+            return new Set(['meetings', 'docs', 'templates']).has(firstSegment);
         }
 
         function renderFileTree(ul, prefix) {
@@ -798,6 +760,14 @@
         }
 
         async function loadPage(path) {
+            if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
+                const readerEl = document.getElementById('reader-view');
+                const contentEl = document.getElementById('markdown-content');
+                if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and reload.</p>';
+                if (readerEl) readerEl.classList.remove('hidden-view');
+                if (dashboard) dashboard.classList.add('hidden-view');
+                return;
+            }
             dashboard.classList.add('hidden-view');
             reader.classList.remove('hidden-view');
             reader.focus({ preventScroll: true });
@@ -863,6 +833,12 @@
             reader.classList.add('hidden-view');
             readerStatus.textContent = '';
             window.scrollTo(0, 0);
+            const mainEl = document.getElementById('main-content');
+            if (mainEl) mainEl.focus({ preventScroll: true });
+            if (readerStatus) {
+                readerStatus.textContent = 'Dashboard';
+                setTimeout(() => { if (readerStatus) readerStatus.textContent = ''; }, 1000);
+            }
         }
 
         function handleRoute() {
@@ -897,6 +873,7 @@
             window.location.hash = '';
         });
 
+        // Runs immediately — no CDN dependency
         renderUpcomingMaterials();
         renderArchiveCards();
         attachPrefetchListeners();
@@ -912,7 +889,13 @@
             });
         });
 
-        handleRoute();
+        // Wait for CDN libs before enabling the reader
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof marked !== 'undefined') {
+                marked.use({ gfm: true, breaks: true, headerIds: false, mangle: false });
+            }
+            handleRoute();
+        });
     </script>
 </body>
 </html>
