@@ -522,14 +522,30 @@
                 </div>`;
 
             if (meeting.video) {
+                // Canonical video row
                 rows.push(`
-                    <div class="asset-row">
+                    <div class="asset-row" data-testid="${meeting.id}-canonical">
                         <a href="${meeting.video.file}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            Video Recap
+                            ${meeting.video.label}
                         </a>
                         <a href="${meeting.video.file}" download aria-label="Download video recap" class="asset-dl">${dlIcon}</a>
                     </div>`);
+                // Render any alternates associated with this meeting (e.g., variant==='alternate')
+                const altItems = [];
+                if (meeting.video && meeting.video.variant === 'alternate') altItems.push(meeting.video);
+                (meeting.podcasts || []).forEach(p => { if (p.variant === 'alternate') altItems.push(p); });
+                if (altItems.length > 0) {
+                    rows.push(`
+                        <div class="asset-row" data-testid="${meeting.id}-alternate">
+                            ${altItems.map(a => `
+                                <div style="display:inline-block;margin-right:0.75rem;">
+                                    <a href="${a.file}" class="asset-link">${a.label}</a>
+                                    <a href="${a.file}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
+                                </div>
+                            `).join('')}
+                        </div>`);
+                }
             } else {
                 rows.push(placeholderRow('🎬', 'Video Recap', 'Coming Soon'));
             }
@@ -603,8 +619,9 @@
                     ? colorValue
                     : colorMap['spectrum-2'];
 
+                // Canonical video row for archive
                 const videoRow = meeting.video ? `
-                    <div class="asset-row">
+                    <div class="asset-row" data-testid="${meeting.id}-canonical">
                         <a href="${meeting.video.file}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                             ${meeting.video.label}
@@ -621,7 +638,7 @@
                         <a href="${meeting.slides.file}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
                     </div>` : '';
 
-                const podcastRows = (meeting.podcasts || []).map(pod => {
+                const podcastRows = (meeting.podcasts || []).filter(p => p.variant !== 'alternate').map(pod => {
                     const cfg = podcastConfig[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
                     return `
                     <div class="asset-row">
@@ -643,6 +660,20 @@
                         </a>`).join('')}
                     </div>` : '';
 
+                // Build alternates listing (preserve as a compact sub-row)
+                const altItems = [];
+                if (meeting.video && meeting.video.variant === 'alternate') altItems.push(meeting.video);
+                (meeting.podcasts || []).forEach(p => { if (p.variant === 'alternate') altItems.push(p); });
+                const altRows = altItems.length > 0 ? `
+                    <div class="asset-row" data-testid="${meeting.id}-alternate">
+                        ${altItems.map(a => `
+                            <div style="display:inline-block;margin-right:0.75rem;">
+                                <a href="${a.file}" class="asset-link">${a.label}</a>
+                                <a href="${a.file}" download aria-label="Download alternate" class="asset-dl">${dlIcon}</a>
+                            </div>
+                        `).join('')}
+                    </div>` : '';
+
                 const card = document.createElement('div');
                 card.className = 'card p-6 border-t-2';
                 card.style.borderTopColor = colorValue;
@@ -657,6 +688,7 @@
                         <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
                     </div>
                     ${videoRow}
+                    ${altRows}
                     ${slidesRow}
                     ${podcastRows}
                     ${resourceStrip}
