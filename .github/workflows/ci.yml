@@ -80,4 +80,24 @@ jobs:
               ERRORS=$((ERRORS+1))
             fi
           done < <(grep -oP '(?<=href=")[^"]+\.(mp4|pptx|png)(?=")' index.html)
-          [ "$ERRORS" -eq 0 ] && echo "Asset link check passed" || exit 1
+           [ "$ERRORS" -eq 0 ] && echo "Asset link check passed" || exit 1
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
