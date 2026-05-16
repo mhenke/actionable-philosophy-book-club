@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify .nojekyll exists
+        run: test -f .nojekyll
+
+      - name: Check CDN scripts have SRI integrity attributes
+        run: |
+          # Count <script> tags pointing at CDN URLs
+          CDN_COUNT=$(grep -c 'src="https://' index.html || true)
+          # Count integrity= attributes that appear within 3 lines of a CDN src
+          INTEGRITY_COUNT=$(grep -A3 'src="https://' index.html | grep -c 'integrity=' || true)
+          if [ "$CDN_COUNT" -ne "$INTEGRITY_COUNT" ]; then
+            echo "ERROR: $CDN_COUNT CDN script(s) found but only $INTEGRITY_COUNT have integrity= attribute"
+            exit 1
+          fi
+          echo "SRI check passed ($CDN_COUNT CDN script(s), all have integrity=)"
+
+      - name: Verify internal hash-route paths resolve to real files
+        run: |
+          # Match href="#p=..." — skip JS template literals like ${meeting.url}
+          ERRORS=0
+          while IFS= read -r path; do
+            [[ "$path" == \$* ]] && continue  # skip JS template literals
+            if [ ! -f "$path" ]; then
+              echo "BROKEN: #p=$path"
+              ERRORS=$((ERRORS+1))
+            fi
+          done < <(grep -oP '(?<=href="#p=)[^"]+' index.html)
+          [ "$ERRORS" -eq 0 ] && echo "Hash-route link check passed" || exit 1
+
+      - name: Verify internal asset href paths resolve to real files
+        run: |
+          ERRORS=0
+          while IFS= read -r path; do
+            [[ "$path" == \$* ]] && continue  # skip JS template literals
+            [[ "$path" == http* ]] && continue
+            if [ ! -f "$path" ]; then
+              echo "BROKEN asset href: $path"
+              ERRORS=$((ERRORS+1))
+            fi
+          done < <(grep -oP '(?<=href=")[^"]+\.(mp4|pptx|png)(?=")' index.html)
+          [ "$ERRORS" -eq 0 ] && echo "Asset link check passed" || exit 1
