@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
+    <meta name="description" content="Meeting notes, recordings, and discussion guides for A Philosophy of Software Design book club.">
+    <meta property="og:title" content="Actionable Philosophy Book Club">
+    <meta property="og:description" content="Meeting notes, recordings, and discussion guides for A Philosophy of Software Design.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mhenke.github.io/actionable-philosophy-book-club/">
     <link rel="stylesheet" href="dist/tailwind.css">
     <script defer
       src="https://cdn.jsdelivr.net/npm/marked@5.1.2/marked.min.js"
@@ -373,21 +378,17 @@
 
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view" tabindex="-1">
-        <div class="banner-bar">
-            <div class="flex items-center gap-4">
-                <a href="#" id="back-to-dashboard" class="group flex items-center text-[10px] swiss-light uppercase tracking-widest hover:text-spectrum-2 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-3 h-3 mr-1.5 group-hover:-translate-x-0.5 transition-transform" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                    Dashboard
-                </a>
-                <span class="text-white/20">|</span>
-                <h1 class="text-sm md:text-base swiss-caps">A Philosophy of Software Design</h1>
-            </div>
-            <span class="text-[10px] swiss-light hidden md:inline">Synthesis Reader</span>
-        </div>
-        <div class="spectrum-bar" style="height: 4px;"></div>
+        <nav class="banner-bar" aria-label="Reader navigation">
+            <a href="#" id="back-to-dashboard" class="text-xs swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+                Dashboard
+            </a>
+            <span class="text-[10px] swiss-light">Synthesis Reader</span>
+        </nav>
+        <div class="spectrum-bar" style="height: 2px;"></div>
 
         <div id="reader-status" role="status" class="sr-only"></div>
-        <article id="markdown-content" class="prose px-6 md:px-10 lg:px-16 pt-14 pb-24 max-w-6xl mx-auto" aria-busy="false">
+        <article id="markdown-content" class="prose px-6 md:px-10 lg:px-16 pt-12 pb-24 max-w-6xl mx-auto" aria-label="Document content" aria-busy="false">
         </article>
     </div>
 
@@ -400,7 +401,7 @@
         const reader    = document.getElementById('reader-view');
         const content   = document.getElementById('markdown-content');
         const readerStatus = document.getElementById('reader-status');
-        const mdCache   = new Map();  // Session markdown cache
+        const mdCache   = new Map();  // Session markdown cache (Promises)
 
         // Meeting data manifest
         const MEETINGS = [
@@ -492,22 +493,25 @@
             }
         ];
 
+        function fetchMarkdownCached(path) {
+            if (mdCache.has(path)) return mdCache.get(path);
+            const promise = fetch(path).then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.text();
+            });
+            mdCache.set(path, promise);
+            promise.catch(() => {
+                if (mdCache.get(path) === promise) mdCache.delete(path);
+            });
+            return promise;
+        }
         function prefetchMarkdown(path) {
             // Fire-and-forget: fetch markdown into cache if not already cached
-            if (mdCache.has(path)) return; // Already cached, nothing to do
-            
-            fetch(path)
-                .then(response => {
-                    if (response.ok) return response.text();
-                    throw new Error('Prefetch failed');
-                })
-                .then(text => {
-                    mdCache.set(path, text);
-                })
-                .catch(() => {
-                    // Silent fail: prefetch is an optimization, not critical
-                    // User will just experience normal fetch latency if they click
-                });
+            if (!isSafeRepoPath(path)) return;
+            fetchMarkdownCached(path).catch(() => {
+                // Silent fail: prefetch is an optimization, not critical
+                // User will just experience normal fetch latency if they click
+            });
         }
 
         function attachPrefetchListeners() {
@@ -522,129 +526,6 @@
             });
         }
 
-        function escapeHTML(s) {
-            return String(s).replace(/[&<>"']/g, c => ({
-                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-            }[c]));
-        }
-
-        function isSafeAssetPath(p) {
-            if (typeof p !== 'string' || p.length === 0 || p.length > 256) return false;
-            if (p.includes('..')) return false;
-            return /^(meetings|assets)\/[A-Za-z0-9._\-/]+\.(mp4|m4a|pptx|pdf|png|jpg|jpeg|webp)$/i.test(p);
-        }
-
-        // Shared rendering constants
-        const PODCAST_CONFIG = {
-            'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
-            'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
-            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
-        };
-
-        const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
-
-        function buildOfficeViewerURL(path) {
-            if (!isSafeAssetPath(path)) return '#';
-            const src = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/' + path;
-            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(src);
-        }
-
-        function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
-            const rows = [];
-
-            if (meeting.video && isSafeAssetPath(meeting.video.file)) {
-                rows.push(`
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical">
-                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            ${escapeHTML(meeting.video.label)}
-                        </a>
-                        <a href="${escapeHTML(meeting.video.file)}" download
-                           aria-label="Download video — ${escapeHTML(meeting.session)}"
-                           class="asset-dl">${DL_ICON}</a>
-                    </div>`);
-
-                (meeting.podcasts || [])
-                    .filter(p => p.variant === 'alternate' || p.type === 'alternate')
-                    .forEach(alt => {
-                        if (!isSafeAssetPath(alt.file)) return;
-                        const altIcon = alt.file.endsWith('.mp4') ? '🎬' : '🎙';
-                        rows.push(`
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-alternate">
-                        <a href="${escapeHTML(alt.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${altIcon}</span>
-                            ${escapeHTML(alt.label || 'Alternate Recording')}
-                            <span class="text-[9px] font-semibold uppercase tracking-wider text-muted ml-auto">Alt</span>
-                        </a>
-                        <a href="${escapeHTML(alt.file)}" download
-                           aria-label="Download alternate — ${escapeHTML(meeting.session)}"
-                           class="asset-dl">${DL_ICON}</a>
-                    </div>`);
-                    });
-            } else if (includePlaceholders) {
-                rows.push(`
-                    <div class="asset-row opacity-50">
-                        <span class="asset-link cursor-default">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            Video Recording <span class="text-[9px] uppercase tracking-wider ml-auto">Coming Soon</span>
-                        </span>
-                    </div>`);
-            }
-
-            if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
-                rows.push(`
-                    <div class="asset-row">
-                        <a href="${buildOfficeViewerURL(meeting.slides.file)}" target="_blank" rel="noopener" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            ${escapeHTML(meeting.slides.label)}
-                        </a>
-                        <a href="${escapeHTML(meeting.slides.file)}" download
-                           aria-label="Download slides — ${escapeHTML(meeting.session)}"
-                           class="asset-dl">${DL_ICON}</a>
-                    </div>`);
-            } else if (includePlaceholders) {
-                rows.push(`
-                    <div class="asset-row opacity-50">
-                        <span class="asset-link cursor-default">
-                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            Slide Deck <span class="text-[9px] uppercase tracking-wider ml-auto">Coming Soon</span>
-                        </span>
-                    </div>`);
-            }
-
-            (meeting.podcasts || [])
-                .filter(p => p.variant !== 'alternate' && p.type !== 'alternate')
-                .forEach(pod => {
-                    if (!isSafeAssetPath(pod.file)) return;
-                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
-                    rows.push(`
-                    <div class="asset-row">
-                        <a href="${escapeHTML(pod.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                            ${escapeHTML(pod.label)}
-                            <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
-                        </a>
-                        <a href="${escapeHTML(pod.file)}" download
-                           aria-label="Download ${escapeHTML(pod.label)}"
-                           class="asset-dl">${DL_ICON}</a>
-                    </div>`);
-                });
-
-            const resourceStrip = (meeting.resources || []).length > 0
-                ? `<div class="resource-strip">${
-                    (meeting.resources || [])
-                        .filter(r => isSafeAssetPath(r.file))
-                        .map(res => `
-                        <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener" class="resource-thumb">
-                            <img src="${escapeHTML(res.file)}" alt="${escapeHTML(res.label)}" loading="lazy" width="200" height="80">
-                            <span>${escapeHTML(res.label)}</span>
-                        </a>`).join('')}
-                </div>`
-                : '';
-
-            return { rows, resourceStrip };
-        }
-
         function escapeHTML(value) {
             return String(value).replace(/[&<>"']/g, c => ({
                 '&': '&amp;',
@@ -653,6 +534,12 @@
                 '"': '&quot;',
                 "'": '&#39;'
             }[c]));
+        }
+
+        function buildOfficeViewerURL(path) {
+            if (!isSafeAssetPath(path)) return '#';
+            const src = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/' + path;
+            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(src);
         }
 
         function isSafeAssetPath(path) {
@@ -688,18 +575,24 @@
                 'spectrum-5': '#72C9A8',
                 'spectrum-6': '#A8D8B9',
             };
+            const validWashes = new Set(['--wash-1', '--wash-2', '--wash-3', '--wash-4', '--wash-5']);
 
             MEETINGS.filter(m => m.status === 'done').forEach(meeting => {
-                const colorValue = colorMap[meeting.color] || colorMap['spectrum-1'];
-                const metadataColor = (meeting.color === 'spectrum-1' || meeting.color === 'spectrum-2')
-                    ? colorValue : colorMap['spectrum-2'];
+                const safeColorKey = (meeting.color === 'spectrum-1' || meeting.color === 'spectrum-2' || meeting.color === 'spectrum-3')
+                    ? meeting.color
+                    : 'spectrum-2';
+                const colorValue = colorMap[safeColorKey];
+                const metadataColor = (safeColorKey === 'spectrum-1' || safeColorKey === 'spectrum-2')
+                    ? colorValue
+                    : colorMap['spectrum-2'];
+                const safeWash = validWashes.has(meeting.wash) ? meeting.wash : '--wash-1';
 
                 const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
 
                 const card = document.createElement('div');
                 card.className = 'card p-6 border-t-2';
                 card.style.borderTopColor = colorValue;
-                card.style.background = `var(${meeting.wash})`;
+                card.style.background = `var(${safeWash})`;
 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-3">
@@ -711,7 +604,7 @@
                     </div>
                     ${rows.join('')}
                     ${resourceStrip}
-                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color:${colorValue}" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
+                    <a href="#p=${meeting.readmeUrl}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color:${colorValue}" data-prefetch-path="${meeting.readmeUrl}">Meeting Notes &rarr;</a>
                 `;
 
                 archiveContainer.appendChild(card);
@@ -722,15 +615,18 @@
             if (!p || typeof p !== 'string') return false;
             if (p.length === 0 || p.length > 256) return false;
             if (!p.endsWith('.md')) return false;
-            if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;
-            if (p.startsWith('//') || p.startsWith('/')) return false;
-            if (p.startsWith('.') || p.includes('..')) return false;
-            if (!/^[A-Za-z0-9._\-/]+$/.test(p)) return false;
+            if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;   // any scheme
+            if (p.startsWith('//') || p.startsWith('/')) return false; // protocol-relative, absolute
+            if (p.startsWith('.') || p.includes('..')) return false;   // traversal
+            if (/[\\\x00-\x1f]/.test(p)) return false;           // control chars, backslash
+            if (!/^[\w.\-/]+$/.test(p)) return false;
             // Allowlist: only paths under known content directories
             const firstSegment = p.split('/')[0];
             return new Set(['meetings', 'docs', 'templates']).has(firstSegment);
         }
 
+        // Looks for the first <ul> under an <h2> matching "session materials" (case-insensitive)
+        // and prepends tree connector spans to each <li>. Convention defined in docs/content-contract.md.
         function renderFileTree(ul, prefix) {
             Array.from(ul.children).forEach((li, i, arr) => {
                 const isLast = i === arr.length - 1;
@@ -749,14 +645,29 @@
             const meeting = MEETINGS.find(m => m.id === meetingId);
             const readerBar = reader.querySelector('.spectrum-bar');
             if (meeting) {
-                // Use the meeting's spectrum color for the reader's 2px bar
                 readerBar.style.background = `var(--${meeting.color})`;
                 content.style.setProperty('--prose-h3-border', `var(--wash-${meeting.color.split('-')[1]}-strong-border)`);
             } else {
-                // Default gradient for generic docs
                 readerBar.style.background = '';
                 content.style.setProperty('--prose-h3-border', 'rgba(0,0,0,0.06)');
             }
+        }
+
+        function ensureDOMPurifyHooks() {
+            if (window.__domPurifyHooksInstalled) return;
+            DOMPurify.addHook('afterSanitizeAttributes', node => {
+                if (node.tagName !== 'A') return;
+                const href = node.getAttribute('href') || '';
+                if (/^https?:/i.test(href)) {
+                    node.setAttribute('target', '_blank');
+                    node.setAttribute('rel', 'noopener noreferrer');
+                }
+                if (href && !/^(https?:|#|[A-Za-z0-9._/-]+\.md)/i.test(href)) {
+                    node.removeAttribute('href');
+                }
+            });
+            window.__domPurifyHooksInstalled = true;
+        }
         }
 
         async function loadPage(path) {
@@ -777,15 +688,8 @@
             content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading&hellip;</div>';
 
             try {
-                let text;
-                if (mdCache.has(path)) {
-                    text = mdCache.get(path);
-                } else {
-                    const response = await fetch(path);
-                    if (!response.ok) throw new Error('File not found');
-                    text = await response.text();
-                    mdCache.set(path, text);
-                }
+                const text = await fetchMarkdownCached(path);
+                ensureDOMPurifyHooks();
                 content.innerHTML = DOMPurify.sanitize(marked.parse(text), {
                     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
                     FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput']
@@ -793,15 +697,27 @@
 
                 content.querySelectorAll('a').forEach(link => {
                     const href = link.getAttribute('href');
-                    if (href && href.endsWith('.md') && !href.startsWith('http')) {
-                        const baseDir = path.substring(0, path.lastIndexOf('/') + 1);
-                        const absolutePath = new URL(href, window.location.origin + '/' + baseDir).pathname.substring(1);
-                        link.setAttribute('href', '#p=' + absolutePath);
+                    if (!href || /^https?:/i.test(href) || !href.endsWith('.md')) return;
+                    const base = new URL(path, window.location.href);
+                    const resolved = new URL(href, base);
+                    const absolutePath = resolved.pathname.slice(1);
+                    if (!isSafeRepoPath(absolutePath)) {
+                        link.removeAttribute('href');
+                        link.setAttribute('aria-disabled', 'true');
+                        link.setAttribute('title', 'Link target is outside allowed directories');
+                        return;
                     }
+                    link.setAttribute('href', '#p=' + absolutePath);
                 });
+                const h1 = content.querySelector('h1');
+                if (h1) {
+                    document.title = `${h1.textContent.trim()} — Actionable Philosophy Book Club`;
+                }
 
                 content.querySelectorAll('h2').forEach(h2 => {
                     if (/session materials/i.test(h2.textContent)) {
+                        // Looks for the first <ul> under an <h2> matching "session materials" (case-insensitive)
+                        // and prepends tree connector spans to each <li>. Convention defined in docs/content-contract.md.
                         let el = h2.nextElementSibling;
                         while (el && el.tagName !== 'H2') {
                             if (el.tagName === 'UL') {
@@ -814,14 +730,13 @@
                 });
                 readerStatus.textContent = 'Document loaded.';
             } catch (err) {
-                console.warn('loadPage failed:', err);
-                const wrap = document.createElement('div');
-                wrap.className = 'py-12 text-center';
-                const p = document.createElement('p');
-                p.className = 'text-sm uppercase tracking-widest text-muted';
-                p.textContent = 'Document unavailable.';
-                wrap.appendChild(p);
-                content.replaceChildren(wrap);
+                console.warn('loadPage failed:', err?.message || err);
+                history.replaceState(null, '', window.location.pathname + window.location.search);
+                content.innerHTML = `
+                    <div class="py-12 text-center">
+                        <p class="text-sm uppercase tracking-widest text-muted mb-4">Document unavailable.</p>
+                        <a href="#" class="text-sm uppercase tracking-widest underline">Return to Dashboard</a>
+                    </div>`;
                 readerStatus.textContent = 'Document unavailable.';
             } finally {
                 content.setAttribute('aria-busy', 'false');
@@ -832,6 +747,7 @@
             dashboard.classList.remove('hidden-view');
             reader.classList.add('hidden-view');
             readerStatus.textContent = '';
+            document.title = 'Actionable Philosophy Book Club';
             window.scrollTo(0, 0);
             const mainEl = document.getElementById('main-content');
             if (mainEl) mainEl.focus({ preventScroll: true });

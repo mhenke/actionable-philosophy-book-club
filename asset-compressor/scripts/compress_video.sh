@@ -2,8 +2,10 @@
 # scripts/compress_video.sh
 # Usage: ./compress_video.sh input.(mp4|m4a) output.(mp4|m4a)
 
-INPUT="$1"
-OUTPUT="$2"
+set -euo pipefail
+
+INPUT="${1-}"
+OUTPUT="${2-}"
 
 if [ -z "$INPUT" ] || [ -z "$OUTPUT" ]; then
   echo "Usage: $0 input.(mp4|m4a) output.(mp4|m4a)" >&2
@@ -13,19 +15,31 @@ fi
 EXT="${INPUT##*.}"
 EXT_LOWER="${EXT,,}"
 
+run_ffmpeg() {
+  local log
+  log=$(mktemp)
+  if ! ffmpeg "$@" < /dev/null 2>"$log"; then
+    echo "ffmpeg failed. Last 20 lines:" >&2
+    tail -n 20 "$log" >&2
+    rm -f "$log"
+    exit 1
+  fi
+  rm -f "$log"
+}
+
 if [ "$EXT_LOWER" = "m4a" ]; then
   # Audio-only: remux to AAC at 128k, no video codec needed
-  ffmpeg -i "$INPUT" -acodec aac -b:a 128k -vn -y "$OUTPUT" < /dev/null 2>/dev/null
+  run_ffmpeg -i "$INPUT" -acodec aac -b:a 128k -vn -y "$OUTPUT"
 else
   # Video: x264 with 720p cap and AAC audio
-  ffmpeg -i "$INPUT" -vcodec libx264 -crf 28 -preset medium \
+  run_ffmpeg -i "$INPUT" -vcodec libx264 -crf 28 -preset medium \
          -vf "scale='min(1280,iw)':-2" -acodec aac -b:a 128k \
-         -movflags +faststart -y "$OUTPUT" < /dev/null 2>/dev/null
+         -movflags +faststart -y "$OUTPUT"
 
   if [ ! -s "$OUTPUT" ]; then
-    ffmpeg -i "$INPUT" -vcodec libx264 -crf 28 -preset medium \
+    run_ffmpeg -i "$INPUT" -vcodec libx264 -crf 28 -preset medium \
            -vf "scale='min(1280,iw)':-2" -acodec aac -b:a 128k \
-           -movflags +faststart -f "$EXT_LOWER" -y "$OUTPUT" < /dev/null 2>/dev/null
+           -movflags +faststart -f "$EXT_LOWER" -y "$OUTPUT"
   fi
 fi
 

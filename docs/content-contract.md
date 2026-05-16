@@ -97,6 +97,25 @@ This ensures that clicking links from within a meeting note navigates within the
 
 ---
 
+## Asset Manifest Files (`asset-manifest.json`)
+
+Each meeting directory may contain an `asset-manifest.json` file written by `rename_asset.sh` when alternate asset variants are organized.
+
+This file is a provenance log — it is not read by `index.html`. The dashboard reads only the `MEETINGS` array in `index.html`. The manifest does not need to match `index.html` and is not validated by CI.
+
+Schema:
+
+```json
+{
+  "<target-filename>": {
+    "variant": "alternate",
+    "source_filename": "<original-filename>"
+  }
+}
+```
+
+---
+
 ## Special Characters & URL Safety
 
 Heading and file names should:
@@ -133,6 +152,32 @@ The GitHub Actions CI pipeline also runs this check on every push.
 
 ---
 
+## Dashboard Manifest Fields
+
+When adding a meeting to the `MEETINGS` array in `index.html`, these fields control dashboard rendering:
+
+### Required fields
+- `id` — `'meeting-NN'` matching the directory name
+- `session` — display label e.g. `'Session 01'`
+- `date` — display date e.g. `'01 May 26'`
+- `title` — short session title
+- `status` — `'done'` | `'upcoming'` | `'draft'`
+- `color` — **only** `'spectrum-1'`, `'spectrum-2'`, or `'spectrum-3'` (other values silently break card styling)
+- `wash` — CSS variable name: `'--wash-1'` through `'--wash-5'`
+- `readmeUrl` — relative path e.g. `'meetings/meeting-01/README.md'`
+
+### Asset fields
+- `video` — `{ file, label }` or `null` for upcoming/no-recording
+- `slides` — `{ file, label }` or `null`
+- `podcasts` — array of `{ type, label, file }` where `type` is one of:
+  - `'deep-dive'` — 🎙 badge, steel blue
+  - `'critique'` — 🔍 badge, navy
+  - `'debate'` — ⚔️ badge, medium blue
+  - (Use `variant: 'alternate'` for alternate recordings, not a `type`)
+- `resources` — array of `{ label, file }` for PNG/image thumbnails shown in cards
+
+---
+
 ## Questions?
 
 If a heading or link structure isn't working as expected:
@@ -140,4 +185,3 @@ If a heading or link structure isn't working as expected:
 2. Verify all asset paths are relative and point to files that exist
 3. Run the link checker locally before pushing
 4. Open an issue with the file path and what behavior you expected
-

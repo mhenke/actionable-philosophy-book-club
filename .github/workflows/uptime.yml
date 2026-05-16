@@ -1,0 +1,22 @@
+name: Uptime Check
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  uptime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check site is up
+        run: |
+          STATUS=$(curl -s -o /dev/null -w '%{http_code}' \
+            https://mhenke.github.io/actionable-philosophy-book-club/ \
+            --max-time 15 || echo "000")
+          echo "HTTP status: $STATUS"
+          [ "$STATUS" = "200" ] || (echo "Site returned HTTP $STATUS — check GitHub Pages"; exit 1)

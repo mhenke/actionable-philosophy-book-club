@@ -56,6 +56,17 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#reader-view')).toBeVisible();
     });
 
+    test('network rejection leaves reader in recoverable state', async ({ page }) => {
+        await page.route('**/meetings/meeting-01/README.md', route => route.abort('failed'));
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForLoadState('networkidle');
+
+        await expect(page.locator('#markdown-content')).toHaveAttribute('aria-busy', 'false');
+        await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
+        await page.getByRole('link', { name: 'Return to Dashboard' }).click();
+        await expect(page.locator('#dashboard-view')).toBeVisible();
+    });
+
     test('markdown cache: same path fetched only once per session', async ({ page }) => {
         let fetchCount = 0;
         await page.route('**/meetings/meeting-01/README.md', route => {

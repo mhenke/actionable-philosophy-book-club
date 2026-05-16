@@ -12,6 +12,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +21,9 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
+
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
 
       - name: Check for unregistered meeting directories
         run: |
@@ -61,6 +65,12 @@ jobs:
           fi
           echo "Image size check passed."
 
+      - name: ShellCheck bash scripts
+        run: |
+          shellcheck tests/check-links.sh
+          shellcheck asset-compressor/scripts/rename_asset.sh
+          shellcheck asset-compressor/scripts/compress_video.sh
+
       - name: Verify .nojekyll exists
         run: test -f .nojekyll
 
@@ -92,7 +102,7 @@ jobs:
           # Match href="#p=..." — skip JS template literals like ${meeting.url}
           ERRORS=0
           while IFS= read -r path; do
-            [[ "$path" == \$* ]] && continue  # skip JS template literals
+            [[ "$path" =~ ^\$\{ ]] && continue  # skip JS template literals
             if [ ! -f "$path" ]; then
               echo "BROKEN: #p=$path"
               ERRORS=$((ERRORS+1))
@@ -103,17 +113,34 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
+
+      - name: Verify Tailwind CSS is up to date
+        run: |
+          cp dist/tailwind.css dist/tailwind.css.committed
+          npm run build:css
+          if ! diff -q dist/tailwind.css.committed dist/tailwind.css > /dev/null; then
+            echo "ERROR: dist/tailwind.css is stale. Run 'npm run build:css' and commit the result."
+            exit 1
+          fi
+          echo "Tailwind CSS is up to date."
+          rm dist/tailwind.css.committed
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
         run: npm test
 
+      - name: Run link checker
+        run: npm run test:links
+
       - name: Verify internal asset href paths resolve to real files
         run: |
           ERRORS=0
           while IFS= read -r path; do
-            [[ "$path" == \$* ]] && continue  # skip JS template literals
+            [[ "$path" =~ ^\$\{ ]] && continue  # skip JS template literals
             [[ "$path" == http* ]] && continue
             if [ ! -f "$path" ]; then
               echo "BROKEN asset href: $path"
