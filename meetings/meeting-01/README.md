@@ -37,7 +37,7 @@ A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software 
 - [01-non-obvious-insights.md](01-non-obvious-insights.md)
 - [recordings/](recordings/)
   - [01-The-Architects-of-Complexity.mp4](recordings/01-The-Architects-of-Complexity.mp4)
-  - [01-The-Clean-Code-Paradox-Architecting-Deep-Systems.mp4](recordings/01-The-Clean-Code-Paradox-Architecting-Deep-Systems.mp4)
+  
   - [01-strategic-software-design-and-deep-modules-deep-dive.m4a](recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a)
   - [01-deep-modules-versus-clean-code-for-ai-debate.m4a](recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a)
   - [01-deep-modules-versus-the-ai-tactical-tornado-critique.m4a](recordings/01-deep-modules-versus-the-ai-tactical-tornado-critique.m4a)

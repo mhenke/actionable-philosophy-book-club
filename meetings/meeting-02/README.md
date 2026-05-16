@@ -37,6 +37,7 @@ A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This
 - [02-non-obvious-insights.md](02-non-obvious-insights.md)
 - [recordings/](recordings/)
   - [02-complexity-governance-the-four-pillars-of-deep-modules.mp4](recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4)
+  - [02-Clean-Code-Paradox-deep-dive.mp4](recordings/02-Clean-Code-Paradox-deep-dive.mp4)
 - [resources/](resources/)
   - [02-four-strategies.png](resources/02-four-strategies.png)
   - [02-choose-your-next-meeting.png](resources/02-choose-your-next-meeting.png)
