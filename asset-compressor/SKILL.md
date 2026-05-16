@@ -33,3 +33,48 @@ Always verify the output file opens correctly before deleting the original.
 - Videos are scaled to a maximum height of 720p.
 - PDFs use 150dpi (/ebook) settings.
 - PPTX compression currently focuses on package-level ZIP optimization.
+
+## Naming Convention
+
+All meeting assets follow this pattern:
+
+| Asset type | Pattern | Example |
+|---|---|---|
+| Main recording | `NN-<Slug>.mp4` | `01-The-Architects-of-Complexity.mp4` |
+| Deep dive podcast | `NN-<Slug>-deep-dive.(mp4\|m4a)` | `01-Clean-Code-Paradox-deep-dive.mp4` |
+| Critique podcast | `NN-<Slug>-critique.(mp4\|m4a)` | `01-Ousterhout-Uncle-Bob-critique.m4a` |
+| Debate podcast | `NN-<Slug>-debate.(mp4\|m4a)` | `01-Ousterhout-Uncle-Bob-debate.m4a` |
+| Slides | `NN-<Slug>.pptx` | `01-Architecting-Deep-Systems.pptx` |
+| Resource image | `NN-<Slug>.png` | `01-Choose-Your-Adventure.png` |
+
+`NN` is the zero-padded meeting number (`00`, `01`, `02`…).
+
+## Rename & Organize
+
+Use `rename_asset.sh` to rename a file to convention and move it into the correct meeting subdirectory.
+
+**Category is inferred from extension:**
+
+| Extension | Category | Subdirectory |
+|---|---|---|
+| `.mp4`, `.m4a` | recording | `meetings/NN-*/recordings/` |
+| `.pptx`, `.pdf` | slides | `meetings/NN-*/slides/` |
+| `.png`, `.jpg`, `.jpeg` | resource | `meetings/NN-*/resources/` |
+
+**Usage:**
+
+```bash
+bash scripts/rename_asset.sh <file> --meeting NN --slug <kebab-slug> [--type deep-dive|critique|debate] [--dry-run]
+```
+
+- `--meeting` — meeting number (e.g. `01`). Auto-inferred if only one meeting directory exists.
+- `--slug` — required. Kebab-case title (e.g. `clean-code-paradox`).
+- `--type` — required for podcast recordings (`.mp4`/`.m4a`). Omit for primary session recordings.
+- `--dry-run` — preview the rename without moving anything.
+
+**Example — rename a new podcast:**
+
+```bash
+bash scripts/rename_asset.sh ~/Downloads/debate-recording.m4a \
+    --meeting 01 --slug ousterhout-uncle-bob --type debate --dry-run
+```
