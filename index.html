@@ -499,62 +499,89 @@
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
             if (!archiveContainer) return;
-            
+
             archiveContainer.innerHTML = '';
-            
-            // Color palette mapping for reference
+
             const colorMap = {
                 'spectrum-1': '#1A3A5C',
                 'spectrum-2': '#2B6CB0',
                 'spectrum-3': '#4BA3C7',
             };
-            
-            MEETINGS
-                .filter(m =>
-                    m.status === 'done' &&
-                    !hasPlaceholderAssetPath(m.video.file) &&
-                    !hasPlaceholderAssetPath(m.slides.file)
-                )
-                .forEach(meeting => {
+
+            const podcastConfig = {
+                'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
+                'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
+                'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
+            };
+
+            const dlIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
+
+            MEETINGS.filter(m => m.status === 'done').forEach(meeting => {
                 const colorValue = colorMap[meeting.color];
                 const metadataColor = (meeting.color === 'spectrum-1' || meeting.color === 'spectrum-2')
                     ? colorValue
                     : colorMap['spectrum-2'];
-                
-                const card = document.createElement('div');
-                card.className = 'card p-6 border-t-2';
-                card.style.borderTopColor = colorValue;
-                card.style.background = `var(${meeting.wash})`;
-                
-                card.innerHTML = `
-                    <div class="flex justify-between items-start mb-5 gap-3">
-                        <div>
-                            <span class="text-[9px] font-semibold uppercase tracking-[0.25em] block mb-1" style="color: ${metadataColor}">${meeting.session} &bull; ${meeting.date}</span>
-                            <h4 class="text-xl font-bold tracking-tight">${meeting.title}</h4>
-                        </div>
-                        <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color: var(--banner)">Done</span>
-                    </div>
+
+                const videoRow = meeting.video ? `
                     <div class="asset-row">
                         <a href="${meeting.video.file}" class="asset-link">
                             <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">🎬</span>
                             ${meeting.video.label}
                         </a>
-                        <a href="${meeting.video.file}" download aria-label="Download video" class="asset-dl">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                        </a>
-                    </div>
+                        <a href="${meeting.video.file}" download aria-label="Download video" class="asset-dl">${dlIcon}</a>
+                    </div>` : '';
+
+                const slidesRow = meeting.slides ? `
                     <div class="asset-row">
                         <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/${meeting.slides.file}" target="_blank" rel="noopener" class="asset-link">
                             <span class="icon-pill bg-[rgba(43,108,176,0.12)]" aria-hidden="true">📊</span>
                             ${meeting.slides.label}
                         </a>
-                        <a href="${meeting.slides.file}" download aria-label="Download slides" class="asset-dl">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                        <a href="${meeting.slides.file}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
+                    </div>` : '';
+
+                const podcastRows = (meeting.podcasts || []).map(pod => {
+                    const cfg = podcastConfig[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
+                    return `
+                    <div class="asset-row">
+                        <a href="${pod.file}" class="asset-link">
+                            <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">${cfg.icon}</span>
+                            ${pod.label}
+                            <span class="podcast-badge" style="color:${cfg.color}">${cfg.label}</span>
                         </a>
+                        <a href="${pod.file}" download aria-label="Download ${pod.label}" class="asset-dl">${dlIcon}</a>
+                    </div>`;
+                }).join('');
+
+                const resourceStrip = (meeting.resources || []).length > 0 ? `
+                    <div class="resource-strip">
+                        ${(meeting.resources || []).map(res => `
+                        <a href="${res.file}" target="_blank" rel="noopener" class="resource-thumb">
+                            <img src="${res.file}" alt="${res.label}" loading="lazy">
+                            <span>${res.label}</span>
+                        </a>`).join('')}
+                    </div>` : '';
+
+                const card = document.createElement('div');
+                card.className = 'card p-6 border-t-2';
+                card.style.borderTopColor = colorValue;
+                card.style.background = `var(${meeting.wash})`;
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-5 gap-3">
+                        <div>
+                            <span class="text-[9px] font-semibold uppercase tracking-[0.25em] block mb-1" style="color:${metadataColor}">${meeting.session} &bull; ${meeting.date}</span>
+                            <h4 class="text-xl font-bold tracking-tight">${meeting.title}</h4>
+                        </div>
+                        <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
                     </div>
-                    <a href="#p=${meeting.readmeUrl}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color: ${colorValue}" data-prefetch-path="${meeting.readmeUrl}">Meeting Notes &rarr;</a>
+                    ${videoRow}
+                    ${slidesRow}
+                    ${podcastRows}
+                    ${resourceStrip}
+                    <a href="#p=${meeting.readmeUrl}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color:${colorValue}" data-prefetch-path="${meeting.readmeUrl}">Meeting Notes &rarr;</a>
                 `;
-                
+
                 archiveContainer.appendChild(card);
             });
         }
