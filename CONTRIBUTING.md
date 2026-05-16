@@ -66,9 +66,10 @@ Open `index.html` and find the `const MEETINGS = [...]` block near the top of th
     color: 'spectrum-2',         // pick a spectrum stop: spectrum-1 through spectrum-3
     wash: '--wash-2',            // match the number: wash-1, wash-2, or wash-3
     readmeUrl: 'meetings/meeting-NN/README.md',
-    video:  { file: 'meetings/meeting-NN/recordings/NN-video-title.mp4',  label: 'Video Recording' },
-    slides: { file: 'meetings/meeting-NN/slides/NN-slide-title.pptx',     label: 'Slide Deck' }
+    video:  { file: 'meetings/meeting-NN/recordings/NN-video-title.mp4',  label: 'Video Recap', variant: 'canonical' },
+    slides: { file: 'meetings/meeting-NN/slides/NN-slide-title.pptx',     label: 'Slide Deck', variant: 'canonical' }
 },
+
 ```
 
 Change the previous "upcoming" session entry's `status` from `'upcoming'` to `'done'`.

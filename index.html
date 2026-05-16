@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
     <link rel="stylesheet" href="dist/tailwind.css">
     <script
@@ -30,18 +30,29 @@
             --spectrum-4:   #48BDB8;
             --spectrum-5:   #72C9A8;
             --spectrum-6:   #A8D8B9;
-            --border-low:   rgba(0,0,0,0.06);
+            --border-low:   rgb(34 34 34 / 0.06);
             /* Spectrum wash tokens — centralised tints used throughout */
-            --wash-1: rgba(26,58,92,0.04);
-            --wash-2: rgba(43,108,176,0.05);
-            --wash-3: rgba(75,163,199,0.04);
-            --wash-4: rgba(72,189,184,0.04);
-            --wash-5: rgba(114,201,168,0.04);
-            --wash-2-border: rgba(43,108,176,0.12);
-            --wash-3-border: rgba(75,163,199,0.12);
-            --wash-2-strong-border: rgba(43,108,176,0.15);
-            --wash-2-icon: rgba(43,108,176,0.10);
-            --wash-3-icon: rgba(75,163,199,0.10);
+            --wash-1: rgb(26 58 92 / 0.04);
+            --wash-2: rgb(43 108 176 / 0.05);
+            --wash-3: rgb(75 163 199 / 0.04);
+            --wash-4: rgb(72 189 184 / 0.04);
+            --wash-5: rgb(114 201 168 / 0.04);
+            --wash-2-border: rgb(43 108 176 / 0.12);
+            --wash-3-border: rgb(75 163 199 / 0.12);
+            --wash-2-strong-border: rgb(43 108 176 / 0.15);
+            --wash-1-icon: rgb(26 58 92 / 0.10);
+            --wash-2-icon: rgb(43 108 176 / 0.12);
+            --wash-3-icon: rgb(75 163 199 / 0.12);
+            --wash-4-icon: rgb(72 189 184 / 0.12);
+            --wash-5-icon: rgb(114 201 168 / 0.12);
+            --shadow-sticky: rgb(34 34 34 / 0.15);
+            --shadow-card-hover: rgb(75 163 199 / 0.20);
+            --prose-h3-border: rgb(75 163 199 / 0.30);
+            --prose-blockquote-bg: rgb(72 189 184 / 0.06);
+            --prose-blockquote-border: rgb(72 189 184 / 0.20);
+            --prose-code-bg: rgb(34 34 34 / 0.05);
+            --materials-panel-bg: rgb(34 34 34 / 0.025);
+            --materials-panel-border: rgb(34 34 34 / 0.08);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -87,7 +98,7 @@
             );
         }
         header.sticky {
-            box-shadow: 0 4px 20px -4px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px -4px var(--shadow-sticky);
         }
         .card {
             background: var(--white);
@@ -98,7 +109,7 @@
         }
         .card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px -8px rgba(75,163,199,0.2);
+            box-shadow: 0 8px 24px -8px var(--shadow-card-hover);
         }
 
         .btn {
@@ -165,8 +176,8 @@
             flex-grow: 1;
             height: 2px;
             background: linear-gradient(90deg,
-                rgba(43,108,176,0.3) 0%,
-                rgba(72,189,184,0.15) 60%,
+                var(--prose-h3-border) 0%,
+                var(--prose-blockquote-bg) 60%,
                 transparent 100%
             );
         }
@@ -188,7 +199,7 @@
         .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
         .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
         .prose h2 { font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
-        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; padding-top: 0.5rem; color: var(--spectrum-1); border-top: 1px solid rgba(75,163,199,0.3); }
+        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; padding-top: 0.5rem; color: var(--spectrum-1); border-top: 1px solid var(--prose-h3-border); }
         .prose p { font-size: 1.0625rem; line-height: 1.7; margin-bottom: 1.25rem; color: var(--text-muted); }
         /* Restore bullets — Tailwind preflight resets list-style to none */
         .prose ul { list-style-type: disc; margin-bottom: 1.25rem; padding-left: 1.5rem; }
@@ -201,10 +212,10 @@
         .prose li:has(input[type="checkbox"]) { list-style-type: none; margin-left: -0.25rem; }
         .prose input[type="checkbox"] { margin-right: 0.5rem; accent-color: var(--spectrum-2); }
         .prose strong { color: var(--text-primary); font-weight: 600; }
-        .prose blockquote { background: rgba(72,189,184,0.06); border: 1px solid rgba(72,189,184,0.2); padding: 1.25rem 1.75rem; margin: 2rem 0; font-style: italic; color: var(--text-muted); }
+        .prose blockquote { background: var(--prose-blockquote-bg); border: 1px solid var(--prose-blockquote-border); padding: 1.25rem 1.75rem; margin: 2rem 0; font-style: italic; color: var(--text-muted); }
         .prose a { color: var(--spectrum-2); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
         .prose a:hover { color: var(--spectrum-1); }
-        .prose code { background: rgba(0,0,0,0.05); padding: 0.15rem 0.35rem; font-size: 0.875em; font-family: monospace; border-radius: 2px; }
+        .prose code { background: var(--prose-code-bg); padding: 0.15rem 0.35rem; font-size: 0.875em; font-family: monospace; border-radius: 2px; }
 
         /* Session Materials — file tree, post-processed by JS */
         .materials-panel {
@@ -214,8 +225,8 @@
             font-family: 'Courier New', 'Consolas', monospace;
             font-size: 0.875rem;
             line-height: 1.8;
-            background: rgba(0,0,0,0.025);
-            border: 1px solid rgba(0,0,0,0.08);
+            background: var(--materials-panel-bg);
+            border: 1px solid var(--materials-panel-border);
         }
         .materials-panel li { padding: 0; border: none; color: var(--text-primary); }
         .materials-panel ul { list-style-type: none !important; padding: 0 !important; margin: 0; }
@@ -341,19 +352,19 @@
                 </h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
-                        <span class="icon-pill bg-[rgba(72,189,184,0.12)] mb-2 text-xl" aria-hidden="true">📚</span>
+                        <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true">📚</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Glossary</span>
                     </a>
                     <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-1" style="background: var(--wash-1);">
-                        <span class="icon-pill bg-[rgba(26,58,92,0.1)] mb-2 text-xl" aria-hidden="true">⚖️</span>
+                        <span class="icon-pill" style="background: var(--wash-1-icon);" aria-hidden="true">⚖️</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
                     </a>
                     <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);">
-                        <span class="icon-pill bg-[rgba(43,108,176,0.1)] mb-2 text-xl" aria-hidden="true">🤖</span>
+                        <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true">🤖</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
                     </a>
                     <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-5" style="background: var(--wash-5);">
-                        <span class="icon-pill bg-[rgba(114,201,168,0.12)] mb-2 text-xl" aria-hidden="true">📂</span>
+                        <span class="icon-pill" style="background: var(--wash-5-icon);" aria-hidden="true">📂</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">Inbox</span>
                     </a>
                 </div>
@@ -400,8 +411,8 @@
                 color: 'spectrum-2',
                 wash: '--wash-2',
                 readmeUrl: 'meetings/meeting-02/README.md',
-                video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Recap' },
-                slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'Slide Deck' },
+                video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Recap', variant: 'canonical' },
+                slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [],
                 resources: [
                     { label: 'Four Strategies', file: 'meetings/meeting-02/resources/02-four-strategies.png' },
@@ -417,9 +428,10 @@
                 color: 'spectrum-3',
                 wash: '--wash-3',
                 readmeUrl: 'meetings/meeting-01/README.md',
-                video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Recording' },
-                slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slide Deck' },
+                video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Recap', variant: 'canonical' },
+                slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [
+                    { type: 'summary', label: 'Video Recap (Alternate)', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
                     { type: 'deep-dive', label: 'Clean Code Paradox', file: 'meetings/meeting-01/recordings/01-Clean-Code-Paradox-deep-dive.mp4' },
                     { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a' },
                     { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a' },
@@ -439,8 +451,8 @@
                 color: 'spectrum-1',
                 wash: '--wash-1',
                 readmeUrl: 'meetings/meeting-00/README.md',
-                video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Recording' },
-                slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slide Deck' },
+                video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Recap', variant: 'canonical' },
+                slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [],
                 resources: []
             }
@@ -501,7 +513,7 @@
             const placeholderRow = (icon, label, copy) => `
                 <div class="asset-row">
                     <div class="asset-link">
-                        <span class="icon-pill bg-[rgba(43,108,176,0.12)]" aria-hidden="true">${icon}</span>
+                        <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">${icon}</span>
                         <div>
                             <div>${label}</div>
                             <div class="text-[9px] uppercase tracking-[0.25em] text-muted font-semibold mt-0.5">${copy}</div>
@@ -513,7 +525,7 @@
                 rows.push(`
                     <div class="asset-row">
                         <a href="${meeting.video.file}" class="asset-link">
-                            <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">🎬</span>
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                             Video Recap
                         </a>
                         <a href="${meeting.video.file}" download aria-label="Download video recap" class="asset-dl">${dlIcon}</a>
@@ -526,7 +538,7 @@
                 rows.push(`
                     <div class="asset-row">
                         <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/${meeting.slides.file}" target="_blank" rel="noopener" class="asset-link">
-                            <span class="icon-pill bg-[rgba(43,108,176,0.12)]" aria-hidden="true">📊</span>
+                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
                             ${meeting.slides.label}
                         </a>
                         <a href="${meeting.slides.file}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
@@ -540,7 +552,7 @@
                 rows.push(`
                     <div class="asset-row">
                         <a href="${pod.file}" class="asset-link">
-                            <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">${cfg.icon}</span>
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
                             ${pod.label}
                             <span class="podcast-badge" style="color:${cfg.color}">${cfg.label}</span>
                         </a>
@@ -594,7 +606,7 @@
                 const videoRow = meeting.video ? `
                     <div class="asset-row">
                         <a href="${meeting.video.file}" class="asset-link">
-                            <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">🎬</span>
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                             ${meeting.video.label}
                         </a>
                         <a href="${meeting.video.file}" download aria-label="Download video" class="asset-dl">${dlIcon}</a>
@@ -603,7 +615,7 @@
                 const slidesRow = meeting.slides ? `
                     <div class="asset-row">
                         <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/${meeting.slides.file}" target="_blank" rel="noopener" class="asset-link">
-                            <span class="icon-pill bg-[rgba(43,108,176,0.12)]" aria-hidden="true">📊</span>
+                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
                             ${meeting.slides.label}
                         </a>
                         <a href="${meeting.slides.file}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
@@ -614,7 +626,7 @@
                     return `
                     <div class="asset-row">
                         <a href="${pod.file}" class="asset-link">
-                            <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">${cfg.icon}</span>
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
                             ${pod.label}
                             <span class="podcast-badge" style="color:${cfg.color}">${cfg.label}</span>
                         </a>
@@ -765,6 +777,8 @@
         window.isSafeRepoPath = isSafeRepoPath;
         window.prefetchMarkdown = prefetchMarkdown;
         window.mdCache = mdCache;
+        // Expose MEETINGS for integration tests
+        window.MEETINGS = MEETINGS;
 
         window.addEventListener('hashchange', handleRoute);
         document.getElementById('back-to-dashboard').addEventListener('click', e => {
