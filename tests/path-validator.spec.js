@@ -11,6 +11,7 @@ test.describe('isSafeRepoPath — valid paths', () => {
         'docs/design-principles.md',
         'templates/prompts/README.md',
         'meetings/meeting-99-new/README.md',
+        'meetings/meeting-01/design_principles.md',
         'a.md',
         'a/b/c.md',
     ];

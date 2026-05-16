@@ -1,7 +1,9 @@
 # ADR 002: Single-Page Markdown Reader vs. Jekyll
 
 ## Status
-Accepted
+Accepted — Partially superseded by ADR-0003 (2026-05-16)
+
+The "Zero Ceremony / No Pipeline" principle applies to the deployed site, which remains a single HTML file requiring no server-side build. ADR-0003 introduced npm-based tooling for CI validation only (tests, CSS build, link checking). The site functions for end users without npm; npm is required only for contributors running tests or building CSS.
 
 ## Context
 Initially, we implemented a Jekyll-based approach to style meeting subpages (e.g., `meetings/meeting-02/`). While effective for GitHub Pages, this introduced "infrastructure ceremony" to the repository in the form of `_layouts/` and `_config.yml` files. Our core mandate is **"Zero Ceremony"** and **"No Pipeline."**

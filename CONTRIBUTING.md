@@ -89,6 +89,12 @@ meetings/meeting-NN/slides/NN-slide-title.pptx
 
 This URL is set automatically from the `slides.file` field in the manifest — you do not need to edit it manually in multiple places.
 
+### The Inbox (`meetings/meeting-99-new/`)
+
+`meeting-99-new` is a staging area for materials that are being prepared before a meeting has a confirmed number. It does not appear in the `MEETINGS` manifest and its content is not shown on the dashboard.
+
+Use it for drafts, imported assets, or in-progress meeting materials that have not been assigned a numbered meeting folder yet.
+
 ### 5. Run the link checker before pushing
 
 ```bash
@@ -108,3 +114,23 @@ If you are new to GitHub or the command line, you can use these low-ceremony alt
 AI-generated summaries and insights are encouraged!
 - Please include the prompts used if you believe they add value or help others reproduce the result.
 - Ensure you review AI output for accuracy before sharing.
+
+### Design review tool (optional)
+
+The `impeccable` design review skill is a local developer tool. Install it globally if you need it:
+
+```bash
+npm install -g impeccable
+```
+
+## Rollback
+
+If a bad commit reaches production (GitHub Pages deploys from `main` automatically):
+
+```bash
+# Revert the bad commit
+git revert <bad-commit-sha>
+git push origin main
+```
+
+The revert creates a new commit that undoes the changes. Do not force-push to `main`.

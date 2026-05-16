@@ -21,8 +21,13 @@ test.describe('Manifest Rendering', () => {
 
     test('archive card for meeting-01 renders resource thumbnails', async ({ page }) => {
         await page.goto('/');
+        const expected = await page.evaluate(() =>
+            window.MEETINGS
+                .filter(m => m.status === 'done')
+                .reduce((count, meeting) => count + (meeting.resources?.length || 0), 0)
+        );
         const archiveThumbs = page.locator('#archive-cards-container .resource-thumb');
-        await expect(archiveThumbs).toHaveCount(2);
+        await expect(archiveThumbs).toHaveCount(expected);
     });
 
     test('resource thumbnails have correct labels', async ({ page }) => {
@@ -60,6 +65,14 @@ test.describe('Manifest Rendering', () => {
             return (html.match(/bg-\[rgba/g) || []).length + (html.match(/border-\[rgba/g) || []).length;
         });
         expect(rawClassUses).toBe(0);
+    });
+
+    test('meeting-03 and meeting-04 do not render archive cards', async ({ page }) => {
+        await page.goto('/');
+        const expectedDone = await page.evaluate(() => window.MEETINGS.filter(m => m.status === 'done').length);
+        await expect(page.locator('#archive-cards-container .card')).toHaveCount(expectedDone);
+        await expect(page.locator('#archive-cards-container')).not.toContainText('meeting-03');
+        await expect(page.locator('#archive-cards-container')).not.toContainText('meeting-04');
     });
 
 });

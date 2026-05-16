@@ -13,12 +13,11 @@ test.describe('Performance: Markdown Prefetch', () => {
       prefetchMarkdown('meetings/meeting-00/README.md');
     });
     
-    // Wait for fetch to complete
-    await page.waitForTimeout(300);
+    await page.waitForFunction(() => window.mdCache.has('meetings/meeting-00/README.md'));
     
     // Verify it's in cache
     const cached = await page.evaluate(() => {
-      return mdCache.get('meetings/meeting-00/README.md');
+      return mdCache.get('meetings/meeting-00/README.md').then(value => value);
     });
     
     expect(cached).toBeTruthy();
@@ -39,8 +38,7 @@ test.describe('Performance: Markdown Prefetch', () => {
     const notesLink = page.locator('.meeting-notes-link').first();
     await notesLink.hover();
     
-    // Wait for prefetch
-    await page.waitForTimeout(300);
+    await page.waitForFunction(() => window.mdCache.has('meetings/meeting-02/README.md'));
     
     // Prefetch should have triggered a fetch
     expect(prefetchCalled).toBe(true);
@@ -60,15 +58,14 @@ test.describe('Performance: Markdown Prefetch', () => {
     await page.evaluate(() => {
       prefetchMarkdown('meetings/meeting-00/README.md');
     });
-    await page.waitForTimeout(300);
-    
+    await page.waitForFunction(() => window.mdCache.has('meetings/meeting-00/README.md'));
     expect(fetchCount).toBe(1);
     
     // Prefetch again - should be cache hit
     await page.evaluate(() => {
       prefetchMarkdown('meetings/meeting-00/README.md');
     });
-    await page.waitForTimeout(100);
+    await page.waitForFunction(() => window.mdCache.has('meetings/meeting-00/README.md'));
     
     // Still only 1 fetch (cache prevented 2nd)
     expect(fetchCount).toBe(1);
@@ -85,8 +82,7 @@ test.describe('Performance: Markdown Prefetch', () => {
     await page.evaluate(() => {
       prefetchMarkdown('meetings/missing.md');
     });
-    
-    await page.waitForTimeout(300);
+    await page.waitForFunction(() => !window.mdCache.has('meetings/missing.md'));
 
     // Cache should be empty for missing file
     const cached = await page.evaluate(() => {
