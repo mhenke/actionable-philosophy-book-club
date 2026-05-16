@@ -583,13 +583,13 @@
                 .filter(p => p.variant !== 'alternate' && p.type !== 'alternate')
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
-                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type) };
+                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
                     rows.push(`
                     <div class="asset-row">
                         <a href="${escapeHTML(pod.file)}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
                             ${escapeHTML(pod.label)}
-                            <span class="podcast-badge" style="color:${cfg.color}">${cfg.label}</span>
+                            <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
                         </a>
                         <a href="${escapeHTML(pod.file)}" download
                            aria-label="Download ${escapeHTML(pod.label)}"
