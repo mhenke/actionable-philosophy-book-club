@@ -192,7 +192,7 @@
         }
 
         /* Reader */
-        .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
+        .prose { max-width: 75ch; margin: 0 auto; color: var(--text-primary); }
         .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
         .prose h2 { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
         .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; padding-top: 0.5rem; color: var(--spectrum-1); border-top: 1px solid var(--prose-h3-border); }
@@ -300,7 +300,7 @@
             <div class="spectrum-bar"></div>
         </header>
 
-        <main class="p-5 md:p-10 max-w-4xl mx-auto space-y-14 py-10 pb-24">
+        <main class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 py-10 pb-24">
 
             <!-- Next Session -->
             <section class="card p-6 md:p-8 border-t-4 border-spectrum-2">
@@ -334,7 +334,7 @@
                     <span class="spectrum-rule"></span>
                 </h3>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8" id="archive-cards-container">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="archive-cards-container">
                     <!-- Cards rendered by JavaScript -->
                 </div>
             </div>
@@ -839,29 +839,3 @@
     </script>
 </body>
 </html>
-nce
-        // Must be after renderArchiveCards() to include dynamically created archive cards
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('pointerenter', () => {
-                card.style.willChange = 'transform';
-            });
-            card.addEventListener('pointerleave', () => {
-                card.style.willChange = '';
-            });
-        });
-
-        handleRoute();
-    </script>
-</body>
-</html>
-  </script>
-</body>
-</html>
-
-    </script>
-</body>
-</html>
-  </script>
-</body>
-</html>
-html>
