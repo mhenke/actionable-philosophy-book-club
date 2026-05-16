@@ -41,18 +41,12 @@ test.describe('Manifest Rendering', () => {
         await expect(container).toBeVisible();
     });
 
-    test('upcoming card shows coming soon placeholders and resource thumbnails', async ({ page }) => {
+    test('upcoming card shows meeting 02 video and slide links', async ({ page }) => {
         await page.goto('/');
-        const upcomingPlaceholders = page.locator('#upcoming-materials-container').getByText('Coming Soon');
-        await expect(upcomingPlaceholders).toHaveCount(2);
-        const placeholderText = await upcomingPlaceholders.allTextContents();
-        expect(placeholderText.every(t => /coming soon/i.test(t))).toBe(true);
-
-        const upcomingThumbLabels = page.locator('#upcoming-materials-container .resource-thumb span');
-        await expect(upcomingThumbLabels).toHaveCount(2);
-        const texts = await upcomingThumbLabels.allTextContents();
-        expect(texts.some(t => /Four Strategies/i.test(t))).toBe(true);
-        expect(texts.some(t => /Choose Your Next Meeting/i.test(t))).toBe(true);
+        const upcoming = page.locator('#upcoming-materials-container');
+        await expect(upcoming.getByRole('link', { name: 'Video Recap', exact: true })).toBeVisible();
+        await expect(upcoming.getByRole('link', { name: 'Slide Deck', exact: true })).toBeVisible();
+        await expect(page.getByText(/coming soon/i)).toHaveCount(0);
     });
 
     test('archive cards and upcoming container both present on dashboard', async ({ page }) => {
