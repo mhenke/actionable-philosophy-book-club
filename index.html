@@ -729,6 +729,20 @@
             });
         }
 
+        function updateReaderTheme(meetingId) {
+            const meeting = MEETINGS.find(m => m.id === meetingId);
+            const readerBar = reader.querySelector('.spectrum-bar');
+            if (meeting) {
+                // Use the meeting's spectrum color for the reader's 2px bar
+                readerBar.style.background = `var(--${meeting.color})`;
+                content.style.setProperty('--prose-h3-border', `var(--wash-${meeting.color.split('-')[1]}-strong-border)`);
+            } else {
+                // Default gradient for generic docs
+                readerBar.style.background = '';
+                content.style.setProperty('--prose-h3-border', 'rgba(0,0,0,0.06)');
+            }
+        }
+
         async function loadPage(path) {
             dashboard.classList.add('hidden-view');
             reader.classList.remove('hidden-view');
@@ -805,6 +819,11 @@
                     showDashboard();
                     return;
                 }
+
+                // Apply session-specific theming if this is a meeting README
+                const meeting = MEETINGS.find(m => m.readmeUrl === path);
+                updateReaderTheme(meeting ? meeting.id : null);
+
                 loadPage(path);
             } else {
                 showDashboard();
