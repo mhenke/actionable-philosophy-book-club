@@ -37,6 +37,8 @@
             --wash-3: rgba(75,163,199,0.04);
             --wash-4: rgba(72,189,184,0.04);
             --wash-5: rgba(114,201,168,0.04);
+            --wash-2-border: rgba(43,108,176,0.12);
+            --wash-3-border: rgba(75,163,199,0.12);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -167,6 +169,19 @@
             );
         }
 
+        /* Screen-reader only text */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
         /* Reader */
         .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
         .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
@@ -259,18 +274,18 @@
                     <div>
                         <p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted mb-3">Upcoming Materials</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="flex items-center gap-3 p-4 bg-[rgba(43,108,176,0.04)] border border-[rgba(43,108,176,0.12)]">
+                            <div class="flex items-center gap-3 p-4 bg-[rgba(43,108,176,0.04)] border" style="border-color: var(--wash-2-border)">
                                 <span class="icon-pill bg-[rgba(43,108,176,0.1)]" aria-hidden="true">📊</span>
                                 <div>
                                     <p class="text-sm font-semibold text-muted">Slide Deck</p>
-                                    <p class="text-[9px] uppercase tracking-wider text-spectrum-2/60 font-medium mt-0.5">Ready before meeting</p>
+                                    <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready before meeting</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3 p-4 bg-[rgba(75,163,199,0.04)] border border-[rgba(75,163,199,0.12)]">
+                            <div class="flex items-center gap-3 p-4 bg-[rgba(75,163,199,0.04)] border" style="border-color: var(--wash-3-border)">
                                 <span class="icon-pill bg-[rgba(75,163,199,0.1)]" aria-hidden="true">🎬</span>
                                 <div>
                                     <p class="text-sm font-semibold text-muted">Video Recording</p>
-                                    <p class="text-[9px] uppercase tracking-wider text-spectrum-3/60 font-medium mt-0.5">Ready after meeting</p>
+                                    <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready after meeting</p>
                                 </div>
                             </div>
                         </div>
@@ -282,7 +297,7 @@
             <div>
                 <h3 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     The Archive
-                    <div class="spectrum-rule"></div>
+                    <span class="spectrum-rule"></span>
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8" id="archive-cards-container">
@@ -294,12 +309,12 @@
             <div>
                 <h3 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     Knowledge Base
-                    <div class="spectrum-rule"></div>
+                    <span class="spectrum-rule"></span>
                 </h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
                         <span class="icon-pill bg-[rgba(72,189,184,0.12)] mb-2 text-xl" aria-hidden="true">📚</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-4 group-hover:text-spectrum-3 transition-colors">Glossary</span>
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Glossary</span>
                     </a>
                     <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-1" style="background: var(--wash-1);">
                         <span class="icon-pill bg-[rgba(26,58,92,0.1)] mb-2 text-xl" aria-hidden="true">⚖️</span>
@@ -311,7 +326,7 @@
                     </a>
                     <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-5" style="background: var(--wash-5);">
                         <span class="icon-pill bg-[rgba(114,201,168,0.12)] mb-2 text-xl" aria-hidden="true">📂</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-5 group-hover:text-spectrum-4 transition-colors">Inbox</span>
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">Inbox</span>
                     </a>
                 </div>
             </div>
@@ -330,7 +345,8 @@
         </div>
         <div class="spectrum-bar" style="height: 2px;"></div>
 
-        <article id="markdown-content" class="prose px-6 md:px-10 pt-12 pb-24" aria-live="polite" aria-busy="false">
+        <div id="reader-status" role="status" class="sr-only"></div>
+        <article id="markdown-content" class="prose px-6 md:px-10 pt-12 pb-24" aria-busy="false">
         </article>
     </div>
 
@@ -386,6 +402,24 @@
 
         marked.use({ gfm: true, breaks: true });
 
+        function prefetchMarkdown(path) {
+            // Fire-and-forget: fetch markdown into cache if not already cached
+            if (mdCache.has(path)) return; // Already cached, nothing to do
+            
+            fetch(path)
+                .then(response => {
+                    if (response.ok) return response.text();
+                    throw new Error('Prefetch failed');
+                })
+                .then(text => {
+                    mdCache.set(path, text);
+                })
+                .catch(err => {
+                    // Silent fail: prefetch is an optimization, not critical
+                    // User will just experience normal fetch latency if they click
+                });
+        }
+
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
             if (!archiveContainer) return;
@@ -433,10 +467,20 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                         </a>
                     </div>
-                    <a href="#p=${meeting.readmeUrl}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color: ${colorValue}">Meeting Notes &rarr;</a>
+                    <a href="#p=${meeting.readmeUrl}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color: ${colorValue}" data-prefetch-path="${meeting.readmeUrl}">Meeting Notes &rarr;</a>
                 `;
                 
                 archiveContainer.appendChild(card);
+            });
+            
+            // Attach prefetch listeners to meeting notes links
+            document.querySelectorAll('.meeting-notes-link[data-prefetch-path]').forEach(link => {
+                link.addEventListener('pointerenter', () => {
+                    const path = link.getAttribute('data-prefetch-path');
+                    if (path && isSafeRepoPath(path)) {
+                        prefetchMarkdown(path);
+                    }
+                });
             });
         }
 
@@ -551,7 +595,10 @@
             window.location.hash = '';
         });
 
+        renderArchiveCards();
+
         // Apply will-change dynamically on card hover for performance
+        // Must be after renderArchiveCards() to include dynamically created archive cards
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('pointerenter', () => {
                 card.style.willChange = 'transform';
@@ -561,7 +608,6 @@
             });
         });
 
-        renderArchiveCards();
         handleRoute();
     </script>
 </body>
