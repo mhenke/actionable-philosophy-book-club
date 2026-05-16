@@ -394,6 +394,7 @@
         const dashboard = document.getElementById('dashboard-view');
         const reader    = document.getElementById('reader-view');
         const content   = document.getElementById('markdown-content');
+        const mdCache   = new Map();  // Session markdown cache
 
         marked.setOptions({ gfm: true, breaks: true });
 
@@ -430,9 +431,15 @@
             content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading&hellip;</div>';
 
             try {
-                const response = await fetch(path);
-                if (!response.ok) throw new Error('File not found');
-                const text = await response.text();
+                let text;
+                if (mdCache.has(path)) {
+                    text = mdCache.get(path);
+                } else {
+                    const response = await fetch(path);
+                    if (!response.ok) throw new Error('File not found');
+                    text = await response.text();
+                    mdCache.set(path, text);
+                }
                 content.innerHTML = DOMPurify.sanitize(marked.parse(text), {
                     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
                     FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput']
