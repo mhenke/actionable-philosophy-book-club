@@ -191,25 +191,22 @@
         .prose a:hover { color: var(--spectrum-1); }
         .prose code { background: rgba(0,0,0,0.05); padding: 0.15rem 0.35rem; font-size: 0.875em; font-family: monospace; border-radius: 2px; }
 
-        /* Session Materials — post-processed by JS */
+        /* Session Materials — file tree, post-processed by JS */
         .materials-panel {
-            background: rgba(43,108,176,0.04);
-            border: 1px solid rgba(43,108,176,0.12);
-            padding: 0.75rem 1.25rem;
-            margin-top: 0.5rem;
             list-style-type: none !important;
-            padding-left: 1.25rem !important;
+            padding: 0.875rem 1rem !important;
+            margin-top: 0.5rem;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: 0.875rem;
+            line-height: 1.8;
+            background: rgba(0,0,0,0.025);
+            border: 1px solid rgba(0,0,0,0.08);
         }
-        .materials-panel > li {
-            padding: 7px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            color: var(--text-primary);
-        }
-        .materials-panel > li:last-child { border-bottom: none; }
-        .materials-panel a { color: var(--spectrum-2); font-weight: 600; text-decoration: none; }
+        .materials-panel li { padding: 0; border: none; color: var(--text-primary); }
+        .materials-panel ul { list-style-type: none !important; padding: 0 !important; margin: 0; }
+        .tree-connector { color: var(--spectrum-3); user-select: none; }
+        .materials-panel a { color: var(--spectrum-2); font-weight: 500; text-decoration: none; font-family: inherit; }
         .materials-panel a:hover { color: var(--spectrum-1); text-decoration: underline; }
-        .materials-panel ul { list-style-type: none !important; padding-left: 1rem; margin: 0.25rem 0 0; }
-        .materials-panel ul li { padding: 3px 0; border: none; color: var(--text-muted); font-size: 0.9375rem; }
 
         .hidden-view { display: none !important; }
 
@@ -430,12 +427,28 @@
                     }
                 });
 
-                // Give Session Materials a panel treatment
+                // Render Session Materials as a file tree
+                function renderFileTree(ul, prefix) {
+                    Array.from(ul.children).forEach((li, i, arr) => {
+                        const isLast = i === arr.length - 1;
+                        const connector = isLast ? '└── ' : '├── ';
+                        const childPrefix = prefix + (isLast ? '    ' : '│   ');
+                        const pre = document.createElement('span');
+                        pre.className = 'tree-connector';
+                        pre.textContent = prefix + connector;
+                        li.insertBefore(pre, li.firstChild);
+                        const nested = li.querySelector(':scope > ul');
+                        if (nested) renderFileTree(nested, childPrefix);
+                    });
+                }
                 content.querySelectorAll('h2').forEach(h2 => {
                     if (/session materials/i.test(h2.textContent)) {
                         let el = h2.nextElementSibling;
                         while (el && el.tagName !== 'H2') {
-                            if (el.tagName === 'UL') el.classList.add('materials-panel');
+                            if (el.tagName === 'UL') {
+                                el.classList.add('materials-panel');
+                                renderFileTree(el, '');
+                            }
                             el = el.nextElementSibling;
                         }
                     }
