@@ -37,7 +37,7 @@ python3 -m http.server 8000
 # Open browser to http://localhost:8000
 ```
 
-> **Note:** `file://` URLs block fetch(). Use a local server instead.
+> **Note:** `file://` URLs block fetch(). Use a local server instead. We also include a `.nojekyll` file in the root to ensure GitHub Pages correctly serves our single-page application without Jekyll processing.
 
 ### Run tests
 ```bash

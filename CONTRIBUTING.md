@@ -79,7 +79,7 @@ Change the previous "upcoming" session entry's `status` from `'upcoming'` to `'d
 The "View" link for slides uses Microsoft Office Online. The URL pattern is:
 
 ```
-https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/PATH_TO_FILE
+https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/PATH_TO_FILE
 ```
 
 Replace `PATH_TO_FILE` with the relative path from the repo root, e.g.:
