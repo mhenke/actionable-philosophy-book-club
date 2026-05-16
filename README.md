@@ -27,5 +27,31 @@ For the best experience, including mobile-optimized navigation, meeting agendas,
 ## 🤖 AI-Assisted Workflows
 We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompts/) to extract insights or the [Compression Skill](asset-compressor/) to manage large assets.
 
+## 💻 Local Development
+
+### Preview locally
+```bash
+# Start a local web server (required for fetch() to work)
+python3 -m http.server 8000
+
+# Open browser to http://localhost:8000
+```
+
+> **Note:** `file://` URLs block fetch(). Use a local server instead.
+
+### Run tests
+```bash
+# Install dependencies once
+npm install
+
+# Run all tests (starts server automatically)
+npm test
+
+# View test results
+npx playwright show-report
+```
+
+Tests verify XSS prevention, path validation, routing, and caching behavior.
+
 ## 🛠 Contributing
 We value **content over ceremony**. See [CONTRIBUTING.md](CONTRIBUTING.md) for details on uploading materials and staying under the 50MB file limit.
