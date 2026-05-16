@@ -14,7 +14,8 @@ The dashboard looks for this heading and transforms the list beneath it into a s
 ```markdown
 ## Session Materials
 - [recordings/](recordings/)
-  - [01-governance.mp4](recordings/01-governance.mp4)
+  - [01-governance.mp4](recordings/01-governance.mp4) (Displayed as "Video Recap")
+  - [01-governance-alt.mp4](recordings/01-governance-alt.mp4) (Displayed as "Video Recap Alt")
 - [slides/](slides/)
   - [01-slides.pptx](slides/01-slides.pptx)
 ```
@@ -23,7 +24,7 @@ The dashboard looks for this heading and transforms the list beneath it into a s
 A styled, expandable tree view with folder icons and file descriptors.
 
 ### Why the heading name matters
-- **If you use `## Recording` instead:** The file list renders as plain text, not a styled tree
+- **If you use `## Recap` instead:** The file list renders as plain text, not a styled tree
 - **If you use `## Materials`:** Same—the renderer won't recognize it
 - **If you use `## session materials` (lowercase in markdown):** Still works (matching is case-insensitive)
 
@@ -52,7 +53,7 @@ Links in **Session Materials** must be:
 
 ### Invalid examples (will break the link checker)
 ```markdown
-[https://github.com/mhenke/actionable-philosophy-book-club/raw/master/meetings/meeting-01/recordings/01-video.mp4](...) ← too long
+[https://github.com/mhenke/actionable-philosophy-book-club/raw/main/meetings/meeting-01/recordings/01-video.mp4](...) ← too long
 [recordings/VIDEO_NOT_UPLOADED.mp4](...) ← file doesn't exist
 [../missing.mp4](...) ← file doesn't exist
 ```
@@ -67,7 +68,7 @@ Each meeting folder must follow this structure:
 meetings/meeting-NN/
 ├── README.md              ← contains session notes and Section Materials
 ├── recordings/
-│   └── NN-*.mp4          ← video file(s)
+│   └── NN-*.mp4          ← video recap file(s)
 ├── slides/
 │   └── NN-*.pptx         ← presentation file(s)
 └── resources/

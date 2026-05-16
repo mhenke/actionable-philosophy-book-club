@@ -428,7 +428,7 @@
                 video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Recap', variant: 'canonical' },
                 slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [
-                    { type: 'summary', label: 'Video Recap (Alternate)', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
+                    { type: 'summary', label: 'Video Recap Alt', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
                     { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a' },
                     { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a' },
                     { type: 'critique', label: 'Deep Modules vs the AI Tactical Tornado', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-the-ai-tactical-tornado-critique.m4a' }
@@ -622,7 +622,7 @@
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                             ${meeting.video.label}
                         </a>
-                        <a href="${meeting.video.file}" download aria-label="Download video" class="asset-dl">${dlIcon}</a>
+                        <a href="${meeting.video.file}" download aria-label="Download video recap" class="asset-dl">${dlIcon}</a>
                     </div>` : '';
 
                 const slidesRow = meeting.slides ? `
@@ -831,5 +831,23 @@
 
         handleRoute();
     </script>
+</body>
+</html>
+nce
+        // Must be after renderArchiveCards() to include dynamically created archive cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('pointerenter', () => {
+                card.style.willChange = 'transform';
+            });
+            card.addEventListener('pointerleave', () => {
+                card.style.willChange = '';
+            });
+        });
+
+        handleRoute();
+    </script>
+</body>
+</html>
+  </script>
 </body>
 </html>
