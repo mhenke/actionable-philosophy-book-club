@@ -93,14 +93,11 @@
             background: var(--white);
             border: 1px solid var(--border-low);
             will-change: transform;
-            transition: transform 0.2s ease,
-                        border-color 0.2s,
-                        box-shadow 0.2s;
+            transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
         }
         .card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px -8px rgba(75,163,199,0.2);
-            border-color: rgba(75,163,199,0.3);
         }
         .card:active { transform: scale(0.99); }
 
@@ -122,6 +119,7 @@
             transform: translateY(-1px);
         }
 
+        /* Asset rows — links are visibly blue by default */
         .asset-row {
             display: flex;
             align-items: center;
@@ -130,6 +128,51 @@
             border-bottom: 1px solid var(--border-low);
         }
         .asset-row:last-child { border-bottom: none; }
+        .asset-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--spectrum-2);
+            min-height: 44px;
+            transition: color 0.15s;
+        }
+        .asset-link:hover { color: var(--spectrum-1); }
+        .asset-dl {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            color: var(--spectrum-3);
+            min-height: 44px;
+            transition: color 0.15s, background-color 0.15s;
+            border-radius: 4px;
+        }
+        .asset-dl:hover {
+            color: var(--white);
+            background-color: var(--spectrum-2);
+        }
+        .icon-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        /* Section divider — gradient rule */
+        .spectrum-rule {
+            flex-grow: 1;
+            height: 2px;
+            background: linear-gradient(90deg,
+                rgba(43,108,176,0.3) 0%,
+                rgba(72,189,184,0.15) 60%,
+                transparent 100%
+            );
+        }
 
         /* Reader */
         .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
@@ -171,13 +214,13 @@
             <section class="card p-6 md:p-8 border-t-4 border-spectrum-2">
                 <div class="flex justify-between items-start mb-6 gap-4">
                     <div>
-                        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted block mb-1">Meeting 02 &bull; Next Session</span>
+                        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02 &bull; Next Session</span>
                         <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Deep Modules &amp; Complexity Sink</h2>
                     </div>
                     <span class="shrink-0 text-[9px] font-bold uppercase tracking-widest bg-spectrum-2 text-white px-3 py-1">Upcoming</span>
                 </div>
 
-                <div class="bg-[rgba(43,108,176,0.05)] border border-[rgba(43,108,176,0.12)] p-5 mb-7">
+                <div class="bg-[rgba(43,108,176,0.06)] border border-[rgba(43,108,176,0.15)] p-5 mb-7">
                     <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
                     <p class="text-lg leading-snug italic text-banner">"A well-designed module is a <strong class="not-italic font-bold">complexity sink</strong>: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
                 </div>
@@ -191,18 +234,18 @@
                     <div>
                         <p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted mb-3">Upcoming Materials</p>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="flex items-center gap-3 p-4 border border-dashed border-black/10">
-                                <span class="text-xl shrink-0" aria-hidden="true">📊</span>
+                            <div class="flex items-center gap-3 p-4 bg-[rgba(43,108,176,0.04)] border border-[rgba(43,108,176,0.12)]">
+                                <span class="icon-pill bg-[rgba(43,108,176,0.1)]" aria-hidden="true">📊</span>
                                 <div>
                                     <p class="text-sm font-semibold text-muted">Slide Deck</p>
-                                    <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready before meeting</p>
+                                    <p class="text-[9px] uppercase tracking-wider text-spectrum-2/60 font-medium mt-0.5">Ready before meeting</p>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-3 p-4 border border-dashed border-black/10">
-                                <span class="text-xl shrink-0" aria-hidden="true">🎬</span>
+                            <div class="flex items-center gap-3 p-4 bg-[rgba(75,163,199,0.04)] border border-[rgba(75,163,199,0.12)]">
+                                <span class="icon-pill bg-[rgba(75,163,199,0.1)]" aria-hidden="true">🎬</span>
                                 <div>
                                     <p class="text-sm font-semibold text-muted">Video Recording</p>
-                                    <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready after meeting</p>
+                                    <p class="text-[9px] uppercase tracking-wider text-spectrum-3/60 font-medium mt-0.5">Ready after meeting</p>
                                 </div>
                             </div>
                         </div>
@@ -214,13 +257,13 @@
             <div>
                 <h3 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     The Archive
-                    <div class="h-px bg-spectrum-2/20 flex-grow"></div>
+                    <div class="spectrum-rule"></div>
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
 
                     <!-- Meeting 01 -->
-                    <div class="card p-6 border-t-2 border-spectrum-3">
+                    <div class="card p-6 border-t-2 border-spectrum-3" style="background: rgba(75,163,199,0.03);">
                         <div class="flex justify-between items-start mb-5 gap-3">
                             <div>
                                 <span class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-3 block mb-1">Session 01 &bull; 01 May 26</span>
@@ -230,27 +273,29 @@
                         </div>
                         <div>
                             <div class="asset-row">
-                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="flex items-center gap-3 text-sm font-semibold text-muted hover:text-spectrum-2 transition-colors min-h-[44px]">
-                                    <span class="flex items-center justify-center w-7 h-7 bg-spectrum-3/10 rounded text-sm shrink-0" aria-hidden="true">🎬</span> Video Recording
+                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" class="asset-link">
+                                    <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">🎬</span>
+                                    Video Recording
                                 </a>
-                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download aria-label="Download video" class="p-2 text-muted hover:text-spectrum-2 transition-colors min-h-[44px] flex items-center">
+                                <a href="meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4" download aria-label="Download video" class="asset-dl">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                                 </a>
                             </div>
                             <div class="asset-row">
-                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" rel="noopener" class="flex items-center gap-3 text-sm font-semibold text-muted hover:text-spectrum-2 transition-colors min-h-[44px]">
-                                    <span class="flex items-center justify-center w-7 h-7 bg-spectrum-2/10 rounded text-sm shrink-0" aria-hidden="true">📊</span> Slide Deck
+                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" target="_blank" rel="noopener" class="asset-link">
+                                    <span class="icon-pill bg-[rgba(43,108,176,0.12)]" aria-hidden="true">📊</span>
+                                    Slide Deck
                                 </a>
-                                <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download aria-label="Download slides" class="p-2 text-muted hover:text-spectrum-2 transition-colors min-h-[44px] flex items-center" >
+                                <a href="meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx" download aria-label="Download slides" class="asset-dl">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                                 </a>
                             </div>
                         </div>
-                        <a href="#p=meetings/meeting-01/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted hover:text-spectrum-2 mt-4 block transition-colors">Meeting Notes &rarr;</a>
+                        <a href="#p=meetings/meeting-01/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-3 hover:text-spectrum-1 mt-4 block transition-colors">Meeting Notes &rarr;</a>
                     </div>
 
                     <!-- Meeting 00 -->
-                    <div class="card p-6 border-t-2 border-spectrum-1">
+                    <div class="card p-6 border-t-2 border-spectrum-1" style="background: rgba(26,58,92,0.03);">
                         <div class="flex justify-between items-start mb-5 gap-3">
                             <div>
                                 <span class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-1 block mb-1">Session 00 &bull; 29 Apr 26</span>
@@ -260,23 +305,25 @@
                         </div>
                         <div>
                             <div class="asset-row">
-                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="flex items-center gap-3 text-sm font-semibold text-muted hover:text-spectrum-2 transition-colors min-h-[44px]">
-                                    <span class="flex items-center justify-center w-7 h-7 bg-spectrum-3/10 rounded text-sm shrink-0" aria-hidden="true">🎬</span> Video Recording
+                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" class="asset-link">
+                                    <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">🎬</span>
+                                    Video Recording
                                 </a>
-                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download aria-label="Download video" class="p-2 text-muted hover:text-spectrum-2 transition-colors min-h-[44px] flex items-center">
+                                <a href="meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4" download aria-label="Download video" class="asset-dl">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                                 </a>
                             </div>
                             <div class="asset-row">
-                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" rel="noopener" class="flex items-center gap-3 text-sm font-semibold text-muted hover:text-spectrum-2 transition-colors min-h-[44px]">
-                                    <span class="flex items-center justify-center w-7 h-7 bg-spectrum-2/10 rounded text-sm shrink-0" aria-hidden="true">📊</span> Slide Deck
+                                <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" target="_blank" rel="noopener" class="asset-link">
+                                    <span class="icon-pill bg-[rgba(43,108,176,0.12)]" aria-hidden="true">📊</span>
+                                    Slide Deck
                                 </a>
-                                <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" download aria-label="Download slides" class="p-2 text-muted hover:text-spectrum-2 transition-colors min-h-[44px] flex items-center">
+                                <a href="meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx" download aria-label="Download slides" class="asset-dl">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                                 </a>
                             </div>
                         </div>
-                        <a href="#p=meetings/meeting-00/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted hover:text-spectrum-2 mt-4 block transition-colors">Meeting Notes &rarr;</a>
+                        <a href="#p=meetings/meeting-00/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-1 hover:text-spectrum-2 mt-4 block transition-colors">Meeting Notes &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -285,24 +332,24 @@
             <div>
                 <h3 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     Knowledge Base
-                    <div class="h-px bg-spectrum-2/20 flex-grow"></div>
+                    <div class="spectrum-rule"></div>
                 </h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 hover:border-spectrum-4">
-                        <span class="text-2xl mb-2" aria-hidden="true">📚</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-muted group-hover:text-spectrum-4 transition-colors">Glossary</span>
+                    <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: rgba(72,189,184,0.03);">
+                        <span class="icon-pill bg-[rgba(72,189,184,0.12)] mb-2 text-xl" aria-hidden="true">📚</span>
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-4 group-hover:text-spectrum-3 transition-colors">Glossary</span>
                     </a>
-                    <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-1 hover:border-spectrum-1">
-                        <span class="text-2xl mb-2" aria-hidden="true">⚖️</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-muted group-hover:text-spectrum-1 transition-colors">Principles</span>
+                    <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-1" style="background: rgba(26,58,92,0.03);">
+                        <span class="icon-pill bg-[rgba(26,58,92,0.1)] mb-2 text-xl" aria-hidden="true">⚖️</span>
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
                     </a>
-                    <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2 hover:border-spectrum-2">
-                        <span class="text-2xl mb-2" aria-hidden="true">🤖</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-muted group-hover:text-spectrum-2 transition-colors">AI Prompts</span>
+                    <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: rgba(43,108,176,0.03);">
+                        <span class="icon-pill bg-[rgba(43,108,176,0.1)] mb-2 text-xl" aria-hidden="true">🤖</span>
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
                     </a>
-                    <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-5 hover:border-spectrum-5">
-                        <span class="text-2xl mb-2" aria-hidden="true">📂</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-muted group-hover:text-spectrum-5 transition-colors">Inbox</span>
+                    <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-5" style="background: rgba(114,201,168,0.03);">
+                        <span class="icon-pill bg-[rgba(114,201,168,0.12)] mb-2 text-xl" aria-hidden="true">📂</span>
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-5 group-hover:text-spectrum-4 transition-colors">Inbox</span>
                     </a>
                 </div>
             </div>
