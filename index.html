@@ -317,25 +317,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                     </a>
 
-                    <div>
-                        <p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted mb-3">Upcoming Materials</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div class="flex items-center gap-3 p-4 border" style="background: var(--wash-2); border-color: var(--wash-2-border);">
-                                <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true">📊</span>
-                                <div>
-                                    <p class="text-sm font-semibold text-muted">Slide Deck</p>
-                                    <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready before meeting</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-3 p-4 border" style="background: var(--wash-3); border-color: var(--wash-3-border);">
-                                <span class="icon-pill" style="background: var(--wash-3-icon);" aria-hidden="true">🎬</span>
-                                <div>
-                                    <p class="text-sm font-semibold text-muted">Video Recording</p>
-                                    <p class="text-[9px] uppercase tracking-wider text-muted font-medium mt-0.5">Ready after meeting</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="upcoming-materials-container"></div>
                 </div>
             </section>
 
@@ -494,6 +476,75 @@
 
         function hasPlaceholderAssetPath(path) {
             return /FILENAME/i.test(path);
+        }
+
+        function renderUpcomingMaterials() {
+            const container = document.getElementById('upcoming-materials-container');
+            if (!container) return;
+
+            const meeting = MEETINGS.find(m => m.status === 'upcoming');
+            if (!meeting) return;
+
+            const podcastConfig = {
+                'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
+                'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
+                'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
+            };
+
+            const dlIcon = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
+
+            const rows = [];
+
+            if (meeting.video) {
+                rows.push(`
+                    <div class="asset-row">
+                        <a href="${meeting.video.file}" class="asset-link">
+                            <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">🎬</span>
+                            ${meeting.video.label}
+                        </a>
+                        <a href="${meeting.video.file}" download aria-label="Download video" class="asset-dl">${dlIcon}</a>
+                    </div>`);
+            }
+
+            if (meeting.slides) {
+                rows.push(`
+                    <div class="asset-row">
+                        <a href="https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/${meeting.slides.file}" target="_blank" rel="noopener" class="asset-link">
+                            <span class="icon-pill bg-[rgba(43,108,176,0.12)]" aria-hidden="true">📊</span>
+                            ${meeting.slides.label}
+                        </a>
+                        <a href="${meeting.slides.file}" download aria-label="Download slides" class="asset-dl">${dlIcon}</a>
+                    </div>`);
+            }
+
+            (meeting.podcasts || []).forEach(pod => {
+                const cfg = podcastConfig[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: pod.type };
+                rows.push(`
+                    <div class="asset-row">
+                        <a href="${pod.file}" class="asset-link">
+                            <span class="icon-pill bg-[rgba(75,163,199,0.12)]" aria-hidden="true">${cfg.icon}</span>
+                            ${pod.label}
+                            <span class="podcast-badge" style="color:${cfg.color}">${cfg.label}</span>
+                        </a>
+                        <a href="${pod.file}" download aria-label="Download ${pod.label}" class="asset-dl">${dlIcon}</a>
+                    </div>`);
+            });
+
+            const resourceStrip = (meeting.resources || []).length > 0 ? `
+                <div class="resource-strip">
+                    ${(meeting.resources || []).map(res => `
+                    <a href="${res.file}" target="_blank" rel="noopener" class="resource-thumb">
+                        <img src="${res.file}" alt="${res.label}" loading="lazy">
+                        <span>${res.label}</span>
+                    </a>`).join('')}
+                </div>` : '';
+
+            if (rows.length === 0 && !resourceStrip) {
+                container.innerHTML = `<p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted">Materials available closer to the meeting.</p>`;
+                return;
+            }
+
+            container.innerHTML = rows.join('') + resourceStrip;
         }
 
         function renderArchiveCards() {
@@ -703,6 +754,7 @@
             window.location.hash = '';
         });
 
+        renderUpcomingMaterials();
         renderArchiveCards();
         attachPrefetchListeners();
 
