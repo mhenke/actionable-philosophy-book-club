@@ -16,6 +16,11 @@ test.describe('Manifest Rendering', () => {
         await expect(podcastLink).toContainText('Clean Code Paradox');
     });
 
+    test('archive card includes strategic software design recap', async ({ page }) => {
+        await page.goto('/');
+        await expect(page.getByText('Strategic Software Design and Deep Modules')).toBeVisible();
+    });
+
     test('archive card for meeting-01 renders resource thumbnails', async ({ page }) => {
         await page.goto('/');
         const archiveThumbs = page.locator('#archive-cards-container .resource-thumb');
