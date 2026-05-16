@@ -383,7 +383,7 @@
             }
         ];
 
-        marked.setOptions({ gfm: true, breaks: true });
+        marked.use({ gfm: true, breaks: true });
 
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
@@ -540,6 +540,9 @@
                 showDashboard();
             }
         }
+
+        // Expose for tests
+        window.isSafeRepoPath = isSafeRepoPath;
 
         window.addEventListener('hashchange', handleRoute);
         document.getElementById('back-to-dashboard').addEventListener('click', e => {

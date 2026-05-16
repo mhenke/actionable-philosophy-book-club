@@ -40,6 +40,15 @@ jobs:
           done < <(grep -oP '(?<=href="#p=)[^"]+' index.html)
           [ "$ERRORS" -eq 0 ] && echo "Hash-route link check passed" || exit 1
 
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npm test
+
       - name: Verify internal asset href paths resolve to real files
         run: |
           ERRORS=0
