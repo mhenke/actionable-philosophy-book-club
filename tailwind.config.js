@@ -4,15 +4,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        banner:       '#222222',
-        surface:      '#F7F7F7',
-        muted:        '#545454',
-        'spectrum-1': '#1A3A5C',
-        'spectrum-2': '#2B6CB0',
-        'spectrum-3': '#4BA3C7',
-        'spectrum-4': '#48BDB8',
-        'spectrum-5': '#72C9A8',
-        'spectrum-6': '#A8D8B9',
+        banner:       'var(--banner)',
+        surface:      'var(--surface)',
+        muted:        'var(--text-muted)',
+        'spectrum-1': 'var(--spectrum-1)',
+        'spectrum-2': 'var(--spectrum-2)',
+        'spectrum-3': 'var(--spectrum-3)',
+        'spectrum-4': 'var(--spectrum-4)',
+        'spectrum-5': 'var(--spectrum-5)',
+        'spectrum-6': 'var(--spectrum-6)',
       }
     }
   }
