@@ -1,39 +1,40 @@
 # Design
 
-## Theme
-Physical Scene: A clean, well-lit minimalist workspace. The interface is a literal digital extension of the "A Philosophy of Software Design" physical book cover—technical, precise, and approachable. It uses the "Complexity Governor" organic loops as a central system metaphor.
+## Aesthetic Vision: The APoSD Identity
+The interface is a literal digital extension of the "A Philosophy of Software Design" physical book cover. It targets a "technical but human" feel, prioritizing functional minimalism and high-precision Swiss/International Style design.
+
+## Physical Scene
+A clean, well-lit monograph reader or engineering notebook. The dashboard should feel like a premium printed object rather than a standard web application.
 
 ## Colors
-- **Strategy:** True APoSD Cover Palette
-- **Background (Near White):** `#F7F7F7`
-- **Banner (Dark Charcoal):** `#222222`
-- **Text Primary:** `#222222`
-- **Text Muted:** `#666666`
-- **White:** `#FFFFFF`
+
+### Core Surfaces
+- **Background (Near White):** `#F7F7F7` — Primary cover background.
+- **Banner (Dark Charcoal):** `#222222` — Used for the title bar/header.
+- **Title/Banner Text:** `#FFFFFF` — Pure white on charcoal.
+- **Text Primary:** `#222222` — High-contrast charcoal for body/headings.
+- **Text Muted:** `#545454` — Dark gray, compliant with WCAG AA (5.8:1 ratio).
 
 ### The Loops Spectrum (Accents)
-- **Deep Navy:** `#1A3A5C`
+A muted blue → teal → sage green gradient spectrum on white.
+- **Deep Navy:** `#1A3A5C` (Darkest)
 - **Medium Blue:** `#2B6CB0`
 - **Steel Blue:** `#4BA3C7`
 - **Teal:** `#48BDB8`
 - **Seafoam:** `#72C9A8`
-- **Light Sage:** `#A8D8B9`
+- **Light Sage:** `#A8D8B9` (Lightest)
 
-## Typography
-- **Typeface:** Inter (Swiss/International Style)
-- **Title Style:** All-caps, Medium weight, tight tracking (`-0.02em`).
-- **Author/Metadata Style:** All-caps, Light/Thin weight, smaller scale.
-- **Body Style:** Clean, high-legibility sans-serif. No serifs.
-- **Scale:** Modular hierarchy based on weight contrast over size variation.
+## Typography: Swiss / International Style
+Zero decorative type. Hierarchy is achieved entirely through **weight contrast** rather than size or color variation.
 
-## Components
-- **Banner Bar:** Full-width charcoal block with white Swiss typography.
-- **Organic Loops:** SVG-based "Complexity Governor" illustration with layered transparency and spectrum colors.
-- **Material Cards:** Flat white cards with 1px borders and spectrum hover states.
-- **Bibliographic Footer:** Solid charcoal anchor mirroring the cover's structural balance.
+- **Typeface:** Inter (Swiss feel, high screen performance).
+- **Titles (Large/Primary):** All-caps, **Medium weight**, tight tracking (`-0.04em`).
+- **Author/Metadata:** All-caps, **Light/Thin weight**, set noticeably smaller or to the right of titles.
+- **Body:** Sans-serif, high-legibility, standard case. Line length capped at **65–75ch**.
 
-## Layout
-- Single-column flow with generous whitespace.
-- "Complexity Governor" visual fills the upper 40% of the viewport.
-- Maximum line length of 70ch for comfortable reading.
-- Large, thumb-friendly touch targets for mobile media access.
+## Layout & Components
+- **The Banner Bar:** Dark charcoal anchor containing the title (Medium) and author (Light) on the same baseline.
+- **The Spectrum Bar:** A 6px high-precision linear gradient bar (Navy to Sage) serving as the primary visual divider.
+- **Structural Minimalism:** Only necessary text elements; generous whitespace; no side-stripe borders or gradient text.
+- **Material Cards:** Flat white cards with subtle 1px borders (`rgba(0,0,0,0.06)`). Hover states trigger an upward shift and a spectrum-tinted shadow.
+- **A11y:** 44px minimum touch targets; focus-within rings using `--spectrum-3`.
