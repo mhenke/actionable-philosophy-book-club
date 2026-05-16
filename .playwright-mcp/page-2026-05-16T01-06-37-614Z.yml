@@ -1,0 +1,67 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - heading "A Philosophy of Software Design" [level=1] [ref=e5]
+        - generic [ref=e6]: John Ousterhout
+    - main [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]: Meeting 02
+          - generic [ref=e13]: Next Session
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - heading "Complexity Sinks" [level=2] [ref=e16]
+            - blockquote [ref=e17]: "“A well-designed module is a complexity sink: it takes on internal implementation suffering so the rest of the system can stay simple.”"
+            - link "Open Agenda" [ref=e18] [cursor=pointer]:
+              - /url: "#p=meetings/meeting-02/README.md"
+              - text: Open Agenda
+              - img [ref=e19]
+          - generic [ref=e21]:
+            - heading "Materials" [level=3] [ref=e22]
+            - generic [ref=e23]:
+              - generic [ref=e24]:
+                - generic [ref=e25]: Slide Deck
+                - generic [ref=e26]: Awaiting Signal
+              - generic [ref=e27]:
+                - generic [ref=e28]: Video Record
+                - generic [ref=e29]: Awaiting Signal
+      - generic [ref=e30]:
+        - heading "The Archive" [level=3] [ref=e31]
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]:
+              - generic [ref=e35]: 01 / 05 / 26
+              - text: APoSD.2026.01
+            - heading "Deep Systems" [level=4] [ref=e38]
+            - link "Synthesis" [ref=e40] [cursor=pointer]:
+              - /url: "#p=meetings/meeting-01/README.md"
+          - generic [ref=e41]:
+            - generic [ref=e42]:
+              - generic [ref=e43]: 29 / 04 / 26
+              - text: APoSD.2026.00
+            - heading "The Kickoff" [level=4] [ref=e46]
+            - link "Synthesis" [ref=e48] [cursor=pointer]:
+              - /url: "#p=meetings/meeting-00/README.md"
+      - generic [ref=e49]:
+        - link "Glossary A rigorous taxonomy of software complexity." [ref=e50] [cursor=pointer]:
+          - /url: "#p=docs/glossary.md"
+          - heading "Glossary" [level=4] [ref=e51]
+          - paragraph [ref=e52]: A rigorous taxonomy of software complexity.
+        - link "Principles The immutable principles governing technical decisions." [ref=e53] [cursor=pointer]:
+          - /url: "#p=docs/design-principles.md"
+          - heading "Principles" [level=4] [ref=e54]
+          - paragraph [ref=e55]: The immutable principles governing technical decisions.
+        - link "Prompt Lib Standardized frameworks for distilling deep insights." [ref=e56] [cursor=pointer]:
+          - /url: "#p=templates/prompts/README.md"
+          - heading "Prompt Lib" [level=4] [ref=e57]
+          - paragraph [ref=e58]: Standardized frameworks for distilling deep insights.
+  - contentinfo [ref=e59]:
+    - generic [ref=e60]:
+      - generic [ref=e61]:
+        - paragraph [ref=e62]: Actionable Philosophy Book Club • 2026
+        - link "Back to Top" [ref=e63] [cursor=pointer]:
+          - /url: "#"
+          - img [ref=e64]
+          - text: Back to Top
+      - paragraph [ref=e66]: Spare Time Excellence
