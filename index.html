@@ -374,8 +374,12 @@
                 color: 'spectrum-2',
                 wash: '--wash-2',
                 readmeUrl: 'meetings/meeting-02/README.md',
-                video: { file: 'meetings/meeting-02/recordings/02-FILENAME.mp4', label: 'Video Recording' },
-                slides: { file: 'meetings/meeting-02/slides/02-FILENAME.pptx', label: 'Slide Deck' }
+                video: null,
+                slides: null,
+                podcasts: [],
+                resources: [
+                    { label: 'Four Strategies', file: 'meetings/meeting-02/resources/02-Four-Strategies.png' }
+                ]
             },
             {
                 id: 'meeting-01',
@@ -387,7 +391,14 @@
                 wash: '--wash-3',
                 readmeUrl: 'meetings/meeting-01/README.md',
                 video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Recording' },
-                slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slide Deck' }
+                slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slide Deck' },
+                podcasts: [
+                    { type: 'deep-dive', label: 'Clean Code Paradox', file: 'meetings/meeting-01/recordings/01-Clean-Code-Paradox-deep-dive.mp4' }
+                ],
+                resources: [
+                    { label: 'Architecture of Simplicity', file: 'meetings/meeting-01/resources/01-Architecture-of-Simplicity.png' },
+                    { label: 'Choose Your Adventure',      file: 'meetings/meeting-01/resources/01-Choose-Your-Adventure.png' }
+                ]
             },
             {
                 id: 'meeting-00',
@@ -399,7 +410,9 @@
                 wash: '--wash-1',
                 readmeUrl: 'meetings/meeting-00/README.md',
                 video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Recording' },
-                slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slide Deck' }
+                slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slide Deck' },
+                podcasts: [],
+                resources: []
             }
         ];
 
