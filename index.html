@@ -178,14 +178,38 @@
         .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
         .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
         .prose h2 { font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
-        .prose h3 { font-size: 1.125rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.75rem; color: var(--spectrum-1); padding-left: 0.75rem; border-left: 2px solid var(--spectrum-3); }
         .prose p { font-size: 1.0625rem; line-height: 1.7; margin-bottom: 1.25rem; color: var(--text-muted); }
-        .prose ul, .prose ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        /* Restore bullets — Tailwind preflight resets list-style to none */
+        .prose ul { list-style-type: disc; margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        .prose ul ul { list-style-type: circle; margin-top: 0.25rem; margin-bottom: 0.25rem; }
+        .prose ol { list-style-type: decimal; margin-bottom: 1.25rem; padding-left: 1.5rem; }
         .prose li { margin-bottom: 0.4rem; color: var(--text-muted); }
         .prose strong { color: var(--text-primary); font-weight: 600; }
         .prose blockquote { background: rgba(72,189,184,0.06); border: 1px solid rgba(72,189,184,0.2); padding: 1.25rem 1.75rem; margin: 2rem 0; font-style: italic; color: var(--text-muted); }
-        .prose a { color: var(--spectrum-2); text-decoration: underline; text-underline-offset: 3px; }
+        .prose a { color: var(--spectrum-2); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+        .prose a:hover { color: var(--spectrum-1); }
         .prose code { background: rgba(0,0,0,0.05); padding: 0.15rem 0.35rem; font-size: 0.875em; font-family: monospace; border-radius: 2px; }
+
+        /* Session Materials — post-processed by JS */
+        .materials-panel {
+            background: rgba(43,108,176,0.04);
+            border: 1px solid rgba(43,108,176,0.12);
+            padding: 0.75rem 1.25rem;
+            margin-top: 0.5rem;
+            list-style-type: none !important;
+            padding-left: 1.25rem !important;
+        }
+        .materials-panel > li {
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: var(--text-primary);
+        }
+        .materials-panel > li:last-child { border-bottom: none; }
+        .materials-panel a { color: var(--spectrum-2); font-weight: 600; text-decoration: none; }
+        .materials-panel a:hover { color: var(--spectrum-1); text-decoration: underline; }
+        .materials-panel ul { list-style-type: none !important; padding-left: 1rem; margin: 0.25rem 0 0; }
+        .materials-panel ul li { padding: 3px 0; border: none; color: var(--text-muted); font-size: 0.9375rem; }
 
         .hidden-view { display: none !important; }
 
@@ -403,6 +427,17 @@
                         const baseDir = path.substring(0, path.lastIndexOf('/') + 1);
                         const absolutePath = new URL(href, window.location.origin + '/' + baseDir).pathname.substring(1);
                         link.setAttribute('href', '#p=' + absolutePath);
+                    }
+                });
+
+                // Give Session Materials a panel treatment
+                content.querySelectorAll('h2').forEach(h2 => {
+                    if (/session materials/i.test(h2.textContent)) {
+                        let el = h2.nextElementSibling;
+                        while (el && el.tagName !== 'H2') {
+                            if (el.tagName === 'UL') el.classList.add('materials-panel');
+                            el = el.nextElementSibling;
+                        }
                     }
                 });
             } catch (err) {
