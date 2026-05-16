@@ -109,10 +109,8 @@
             background-color: var(--spectrum-2);
             color: var(--white);
         }
-        .btn-primary:hover {
-            background-color: var(--spectrum-1);
-            transform: translateY(-1px);
-        }
+        .btn-primary:hover  { background-color: var(--spectrum-1); transform: translateY(-1px); }
+        .btn-primary:active { background-color: var(--spectrum-1); transform: translateY(1px); opacity: 0.9; }
 
         /* Asset rows — links are visibly blue by default */
         .asset-row {
@@ -131,9 +129,10 @@
             font-weight: 600;
             color: var(--spectrum-2);
             min-height: 44px;
-            transition: color 0.15s;
+            transition: color 0.15s, opacity 0.1s, transform 0.1s;
         }
-        .asset-link:hover { color: var(--spectrum-1); }
+        .asset-link:hover  { color: var(--spectrum-1); }
+        .asset-link:active { color: var(--spectrum-1); opacity: 0.6; transform: scale(0.98); }
         .asset-dl {
             display: flex;
             align-items: center;
@@ -143,10 +142,8 @@
             transition: color 0.15s, background-color 0.15s;
             border-radius: 4px;
         }
-        .asset-dl:hover {
-            color: var(--white);
-            background-color: var(--spectrum-2);
-        }
+        .asset-dl:hover  { color: var(--white); background-color: var(--spectrum-2); }
+        .asset-dl:active { color: var(--white); background-color: var(--spectrum-1); transform: scale(0.92); }
         .icon-pill {
             display: flex;
             align-items: center;
@@ -206,14 +203,20 @@
         .materials-panel ul { list-style-type: none !important; padding: 0 !important; margin: 0; }
         .tree-connector { color: var(--spectrum-3); user-select: none; }
         .materials-panel a { color: var(--spectrum-2); font-weight: 500; text-decoration: none; font-family: inherit; }
-        .materials-panel a:hover { color: var(--spectrum-1); text-decoration: underline; }
+        .materials-panel a:hover  { color: var(--spectrum-1); text-decoration: underline; }
+        .materials-panel a:active { opacity: 0.6; }
+
+        /* Meeting Notes links and Knowledge Base text links */
+        .meeting-notes-link { transition: color 0.15s, opacity 0.1s; }
+        .meeting-notes-link:active { opacity: 0.5; }
 
         .hidden-view { display: none !important; }
 
         @media (prefers-reduced-motion: reduce) {
             .card, .btn, a { transition: none !important; }
-            .card:hover { transform: none; }
-            .btn-primary:hover { transform: none; }
+            .card:hover, .card:active { transform: none; }
+            .btn-primary:hover, .btn-primary:active { transform: none; }
+            .asset-link:active, .asset-dl:active { transform: none; opacity: 1; }
         }
     </style>
 </head>
@@ -429,7 +432,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
                         </a>
                     </div>
-                    <a href="#p=${meeting.readmeUrl}" class="text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px] transition-colors" style="color: ${colorValue}">Meeting Notes &rarr;</a>
+                    <a href="#p=${meeting.readmeUrl}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color: ${colorValue}">Meeting Notes &rarr;</a>
                 `;
                 
                 archiveContainer.appendChild(card);
