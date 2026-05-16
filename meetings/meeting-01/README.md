@@ -40,7 +40,7 @@ A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software 
   
   - [01-strategic-software-design-and-deep-modules-deep-dive.m4a](recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a)
   - [01-deep-modules-versus-clean-code-for-ai-debate.m4a](recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a)
-  - [01-deep-modules-versus-the-ai-tactical-tornado-critique.m4a](recordings/01-deep-modules-versus-the-ai-tactical-tornado-critique.m4a)
+  - [01-tactical-programming-complexity-critique.m4a](recordings/01-tactical-programming-complexity-critique.m4a)
 - [resources/](resources/)
   - [01-architecture-of-simplicity.png](resources/01-architecture-of-simplicity.png)
   - [01-choose-your-adventure.png](resources/01-choose-your-adventure.png)
