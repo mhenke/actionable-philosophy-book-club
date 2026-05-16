@@ -702,13 +702,16 @@
         }
 
         function isSafeRepoPath(p) {
-            if (typeof p !== 'string' || p.length === 0 || p.length > 256) return false;
+            if (!p || typeof p !== 'string') return false;
+            if (p.length === 0 || p.length > 256) return false;
             if (!p.endsWith('.md')) return false;
-            if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;   // any scheme
-            if (p.startsWith('//') || p.startsWith('/')) return false; // protocol-relative, absolute
-            if (p.startsWith('.') || p.includes('..')) return false;   // traversal
-            if (/[\\\x00-\x1f]/.test(p)) return false;           // control chars, backslash
-            return /^[A-Za-z0-9._\-/]+$/.test(p);
+            if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;
+            if (p.startsWith('//') || p.startsWith('/')) return false;
+            if (p.startsWith('.') || p.includes('..')) return false;
+            if (!/^[A-Za-z0-9._\-/]+$/.test(p)) return false;
+            // Allowlist: only paths under known content directories
+            const firstSegment = p.split('/')[0];
+            return new Set(['meetings', 'docs', 'templates']).has(firstSegment);
         }
 
         function renderFileTree(ul, prefix) {
