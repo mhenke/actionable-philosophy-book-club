@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
     <link rel="stylesheet" href="dist/tailwind.css">
     <script
@@ -14,9 +14,6 @@
       src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"
       integrity="sha384-eEu5CTj3qGvu9PdJuS+YlkNi7d2XxQROAFYOr59zgObtlcux1ae1Il3u7jvdCSWu"
       crossorigin="anonymous"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --surface:      #F7F7F7;
@@ -55,7 +52,7 @@
             --materials-panel-border: rgb(34 34 34 / 0.08);
         }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
             background-color: var(--surface);
             color: var(--text-primary);
             line-height: 1.5;
@@ -66,12 +63,10 @@
             outline-offset: 2px;
         }
         .swiss-caps {
-            text-transform: uppercase;
             letter-spacing: -0.04em;
             font-weight: 500;
         }
         .swiss-light {
-            text-transform: uppercase;
             letter-spacing: -0.01em;
             font-weight: 300;
         }
@@ -198,7 +193,7 @@
         /* Reader */
         .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
         .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
-        .prose h2 { font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
+        .prose h2 { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
         .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; padding-top: 0.5rem; color: var(--spectrum-1); border-top: 1px solid var(--prose-h3-border); }
         .prose p { font-size: 1.0625rem; line-height: 1.7; margin-bottom: 1.25rem; color: var(--text-muted); }
         /* Restore bullets — Tailwind preflight resets list-style to none */
@@ -276,8 +271,7 @@
         .resource-thumb span {
             font-size: 0.5625rem;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.02em;
             color: var(--text-muted);
             text-align: center;
             max-width: 80px;
@@ -390,7 +384,7 @@
     </div>
 
     <footer class="py-8 border-t border-black/5 text-center">
-        <p class="text-[9px] font-semibold uppercase tracking-[0.4em] text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
+        <p class="text-[9px] font-semibold text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
     </footer>
 
     <script>
@@ -516,7 +510,7 @@
                         <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">${icon}</span>
                         <div>
                             <div>${label}</div>
-                            <div class="text-[9px] uppercase tracking-[0.25em] text-muted font-semibold mt-0.5">${copy}</div>
+                            <div class="text-[9px] text-muted font-semibold mt-0.5">${copy}</div>
                         </div>
                     </div>
                 </div>`;
@@ -586,7 +580,7 @@
                 </div>` : '';
 
             if (rows.length === 0 && !resourceStrip) {
-                container.innerHTML = `<p class="text-[9px] font-semibold uppercase tracking-[0.25em] text-muted">Materials available closer to the meeting.</p>`;
+                container.innerHTML = `<p class="text-[9px] font-semibold text-muted">Materials available closer to the meeting.</p>`;
                 return;
             }
 

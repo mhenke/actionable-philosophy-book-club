@@ -55,4 +55,13 @@ test.describe('Manifest Rendering', () => {
         await expect(page.locator('#upcoming-materials-container')).toBeVisible();
     });
 
+    test('dashboard source has no raw rgba utility classes', async ({ page }) => {
+        await page.goto('/');
+        const rawClassUses = await page.locator('body').evaluate((body) => {
+            const html = body.innerHTML;
+            return (html.match(/bg-\[rgba/g) || []).length + (html.match(/border-\[rgba/g) || []).length;
+        });
+        expect(rawClassUses).toBe(0);
+    });
+
 });

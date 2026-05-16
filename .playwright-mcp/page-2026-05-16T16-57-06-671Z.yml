@@ -1,0 +1,167 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - heading "A Philosophy of Software Design" [level=1] [ref=e5]
+        - generic [ref=e6]: John Ousterhout
+    - main [ref=e8]:
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e11]:
+            - generic [ref=e12]: Meeting 02 • Next Session
+            - heading "Deep Modules & Complexity Sink" [level=2] [ref=e13]
+          - generic [ref=e14]: Upcoming
+        - generic [ref=e15]:
+          - paragraph [ref=e16]: Key Takeaway
+          - paragraph [ref=e17]:
+            - text: "\"A well-designed module is a"
+            - strong [ref=e18]: complexity sink
+            - text: ": it takes on internal implementation suffering so the rest of the system can stay simple.\""
+        - generic [ref=e19]:
+          - link "View Agenda & Discussion Guide" [ref=e20] [cursor=pointer]:
+            - /url: "#p=meetings/meeting-02/README.md"
+            - text: View Agenda & Discussion Guide
+            - img [ref=e21]
+          - generic [ref=e23]:
+            - generic [ref=e24]:
+              - link "Video Recap" [ref=e25] [cursor=pointer]:
+                - /url: meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4
+                - generic [ref=e26]: 🎬
+                - text: Video Recap
+              - link "Download video recap" [ref=e27] [cursor=pointer]:
+                - /url: meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4
+                - img [ref=e28]
+            - generic [ref=e30]:
+              - link "Slide Deck" [ref=e31] [cursor=pointer]:
+                - /url: https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-02/slides/02-the-complexity-case.pptx
+                - generic [ref=e32]: 📊
+                - text: Slide Deck
+              - link "Download slides" [ref=e33] [cursor=pointer]:
+                - /url: meetings/meeting-02/slides/02-the-complexity-case.pptx
+                - img [ref=e34]
+            - generic [ref=e36]:
+              - link "Four Strategies Four Strategies" [ref=e37] [cursor=pointer]:
+                - /url: meetings/meeting-02/resources/02-four-strategies.png
+                - img "Four Strategies" [ref=e38]
+                - generic [ref=e39]: Four Strategies
+              - link "Choose Your Next Meeting Choose Your Next Meeting" [ref=e40] [cursor=pointer]:
+                - /url: meetings/meeting-02/resources/02-choose-your-next-meeting.png
+                - img "Choose Your Next Meeting" [ref=e41]
+                - generic [ref=e42]: Choose Your Next Meeting
+      - generic [ref=e43]:
+        - heading "The Archive" [level=3] [ref=e44]: The Archive
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - generic [ref=e48]:
+              - generic [ref=e49]:
+                - generic [ref=e50]: Session 01 • 01 May 26
+                - heading "Deep Systems" [level=4] [ref=e51]
+              - generic [ref=e52]: Done
+            - generic [ref=e53]:
+              - link "Video Recording" [ref=e54] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4
+                - generic [ref=e55]: 🎬
+                - text: Video Recording
+              - link "Download video" [ref=e56] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4
+                - img [ref=e57]
+            - generic [ref=e59]:
+              - link "Slide Deck" [ref=e60] [cursor=pointer]:
+                - /url: https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx
+                - generic [ref=e61]: 📊
+                - text: Slide Deck
+              - link "Download slides" [ref=e62] [cursor=pointer]:
+                - /url: meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx
+                - img [ref=e63]
+            - generic [ref=e65]:
+              - link "Clean Code Paradox Deep Dive" [ref=e66] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-Clean-Code-Paradox-deep-dive.mp4
+                - generic [ref=e67]: 🎙
+                - text: Clean Code Paradox
+                - generic [ref=e68]: Deep Dive
+              - link "Download Clean Code Paradox" [ref=e69] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-Clean-Code-Paradox-deep-dive.mp4
+                - img [ref=e70]
+            - generic [ref=e72]:
+              - link "Strategic Software Design and Deep Modules Deep Dive" [ref=e73] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a
+                - generic [ref=e74]: 🎙
+                - text: Strategic Software Design and Deep Modules
+                - generic [ref=e75]: Deep Dive
+              - link "Download Strategic Software Design and Deep Modules" [ref=e76] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a
+                - img [ref=e77]
+            - generic [ref=e79]:
+              - link "Deep Modules vs Clean Code for AI Debate" [ref=e80] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a
+                - generic [ref=e81]: ⚔️
+                - text: Deep Modules vs Clean Code for AI
+                - generic [ref=e82]: Debate
+              - link "Download Deep Modules vs Clean Code for AI" [ref=e83] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a
+                - img [ref=e84]
+            - generic [ref=e86]:
+              - link "Deep Modules vs the AI Tactical Tornado Critique" [ref=e87] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-deep-modules-versus-the-ai-tactical-tornado-critique.m4a
+                - generic [ref=e88]: 🔍
+                - text: Deep Modules vs the AI Tactical Tornado
+                - generic [ref=e89]: Critique
+              - link "Download Deep Modules vs the AI Tactical Tornado" [ref=e90] [cursor=pointer]:
+                - /url: meetings/meeting-01/recordings/01-deep-modules-versus-the-ai-tactical-tornado-critique.m4a
+                - img [ref=e91]
+            - generic [ref=e93]:
+              - link "Architecture of Simplicity Architecture of Simplicity" [ref=e94] [cursor=pointer]:
+                - /url: meetings/meeting-01/resources/01-architecture-of-simplicity.png
+                - img "Architecture of Simplicity" [ref=e95]
+                - generic [ref=e96]: Architecture of Simplicity
+              - link "Choose Your Adventure Choose Your Adventure" [ref=e97] [cursor=pointer]:
+                - /url: meetings/meeting-01/resources/01-choose-your-adventure.png
+                - img "Choose Your Adventure" [ref=e98]
+                - generic [ref=e99]: Choose Your Adventure
+            - link "Meeting Notes →" [ref=e100] [cursor=pointer]:
+              - /url: "#p=meetings/meeting-01/README.md"
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - generic [ref=e103]:
+                - generic [ref=e104]: Session 00 • 29 Apr 26
+                - heading "The Kickoff" [level=4] [ref=e105]
+              - generic [ref=e106]: Done
+            - generic [ref=e107]:
+              - link "Video Recording" [ref=e108] [cursor=pointer]:
+                - /url: meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4
+                - generic [ref=e109]: 🎬
+                - text: Video Recording
+              - link "Download video" [ref=e110] [cursor=pointer]:
+                - /url: meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4
+                - img [ref=e111]
+            - generic [ref=e113]:
+              - link "Slide Deck" [ref=e114] [cursor=pointer]:
+                - /url: https://view.officeapps.live.com/op/view.aspx?src=https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/master/meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx
+                - generic [ref=e115]: 📊
+                - text: Slide Deck
+              - link "Download slides" [ref=e116] [cursor=pointer]:
+                - /url: meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx
+                - img [ref=e117]
+            - link "Meeting Notes →" [ref=e119] [cursor=pointer]:
+              - /url: "#p=meetings/meeting-00/README.md"
+      - generic [ref=e120]:
+        - heading "Knowledge Base" [level=3] [ref=e121]: Knowledge Base
+        - generic [ref=e123]:
+          - link "Glossary" [ref=e124] [cursor=pointer]:
+            - /url: "#p=docs/glossary.md"
+            - generic [ref=e125]: 📚
+            - generic [ref=e126]: Glossary
+          - link "Principles" [ref=e127] [cursor=pointer]:
+            - /url: "#p=docs/design-principles.md"
+            - generic [ref=e128]: ⚖️
+            - generic [ref=e129]: Principles
+          - link "AI Prompts" [ref=e130] [cursor=pointer]:
+            - /url: "#p=templates/prompts/README.md"
+            - generic [ref=e131]: 🤖
+            - generic [ref=e132]: AI Prompts
+          - link "Inbox" [ref=e133] [cursor=pointer]:
+            - /url: "#p=meetings/meeting-99-new/README.md"
+            - generic [ref=e134]: 📂
+            - generic [ref=e135]: Inbox
+  - contentinfo [ref=e136]:
+    - paragraph [ref=e137]: Actionable Philosophy Book Club • Spare Time Excellence • 2026
