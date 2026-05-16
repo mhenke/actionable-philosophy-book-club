@@ -42,6 +42,12 @@
             --spectrum-5:   #72C9A8;
             --spectrum-6:   #A8D8B9;
             --border-low:   rgba(0,0,0,0.06);
+            /* Spectrum wash tokens — centralised tints used throughout */
+            --wash-1: rgba(26,58,92,0.04);
+            --wash-2: rgba(43,108,176,0.05);
+            --wash-3: rgba(75,163,199,0.04);
+            --wash-4: rgba(72,189,184,0.04);
+            --wash-5: rgba(114,201,168,0.04);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -93,7 +99,9 @@
             background: var(--white);
             border: 1px solid var(--border-low);
             will-change: transform;
-            transition: transform 0.2s ease, border-color 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card:hover {
             transform: translateY(-2px);
@@ -178,7 +186,7 @@
         .prose { max-width: 65ch; margin: 0 auto; color: var(--text-primary); }
         .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
         .prose h2 { font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
-        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.75rem; color: var(--spectrum-1); padding-left: 0.75rem; border-left: 2px solid var(--spectrum-3); }
+        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; padding-top: 0.5rem; color: var(--spectrum-1); border-top: 1px solid rgba(75,163,199,0.3); }
         .prose p { font-size: 1.0625rem; line-height: 1.7; margin-bottom: 1.25rem; color: var(--text-muted); }
         /* Restore bullets — Tailwind preflight resets list-style to none */
         .prose ul { list-style-type: disc; margin-bottom: 1.25rem; padding-left: 1.5rem; }
@@ -284,13 +292,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
 
                     <!-- Meeting 01 -->
-                    <div class="card p-6 border-t-2 border-spectrum-3" style="background: rgba(75,163,199,0.03);">
+                    <div class="card p-6 border-t-2 border-spectrum-3" style="background: var(--wash-3);">
                         <div class="flex justify-between items-start mb-5 gap-3">
                             <div>
                                 <span class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-3 block mb-1">Session 01 &bull; 01 May 26</span>
                                 <h4 class="text-xl font-bold tracking-tight">Deep Systems</h4>
                             </div>
-                            <span class="shrink-0 text-[8px] font-bold uppercase tracking-widest bg-spectrum-4 text-white px-2 py-1">Done</span>
+                            <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest bg-spectrum-1 text-white px-2 py-1">Done</span>
                         </div>
                         <div>
                             <div class="asset-row">
@@ -312,17 +320,17 @@
                                 </a>
                             </div>
                         </div>
-                        <a href="#p=meetings/meeting-01/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-3 hover:text-spectrum-1 mt-4 block transition-colors">Meeting Notes &rarr;</a>
+                        <a href="#p=meetings/meeting-01/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-3 hover:text-spectrum-1 mt-2 flex items-center min-h-[44px] transition-colors">Meeting Notes &rarr;</a>
                     </div>
 
                     <!-- Meeting 00 -->
-                    <div class="card p-6 border-t-2 border-spectrum-1" style="background: rgba(26,58,92,0.03);">
+                    <div class="card p-6 border-t-2 border-spectrum-1" style="background: var(--wash-1);">
                         <div class="flex justify-between items-start mb-5 gap-3">
                             <div>
                                 <span class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-1 block mb-1">Session 00 &bull; 29 Apr 26</span>
                                 <h4 class="text-xl font-bold tracking-tight">The Kickoff</h4>
                             </div>
-                            <span class="shrink-0 text-[8px] font-bold uppercase tracking-widest bg-spectrum-4 text-white px-2 py-1">Done</span>
+                            <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest bg-spectrum-1 text-white px-2 py-1">Done</span>
                         </div>
                         <div>
                             <div class="asset-row">
@@ -344,7 +352,7 @@
                                 </a>
                             </div>
                         </div>
-                        <a href="#p=meetings/meeting-00/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-1 hover:text-spectrum-2 mt-4 block transition-colors">Meeting Notes &rarr;</a>
+                        <a href="#p=meetings/meeting-00/README.md" class="text-[9px] font-semibold uppercase tracking-[0.25em] text-spectrum-1 hover:text-spectrum-2 mt-2 flex items-center min-h-[44px] transition-colors">Meeting Notes &rarr;</a>
                     </div>
                 </div>
             </div>
@@ -356,19 +364,19 @@
                     <div class="spectrum-rule"></div>
                 </h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: rgba(72,189,184,0.03);">
+                    <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
                         <span class="icon-pill bg-[rgba(72,189,184,0.12)] mb-2 text-xl" aria-hidden="true">📚</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-4 group-hover:text-spectrum-3 transition-colors">Glossary</span>
                     </a>
-                    <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-1" style="background: rgba(26,58,92,0.03);">
+                    <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-1" style="background: var(--wash-1);">
                         <span class="icon-pill bg-[rgba(26,58,92,0.1)] mb-2 text-xl" aria-hidden="true">⚖️</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
                     </a>
-                    <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: rgba(43,108,176,0.03);">
+                    <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);">
                         <span class="icon-pill bg-[rgba(43,108,176,0.1)] mb-2 text-xl" aria-hidden="true">🤖</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
                     </a>
-                    <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-5" style="background: rgba(114,201,168,0.03);">
+                    <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-5" style="background: var(--wash-5);">
                         <span class="icon-pill bg-[rgba(114,201,168,0.12)] mb-2 text-xl" aria-hidden="true">📂</span>
                         <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-5 group-hover:text-spectrum-4 transition-colors">Inbox</span>
                     </a>
@@ -404,6 +412,20 @@
 
         marked.setOptions({ gfm: true, breaks: true });
 
+        function renderFileTree(ul, prefix) {
+            Array.from(ul.children).forEach((li, i, arr) => {
+                const isLast = i === arr.length - 1;
+                const connector = isLast ? '└── ' : '├── ';
+                const childPrefix = prefix + (isLast ? '    ' : '│   ');
+                const pre = document.createElement('span');
+                pre.className = 'tree-connector';
+                pre.textContent = prefix + connector;
+                li.insertBefore(pre, li.firstChild);
+                const nested = li.querySelector(':scope > ul');
+                if (nested) renderFileTree(nested, childPrefix);
+            });
+        }
+
         async function loadPage(path) {
             dashboard.classList.add('hidden-view');
             reader.classList.remove('hidden-view');
@@ -427,20 +449,6 @@
                     }
                 });
 
-                // Render Session Materials as a file tree
-                function renderFileTree(ul, prefix) {
-                    Array.from(ul.children).forEach((li, i, arr) => {
-                        const isLast = i === arr.length - 1;
-                        const connector = isLast ? '└── ' : '├── ';
-                        const childPrefix = prefix + (isLast ? '    ' : '│   ');
-                        const pre = document.createElement('span');
-                        pre.className = 'tree-connector';
-                        pre.textContent = prefix + connector;
-                        li.insertBefore(pre, li.firstChild);
-                        const nested = li.querySelector(':scope > ul');
-                        if (nested) renderFileTree(nested, childPrefix);
-                    });
-                }
                 content.querySelectorAll('h2').forEach(h2 => {
                     if (/session materials/i.test(h2.textContent)) {
                         let el = h2.nextElementSibling;
