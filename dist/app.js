@@ -276,7 +276,17 @@
             const summaryParts = [];
             if (videoCount > 0) summaryParts.push(`${videoCount} Video${videoCount > 1 ? 's' : ''}`);
             if (podcastCount > 0) summaryParts.push(`${podcastCount} Podcast${podcastCount > 1 ? 's' : ''}`);
-            const podcastSummary = summaryParts.join(' · ');
+            let podcastSummary = summaryParts.join(' · ');
+
+            // Defensive sanitization: remove common leading emoji glyphs if present
+            if (podcastSummary) {
+                podcastSummary = podcastSummary.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]+/u, '').trim();
+            }
+
+            // Prepend label when other non-primary resources exist (e.g., resourceStrip)
+            if (podcastSummary && resourceStrip) {
+                podcastSummary = `Additional Resources: ${podcastSummary}`;
+            }
 
             return { primaryRows, podcastRows, resourceStrip, podcastSummary };
         }
