@@ -1,744 +1,297 @@
-# Comprehensive Persona Red Flag Fixes Implementation Plan
+# Comprehensive Persona Red Flag Fixes — PARTIALLY LANDED
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+> **Status:** Tasks 1–8 shipped, Task 9 pending, Task 10 was verification. See status table below.
+> Plan originally written as greenfield; updated to reflect already-shipped code.
 
-**Goal:** Address all remaining persona pain points (Alex, Casey, Sam, Marcus) in a single coordinated implementation: podcast metadata display, asset permalinks, reader affordances, onboarding guidance, and mobile video playback.
+**Goal:** Address all remaining persona pain points (Alex, Casey, Sam, Marcus) in a single coordinated implementation: podcast metadata display, asset permalinks, reader affordances, onboarding guidance, and video player with resume.
 
-**Architecture:** 
-- Enhanced asset-compressor skill to extract + auto-update MEETINGS manifest with duration/fileSize
-- Extend hash routing to support per-asset anchors (`#asset-TYPE-SLUG`)
-- Render metadata inline in all asset rows (dashboard + reader)
-- Add mobile-only video player overlay with sessionStorage resume
-- Improve reader header affordances + onboarding microcopy
+**Architecture (as shipped):** 
+- **External JSON manifest** (`docs/manifest.json`) — eliminates regex brittleness, cleaner data layer
+- **Numeric values in manifest** — stored in **minutes and MB** (not raw seconds/bytes); formatting happens in UI layer via `formatDuration()` / `formatFileSize()`
+- **Safe hash routing** — strip anchor before path validation via `sanitizeAnchor()`, sanitize slug, ensure uniqueness
+- **Accessibility-first** — `aria-describedby` on KB cards, sr-only text, localized units
+- **sessionStorage + localStorage** — video resume saves to both (sessionStorage preferred for tab-scoped resume)
+- **Backward-compatible** — app tolerates missing metadata gracefully, falls back to `MEETINGS_INLINE` on fetch failure
+- **Enhanced asset-compressor** — pending (Task 9 not yet implemented)
+- **Reader affordances** — Esc hint in reader header, copy-link with opacity transition and asset anchor detection
 
-**Tech Stack:** Vanilla JS, Playwright, FFmpeg (ffprobe), native HTML5 `<video>`
+**Per-task status:**
 
----
+| # | Task | Status | Notes |
+|---|------|--------|-------|
+| 1 | External JSON manifest | **DONE** | `docs/manifest.json` created, `loadManifest()` with inline fallback |
+| 2 | Formatting layer (formatDuration, formatFileSize) | **DONE** | Minutes/MB (not seconds/bytes per review C1) |
+| 3 | Metadata display in buildAssetRows() | **DONE** | Duration + fileSize inline after video/podcast labels |
+| 4 | Safe hash anchoring (#asset-TYPE-SLUG) | **DONE** | `sanitizeAnchor()` strips anchor before path validation |
+| 5 | Copy-link with asset anchor detection | **DONE** | `getVisibleAssetAnchor()` scans `[id^="asset-"]`, copies URL + anchor |
+| 6 | Reader affordances (Esc hint + copy-link opacity) | **DONE** | `(press Esc)` text, `opacity-60` → `hover:opacity-100` |
+| 7 | Onboarding microcopy + KB descriptions | **DONE** | Banner exists, KB cards use `aria-describedby` (not `title`) |
+| 8 | Video player with resume (all viewports) | **DONE** | `<dialog>`-based player for all screen sizes, sessionStorage + localStorage dual save |
+| 9 | Enhanced asset-compressor metadata extraction | **PENDING** | Needs JSON manifest write (not regex on index.html) |
+| 10 | Final test suite + verification | **DONE** | 19 new tests, 87 suite passes (1 skip in SW test) |
 
-## Task 1: Extend MEETINGS Manifest Schema
+**Key decisions (post-review fixes):**
+- Duration stored in **minutes** (not seconds) — `formatDuration(52)` → `"52m"`
+- `title=""` replaced with `aria-describedby` + `sr-only` span for a11y
+- sessionStorage key format: `apbc:vs:{filePath}` (namespaced, try/catch for quota)
+- Manifest fallback test and MEETINGS_INLINE drift detection test added
+- SW registration guarded by `navigator.webdriver` — skipped in automated test environments to prevent SW cache from interfering with `page.route()` mocks
 
-**Files:**
-- Modify: `index.html:360-500` (MEETINGS array)
-- Test: `tests/manifest-rendering.spec.js` (update existing tests)
-
-**Step 1: Understand current manifest structure**
-
-Open `index.html` and find the MEETINGS array. Note current fields for podcasts/videos: `file`, `type`, `title`.
-
-**Step 2: Add duration + fileSize fields to one test entry**
-
-Edit `index.html` MEETINGS[0] (meeting-00):
-```javascript
-videos: [
-  { file: "meetings/meeting-00/video.mp4", type: "canonical", title: "Video Recap", duration: 52, fileSize: 840 }
-],
-podcasts: [
-  { file: "meetings/meeting-00/podcast-deepdive.m4a", type: "debate", title: "Deep Dive", duration: 45, fileSize: 120 }
-]
-```
-
-**Step 3: Verify tests still pass**
-
-Run: `npm test -- tests/manifest-rendering.spec.js`
-Expected: All tests pass (schema change doesn't break existing logic yet)
-
-**Step 4: Commit**
-
-```bash
-git add index.html
-git commit -m "feat: extend MEETINGS manifest with duration + fileSize fields"
-```
+**Tech Stack:** Vanilla JS, Playwright, FFmpeg (ffprobe), native HTML5 `<video>`, JSON manifest
 
 ---
 
-## Task 2: Update buildAssetRows() to Render Metadata
+## Task 1: Create External JSON Manifest from Current MEETINGS
 
 **Files:**
-- Modify: `dist/app.js:~180-250` (buildAssetRows function)
-- Test: `tests/additional-resources-summary.spec.js` (extend existing test)
+- Create: `docs/manifest.json` (new external manifest)
+- Modify: `dist/app.js` (load manifest from JSON, fallback to inline if missing)
+- Test: `tests/manifest-rendering.spec.js` (update existing tests to handle JSON source)
 
-**Step 1: Write test for metadata display**
+**Step 1: Extract current MEETINGS array from index.html**
 
-Edit `tests/additional-resources-summary.spec.js` and add:
-```javascript
-test('renders podcast duration and file size when present', async ({ page }) => {
-  await page.goto('http://localhost:3000');
-  const podcastLink = await page.locator('text=/Deep Dive.*45m.*120 MB/');
-  await expect(podcastLink).toBeVisible();
-});
-```
+Open `index.html:360-500` and copy the entire MEETINGS array. Verify it contains all meetings: meeting-00 through meeting-99.
 
-**Step 2: Run test to verify it fails**
+**Step 2: Transform MEETINGS array to JSON**
 
-Run: `npm test -- tests/additional-resources-summary.spec.js`
-Expected: FAIL with "no element matching text"
-
-**Step 3: Implement metadata formatting in buildAssetRows()**
-
-In `dist/app.js`, find `buildAssetRows()` function around line 180. Update video/podcast rendering:
-
-```javascript
-function formatAssetMetadata(duration, fileSize) {
-  const parts = [];
-  if (duration) parts.push(`${duration}m`);
-  if (fileSize) parts.push(`${fileSize} MB`);
-  return parts.length > 0 ? ` · ${parts.join(' · ')}` : '';
-}
-
-// In buildAssetRows, update video rendering (around line 210):
-const videoDuration = video.duration ? formatAssetMetadata(video.duration, video.fileSize) : '';
-html += `<a href="${videoFile}" class="asset-link">
-  <span class="icon-pill" aria-hidden="true">🎬</span>
-  <span>${escapeHTML(video.title || '')}${videoDuration}</span>
-</a>`;
-
-// In buildAssetRows, update podcast rendering (around line 245):
-const podcastDuration = podcast.duration ? formatAssetMetadata(podcast.duration, podcast.fileSize) : '';
-podcastRows.push(`<li>
-  <a href="${podcastFile}" class="asset-link">
-    <span class="podcast-badge">${escapeHTML(podcast.title || '')}</span>
-    <span class="podcast-caption">${escapeHTML(podcast.label || '')}${podcastDuration}</span>
-  </a>
-</li>`);
-```
-
-**Step 4: Update aria-labels for accessibility**
-
-Update video/podcast aria-labels to include duration + size:
-```javascript
-const ariaLabel = `${escapeHTML(video.title)}, ${video.duration} minutes, ${video.fileSize} megabytes`;
-// Apply to <a> tag: aria-label="${ariaLabel}"
-```
-
-**Step 5: Run test to verify it passes**
-
-Run: `npm test -- tests/additional-resources-summary.spec.js`
-Expected: PASS (metadata visible)
-
-**Step 6: Run all tests**
-
-Run: `npm test`
-Expected: All 66+ tests pass
-
-**Step 7: Commit**
-
-```bash
-git add dist/app.js tests/additional-resources-summary.spec.js
-git commit -m "feat: render podcast/video duration and fileSize in asset rows"
-```
-
----
-
-## Task 3: Implement Asset Permalinks (Asset Anchors + Router)
-
-**Files:**
-- Modify: `dist/app.js:~380-420` (loadPage function)
-- Modify: `index.html` (add asset IDs in reader template)
-- Test: `tests/routing.spec.js` (new test for asset anchors)
-
-**Step 1: Write test for asset permalink navigation**
-
-Edit `tests/routing.spec.js` and add:
-```javascript
-test('navigates to asset anchor when URL contains #asset-TYPE-SLUG', async ({ page }) => {
-  await page.goto('http://localhost:3000/#p=meetings/meeting-01/README.md#asset-podcast-deepdive');
-  await page.waitForLoadState('networkidle');
-  
-  const anchorElement = await page.locator('#asset-podcast-deepdive');
-  await expect(anchorElement).toBeVisible();
-  
-  // Verify element is scrolled into view (not precise, but close)
-  const box = await anchorElement.boundingBox();
-  expect(box.y).toBeLessThan(window.innerHeight);
-});
-```
-
-**Step 2: Run test to verify it fails**
-
-Run: `npm test -- tests/routing.spec.js`
-Expected: FAIL (no anchor matching, or not scrolled)
-
-**Step 3: Update loadPage() to parse and scroll to asset anchors**
-
-In `dist/app.js`, find `loadPage()` around line 380. Update hash parsing:
-
-```javascript
-async function loadPage(path, fallback = 'meetings/meeting-01/README.md') {
-  // Parse path and anchor from hash: #p=path#asset-TYPE-SLUG
-  const [routePath, anchorId] = path.includes('#') 
-    ? path.split('#') 
-    : [path, null];
-    
-  if (!isSafeRepoPath(routePath)) {
-    // ... existing error handling
-  }
-  
-  // Fetch + render markdown (existing code)
-  const html = await fetchMarkdownCached(routePath);
-  // ... render to #markdown-content
-  
-  // NEW: Scroll to asset anchor if present
-  if (anchorId) {
-    // Wait one frame for DOM to settle
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    const element = document.getElementById(anchorId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+Create `docs/manifest.json` with structure:
+```json
+{
+  "meetings": [
+    {
+      "id": "meeting-00",
+      "title": "Session Title",
+      "date": "2025-01-15",
+      "status": "done",
+      "color": "spectrum-1",
+      "wash": "--wash-1",
+      "readmeUrl": "meetings/meeting-00/README.md",
+      "video": {
+        "file": "meetings/meeting-00/recordings/00-video.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 52,
+        "fileSize": 840
+      },
+      "podcasts": [
+        {
+          "file": "meetings/meeting-00/podcast-deepdive.m4a",
+          "type": "debate",
+          "label": "Deep Dive",
+          "duration": 45,
+          "fileSize": 120
+        }
+      ]
     }
-  }
+  ]
 }
 ```
 
-**Step 4: Update hash change handler to pass anchor**
+**Key differences from inline MEETINGS:**
+- `duration` stored in **minutes** (not seconds) — e.g., 52 = 52m
+- `fileSize` stored in **MB** — e.g., 840 MB
+- All numeric data raw; formatting happens only in UI render functions via `formatDuration()` / `formatFileSize()`
 
-Find `window.addEventListener('hashchange', ...)` around line 580. Update to parse anchor:
+**Step 3: Update dist/app.js to load manifest from JSON**
 
+Add at script top:
 ```javascript
-window.addEventListener('hashchange', () => {
-  const hash = window.location.hash.slice(1);
-  const path = hash.startsWith('p=') ? hash.slice(2) : 'meetings/meeting-01/README.md';
-  loadPage(path);
-});
+let MEETINGS = [];
+const MEETINGS_INLINE = [ /* inline JS array */ ];
 ```
 
-**Step 5: Add asset IDs to rendered markdown content**
-
-For now, add simple anchor divs around assets in the reader. Update `buildAssetRows()` to return asset IDs:
-
-In `buildAssetRows()`, prefix each asset HTML with an anchor:
+Add async loader:
 ```javascript
-const videoId = `asset-video-${(video.file.split('/').pop().replace('.mp4', ''))}`;
-html += `<div id="${videoId}"><a href="...">...</a></div>`;
-
-const podcastId = `asset-podcast-${(podcast.file.split('/').pop().replace('.m4a', ''))}`;
-podcastRows.push(`<div id="${podcastId}"><a href="...">...</a></div>`);
-```
-
-**Step 6: Run test to verify it passes**
-
-Run: `npm test -- tests/routing.spec.js`
-Expected: PASS (asset anchor found and scrolled to)
-
-**Step 7: Run all tests**
-
-Run: `npm test`
-Expected: All tests pass
-
-**Step 8: Commit**
-
-```bash
-git add dist/app.js tests/routing.spec.js
-git commit -m "feat: add asset permalink support (#asset-TYPE-SLUG anchors)"
-```
-
----
-
-## Task 4: Update Copy-Link Button to Include Asset Anchor
-
-**Files:**
-- Modify: `dist/app.js:~550-600` (copy-link button handler)
-- Test: `tests/routing.spec.js` (extend asset permalink test)
-
-**Step 1: Update copy-link handler to detect focused asset**
-
-In `dist/app.js`, find copy-link button click handler. Update to:
-
-```javascript
-const copyLinkBtn = document.getElementById('copy-link-btn');
-if (copyLinkBtn) {
-  copyLinkBtn.addEventListener('click', () => {
-    const basePath = window.location.pathname;
-    let hash = window.location.hash;
-    
-    // If an asset is focused or hovered, append its anchor
-    // For now, use current hash as-is (can be enhanced with focus detection later)
-    
-    const fullUrl = `${window.location.origin}${basePath}${hash}`;
-    navigator.clipboard.writeText(fullUrl).then(() => {
-      // Show feedback: "Copied!"
-      copyLinkBtn.textContent = '✓ Copied';
-      setTimeout(() => { copyLinkBtn.textContent = '🔗'; }, 2000);
-    });
-  });
-}
-```
-
-**Step 2: Enhance to include asset anchor if one is visible**
-
-Add logic to detect focused asset element (optional for MVP, but improves UX):
-
-```javascript
-function getFocusedAssetAnchor() {
-  // Check if any asset is in viewport
-  const assets = document.querySelectorAll('[id^="asset-"]');
-  for (const asset of assets) {
-    const rect = asset.getBoundingClientRect();
-    if (rect.top >= 0 && rect.top <= window.innerHeight / 2) {
-      return asset.id;
-    }
-  }
-  return null;
-}
-
-// In copy-link handler:
-const assetAnchor = getFocusedAssetAnchor();
-let hash = window.location.hash;
-if (assetAnchor && !hash.includes(`#${assetAnchor}`)) {
-  hash += `#${assetAnchor}`;
-}
-```
-
-**Step 3: Test copy-link with asset anchor**
-
-Update routing test to verify copy-link includes anchor:
-
-```javascript
-test('copy-link button includes asset anchor when near top of viewport', async ({ page }) => {
-  await page.goto('http://localhost:3000/#p=meetings/meeting-01/README.md#asset-podcast-deepdive');
-  
-  const copyBtn = await page.locator('#copy-link-btn');
-  await copyBtn.click();
-  
-  // Check clipboard (not directly testable in Playwright, but log can verify)
-  // For now, just verify button shows feedback
-  await expect(copyBtn).toContainText('✓ Copied');
-});
-```
-
-**Step 4: Commit**
-
-```bash
-git add dist/app.js tests/routing.spec.js
-git commit -m "feat: copy-link button now includes asset anchors"
-```
-
----
-
-## Task 5: Improve Reader Header Affordances (Esc Hint + Copy-Link Visibility)
-
-**Files:**
-- Modify: `index.html:~600-650` (reader header HTML)
-- Modify: `dist/tailwind.css` or inline styles for copy-link opacity
-- Test: `tests/routing.spec.js` (new test for affordances)
-
-**Step 1: Write test for Esc hint visibility**
-
-```javascript
-test('reader header shows (press Esc) hint', async ({ page }) => {
-  await page.goto('http://localhost:3000/#p=meetings/meeting-01/README.md');
-  
-  const escHint = await page.locator('text=/press Esc/i');
-  await expect(escHint).toBeVisible();
-});
-```
-
-**Step 2: Add Esc hint to reader header HTML**
-
-In `index.html`, find the reader header (around line 620) and update:
-
-```html
-<header class="reader-header" id="reader-header">
-  <div class="reader-header-left">
-    <a href="#" id="dashboard-link" class="reader-back-link">Dashboard</a>
-    <span class="text-xs text-muted ml-2">(press Esc)</span>
-  </div>
-  <button id="copy-link-btn" class="copy-link-btn opacity-60 hover:opacity-100 focus:opacity-100" 
-    aria-label="Copy link to this page">
-    🔗
-  </button>
-</header>
-```
-
-**Step 3: Update copy-link button opacity styles**
-
-Ensure Tailwind classes are applied:
-```html
-<button ... class="copy-link-btn opacity-60 hover:opacity-100 focus:opacity-100 transition-opacity" ...>
-```
-
-If inline CSS is needed in `dist/app.js`:
-```javascript
-const copyLinkBtn = document.getElementById('copy-link-btn');
-if (copyLinkBtn) {
-  copyLinkBtn.style.opacity = '0.6';
-  copyLinkBtn.addEventListener('mouseenter', () => copyLinkBtn.style.opacity = '1');
-  copyLinkBtn.addEventListener('mouseleave', () => copyLinkBtn.style.opacity = '0.6');
-}
-```
-
-**Step 4: Run test to verify Esc hint is visible**
-
-Run: `npm test -- tests/routing.spec.js`
-Expected: PASS (Esc hint found)
-
-**Step 5: Commit**
-
-```bash
-git add index.html dist/app.js
-git commit -m "feat: add (press Esc) affordance hint in reader header + improve copy-link visibility"
-```
-
----
-
-## Task 6: Add Onboarding Microcopy + Tooltips
-
-**Files:**
-- Modify: `index.html:~250-280` (onboarding banner)
-- Modify: `index.html:~1500-1700` (Knowledge Base section)
-- Test: `tests/manifest-rendering.spec.js` (visual regression check)
-
-**Step 1: Expand onboarding banner with microcopy**
-
-In `index.html`, find the onboarding banner (should be in `<main>` now after earlier commit 6adc694). Update:
-
-```html
-<div id="onboarding-banner" class="onboarding-banner p-4 mb-6 bg-wash-1 rounded-md border border-wash-2-border">
-  <p class="text-sm leading-relaxed">
-    <strong>New to the club?</strong> Start with the <strong><a href="#" onclick="scrollToSection('upcoming-materials'); return false;">Latest Meeting</a></strong> 
-    or explore the <strong><a href="#" onclick="scrollToSection('knowledge-base'); return false;">Knowledge Base</a></strong> below.
-  </p>
-</div>
-```
-
-Add helper function in `dist/app.js`:
-```javascript
-function scrollToSection(sectionId) {
-  const section = document.getElementById(sectionId);
-  if (section) {
-    section.scrollIntoView({ behavior: 'smooth' });
-  }
-}
-```
-
-**Step 2: Add title tooltips to Knowledge Base labels**
-
-Find Knowledge Base section (around line 1600) and add `title=""` attributes:
-
-```html
-<div class="knowledge-base-cards" id="knowledge-base">
-  <h2>Knowledge Base</h2>
-  <!-- Card 1 -->
-  <div class="kb-card" title="A guided walkthrough of key concepts and connections">
-    <h3>Synthesis Reader</h3>
-    ...
-  </div>
-  <!-- Card 2 -->
-  <div class="kb-card" title="Upcoming meetings and future discussion topics">
-    <h3>Horizon</h3>
-    ...
-  </div>
-  <!-- Card 3 -->
-  <div class="kb-card" title="Past meetings, recordings, and archived materials">
-    <h3>Archive</h3>
-    ...
-  </div>
-</div>
-```
-
-**Step 3: Test that tooltips appear on hover**
-
-Manual test: hover over Knowledge Base labels, verify tooltips show.
-
-Playwright test (visual):
-```javascript
-test('Knowledge Base cards have helpful tooltips', async ({ page }) => {
-  await page.goto('http://localhost:3000');
-  
-  const synthesisCard = await page.locator('[title*="guided walkthrough"]');
-  await expect(synthesisCard).toHaveAttribute('title', /guided walkthrough/);
-});
-```
-
-**Step 4: Run tests**
-
-Run: `npm test`
-Expected: All tests pass
-
-**Step 5: Commit**
-
-```bash
-git add index.html dist/app.js
-git commit -m "feat: expand onboarding banner + add Knowledge Base tooltips"
-```
-
----
-
-## Task 7: Mobile Video Player with Resume (sessionStorage)
-
-**Files:**
-- Modify: `dist/app.js:~300-350` (renderUpcomingMaterials) + new function
-- Modify: `index.html` (add video overlay template)
-- Test: `tests/routing.spec.js` (new mobile video player test)
-
-**Step 1: Write test for mobile video player**
-
-```javascript
-test('mobile: clicking video link opens inline player overlay', async ({ page, context }) => {
-  // Set mobile viewport
-  await page.setViewportSize({ width: 375, height: 667 });
-  
-  await page.goto('http://localhost:3000/#p=meetings/meeting-01/README.md');
-  
-  // Find first video link
-  const videoLink = await page.locator('a[href*=".mp4"]').first();
-  await videoLink.click();
-  
-  // Verify overlay appears with video element
-  const overlay = await page.locator('#video-overlay');
-  await expect(overlay).toBeVisible();
-  
-  const videoElement = await page.locator('#video-overlay video');
-  await expect(videoElement).toBeVisible();
-});
-```
-
-**Step 2: Add video overlay HTML template to index.html**
-
-At end of `<main>` section (before `</main>`), add:
-
-```html
-<div id="video-overlay" class="hidden fixed inset-0 bg-black/80 z-50 flex flex-col">
-  <div class="flex-1 flex items-center justify-center">
-    <video id="video-player" controls class="max-w-full max-h-full" style="max-height: 80vh;"></video>
-  </div>
-  <div class="p-4 bg-black text-white flex justify-between items-center">
-    <p id="video-title" class="text-sm">Video</p>
-    <button id="video-close-btn" class="px-3 py-2 bg-gray-700 rounded hover:bg-gray-600" aria-label="Close video">✕</button>
-  </div>
-</div>
-```
-
-**Step 3: Implement video player controller in dist/app.js**
-
-Add new function after loadPage():
-
-```javascript
-class MobileVideoPlayer {
-  constructor() {
-    this.overlay = document.getElementById('video-overlay');
-    this.video = document.getElementById('video-player');
-    this.closeBtn = document.getElementById('video-close-btn');
-    this.titleEl = document.getElementById('video-title');
-    
-    this.closeBtn?.addEventListener('click', () => this.close());
-    this.overlay?.addEventListener('click', (e) => {
-      if (e.target === this.overlay) this.close();
-    });
-  }
-  
-  open(videoFile, title) {
-    if (!this.overlay) return; // Desktop, skip
-    
-    this.titleEl.textContent = title || 'Video';
-    this.video.src = videoFile;
-    this.overlay.classList.remove('hidden');
-    
-    // Restore playback position if exists
-    const storageKey = `video-${videoFile}`;
-    const savedTime = sessionStorage.getItem(storageKey);
-    if (savedTime) {
-      this.video.currentTime = parseFloat(savedTime);
-    }
-    
-    // Save position on pause/seek
-    this.video.addEventListener('pause', () => {
-      sessionStorage.setItem(storageKey, this.video.currentTime);
-    }, { once: false });
-    this.video.addEventListener('seeked', () => {
-      sessionStorage.setItem(storageKey, this.video.currentTime);
-    });
-  }
-  
-  close() {
-    this.overlay?.classList.add('hidden');
-    this.video.pause();
-  }
-}
-
-const mobileVideoPlayer = new MobileVideoPlayer();
-```
-
-**Step 4: Intercept video link clicks on mobile**
-
-Update video link click handlers. In renderUpcomingMaterials() and similar functions, wrap video links:
-
-```javascript
-// When building HTML for video links:
-const videoLink = `<a href="#" class="asset-link video-link" data-file="${videoFile}" data-title="${videoTitle}">
-  <span class="icon-pill">🎬</span>
-  <span>${videoTitle}${videoDuration}</span>
-</a>`;
-
-// Add event delegation:
-document.addEventListener('click', (e) => {
-  const videoLink = e.target.closest('.video-link');
-  if (videoLink) {
-    e.preventDefault();
-    
-    // Only on mobile
-    if (window.innerWidth <= 640) {
-      const file = videoLink.dataset.file;
-      const title = videoLink.dataset.title;
-      mobileVideoPlayer.open(file, title);
-    } else {
-      // Desktop: allow direct link
-      window.location.href = videoLink.href;
-    }
-  }
-});
-```
-
-**Step 5: Run test to verify overlay appears**
-
-Run: `npm test -- tests/routing.spec.js`
-Expected: PASS (overlay visible on mobile)
-
-**Step 6: Test sessionStorage resume**
-
-```javascript
-test('mobile video: resumesplayback position after navigation', async ({ page }) => {
-  await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto('http://localhost:3000/#p=meetings/meeting-01/README.md');
-  
-  const videoLink = await page.locator('a[href*=".mp4"]').first();
-  await videoLink.click();
-  
-  const video = await page.locator('#video-player');
-  
-  // Seek to 30s
-  await video.evaluate(el => el.currentTime = 30);
-  await page.waitForTimeout(500);
-  
-  // Close overlay
-  await page.locator('#video-close-btn').click();
-  
-  // Reopen same video
-  await videoLink.click();
-  
-  // Verify currentTime restored
-  const currentTime = await video.evaluate(el => el.currentTime);
-  expect(Math.round(currentTime)).toBe(30); // Allow 1s variance
-});
-```
-
-**Step 7: Commit**
-
-```bash
-git add index.html dist/app.js tests/routing.spec.js
-git commit -m "feat: add mobile video player overlay with sessionStorage resume"
-```
-
----
-
-## Task 8: Update asset-compressor Skill (Metadata Extraction + Auto-Update)
-
-**Files:**
-- Modify: `asset-compressor/` (main script)
-- Create: `asset-compressor/extract-metadata.js` (helper)
-- Test: manual verification
-
-**Step 1: Check current asset-compressor structure**
-
-Review `asset-compressor/` directory structure and identify the main compression script.
-
-**Step 2: Write metadata extraction helper**
-
-Create `asset-compressor/extract-metadata.js`:
-
-```javascript
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-
-function extractMetadata(filePath) {
+async function loadManifest() {
   try {
-    // Get duration via ffprobe
-    const ffprobeCmd = `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1:noprint_filename=1 "${filePath}"`;
-    const durationSeconds = parseFloat(execSync(ffprobeCmd, { encoding: 'utf-8' }).trim());
-    const duration = Math.round(durationSeconds / 60); // Convert to minutes
-    
-    // Get file size
-    const stats = fs.statSync(filePath);
-    const fileSize = Math.round(stats.size / (1024 * 1024)); // Convert to MB
-    
-    return { duration, fileSize };
-  } catch (error) {
-    console.error(`Failed to extract metadata for ${filePath}:`, error.message);
-    return null;
-  }
-}
-
-module.exports = { extractMetadata };
-```
-
-**Step 3: Update main compression script to extract metadata**
-
-Modify main asset-compressor script to call `extractMetadata()` after compression:
-
-```javascript
-const { extractMetadata } = require('./extract-metadata.js');
-
-// After compressing media file:
-const metadata = extractMetadata(outputPath);
-if (metadata) {
-  console.log(`Metadata extracted: ${outputPath} - ${metadata.duration}m, ${metadata.fileSize}MB`);
-  
-  // Will implement auto-update in next step
-  updateManifestWithMetadata(outputPath, metadata);
-}
-```
-
-**Step 4: Write function to auto-update MEETINGS manifest**
-
-In main script, add:
-
-```javascript
-function updateManifestWithMetadata(filePath, metadata) {
-  const indexPath = path.join(__dirname, '..', 'index.html');
-  let html = fs.readFileSync(indexPath, 'utf-8');
-  
-  // Find matching entry in MEETINGS array by file path
-  // Use regex to find: { file: "path/to/file.m4a", ... }
-  // and update duration + fileSize
-  
-  const filename = path.basename(filePath);
-  const pattern = new RegExp(
-    `(file:\\s*"[^"]*${filename.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}",.*?)(duration:\\s*\\d+,)?\\s*(fileSize:\\s*\\d+,)?`,
-    's'
-  );
-  
-  const replacement = `$1duration: ${metadata.duration}, fileSize: ${metadata.fileSize},`;
-  const updated = html.replace(pattern, replacement);
-  
-  if (updated !== html) {
-    fs.writeFileSync(indexPath, updated, 'utf-8');
-    console.log(`✓ Updated manifest with metadata for ${filename}`);
-  } else {
-    console.warn(`⚠ Could not find entry for ${filename} in manifest. Add manually.`);
+    const response = await fetch('docs/manifest.json');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (data.meetings && Array.isArray(data.meetings)) {
+      MEETINGS = data.meetings;
+    } else {
+      throw new Error('Invalid manifest structure');
+    }
+  } catch (err) {
+    console.warn('Failed to load manifest.json, falling back to inline:', err.message);
+    MEETINGS = MEETINGS_INLINE;
   }
 }
 ```
 
-**Step 5: Test metadata extraction manually**
-
-Run compression script on a test media file, verify metadata extracted + manifest updated.
-
-```bash
-node asset-compressor/index.js meetings/meeting-01/video.mp4
+Call inside `DOMContentLoaded` (not top-level — C3):
+```javascript
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadManifest();
+  renderUpcomingMaterials();
+  renderArchiveCards();
+  renderHorizonCards();
+});
 ```
 
-Expected output: "Updated manifest with metadata for video.mp4"
+**Step 4: Ensure backward compatibility**
+
+In `index.html`, keep the inline MEETINGS array as a fallback:
+```html
+<script>
+  window.MEETINGS_INLINE = [ ... current MEETINGS array ... ];
+</script>
+```
+
+The app will try JSON first, fall back to inline if JSON fetch fails.
+
+**Step 5: Verify tests still pass**
+
+Run: `npm test`
+Expected: All tests pass (MEETINGS loaded from JSON, fallback works)
 
 **Step 6: Commit**
 
 ```bash
-git add asset-compressor/
-git commit -m "feat: enhance asset-compressor to extract + auto-update manifest with media metadata"
+git add docs/manifest.json dist/app.js index.html
+git commit -m "feat: move MEETINGS to external docs/manifest.json with raw number fields"
 ```
 
 ---
 
-## Task 9: Run Full Test Suite + Polish
+## Task 2: Add Formatting Layer (formatDuration, formatFileSize) — **DONE**
+
+**Files:**
+- Modify: `dist/app.js` (add formatter functions)
+- Test: Create `tests/formatters.spec.js` (unit tests for formatters)
+
+**Shipped implementation** in `dist/app.js`:
+```javascript
+function formatDuration(minutes) {
+    if (!Number.isFinite(minutes)) return '';
+    const m = Math.round(minutes);
+    if (m >= 120) return `${Math.floor(m / 60)}h ${m % 60}m`;
+    if (m === 0) return '';
+    return `${m}m`;
+}
+
+function formatFileSize(value) {
+    if (!Number.isFinite(value)) return '';
+    return `${Math.round(value)} MB`;
+}
+```
+
+**Duration stored in minutes** (per C1 resolution — not seconds). Manifest stores `duration: 52` meaning 52 minutes. `formatDuration(52)` returns `"52m"`. No division by 60.
+
+**Number.isFinite guard:** Both formatters use `Number.isFinite()` instead of loose truthiness checks (`if (!value)`), which avoids treating `0` as falsy and correctly rejects `NaN`, `Infinity`, and non-numeric types. `formatDuration(0)` returns `""` (empty string — handled explicitly). `formatDuration(150)` returns `"2h 30m"` (hour formatting for ≥120 minutes).
+
+**Tests** in `tests/formatters.spec.js` — test the real functions via `window.formatDuration` / `window.formatFileSize` (set only when `window.__TEST__` is true, avoiding the I6 anti-pattern of defining formatters in `addInitScript`).
+
+```javascript
+test('formatDuration converts minutes to display string', async ({ page }) => {
+    await page.goto('/');
+    const result = await page.evaluate(() => window.formatDuration(52));
+    expect(result).toBe('52m');
+});
+```
+
+---
+
+## Task 3: Update buildAssetRows() to Display Metadata — **DONE**
+
+**Files:**
+- Modify: `dist/app.js` (buildAssetRows function)
+- Test: `tests/additional-resources-summary.spec.js`
+
+**Shipped:** Video and podcast rows append ` · 52m · 840 MB` after the label when `duration` and `fileSize` are present in the manifest. `aria-label` updated accordingly. Podcast metadata rendered inside `asset-link-top` span alongside the existing badge and caption.
+
+Tests verify meeting-00's video shows "52m" and "840 MB", podcast shows "45m" and "120 MB".
+
+---
+
+## Task 4: Implement Safe Hash Anchoring (Asset Permalinks) — **DONE**
+
+**Files:**
+- Modify: `dist/app.js` (loadPage, buildAssetRows, handleRoute)
+- Test: `tests/routing.spec.js`
+
+**Shipped:**
+- `sanitizeAnchor()` — regex `/^[a-zA-Z0-9_-]+$/` rejects slashes, dots, angle brackets. Exposed on `window` for testing.
+- `handleRoute()` — splits `#p=path#fragment` on last `#`, validates path with `isSafeRepoPath()` before anchor stripping, passes `anchorId` to `loadPage()`.
+- `loadPage(path, fallback, anchorId)` — calls `requestAnimationFrame` then `document.getElementById(anchorId)?.scrollIntoView()` after content renders.
+- `buildAssetRows()` — adds `id="asset-video-{slug}"` and `id="asset-podcast-{slug}"` to dashboard asset rows.
+
+Note: Asset anchors are added to **dashboard** card rows (not reader markdown content), since `loadPage()` processes markdown links without adding IDs.
+
+**escapeHTML in asset IDs:** The `id` attribute uses `escapeHTML(meeting.id)` to prevent XSS. This is safe with current meeting IDs (`meeting-00` format — no special chars), but would produce mismatched IDs if a meeting ID ever contained `&`, `<`, `>`, `"`, or `'`. Since meeting IDs are internal identifiers generated by the system (not user-supplied), this is a theoretical risk. If IDs ever expand to include special characters, omit `escapeHTML()` for the id attribute and use a more targeted sanitizer.
+
+---
+
+## Task 5: Update Copy-Link Button (Asset Anchor Detection) — **DONE**
+
+**Shipped:**
+- `getVisibleAssetAnchor()` — scans `[id^="asset-"]` elements, returns the ID of the element nearest viewport top (smallest `Math.abs(rect.top)` — absolute distance, so above-viewport elements with negative `top` are also considered).
+- Copy-link handler (`#copy-link-btn` click) now: calls `getVisibleAssetAnchor()`, appends `#assetAnchor` to the existing hash-based URL if a visible asset is found, writes to clipboard via `navigator.clipboard.writeText()`.
+- Uses `aria-label` feedback ("Link copied!") rather than changing button text (avoids layout shift).
+- Clipboard permissions granted in test via `context.grantPermissions(['clipboard-read', 'clipboard-write'])`.
+
+Note: Per I2, `getVisibleAssetAnchor()` picks the *first* asset near viewport top, which may not be the intended one in complex scroll positions. Per-asset copy buttons would be better UX but are out of scope for this change.
+
+---
+
+## Task 6: Improve Reader Header Affordances (Esc Hint + Copy-Link Visibility) — **DONE**
+
+**Shipped:**
+- Reader header Dashboard link: `(Esc)` → `(press Esc)` (`index.html:650`)
+- Copy-link button: `opacity-80` → `opacity-60`, `hover:opacity-100` (`index.html:656`)
+- Esc key handler already existed in `dist/app.js` (returns `window.location.hash = ''` + `showDashboard()`)
+
+---
+
+## Task 7: Add Onboarding Microcopy + Knowledge Base Descriptions — **DONE**
+
+**Shipped:**
+- Onboarding banner already present in `index.html` with `initOnboardingBanner()` — hidden by default, shown on first visit, dismissible with localStorage
+- KB card `title` attributes were added then **replaced with `aria-describedby`** (per I3 resolution): each card has an `sr-only` span with a description, referenced by `aria-describedby` on the anchor. This works on mobile and with screen readers (unlike `title`).
+- Test checks each card has a valid `aria-describedby` pointing to an attached DOM element.
+
+---
+
+## Task 8: Mobile Video Player with Resume (sessionStorage) — **DONE**
+
+**Shipped:** Rather than a separate mobile overlay, the **existing `<dialog>`-based video player** (`openVideoPlayer()`) was enhanced:
+- **Dual storage save:** saves to both `sessionStorage` (key `apbc:vs:{filePath}`) and `localStorage` (key `apbc:vp:{filePath}`)
+- **Session-first resume:** reads from `sessionStorage` first (tab-scoped), falls back to `localStorage` (cross-tab)
+- **Error handling:** both read/write wrapped in `try/catch` for quota exceeded / private browsing (per I4)
+- **Namespaced keys** — already used the `LS = 'apbc:'` prefix scheme; `sessionStorage` uses `vs:` distinct from `vp:` (`localStorage`)
+- Test verifies video links are clickable on 375px viewport
+
+---
+
+## Task 9: Update asset-compressor Skill (Metadata Extraction + Auto-Update) — **PENDING**
+
+**Status:** Not yet implemented. This is the only remaining delta from the original plan.
+
+**Requirement:** Extend the `asset-compressor/` tool to:
+1. Run `ffprobe` on compressed media files to extract duration
+2. Read file size from `fs.statSync`
+3. Write metadata to `docs/manifest.json` using `JSON.parse`/`JSON.stringify` (NOT regex on `index.html` — per I5)
+
+**Why this matters:** Currently `duration` and `fileSize` must be hand-edited into `docs/manifest.json`. The compressor should automate this.
+
+**Design:**
+
+```
+asset-compressor/extract-metadata.js  (helper — ffprobe + stat)
+↓
+asset-compressor/index.js             (call after compression)
+↓
+JSON.parse/JSON.stringify             (read manifest, find matching entry by file path, update, write)
+```
+
+**Important (per I5):** Write to `docs/manifest.json`, NOT `index.html`. Use `JSON.parse(fs.readFileSync(manifestPath))` → find entry → update → `JSON.stringify(data, null, 2)` → `fs.writeFileSync`. No regex.
+
+**Out of scope for this delta:**
+- Task 10 was verification-only and was executed during implementation
+
+---
+
+## Task 10: Run Full Test Suite + Polish
 
 **Files:**
 - Test: All tests in `tests/`
@@ -748,7 +301,7 @@ git commit -m "feat: enhance asset-compressor to extract + auto-update manifest 
 **Step 1: Run full test suite**
 
 Run: `npm test`
-Expected: All 70+ tests pass (added 4+ new tests)
+Expected: All 87 tests pass (1 skip in SW test — SW registration blocked in Playwright)
 
 **Step 2: Run CSS build to check for staleness**
 
@@ -778,25 +331,26 @@ git commit -m "chore: final persona fixes — all tests pass + manual verificati
 
 ## Summary
 
-**Commits created:** 9 total
-- Task 1: Manifest schema
-- Task 2: Metadata rendering
-- Task 3: Asset permalinks
-- Task 4: Copy-link anchors
-- Task 5: Reader affordances
-- Task 6: Onboarding
-- Task 7: Mobile video player
-- Task 8: Asset-compressor enhancement
-- Task 9: Polish + tests
+**Commits created:** Tasks 1–8 shipped in `feat/comprehensive-persona-fixes` branch. Task 9 pending.
 
-**Tests added:** ~6 new tests (metadata display, asset permalinks, video player, Esc hint, tooltips, onboarding)
+| Task | Status | What shipped |
+|------|--------|-------------|
+| 1. External JSON manifest | **DONE** | `docs/manifest.json`, `loadManifest()` with inline fallback |
+| 2. Formatting layer | **DONE** | `formatDuration(minutes)`, `formatFileSize(MB)` |
+| 3. Metadata rendering | **DONE** | Duration + size inline after video/podcast labels |
+| 4. Safe hash anchoring | **DONE** | `sanitizeAnchor()`, `#asset-TYPE-SLUG` IDs on dashboard |
+| 5. Copy-link with anchor | **DONE** | `getVisibleAssetAnchor()` wired to copy handler |
+| 6. Reader affordances | **DONE** | `(press Esc)` text, `opacity-60` copy-link |
+| 7. KB descriptions | **DONE** | `aria-describedby` + `sr-only` (replaced `title` per review) |
+| 8. Video player with resume | **DONE** | `<dialog>`-based player (all viewports), dual storage save |
+| 9. Asset-compressor | **PENDING** | Needs JSON manifest write, not regex on HTML |
+| 10. Verification | **DONE** | 19 new tests, 87 passing (1 skip) |
 
-**Features delivered:**
-- ✅ Podcast/video metadata display (duration + fileSize) — Alex, Casey, Sam
-- ✅ Asset permalinks (`#asset-TYPE-SLUG`) — Alex
-- ✅ Reader affordances (Esc hint + copy-link visibility) — Alex + UX
-- ✅ Mobile video player + resume — Casey
-- ✅ Onboarding guidance (banner + tooltips) — Marcus
-- ✅ Auto-updating manifest via asset-compressor — DX improvement
+**Key design decisions (post-review):**
+- Duration in **minutes**, not seconds (C1)
+- `aria-describedby` + `sr-only` instead of `title` (I3)
+- sessionStorage key `apbc:vs:{path}`, localStorage key `apbc:vp:{path}` (I4)
+- Manifest writes via `JSON.parse/stringify`, not regex (I5)
+- Formatter tests test real `window.*` functions, not `addInitScript` shims (I6)
 
-**Timeline:** ~6–8 hours (with testing + verification)
+**Tests added:** 19 new tests (formatters ×7, metadata ×2, safe-anchoring ×3, copy-link ×1, affordances ×2, mobile video ×1, manifest fallback ×1, drift detection ×2, KB descriptions ×1, SW skip ×1)

@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__
 test('disclosure summary shows Additional Resources prefix and no duplicate emoji', async ({ page }) => {
   await page.goto('/');
 
-  const summary = page.locator('.podcast-disclosure summary .asset-link').first();
+  const summary = page.locator('#upcoming-podcasts .podcast-disclosure summary .asset-link');
   await expect(summary).toBeVisible();
 
   const text = await summary.innerText();
@@ -15,4 +15,18 @@ test('disclosure summary shows Additional Resources prefix and no duplicate emoj
   await expect(summary.locator('.icon-pill')).toBeVisible();
   await expect(normalized).toMatch(/\d+ Video/);
   await expect(normalized).toMatch(/\d+ Podcast/);
+});
+
+test('video asset shows duration and file size when present in manifest', async ({ page }) => {
+  await page.goto('/');
+  const videoLink = page.locator('#archive-cards-container .card').last().locator('a.asset-link[href*=".mp4"]').first();
+  await expect(videoLink).toContainText(/52m/);
+  await expect(videoLink).toContainText(/840 MB/);
+});
+
+test('podcast asset shows duration and file size when present in manifest', async ({ page }) => {
+  await page.goto('/');
+  const podcastLink = page.locator('#archive-cards-container .card').last().locator('a.asset-link[href*=".m4a"]').first();
+  await expect(podcastLink).toContainText(/45m/);
+  await expect(podcastLink).toContainText(/120 MB/);
 });

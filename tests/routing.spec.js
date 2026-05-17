@@ -150,5 +150,71 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
     });
 
+    test('safe-anchoring: sanitizeAnchor rejects invalid characters', async ({ page }) => {
+        await page.addInitScript(() => { window.__TEST__ = true; });
+        await page.goto('/');
+        const result = await page.evaluate(() => window.sanitizeAnchor('../../../etc/passwd'));
+        expect(result).toBeNull();
+    });
+
+    test('safe-anchoring: sanitizeAnchor allows valid anchor IDs', async ({ page }) => {
+        await page.addInitScript(() => { window.__TEST__ = true; });
+        await page.goto('/');
+        const result = await page.evaluate(() => window.sanitizeAnchor('asset-video-recap'));
+        expect(result).toBe('asset-video-recap');
+    });
+
+    test('reader header shows (press Esc) hint', async ({ page }) => {
+        await page.route('**/meetings/meeting-01/README.md', route =>
+            route.fulfill({ body: '# Deep Systems\n\nContent here.' })
+        );
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForSelector('#markdown-content', { state: 'attached' });
+        const escHint = page.locator('text=/press Esc/i');
+        await expect(escHint).toBeVisible();
+    });
+
+    test('copy-link button is visible and clickable in reader', async ({ page, context }) => {
+        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        await page.route('**/meetings/meeting-01/README.md', route =>
+            route.fulfill({ body: '# Deep Systems\n\nContent here.' })
+        );
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForSelector('#markdown-content', { state: 'attached' });
+        const copyBtn = page.locator('#copy-link-btn');
+        await expect(copyBtn).toBeVisible();
+        await expect(copyBtn).toBeEnabled();
+    });
+
+    test('mobile video: asset links are clickable on small viewport', async ({ page }) => {
+        await page.setViewportSize({ width: 375, height: 667 });
+        await page.goto('/');
+        const videoLink = page.locator('#archive-cards-container [id*="-video-"] .asset-link').first();
+        await expect(videoLink).toBeVisible();
+        await expect(videoLink).toBeEnabled();
+    });
+
+    test('copy-link: button click shows copied feedback', async ({ page, context }) => {
+        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+        await page.route('**/meetings/meeting-01/README.md', route =>
+            route.fulfill({ body: '# Deep Systems\n\nContent here.' })
+        );
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForSelector('#markdown-content', { state: 'attached' });
+        const copyBtn = page.locator('#copy-link-btn');
+        await expect(copyBtn).toBeVisible();
+        await copyBtn.click();
+        await expect(copyBtn).toHaveAttribute('aria-label', 'Link copied!', { timeout: 3000 });
+    });
+
+    test('safe-anchoring: reader ignores trailing hash fragment', async ({ page }) => {
+        await page.route('**/meetings/meeting-01/README.md', route =>
+            route.fulfill({ body: '# Deep Systems\n\nContent here.' })
+        );
+        // Trailing content after last # is treated as anchor, stripped from path validation
+        await page.goto('/#p=meetings/meeting-01/README.md#extra-fragment');
+        await page.waitForSelector('#markdown-content', { state: 'attached' });
+        await expect(page.locator('#reader-view')).toBeVisible();
+    });
 
 });

@@ -614,25 +614,30 @@
                     <span class="spectrum-rule"></span>
                 </h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-                    <a href="#p=docs/onboarding.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
+                    <a href="#p=docs/onboarding.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-onboarding">
                         <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true">👋</span>
                         <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Onboarding</span>
+                        <span id="kb-desc-onboarding" class="sr-only">New member guide — how the club works, what to expect, and where to start</span>
                     </a>
-                    <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
+                    <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-glossary">
                         <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true">📚</span>
                         <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Glossary</span>
+                        <span id="kb-desc-glossary" class="sr-only">Key terms, concepts, and references from all sessions</span>
                     </a>
-                    <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
+                    <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-principles">
                         <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true">⚖️</span>
                         <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
+                        <span id="kb-desc-principles" class="sr-only">Design heuristics and guiding principles behind the club's approach</span>
                     </a>
-                    <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);">
+                    <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);" aria-describedby="kb-desc-prompts">
                         <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true">🤖</span>
                         <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
+                        <span id="kb-desc-prompts" class="sr-only">Curated prompts for AI-assisted discussion and reflection</span>
                     </a>
-                    <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);">
+                    <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);" aria-describedby="kb-desc-inbox">
                         <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true">📂</span>
                         <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">Inbox</span>
+                        <span id="kb-desc-inbox" class="sr-only">Staging area for new meeting materials and draft content</span>
                     </a>
                 </div>
             </section>
@@ -647,13 +652,13 @@
                 <div class="banner-inner">
                     <a href="#" id="back-to-dashboard" class="text-sm md:text-base swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]" title="Press Esc to return">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                        Dashboard <span class="hidden sm:inline text-[0.75rem] font-normal ml-1 opacity-75">(Esc)</span>
+                        Dashboard <span class="text-[0.75rem] font-normal ml-1 opacity-75 max-sm:hidden">(press Esc)</span>
                     </a>
                     <div class="flex items-center gap-2">
                         <button id="copy-link-btn"
                                 aria-label="Copy link to these session notes"
                                 title="Copy link to these session notes"
-                                class="flex items-center justify-content p-2 opacity-80 hover:opacity-100 transition-opacity min-h-[44px] min-w-[44px]"
+                                 class="flex items-center justify-content p-2 opacity-60 hover:opacity-100 focus:opacity-100 transition-opacity min-h-[44px] min-w-[44px]"
                                 data-label-visible="true">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
                             <span class="text-[0.75rem] font-semibold uppercase tracking-[0.15em]">Copy Link</span>

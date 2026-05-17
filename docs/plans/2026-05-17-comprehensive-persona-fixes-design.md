@@ -45,22 +45,22 @@ Address all remaining persona pain points in a coordinated implementation:
 
 **Solution:**
 - Extend hash routing to support `#p=meetings/meeting-01/README.md#asset-TYPE-SLUG`
-- Each asset gets stable `id="asset-{type}-{slug}"` anchor in HTML:
+- Each asset gets stable `id="asset-{meetingId}-{type}-{slug}"` anchor in HTML:
   ```html
-  <div id="asset-video-recap">
-    <a href="...">Video Recap · 52m · 840 MB</a>
+  <div id="asset-meeting-00-video-00-the-complexity-governor">
+    <a href="...">Video Primer · 52m · 840 MB</a>
   </div>
-  <div id="asset-podcast-deepdive">
+  <div id="asset-meeting-00-podcast-podcast-deepdive">
     <a href="...">Deep Dive · 45m · 120 MB</a>
   </div>
   ```
 - `loadPage()` parses anchor from hash and scrolls to it after render
-- Copy-link button now generates `full_url#asset-{type}-{slug}` for deep-linking
-- History API: `window.location.hash = '#p=...#asset-TYPE-SLUG'` (pushes state)
+- Copy-link button now generates `full_url#asset-{meetingId}-{type}-{slug}` for deep-linking
+- History API: `window.location.hash = '#p=...#asset-meetingId-TYPE-SLUG'` (pushes state)
 
 **URL examples:**
-- `#p=meetings/meeting-01/README.md#asset-video-recap` → jumps to video
-- `#p=meetings/meeting-01/README.md#asset-podcast-deepdive` → jumps to deep-dive audio
+- `#p=meetings/meeting-00/README.md#asset-meeting-00-video-00-the-complexity-governor` → jumps to video
+- `#p=meetings/meeting-00/README.md#asset-meeting-00-podcast-podcast-deepdive` → jumps to deep-dive audio
 
 **Impact:** Enables Alex to share, enables Casey (mobile users can send resources).
 
@@ -71,7 +71,7 @@ Address all remaining persona pain points in a coordinated implementation:
 **Problem:** Alex doesn't discover Esc key; copy-link button visually hidden.
 
 **Solution:**
-- Add small text hint next to "Dashboard" link: `<span class="text-xs text-muted">(press Esc)</span>`
+- Add small text hint next to "Dashboard" link: `<span class="text-xs text-muted">(press Esc)</span>` (hidden on ≤640px via `max-sm:hidden` since mobile users don't have keyboard shortcuts)
 - Increase copy-link button visibility:
   - Normal state: opacity-60 (from opacity-40)
   - Hover/focus: opacity-100
@@ -81,7 +81,7 @@ Address all remaining persona pain points in a coordinated implementation:
 **Example:**
 ```html
 <header class="reader-header">
-  <a href="...">Dashboard</a> <span class="text-xs text-muted">(press Esc)</span>
+  <a href="...">Dashboard</a> <span class="text-[0.75rem] font-normal ml-1 opacity-75 max-sm:hidden">(press Esc)</span>
   <button class="copy-link-btn opacity-60 hover:opacity-100 focus:opacity-100">🔗</button>
 </header>
 ```
@@ -104,74 +104,81 @@ Address all remaining persona pain points in a coordinated implementation:
   - Visible on mobile (thumb zone), sticky on small screens
   - Includes CTAs that link to key sections
 
-- **Terminology tooltips:** Add `title=""` attributes to jargon:
-  - "Synthesis Reader" → tooltip: "A guided walkthrough of key concepts"
-  - "Horizon" → tooltip: "Upcoming meetings and future topics"
-  - "Archive" → tooltip: "Past meetings and recordings"
+- **Terminology descriptions:** Add `aria-describedby` + `sr-only` span to jargon cards (per I3 resolution — `title` doesn't work on mobile and has poor screen reader support):
+  - "Synthesis Reader" → description: "A guided walkthrough of key concepts"
+  - "Horizon" → description: "Upcoming meetings and future topics"
+  - "Archive" → description: "Past meetings and recordings"
 
 **Impact:** Helps Marcus (new users know where to start), improves UX for all.
 
 ---
 
-### 5. Mobile Video Playback with Resume
+### 5. Video Playback with Resume (All Viewports)
 
-**Problem:** Casey gets download prompts instead of in-page playback; can't resume mid-session.
+**Problem:** Users get download prompts instead of in-page playback; can't resume mid-session.
 
 **Solution:**
-- Native `<video>` player overlay when video links clicked on mobile (≤640px)
-- Desktop (>640px): keep current behavior (direct link)
-- **Player controls:** Standard HTML5 (play/pause, progress, volume, fullscreen)
-- **Resume:** Save playback position to `sessionStorage['video-{filename}']` on pause/seek
-- **Restore:** On re-open same video (same session), resume from last position
+- Native `<video>` player in a `<dialog>` overlay when any `.mp4` link is clicked (all viewports)
+- **Resume:** Save playback position to both `sessionStorage` (tab-scoped) and `localStorage` (cross-tab fallback)
+- **Restore:** On re-open same video, resume from last position
+- **Error handling:** Wrapped in `try/catch` for quota exceeded and private browsing modes
+- **Dual-close:** Click close button, click overlay backdrop, or press Escape — all close the dialog and restore focus
 
 **Flow:**
 ```
-User taps video link (mobile)
+User clicks video link (any viewport)
   ↓
-Overlay opens with <video> player
+<dialog> overlay opens with <video> player
   ↓
-User pauses/seeks (position saved to sessionStorage)
+User pauses/seeks (position saved to sessionStorage + localStorage)
   ↓
-User navigates away
+User navigates away or closes overlay
   ↓
-User returns to reader + taps same video
+User returns + taps same video
   ↓
-Video resumes from last position
+Video resumes from last position with "Resume from X:XX?" prompt
 ```
 
 **UX details:**
-- Overlay: full-width video at top, dismiss button (X), back to reader below
-- Error state: "Video unavailable. [Direct link: download]"
-- sessionStorage: clears on tab close (safe, per-session only)
+- `<dialog>` element with `showModal()` — native focus trapping and Escape handling
+- "Resume from X:XX?" bar appears when saved position exceeds 5s threshold
+- Resume bar offers two buttons: Resume (seeks to position) and Start Over (clears saved time)
+- Namespaced storage keys: `apbc:vs:{filePath}` (sessionStorage), `apbc:vp:{filePath}` (localStorage)
+- Focus restoration: saves `document.activeElement` before opening, restores on close
+- Error state: "This file is not available yet. Materials appear closer to the meeting date." toast
+- Backdrop click handled via `overlay.onclick` (only fires on backdrop, not content clicks)
 - No external player required (native HTML5 `<video>`)
 
-**Impact:** Helps Casey (mobile-friendly experience), improves mobile UX across personas.
+**Impact:** Helps Casey (mobile-friendly playback), improves desktop UX with resume support.
 
 ---
 
-## Metadata Extraction (Enhanced asset-compressor Skill)
+## Metadata Extraction (Enhanced asset-compressor Skill) — **PENDING**
 
-### Current Workflow
+**Status:** Not yet implemented. Duration and fileSize values are currently hand-edited into `docs/manifest.json`. The compressor automation is deferred.
+
+### Current Workflow (Manual)
 ```bash
 npm run compress:media
+# Then hand-edit docs/manifest.json with duration + fileSize
 ```
 
-### Enhanced Workflow
+### Planned Workflow (When Implemented)
 1. Compress/resize media file
 2. Rename to kebab-case (existing)
 3. **Extract metadata:**
    - Duration: ffprobe → seconds → convert to minutes
    - File size: bytes → MB
-4. **Auto-update MEETINGS manifest** in `index.html`:
-   - Add/update `duration` + `fileSize` fields
+4. **Auto-update manifest** in `docs/manifest.json`:
+   - Add/update `duration` + `fileSize` fields via `JSON.parse()`/`JSON.stringify()` (NOT regex on HTML)
    - Preserve all other asset fields
    - Log success: "Updated podcast-deepdive.m4a: 45m, 120 MB"
 
-### Implementation Details
+### Implementation Details (Future)
 - Use ffprobe (FFmpeg tool) for metadata extraction
 - Query command: `ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1:noprint_filename=1 file.m4a`
 - Parse file size from file system (stat)
-- Update MEETINGS via regex or JSON parsing (choose based on manifest structure)
+- Update manifest via `JSON.parse(fs.readFileSync(manifestPath))` → find entry → update → `JSON.stringify(data, null, 2)` → `fs.writeFileSync`
 
 ---
 
@@ -198,12 +205,12 @@ npm run compress:media
 ## Implementation Plan (See: 2026-05-17-comprehensive-persona-fixes-implementation.md)
 
 **Phases:**
-1. Enhanced asset-compressor + manifest metadata
-2. Podcast/video metadata display (all locations)
-3. Asset permalinks + copy-link routing
-4. Reader header affordance + copy-link visibility
-5. Onboarding banner + tooltips
-6. Mobile video player + resume
+1. Podcast/video metadata display (all locations)
+2. Asset permalinks + copy-link routing
+3. Reader header affordance + copy-link visibility
+4. Onboarding banner + KB descriptions
+5. Video player with resume (all viewports)
+6. Enhanced asset-compressor (PENDING — see section below)
 7. Testing + polish
 
 **Estimated effort:** 6–8 hours

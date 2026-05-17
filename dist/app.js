@@ -5,8 +5,11 @@
         const readerStatus = document.getElementById('reader-status');
         const mdCache   = new Map();  // Meeting markdown cache (Promises)
 
-        // Meeting data manifest
-        const MEETINGS = [
+        // Meeting data manifest (loaded from docs/manifest.json at startup)
+        let MEETINGS = [];
+
+        // Fallback inline meetings array (used if JSON load fails)
+        const MEETINGS_INLINE = [
             {
                 id: 'meeting-02',
                 session: 'Meeting 02',
@@ -16,13 +19,13 @@
                 color: 'spectrum-2',
                 wash: '--wash-2',
                 readmeUrl: 'meetings/meeting-02/README.md',
-                video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Primer', variant: 'canonical' },
+                video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Primer', variant: 'canonical', duration: 55, fileSize: 920 },
                 slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'Slides', variant: 'canonical' },
                 podcasts: [
-                    { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4' },
-                    { type: 'deep-dive', label: 'Why Clean Code Rots Your Codebase', file: 'meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a' },
-                    { type: 'debate', label: 'Deep Modules vs Small Functions', file: 'meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a' },
-                    { type: 'critique', label: 'General Purpose Design Stops Information Leaks', file: 'meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a' }
+                    { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4', duration: 8, fileSize: 31 },
+                    { type: 'deep-dive', label: 'Why Clean Code Rots Your Codebase', file: 'meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a', duration: 18, fileSize: 17 },
+                    { type: 'debate', label: 'Deep Modules vs Small Functions', file: 'meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a', duration: 22, fileSize: 20 },
+                    { type: 'critique', label: 'General Purpose Design Stops Information Leaks', file: 'meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a', duration: 20, fileSize: 19 }
                 ],
                 resources: [
                     { label: 'Four Strategies', file: 'meetings/meeting-02/resources/02-four-strategies.png' },
@@ -38,12 +41,12 @@
                 color: 'spectrum-3',
                 wash: '--wash-3',
                 readmeUrl: 'meetings/meeting-01/README.md',
-                video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Primer', variant: 'canonical' },
+                video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Primer', variant: 'canonical', duration: 48, fileSize: 780 },
                 slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slides', variant: 'canonical' },
                 podcasts: [
-                    { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a' },
-                    { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a' },
-                    { type: 'critique', label: 'How Tactical Programming Creates Complexity', file: 'meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a' }
+                    { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a', duration: 18, fileSize: 16 },
+                    { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a', duration: 24, fileSize: 22 },
+                    { type: 'critique', label: 'How Tactical Programming Creates Complexity', file: 'meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a', duration: 18, fileSize: 17 }
                 ],
                 resources: [
                     { label: 'Architecture of Simplicity', file: 'meetings/meeting-01/resources/01-architecture-of-simplicity.png' },
@@ -95,6 +98,26 @@
                 resources: []
             }
         ];
+
+        // Load meetings manifest from external JSON with fallback to inline data
+        async function loadManifest() {
+            try {
+                const response = await fetch('docs/manifest.json?t=' + Date.now());
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.meetings && Array.isArray(data.meetings)) {
+                    MEETINGS = data.meetings;
+                } else {
+                    throw new Error('Invalid manifest structure');
+                }
+            } catch (err) {
+                console.warn('Failed to load manifest.json, falling back to inline MEETINGS:', err.message);
+                MEETINGS = MEETINGS_INLINE;
+            }
+            window.MEETINGS = MEETINGS;
+        }
 
         const LS = 'apbc:';
         const CONFIG = {
@@ -166,6 +189,19 @@
             }[c]));
         }
 
+        function formatDuration(minutes) {
+            if (!Number.isFinite(minutes)) return '';
+            const m = Math.round(minutes);
+            if (m >= 120) return `${Math.floor(m / 60)}h ${m % 60}m`;
+            if (m === 0) return '';
+            return `${m}m`;
+        }
+
+        function formatFileSize(value) {
+            if (!Number.isFinite(value)) return '';
+            return `${Math.round(value)} MB`;
+        }
+
         const RAW_CONTENT_BASE = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
         function buildPPTXViewerURL(path) {
             if (!isSafeAssetPath(path)) return '#';
@@ -194,11 +230,17 @@
             const podcastRows = [];
 
             if (meeting.video && isSafeAssetPath(meeting.video.file)) {
+                const videoDuration = meeting.video.duration ? formatDuration(meeting.video.duration) : '';
+                const videoSize = meeting.video.fileSize ? formatFileSize(meeting.video.fileSize) : '';
+                const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
+                const metaDisplay = videoMeta ? ` · ${videoMeta}` : '';
+                const videoSlug = meeting.video.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+                const videoAssetId = `asset-${escapeHTML(meeting.id)}-video-${videoSlug}`;
                 primaryRows.push(`
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical">
+                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" id="${videoAssetId}">
                         <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            ${escapeHTML(meeting.video.label)}
+                            ${escapeHTML(meeting.video.label)}${metaDisplay}
                         </a>
                         <a href="${escapeHTML(meeting.video.file)}" download
                            aria-label="Download video — ${escapeHTML(meeting.session)}"
@@ -241,15 +283,21 @@
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
                     const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type), title: '' };
+                    const podDuration = pod.duration ? formatDuration(pod.duration) : '';
+                    const podSize = pod.fileSize ? formatFileSize(pod.fileSize) : '';
+                    const podMeta = [podDuration, podSize].filter(Boolean).join(' · ');
+                    const metaDisplay = podMeta ? ` · ${podMeta}` : '';
+                    const podSlug = pod.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+                    const podAssetId = `asset-${escapeHTML(meeting.id)}-podcast-${podSlug}`;
                     // Enhance accessibility: improve aria-label for download button with file type hint
                     const fileExt = pod.file.split('.').pop() || 'file';
                     const downloadLabel = `Download ${escapeHTML(pod.label)} (${fileExt.toUpperCase()} audio)`;
                     podcastRows.push(`
-                    <div class="asset-row">
+                    <div class="asset-row" id="${podAssetId}">
                         <a href="${escapeHTML(pod.file)}" class="asset-link asset-link--stacked">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                                ${escapeHTML(pod.label)}
+                                ${escapeHTML(pod.label)}${metaDisplay}
                                 <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
                             </span>
                             <span class="podcast-caption">${escapeHTML(cfg.title || '')}</span>
@@ -279,11 +327,6 @@
             if (videoCount > 0) summaryParts.push(`${videoCount} Video${videoCount > 1 ? 's' : ''}`);
             if (podcastCount > 0) summaryParts.push(`${podcastCount} Podcast${podcastCount > 1 ? 's' : ''}`);
             let podcastSummary = summaryParts.join(' · ');
-
-            // Defensive sanitization: remove common leading emoji glyphs if present
-            if (podcastSummary) {
-                podcastSummary = podcastSummary.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]+/u, '').trim();
-            }
 
             // Prepend label so summaries are explicitly qualified
             if (podcastSummary) {
@@ -378,6 +421,11 @@
             horizonContainer.appendChild(fragment);
         }
 
+        function sanitizeAnchor(anchor) {
+            if (typeof anchor !== 'string') return null;
+            return /^[a-zA-Z0-9_-]+$/.test(anchor) ? anchor : null;
+        }
+
         function isSafeRepoPath(p) {
             if (!p || typeof p !== 'string') return false;
             if (p.length === 0 || p.length > CONFIG.PATH_MAX_LENGTH) return false;
@@ -450,7 +498,7 @@
             if (footer) footer.classList.toggle('hidden', !isDashboard);
         }
 
-        async function loadPage(path) {
+        async function loadPage(path, fallback, anchorId) {
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
                 const contentEl = document.getElementById('markdown-content');
                 if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and try reloading the page.</p>';
@@ -552,6 +600,13 @@
                         }
                     }
                 });
+                // Scroll to anchor if present and valid
+                if (anchorId) {
+                    requestAnimationFrame(() => {
+                        const el = document.getElementById(anchorId);
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                }
                 readerStatus.textContent = 'Document loaded.';
             } catch (err) {
                 console.warn('loadPage failed:', err?.message || err);
@@ -565,7 +620,7 @@
                         </div>
                     </div>`;
                 const retryBtn = content.querySelector('#retry-load');
-                if (retryBtn) retryBtn.addEventListener('click', () => loadPage(path));
+                if (retryBtn) retryBtn.addEventListener('click', () => loadPage(path, null, anchorId));
                 const returnBtn = content.querySelector('#return-dashboard');
                 if (returnBtn) returnBtn.addEventListener('click', showDashboard);
                 readerStatus.textContent = 'Document unavailable.';
@@ -639,8 +694,17 @@
             video.load();
 
             const vpKey = LS + 'vp:' + filePath;
-            const saved = localStorage.getItem(vpKey);
-            const savedTime = saved ? parseFloat(saved) : 0;
+            const sessionKey = LS + 'vs:' + filePath;
+            // Prefer sessionStorage (tab-scoped), fall back to localStorage (cross-tab)
+            let savedTime = 0;
+            try {
+                const ss = sessionStorage.getItem(sessionKey);
+                if (ss) savedTime = parseFloat(ss);
+            } catch (_) {}
+            if (!savedTime) {
+                const ls = localStorage.getItem(vpKey);
+                if (ls) savedTime = parseFloat(ls);
+            }
 
             resumeBar.style.display = 'none';
             if (savedTime > CONFIG.RESUME_MIN_SECONDS) {
@@ -649,14 +713,21 @@
                 resumeText.textContent = `Resume from ${mins}:${secs.toString().padStart(2, '0')}?`;
                 resumeBar.style.display = 'flex';
                 resumeBtn.addEventListener('click', () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); }, { once: true });
-                startBtn.addEventListener('click', () => { localStorage.removeItem(vpKey); resumeBar.style.display = 'none'; video.play(); }, { once: true });
+                startBtn.addEventListener('click', () => { localStorage.removeItem(vpKey); try { sessionStorage.removeItem(sessionKey); } catch (_) {} resumeBar.style.display = 'none'; video.play(); }, { once: true });
             }
 
             const saveProgress = () => {
                 const t = video.currentTime;
-                if (t > CONFIG.RESUME_MIN_SECONDS) localStorage.setItem(vpKey, String(t));
+                if (t > CONFIG.RESUME_MIN_SECONDS) {
+                    try { sessionStorage.setItem(sessionKey, String(t)); } catch (_) {}
+                    localStorage.setItem(vpKey, String(t));
+                }
             };
             const vpInterval = setInterval(saveProgress, CONFIG.PROGRESS_SAVE_MS);
+            videoPlayerCleanup = () => {
+                clearInterval(vpInterval);
+                videoPlayerCleanup = null;
+            };
 
             const onClose = () => {
                 clearInterval(vpInterval);
@@ -760,7 +831,12 @@
         function handleRoute() {
             const hash = window.location.hash;
             if (hash.startsWith('#p=')) {
-                const path = decodeURIComponent(hash.slice(3));
+                const fullPath = decodeURIComponent(hash.slice(3));
+                // Split on last # to separate path from anchor (if any)
+                const lastHashIndex = fullPath.lastIndexOf('#');
+                const path = lastHashIndex > 0 ? fullPath.substring(0, lastHashIndex) : fullPath;
+                const rawAnchor = lastHashIndex > 0 ? fullPath.substring(lastHashIndex + 1) : null;
+                const anchorId = rawAnchor ? sanitizeAnchor(rawAnchor) : null;
                 if (!isSafeRepoPath(path)) {
                     showDashboard();
                     return;
@@ -774,7 +850,7 @@
 
                 const meeting = MEETINGS.find(m => m.readmeUrl === path);
                 updateReaderTheme(meeting ? meeting.id : null);
-                loadPage(path);
+                loadPage(path, null, anchorId);
             } else if (hash.startsWith('#a=')) {
                 const path = decodeURIComponent(hash.slice(3));
                 if (!isSafeAssetPath(path)) {
@@ -788,8 +864,8 @@
         }
 
         // Expose for tests
-        // Register service worker for offline support
-        if ('serviceWorker' in navigator) {
+        // Register service worker for offline support (skip in automated/test env to avoid cache interference)
+        if (!navigator.webdriver && 'serviceWorker' in navigator) {
             navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(console.warn);
         }
 
@@ -802,6 +878,11 @@
             window.renderHorizonCards = renderHorizonCards;
             window.MEETINGS = MEETINGS;
             window.showToast = showToast;
+            window.formatDuration = formatDuration;
+            window.formatFileSize = formatFileSize;
+            window.sanitizeAnchor = sanitizeAnchor;
+            window.getVisibleAssetAnchor = getVisibleAssetAnchor;
+            window.MEETINGS_INLINE = MEETINGS_INLINE;
         }
 
         window.addEventListener('hashchange', handleRoute);
@@ -858,27 +939,45 @@
             }
         });
 
+        function getVisibleAssetAnchor() {
+            const assets = document.querySelectorAll('[id^="asset-"]');
+            let closestAsset = null;
+            let closestDistance = Infinity;
+            for (const asset of assets) {
+                const rect = asset.getBoundingClientRect();
+                const dist = Math.abs(rect.top);
+                if (dist < closestDistance) {
+                    closestAsset = asset;
+                    closestDistance = dist;
+                }
+            }
+            return closestAsset ? closestAsset.id : null;
+        }
+
         // Copy-link button — copies current URL (includes #p= or #a= hash) to clipboard
         const copyLinkBtn = document.getElementById('copy-link-btn');
         if (copyLinkBtn) {
-            copyLinkBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText(window.location.href).then(() => {
+            copyLinkBtn.addEventListener('click', async () => {
+                const isReaderMode = window.location.hash.startsWith('#p=');
+                const url = isReaderMode ? window.location.href : (() => {
+                    const assetAnchor = getVisibleAssetAnchor();
+                    const base = window.location.href.split('#')[0];
+                    const hash = window.location.hash;
+                    return assetAnchor ? `${base}${hash}#${assetAnchor}` : window.location.href;
+                })();
+                try {
+                    await navigator.clipboard.writeText(url);
                     copyLinkBtn.setAttribute('aria-label', 'Link copied!');
                     copyLinkBtn.title = 'Copied!';
                     setTimeout(() => {
                         copyLinkBtn.setAttribute('aria-label', 'Copy link to these session notes');
                         copyLinkBtn.title = 'Copy link';
                     }, CONFIG.HIGHLIGHT_DURATION_MS);
-                }).catch(() => {
-                    showToast('Copy failed: ' + window.location.href);
-                });
+                } catch (err) {
+                    showToast('Copy failed: ' + url);
+                }
             });
         }
-
-        // Runs immediately — no CDN dependency
-        renderUpcomingMaterials();
-        renderArchiveCards();
-        renderHorizonCards();
 
         // Set up asset click delegation on dashboard containers
         setupAssetClickDelegation(document.getElementById('upcoming-materials-container'));
@@ -888,27 +987,45 @@
         // Init onboarding banner
         initOnboardingBanner();
 
-        // Apply will-change dynamically on card hover for performance
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('pointerenter', () => {
-                card.style.willChange = 'transform';
-            });
-            card.addEventListener('pointerleave', () => {
-                card.style.willChange = '';
-            });
-        });
-
         // Wait for CDN libs before enabling the reader
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Render immediately with inline data to avoid empty flash
+            MEETINGS = MEETINGS_INLINE;
+            window.MEETINGS = MEETINGS;
             if (typeof marked !== 'undefined') {
                 marked.use({ gfm: true, breaks: true });
             }
+            renderUpcomingMaterials();
+            renderArchiveCards();
+            renderHorizonCards();
+
+            // Load meetings from external manifest (overrides inline if successful)
+            await loadManifest();
+            
+            // Re-render with fetched manifest data
+            renderUpcomingMaterials();
+            renderArchiveCards();
+            renderHorizonCards();
+            
             handleRoute();
+
+            // Apply will-change dynamically on card hover for performance
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('pointerenter', () => {
+                    card.style.willChange = 'transform';
+                });
+                card.addEventListener('pointerleave', () => {
+                    card.style.willChange = '';
+                });
+            });
+
+            // Command palette needs MEETINGS populated, so init here after loadManifest
+            initCommandPalette();
         });
 
         // Command palette (Ctrl/Cmd+K) - lightweight, accessible, iterative
-        (function(){
-            const meetings = (typeof MEETINGS !== 'undefined') ? MEETINGS : (window.MEETINGS || []);
+        function initCommandPalette() {
+            const meetings = MEETINGS;
             if (!meetings || meetings.length === 0) return;
 
             // Styles
@@ -1109,7 +1226,7 @@
 
             // Global key handler: Ctrl/Cmd+K
             document.addEventListener('keydown', (e) => {
-                const isMac = navigator.platform && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+                const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
                 if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')){
                     e.preventDefault(); togglePalette();
                 }
@@ -1146,5 +1263,5 @@
 
             // seed with top meetings
             renderResults(meetings.slice(0,6));
-        })();
+        }
 

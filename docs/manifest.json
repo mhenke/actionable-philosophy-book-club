@@ -1,0 +1,183 @@
+{
+  "meetings": [
+    {
+      "id": "meeting-02",
+      "session": "Meeting 02",
+      "date": "27 May 26",
+      "title": "Complexity Engineering",
+      "status": "upcoming",
+      "color": "spectrum-2",
+      "wash": "--wash-2",
+      "readmeUrl": "meetings/meeting-02/README.md",
+      "video": {
+        "file": "meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 55,
+        "fileSize": 920
+      },
+      "slides": {
+        "file": "meetings/meeting-02/slides/02-the-complexity-case.pptx",
+        "label": "Slides",
+        "variant": "canonical"
+      },
+      "podcasts": [
+        {
+          "type": "alternate",
+          "label": "Video Primer",
+          "file": "meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4",
+          "variant": "alternate",
+          "source_filename": "02-Clean-Code-Paradox-deep-dive.mp4",
+          "duration": 8,
+          "fileSize": 31
+        },
+        {
+          "type": "deep-dive",
+          "label": "Why Clean Code Rots Your Codebase",
+          "file": "meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a",
+          "duration": 18,
+          "fileSize": 17
+        },
+        {
+          "type": "debate",
+          "label": "Deep Modules vs Small Functions",
+          "file": "meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a",
+          "duration": 22,
+          "fileSize": 20
+        },
+        {
+          "type": "critique",
+          "label": "General Purpose Design Stops Information Leaks",
+          "file": "meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a",
+          "duration": 20,
+          "fileSize": 19
+        }
+      ],
+      "resources": [
+        {
+          "label": "Four Strategies",
+          "file": "meetings/meeting-02/resources/02-four-strategies.png"
+        },
+        {
+          "label": "Choose Your Next Meeting",
+          "file": "meetings/meeting-02/resources/02-choose-your-next-meeting.png"
+        }
+      ]
+    },
+    {
+      "id": "meeting-01",
+      "session": "Meeting 01",
+      "date": "13 May 26",
+      "title": "Deep Systems",
+      "status": "done",
+      "color": "spectrum-3",
+      "wash": "--wash-3",
+      "readmeUrl": "meetings/meeting-01/README.md",
+      "video": {
+        "file": "meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 48,
+        "fileSize": 780
+      },
+      "slides": {
+        "file": "meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx",
+        "label": "Slides",
+        "variant": "canonical"
+      },
+      "podcasts": [
+        {
+          "type": "deep-dive",
+          "label": "Strategic Software Design and Deep Modules",
+          "file": "meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a",
+          "duration": 18,
+          "fileSize": 16
+        },
+        {
+          "type": "debate",
+          "label": "Deep Modules vs Clean Code for AI",
+          "file": "meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a",
+          "duration": 24,
+          "fileSize": 22
+        },
+        {
+          "type": "critique",
+          "label": "How Tactical Programming Creates Complexity",
+          "file": "meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a",
+          "duration": 18,
+          "fileSize": 17
+        }
+      ],
+      "resources": [
+        {
+          "label": "Architecture of Simplicity",
+          "file": "meetings/meeting-01/resources/01-architecture-of-simplicity.png"
+        },
+        {
+          "label": "Choose Your Adventure",
+          "file": "meetings/meeting-01/resources/01-choose-your-adventure.png"
+        }
+      ]
+    },
+    {
+      "id": "meeting-00",
+      "session": "Meeting 00",
+      "date": "29 Apr 26",
+      "title": "The Kickoff",
+      "status": "done",
+      "color": "spectrum-1",
+      "wash": "--wash-1",
+      "readmeUrl": "meetings/meeting-00/README.md",
+      "video": {
+        "file": "meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 52,
+        "fileSize": 840
+      },
+      "slides": {
+        "file": "meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx",
+        "label": "Slides",
+        "variant": "canonical"
+      },
+      "podcasts": [
+        {
+          "type": "debate",
+          "label": "Deep Dive Discussion",
+          "file": "meetings/meeting-00/podcast-deepdive.m4a",
+          "duration": 45,
+          "fileSize": 120
+        }
+      ],
+      "resources": []
+    },
+    {
+      "id": "meeting-03",
+      "session": "Meeting 03",
+      "date": "10 Jun 26",
+      "title": "TBD",
+      "status": "draft",
+      "color": "spectrum-1",
+      "wash": "--wash-1",
+      "readmeUrl": "meetings/meeting-03/README.md",
+      "video": null,
+      "slides": null,
+      "podcasts": [],
+      "resources": []
+    },
+    {
+      "id": "meeting-04",
+      "session": "Meeting 04",
+      "date": "24 Jun 26",
+      "title": "TBD",
+      "status": "draft",
+      "color": "spectrum-2",
+      "wash": "--wash-2",
+      "readmeUrl": "meetings/meeting-04/README.md",
+      "video": null,
+      "slides": null,
+      "podcasts": [],
+      "resources": []
+    }
+  ]
+}
