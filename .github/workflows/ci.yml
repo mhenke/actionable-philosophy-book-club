@@ -78,13 +78,12 @@ jobs:
         run: |
           set -euo pipefail
           ERRORS=0
-          while IFS= read -r line; do
-            url=$(echo "$line" | grep -oP '(?<=src=")[^"]+' | head -1)
-            expected_full=$(echo "$line" | grep -oP '(?<=integrity=")[^"]+' | head -1)
-            [ -z "$url" ] || [ -z "$expected_full" ] && continue
-            algo=$(echo "$expected_full" | cut -d- -f1)
-            expected_hash=$(echo "$expected_full" | cut -d- -f2-)
-            bits=$(echo "$algo" | grep -oP '\d+')
+          grep -o 'integrity="[^"]*"' index.html | while read attr; do
+            hash="${attr#integrity=\"}"; hash="${hash%\"}"
+            url_line=$(grep -B1 "integrity=\"$hash" index.html | head -1)
+            url="${url_line#*src=\"}"; url="${url%%\"*}"
+            [ -z "$url" ] && continue
+            algo="${hash%%-*}"; expected_hash="${hash#*-}"; bits="${algo#sha}"
             actual_hash=$(curl -sSLf "$url" | openssl dgst "-sha${bits}" -binary | openssl base64 -A)
             if [ "$actual_hash" != "$expected_hash" ]; then
               echo "SRI MISMATCH: $url"
@@ -94,7 +93,7 @@ jobs:
             else
               echo "OK: $url"
             fi
-          done < <(grep -P 'src="https://.+integrity=' index.html || grep -A1 'src="https://' index.html | grep 'integrity=' | paste - -)
+          done
           [ "$ERRORS" -eq 0 ] && echo "SRI verification passed." || exit 1
 
       - name: Verify internal hash-route paths resolve to real files
