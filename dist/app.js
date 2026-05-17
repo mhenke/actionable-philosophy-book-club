@@ -94,12 +94,17 @@
             }
         ];
 
+        let currentFetch = null;
+
         function fetchMarkdownCached(path) {
             if (mdCache.has(path)) return mdCache.get(path);
+            if (currentFetch) currentFetch.abort();
+            const controller = new AbortController();
+            currentFetch = controller;
             if (mdCache.size >= 20) {
                 mdCache.delete(mdCache.keys().next().value);
             }
-            const promise = fetch(path).then(response => {
+            const promise = fetch(path, { signal: controller.signal }).then(response => {
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 return response.text();
             });
@@ -338,6 +343,7 @@
         // and prepends tree connector spans to each <li>. Convention defined in docs/content-contract.md.
         function renderFileTree(ul, prefix) {
             [...ul.children].forEach((li, i, arr) => {
+                if (li.querySelector(':scope > .tree-connector')) return;
                 const isLast = i === arr.length - 1;
                 const connector = isLast ? '└── ' : '├── ';
                 const childPrefix = prefix + (isLast ? '    ' : '│   ');
@@ -387,9 +393,11 @@
                 if (dashboard) dashboard.classList.add('hidden-view');
                 return;
             }
+            const footer = document.getElementById('site-footer');
+            if (footer) footer.classList.add('hidden-view');
             dashboard.classList.add('hidden-view');
             reader.classList.remove('hidden-view');
-            reader.focus({ preventScroll: true });
+            content.focus({ preventScroll: true });
             window.scrollTo(0, 0);
             readerStatus.textContent = 'Loading document...';
             content.setAttribute('aria-busy', 'true');
@@ -452,10 +460,12 @@
         }
 
         function showDashboard() {
+            const footer = document.getElementById('site-footer');
+            if (footer) footer.classList.remove('hidden-view');
             dashboard.classList.remove('hidden-view');
             reader.classList.add('hidden-view');
             readerStatus.textContent = '';
-            document.title = 'Actionable Philosophy Book Club';
+            content.innerHTML = '';
             window.scrollTo(0, 0);
             const mainEl = document.getElementById('main-content');
             if (mainEl) mainEl.focus({ preventScroll: true });
@@ -485,6 +495,11 @@
         }
 
         // Expose for tests
+        // Register service worker for offline support
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        }
+
         // Expose for tests
         window.isSafeRepoPath = isSafeRepoPath;
         window.prefetchMarkdown = prefetchMarkdown;

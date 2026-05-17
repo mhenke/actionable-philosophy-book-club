@@ -55,3 +55,11 @@ Tests verify XSS prevention, path validation, routing, and caching behavior.
 
 ## 🛠 Contributing
 We value **content over ceremony**. See [CONTRIBUTING.md](CONTRIBUTING.md) for details on uploading materials and staying under the 50MB file limit.
+
+## 📐 Architecture Decision Records
+
+Key design decisions are documented in [docs/adr/](docs/adr/):
+
+- **[ADR-0001](docs/adr/0001-powerpoint-viewer-selection.md)** — PowerPoint Viewer Selection (Microsoft Office Online)
+- **[ADR-0002](docs/adr/0002-single-page-reader.md)** — Single-Page Reader Architecture (partially superseded by ADR-0003)
+- **[ADR-0003](docs/adr/0003-ci-environment-standardization.md)** — CI Environment Standardization (npm-based tooling for validation)
