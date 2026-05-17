@@ -237,10 +237,13 @@
                     const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type), title: '' };
                     podcastRows.push(`
                     <div class="asset-row">
-                        <a href="${escapeHTML(pod.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                            ${escapeHTML(pod.label)}
-                            <span class="podcast-badge" style="color:${cfg.color}" title="${escapeHTML(cfg.title || '')}">${escapeHTML(cfg.label)}</span>
+                        <a href="${escapeHTML(pod.file)}" class="asset-link asset-link--stacked">
+                            <span class="asset-link-top">
+                                <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
+                                ${escapeHTML(pod.label)}
+                                <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
+                            </span>
+                            <span class="podcast-caption">${escapeHTML(cfg.title || '')}</span>
                         </a>
                         <a href="${escapeHTML(pod.file)}" download
                            aria-label="Download ${escapeHTML(pod.label)}"
@@ -531,6 +534,191 @@
             }
         }
 
+        // ── Toast system ──
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.textContent = message;
+            container.appendChild(el);
+            requestAnimationFrame(() => el.classList.add('toast--visible'));
+            setTimeout(() => {
+                el.classList.remove('toast--visible');
+                setTimeout(() => el.remove(), 300);
+            }, 4500);
+        }
+
+        // ── Asset availability check ──
+        async function checkAssetAvailable(path) {
+            try {
+                const resp = await fetch(path, { method: 'HEAD' });
+                return resp.ok;
+            } catch {
+                return false;
+            }
+        }
+
+        // ── Inline video player ──
+        function openVideoPlayer(filePath, label) {
+            const overlay = document.getElementById('video-player-overlay');
+            const video = document.getElementById('vp-video');
+            const title = document.getElementById('vp-title');
+            const resumeBar = document.getElementById('vp-resume-bar');
+            const resumeText = document.getElementById('vp-resume-text');
+            const resumeBtn = document.getElementById('vp-resume-btn');
+            const startBtn = document.getElementById('vp-start-btn');
+            if (!overlay || !video) return;
+
+            title.textContent = label || filePath;
+            video.src = filePath;
+            video.load();
+
+            const storageKey = 'vp_resume_' + filePath;
+            const saved = localStorage.getItem(storageKey);
+            const savedTime = saved ? parseFloat(saved) : 0;
+
+            resumeBar.style.display = 'none';
+            if (savedTime > 5) {
+                const mins = Math.floor(savedTime / 60);
+                const secs = Math.floor(savedTime % 60);
+                resumeText.textContent = `Resume from ${mins}:${secs.toString().padStart(2, '0')}?`;
+                resumeBar.style.display = 'flex';
+                resumeBtn.onclick = () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); };
+                startBtn.onclick = () => { localStorage.removeItem(storageKey); resumeBar.style.display = 'none'; video.play(); };
+            }
+
+            const saveProgress = () => {
+                const t = video.currentTime;
+                if (t > 5) localStorage.setItem(storageKey, String(t));
+            };
+            const interval = setInterval(saveProgress, 3000);
+
+            const onClose = () => {
+                clearInterval(interval);
+                saveProgress();
+                video.pause();
+                video.removeAttribute('src');
+                video.load();
+                overlay.classList.remove('vp--open');
+            };
+            const closeBtn = document.getElementById('vp-close');
+            closeBtn.onclick = onClose;
+            overlay.onclick = (e) => { if (e.target === overlay) onClose(); };
+            document.addEventListener('keydown', function vpEsc(e) {
+                if (e.key === 'Escape') { onClose(); document.removeEventListener('keydown', vpEsc); }
+            });
+
+            overlay.classList.add('vp--open');
+            // Don't autoplay — let user click play or resume
+        }
+
+        // ── Asset click delegation (dashboard) ──
+        function setupAssetClickDelegation(container) {
+            if (!container) return;
+            container.addEventListener('click', async (e) => {
+                const link = e.target.closest('.asset-link');
+                if (!link) return;
+                const dl = e.target.closest('.asset-dl');
+                if (dl) return; // Let download buttons behave normally
+                e.preventDefault();
+
+                const href = link.getAttribute('href');
+                if (!href || !isSafeAssetPath(href)) return;
+
+                // Update permalink hash
+                history.replaceState(null, '', '#a=' + href);
+
+                const available = await checkAssetAvailable(href);
+                if (!available) {
+                    showToast('This file is not available yet. Materials appear closer to the meeting date.');
+                    return;
+                }
+
+                if (href.endsWith('.mp4')) {
+                    const labelEl = link.querySelector('.asset-link-top') || link;
+                    openVideoPlayer(href, (labelEl.textContent || '').trim() || href);
+                } else {
+                    window.location.href = href;
+                }
+            });
+        }
+
+        // ── Onboarding banner ──
+        function initOnboardingBanner() {
+            const banner = document.getElementById('onboarding-banner');
+            const dismissBtn = document.getElementById('onboarding-dismiss');
+            if (!banner || !dismissBtn) return;
+            if (localStorage.getItem('onboarding_dismissed')) return;
+            // Move banner into the dashboard main content area
+            const mainContent = document.getElementById('main-content');
+            if (mainContent && banner.parentNode !== mainContent) {
+                mainContent.insertBefore(banner, mainContent.firstChild);
+            }
+            banner.classList.remove('hidden-view');
+            dismissBtn.addEventListener('click', () => {
+                banner.classList.add('hidden-view');
+                localStorage.setItem('onboarding_dismissed', '1');
+            });
+        }
+
+        // ── Handle #a= permalink to scroll to asset on dashboard ──
+        function handleAssetPermalink(assetPath) {
+            showDashboard();
+            // Remove the reader-status text set by showDashboard()
+            if (readerStatus) readerStatus.textContent = '';
+
+            // Try to find the card containing this asset and scroll to it
+            const cards = document.querySelectorAll('.card');
+            for (const card of cards) {
+                const links = card.querySelectorAll('.asset-link');
+                for (const link of links) {
+                    if (link.getAttribute('href') === assetPath) {
+                        // Expand any parent podcast disclosure
+                        const disclosure = card.querySelector('.podcast-disclosure');
+                        if (disclosure) disclosure.open = true;
+                        // Scroll to the card
+                        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Highlight the asset link briefly
+                        link.style.transition = 'background 0.5s';
+                        link.style.background = 'var(--wash-3-border)';
+                        setTimeout(() => { link.style.background = ''; }, 2000);
+                        return;
+                    }
+                }
+            }
+        }
+
+        function handleRoute() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#p=')) {
+                const path = decodeURIComponent(hash.slice(3));
+                if (!isSafeRepoPath(path)) {
+                    showDashboard();
+                    return;
+                }
+                // Dismiss onboarding banner permanently when visiting any content
+                const banner = document.getElementById('onboarding-banner');
+                if (banner && !banner.classList.contains('hidden-view')) {
+                    banner.classList.add('hidden-view');
+                    localStorage.setItem('onboarding_dismissed', '1');
+                }
+
+                const meeting = MEETINGS.find(m => m.readmeUrl === path);
+                updateReaderTheme(meeting ? meeting.id : null);
+                loadPage(path);
+            } else if (hash.startsWith('#a=')) {
+                const path = decodeURIComponent(hash.slice(3));
+                if (!isSafeAssetPath(path)) {
+                    showDashboard();
+                    return;
+                }
+                handleAssetPermalink(path);
+            } else {
+                showDashboard();
+            }
+        }
+
         // Expose for tests
         // Register service worker for offline support
         if ('serviceWorker' in navigator) {
@@ -545,6 +733,7 @@
         window.renderArchiveCards = renderArchiveCards;
         window.renderHorizonCards = renderHorizonCards;
         window.MEETINGS = MEETINGS;
+        window.showToast = showToast;
 
         window.addEventListener('hashchange', handleRoute);
 
@@ -554,14 +743,22 @@
             window.location.hash = '';
         });
 
-        // Esc key returns to dashboard from reader view
+        // Esc key returns to dashboard from reader view, or closes video player
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && !reader.classList.contains('hidden-view')) {
-                window.location.hash = '';
+            if (e.key === 'Escape') {
+                const vp = document.getElementById('video-player-overlay');
+                if (vp && vp.classList.contains('vp--open')) {
+                    const closeBtn = document.getElementById('vp-close');
+                    if (closeBtn) closeBtn.click();
+                    return;
+                }
+                if (!reader.classList.contains('hidden-view')) {
+                    window.location.hash = '';
+                }
             }
         });
 
-        // Copy-link button — copies current URL (includes #p= hash) to clipboard
+        // Copy-link button — copies current URL (includes #p= or #a= hash) to clipboard
         const copyLinkBtn = document.getElementById('copy-link-btn');
         if (copyLinkBtn) {
             copyLinkBtn.addEventListener('click', () => {
@@ -573,7 +770,6 @@
                         copyLinkBtn.title = 'Copy link';
                     }, 2000);
                 }).catch(() => {
-                    // Fallback: select URL from a temporary input
                     const input = document.createElement('input');
                     input.value = window.location.href;
                     document.body.appendChild(input);
@@ -590,8 +786,15 @@
         renderHorizonCards();
         attachPrefetchListeners();
 
+        // Set up asset click delegation on dashboard containers
+        setupAssetClickDelegation(document.getElementById('upcoming-materials-container'));
+        setupAssetClickDelegation(document.getElementById('archive-cards-container'));
+        setupAssetClickDelegation(document.getElementById('upcoming-podcasts'));
+
+        // Init onboarding banner
+        initOnboardingBanner();
+
         // Apply will-change dynamically on card hover for performance
-        // Must be after renderArchiveCards() to include dynamically created archive cards
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('pointerenter', () => {
                 card.style.willChange = 'transform';
