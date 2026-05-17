@@ -283,8 +283,8 @@
                 podcastSummary = podcastSummary.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]+/u, '').trim();
             }
 
-            // Prepend label when other non-primary resources exist (e.g., resourceStrip)
-            if (podcastSummary && resourceStrip) {
+            // Prepend label so summaries are explicitly qualified
+            if (podcastSummary) {
                 podcastSummary = `Additional Resources: ${podcastSummary}`;
             }
 
