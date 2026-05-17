@@ -4,19 +4,20 @@ test.describe('Manifest Rendering', () => {
 
     test('archive card for meeting-01 renders a podcast row', async ({ page }) => {
         await page.goto('/');
+        // Podcast rows live inside a closed <details> disclosure — attached confirms they rendered
         const badge = page.locator('.podcast-badge').filter({ hasText: 'Deep Dive' }).first();
-        await expect(badge).toBeVisible();
+        await expect(badge).toBeAttached();
     });
 
     test('podcast row has correct icon and label', async ({ page }) => {
         await page.goto('/');
         const podcastLink = page.locator('.asset-link').filter({ hasText: 'Why Clean Code Rots Your Codebase' });
-        await expect(podcastLink).toBeVisible();
+        await expect(podcastLink).toBeAttached();
     });
 
     test('archive card includes strategic software design recap', async ({ page }) => {
         await page.goto('/');
-        await expect(page.getByText('Strategic Software Design and Deep Modules')).toBeVisible();
+        await expect(page.getByText('Strategic Software Design and Deep Modules')).toBeAttached();
     });
 
     test('archive card for meeting-01 renders resource thumbnails', async ({ page }) => {
