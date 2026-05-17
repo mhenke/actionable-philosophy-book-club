@@ -339,23 +339,24 @@
             list-style: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
+            justify-content: space-between;
+            gap: 0.75rem;
+            font-size: 0.875rem;
             font-weight: 600;
-            color: var(--text-muted);
+            color: var(--spectrum-2);
             padding: 8px 0;
             min-height: 44px;
             user-select: none;
             transition: color 0.15s;
         }
-        .podcast-disclosure[open] summary { color: var(--spectrum-2); }
+        .podcast-disclosure summary:hover { color: var(--spectrum-1); }
         .podcast-disclosure summary::-webkit-details-marker { display: none; }
-        .podcast-disclosure summary::after {
-            content: '▾';
-            font-size: 0.75rem;
+        .podcast-disclosure summary .podcast-chevron {
+            flex-shrink: 0;
             color: var(--spectrum-3);
-            margin-left: auto;
+            transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .podcast-disclosure[open] summary .podcast-chevron { transform: rotate(180deg); }
 
         /* Card title — overflow protection */
         .card-title { min-width: 0; }
@@ -367,7 +368,7 @@
             .btn-primary:hover, .btn-primary:active { transform: none; }
             .asset-link:active, .asset-dl:active { transform: none; opacity: 1; }
             .animate-pulse { animation: none !important; }
-            .podcast-disclosure summary, .btn-ghost { transition: none !important; }
+            .podcast-disclosure summary, .podcast-disclosure summary .podcast-chevron, .btn-ghost { transition: none !important; }
         }
     </style>
 </head>

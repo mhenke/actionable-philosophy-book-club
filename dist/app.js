@@ -15,10 +15,10 @@
                 color: 'spectrum-2',
                 wash: '--wash-2',
                 readmeUrl: 'meetings/meeting-02/README.md',
-                video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Recap', variant: 'canonical' },
+                video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Primer', variant: 'canonical' },
                 slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [
-                    { type: 'alternate', label: 'Video Recap', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4' },
+                    { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4' },
                     { type: 'deep-dive', label: 'Why Clean Code Rots Your Codebase', file: 'meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a' },
                     { type: 'debate', label: 'Deep Modules vs Small Functions', file: 'meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a' },
                     { type: 'critique', label: 'General Purpose Design Stops Information Leaks', file: 'meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a' }
@@ -37,10 +37,10 @@
                 color: 'spectrum-3',
                 wash: '--wash-3',
                 readmeUrl: 'meetings/meeting-01/README.md',
-                video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Recap', variant: 'canonical' },
+                video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Primer', variant: 'canonical' },
                 slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [
-                    { type: 'alternate', label: 'Video Recap', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
+                    { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
                     { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a' },
                     { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a' },
                     { type: 'critique', label: 'How Tactical Programming Creates Complexity', file: 'meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a' }
@@ -59,7 +59,7 @@
                 color: 'spectrum-1',
                 wash: '--wash-1',
                 readmeUrl: 'meetings/meeting-00/README.md',
-                video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Recap', variant: 'canonical' },
+                video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Primer', variant: 'canonical' },
                 slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slide Deck', variant: 'canonical' },
                 podcasts: [],
                 resources: []
@@ -278,7 +278,7 @@
             container.innerHTML = primaryRows.join('') + resourceStrip;
             if (podcastContainer) {
                 podcastContainer.innerHTML = podcastRows.length > 0
-                    ? `<details class="podcast-disclosure"><summary>${podcastRows.length} audio format${podcastRows.length > 1 ? 's' : ''}</summary>${podcastRows.join('')}</details>`
+                    ? `<details class="podcast-disclosure"><summary><span class="icon-pill" style="background:var(--wash-2-icon);" aria-hidden="true">🎙</span>${podcastRows.length} Podcast${podcastRows.length > 1 ? 's' : ''}<svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
                     : '';
             }
         }
@@ -297,7 +297,7 @@
 
                 const { primaryRows, podcastRows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: true });
                 const podcastSection = podcastRows.length > 0
-                    ? `<details class="podcast-disclosure"><summary>${podcastRows.length} audio format${podcastRows.length > 1 ? 's' : ''}</summary>${podcastRows.join('')}</details>`
+                    ? `<details class="podcast-disclosure"><summary><span class="icon-pill" style="background:var(--wash-2-icon);" aria-hidden="true">🎙</span>${podcastRows.length} Podcast${podcastRows.length > 1 ? 's' : ''}<svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
                     : '';
 
                 const card = document.createElement('div');
