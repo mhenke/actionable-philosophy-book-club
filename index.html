@@ -317,7 +317,7 @@
         <header class="sticky top-0 z-50">
             <div class="banner-bar">
                 <div class="banner-inner">
-                    <h1 class="text-sm md:text-base swiss-caps">A Philosophy of Software Design</h1>
+                    <h1 class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</h1>
                     <span class="text-[10px] swiss-light">John Ousterhout</span>
                 </div>
             </div>
@@ -394,16 +394,18 @@
 
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
-        <nav class="banner-bar" aria-label="Reader navigation">
-            <div class="banner-inner">
-                <a href="#" id="back-to-dashboard" class="text-xs swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                    Dashboard
-                </a>
-                <span class="text-[10px] swiss-light">Synthesis Reader</span>
-            </div>
-        </nav>
-        <div class="spectrum-bar spectrum-bar--slim"></div>
+        <header class="sticky top-0 z-50">
+            <nav class="banner-bar" aria-label="Reader navigation">
+                <div class="banner-inner">
+                    <a href="#" id="back-to-dashboard" class="text-xs swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+                        Dashboard
+                    </a>
+                    <span class="text-[10px] swiss-light">Synthesis Reader</span>
+                </div>
+            </nav>
+            <div class="spectrum-bar"></div>
+        </header>
 
         <div id="reader-status" role="status" class="sr-only"></div>
         <main class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto pb-24">
