@@ -117,12 +117,10 @@ jobs:
 
       - name: Verify Tailwind CSS is up to date
         run: |
-          echo "Tailwind version: $(node -e "console.log(require('./node_modules/tailwindcss/package.json').version)")"
           cp dist/tailwind.css dist/tailwind.css.committed
           npm run build:css
           if ! diff -q dist/tailwind.css.committed dist/tailwind.css > /dev/null; then
-            echo "ERROR: dist/tailwind.css is stale."
-            diff <(cat dist/tailwind.css.committed | tr ';' '\n') <(cat dist/tailwind.css | tr ';' '\n') | head -20 || true
+            echo "ERROR: dist/tailwind.css is stale. Run 'npm run build:css' and commit the result."
             exit 1
           fi
           echo "Tailwind CSS is up to date."
