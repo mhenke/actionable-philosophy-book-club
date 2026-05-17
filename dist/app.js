@@ -266,6 +266,7 @@
 
         function renderUpcomingMaterials() {
             const container = document.getElementById('upcoming-materials-container');
+            const podcastContainer = document.getElementById('upcoming-podcasts');
             if (!container) return;
             const meeting = MEETINGS.find(m => m.status === 'upcoming');
             if (!meeting) return;
@@ -274,10 +275,12 @@
                 container.innerHTML = `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`;
                 return;
             }
-            const podcastSection = podcastRows.length > 0
-                ? `<details class="podcast-disclosure"><summary>${podcastRows.length} audio format${podcastRows.length > 1 ? 's' : ''}</summary>${podcastRows.join('')}</details>`
-                : '';
-            container.innerHTML = primaryRows.join('') + podcastSection + resourceStrip;
+            container.innerHTML = primaryRows.join('') + resourceStrip;
+            if (podcastContainer) {
+                podcastContainer.innerHTML = podcastRows.length > 0
+                    ? `<details class="podcast-disclosure"><summary>${podcastRows.length} audio format${podcastRows.length > 1 ? 's' : ''}</summary>${podcastRows.join('')}</details>`
+                    : '';
+            }
         }
 
         function renderArchiveCards() {
@@ -303,7 +306,7 @@
 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
-                        <div>
+                        <div class="card-title">
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
                             <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
                         </div>
@@ -325,7 +328,7 @@
 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
-                        <div>
+                        <div class="card-title">
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)}</span>
                             <h3 class="text-xl font-bold tracking-tight text-muted">Coming Soon</h3>
                         </div>
@@ -411,7 +414,7 @@
             window.scrollTo(0, 0);
             readerStatus.textContent = 'Loading document...';
             content.setAttribute('aria-busy', 'true');
-            content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading&hellip;</div>';
+            content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading session notes&hellip;</div>';
 
             try {
                 const text = await fetchMarkdownCached(path);
@@ -524,11 +527,42 @@
         window.MEETINGS = MEETINGS;
 
         window.addEventListener('hashchange', handleRoute);
+
         const backBtn = document.getElementById('back-to-dashboard');
         if (backBtn) backBtn.addEventListener('click', e => {
             e.preventDefault();
             window.location.hash = '';
         });
+
+        // Esc key returns to dashboard from reader view
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !reader.classList.contains('hidden-view')) {
+                window.location.hash = '';
+            }
+        });
+
+        // Copy-link button — copies current URL (includes #p= hash) to clipboard
+        const copyLinkBtn = document.getElementById('copy-link-btn');
+        if (copyLinkBtn) {
+            copyLinkBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    copyLinkBtn.setAttribute('aria-label', 'Link copied!');
+                    copyLinkBtn.title = 'Copied!';
+                    setTimeout(() => {
+                        copyLinkBtn.setAttribute('aria-label', 'Copy link to these session notes');
+                        copyLinkBtn.title = 'Copy link';
+                    }, 2000);
+                }).catch(() => {
+                    // Fallback: select URL from a temporary input
+                    const input = document.createElement('input');
+                    input.value = window.location.href;
+                    document.body.appendChild(input);
+                    input.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(input);
+                });
+            });
+        }
 
         // Runs immediately — no CDN dependency
         renderUpcomingMaterials();
