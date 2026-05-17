@@ -325,7 +325,7 @@
             MEETINGS.filter(m => m.status === 'draft').forEach(meeting => {
                 const card = document.createElement('div');
                 card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
-                card.style.cssText = 'border-top-color: var(--border-low); opacity: 0.6;';
+                card.style.borderTopColor = 'var(--border-low)';
 
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
@@ -422,7 +422,7 @@
                 ensureDOMPurifyHooks();
                 const sanitized = DOMPurify.sanitize(marked.parse(text), {
                     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
-                    FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput']
+                    FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput', 'onmouseover', 'onmouseenter', 'onfocus', 'onkeydown', 'onkeyup']
                 });
 
                 // Smooth cross-fade: keep placeholder visible, replace content and fade in to avoid snapping
@@ -432,6 +432,11 @@
                 content.innerHTML = sanitized;
                 // Trigger transition to visible
                 requestAnimationFrame(() => { content.style.opacity = '1'; });
+
+                content.querySelectorAll('img').forEach(img => {
+                    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+                    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+                });
 
                 // Site root handles both localhost '/' and GitHub Pages '/repo-name/'
                 const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
