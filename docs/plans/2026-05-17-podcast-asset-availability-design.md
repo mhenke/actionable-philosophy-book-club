@@ -25,7 +25,7 @@ Podcast explanations
 - Accessibility: captions are regular DOM text (not aria-hidden); badges retain aria-labels (e.g., "Podcast: Deep Dive — focused walkthrough").
 
 Asset availability (lazy on-click check)
-- Intercept clicks on asset links (video/audio/file) with a small JS handler bound at delegation root.
+- Intercept clicks on asset links (video/podcast/file) with a small JS handler bound at delegation root.
 - On click: prevent default, perform fetch(url, { method: 'GET', mode: 'no-cors' })? Note: no-cors prevents inspecting status — instead use a HEAD or GET with CORS expected for same-origin files. Since assets are same-origin (assets/ or meetings/), perform a fetch with method: 'HEAD' and a short timeout (3s).
 - If response.ok -> open target (same behavior as link: location.href or open in new tab depending on link target).
 - If response.status === 404 or fetch throws -> show non-blocking inline toast near the asset row: "Asset unavailable — it may have been removed or is temporarily offline." The toast includes a link to report an issue (mailto or GitHub issue template).
