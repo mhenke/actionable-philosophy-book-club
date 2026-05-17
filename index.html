@@ -259,7 +259,7 @@
         /* Reserve vertical space for reader content to prevent layout shift when markdown loads */
         #markdown-content {
             min-height: 60vh; /* ensures visible reader area while content loads */
-            transition: min-height 0.2s ease;
+            /* Removed min-height transition — animating min-height causes layout thrash. Content renders immediately. */
         }
         @media (min-width: 768px) {
             /* On larger viewports reserve space accounting for header/footer */
@@ -613,7 +613,7 @@
                     Knowledge Base
                     <span class="spectrum-rule"></span>
                 </h2>
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-4">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                     <a href="#p=docs/onboarding.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
                         <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true">👋</span>
                         <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Onboarding</span>
@@ -652,9 +652,11 @@
                     <div class="flex items-center gap-2">
                         <button id="copy-link-btn"
                                 aria-label="Copy link to these session notes"
-                                title="Copy link"
-                                class="flex items-center justify-content p-2 opacity-80 hover:opacity-100 transition-opacity min-h-[44px] min-w-[44px]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
+                                title="Copy link to these session notes"
+                                class="flex items-center justify-content p-2 opacity-80 hover:opacity-100 transition-opacity min-h-[44px] min-w-[44px]"
+                                data-label-visible="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
+                            <span class="text-[0.75rem] font-semibold uppercase tracking-[0.15em]">Copy Link</span>
                         </button>
                         <span class="text-[0.6875rem] swiss-light">Session Notes</span>
                     </div>
