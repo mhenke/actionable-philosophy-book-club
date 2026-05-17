@@ -159,6 +159,7 @@
 
         // Shared rendering constants
         const PODCAST_CONFIG = {
+            'alternate': { icon: '🎬', color: 'var(--spectrum-3)', label: 'Video', title: 'An alternate recording of the session' },
             'deep-dive': { icon: '🔬', color: 'var(--spectrum-3)', label: 'Deep Dive', title: 'An in-depth solo exploration of the session topic' },
             'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
             'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate',    title: 'A structured debate between two design perspectives' },
@@ -250,7 +251,15 @@
                 </div>`
                 : '';
 
-            return { primaryRows, podcastRows, resourceStrip };
+            const safePodcasts = (meeting.podcasts || []).filter(p => isSafeAssetPath(p.file));
+            const videoCount = safePodcasts.filter(p => p.type === 'alternate').length;
+            const podcastCount = safePodcasts.filter(p => p.type !== 'alternate').length;
+            const summaryParts = [];
+            if (videoCount > 0) summaryParts.push(`🎬 ${videoCount} Video${videoCount > 1 ? 's' : ''}`);
+            if (podcastCount > 0) summaryParts.push(`🎧 ${podcastCount} Podcast${podcastCount > 1 ? 's' : ''}`);
+            const podcastSummary = summaryParts.join(' · ');
+
+            return { primaryRows, podcastRows, resourceStrip, podcastSummary };
         }
 
         function renderUpcomingMaterials() {
@@ -259,7 +268,7 @@
             if (!container) return;
             const meeting = MEETINGS.find(m => m.status === 'upcoming');
             if (!meeting) return;
-            const { primaryRows, podcastRows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
+            const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
             if (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip) {
                 container.innerHTML = `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`;
                 return;
@@ -267,7 +276,7 @@
             container.innerHTML = primaryRows.join('') + resourceStrip;
             if (podcastContainer) {
                 podcastContainer.innerHTML = podcastRows.length > 0
-                    ? `<details class="podcast-disclosure"><summary><span class="asset-link"><span class="icon-pill" style="background:var(--wash-3-border);" aria-hidden="true">🎧</span>Podcasts</span><svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
+                    ? `<details class="podcast-disclosure"><summary><span class="asset-link"><span class="icon-pill" style="background:var(--wash-3-border);" aria-hidden="true">📦</span>${escapeHTML(podcastSummary)}</span><svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
                     : '';
             }
         }
@@ -279,9 +288,9 @@
             archiveContainer.innerHTML = '';
 
             MEETINGS.filter(m => m.status === 'done').forEach(meeting => {
-                const { primaryRows, podcastRows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: true });
+                const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
                 const podcastSection = podcastRows.length > 0
-                    ? `<details class="podcast-disclosure"><summary><span class="asset-link"><span class="icon-pill" style="background:var(--wash-3-border);" aria-hidden="true">🎧</span>Podcasts</span><svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
+                    ? `<details class="podcast-disclosure"><summary><span class="asset-link"><span class="icon-pill" style="background:var(--wash-3-border);" aria-hidden="true">📦</span>${escapeHTML(podcastSummary)}</span><svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
                     : '';
 
                 const card = document.createElement('div');

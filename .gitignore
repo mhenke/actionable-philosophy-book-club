@@ -20,6 +20,9 @@ Thumbs.db
 *.tmp
 *.log
 
+# Playwright MCP artifacts
+.playwright-mcp/
+
 # Claude Code worktrees
 .worktrees/
 .claude/worktrees/
