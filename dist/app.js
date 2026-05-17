@@ -321,6 +321,14 @@
                 archiveContainer.appendChild(card);
             });
 
+        }
+
+        function renderHorizonCards() {
+            const horizonContainer = document.getElementById('horizon-cards-container');
+            if (!horizonContainer) return;
+
+            horizonContainer.innerHTML = '';
+
             MEETINGS.filter(m => m.status === 'draft').forEach(meeting => {
                 const card = document.createElement('div');
                 card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
@@ -337,7 +345,7 @@
                     <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>
                 `;
 
-                archiveContainer.appendChild(card);
+                horizonContainer.appendChild(card);
             });
         }
 
@@ -541,6 +549,7 @@
         window.mdCache = mdCache;
         window.renderUpcomingMaterials = renderUpcomingMaterials;
         window.renderArchiveCards = renderArchiveCards;
+        window.renderHorizonCards = renderHorizonCards;
         window.MEETINGS = MEETINGS;
 
         window.addEventListener('hashchange', handleRoute);
@@ -584,6 +593,7 @@
         // Runs immediately — no CDN dependency
         renderUpcomingMaterials();
         renderArchiveCards();
+        renderHorizonCards();
         attachPrefetchListeners();
 
         // Apply will-change dynamically on card hover for performance
