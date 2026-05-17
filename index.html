@@ -190,8 +190,10 @@
 
         /* Section divider — spectrum gradient rule, mirrors header bar */
         .spectrum-rule {
-            flex-grow: 1;
-            max-width: 240px;
+            flex: 1 1 auto;
+            max-width: none;
+            width: 100%;
+            display: block;
             height: 2px;
             background: linear-gradient(90deg,
                 var(--spectrum-1)  0%,
