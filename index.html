@@ -55,6 +55,8 @@
             --prose-code-bg: rgb(34 34 34 / 0.05);
             --materials-panel-bg: rgb(34 34 34 / 0.025);
             --materials-panel-border: rgb(34 34 34 / 0.08);
+            --rule-start: rgb(75 163 199 / 0.30);
+            --rule-end:   rgb(72 189 184 / 0.06);
         }
         body {
             font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
@@ -97,6 +99,7 @@
                 var(--spectrum-6) 100%
             );
         }
+        .spectrum-bar--slim { height: 2px; }
         header.sticky {
             box-shadow: 0 4px 20px -4px var(--shadow-sticky);
         }
@@ -109,6 +112,7 @@
         }
         .card:hover {
             transform: translateY(-2px);
+            border-color: var(--wash-3-border);
             box-shadow: 0 8px 24px -8px var(--shadow-card-hover);
         }
 
@@ -176,8 +180,8 @@
             flex-grow: 1;
             height: 2px;
             background: linear-gradient(90deg,
-                var(--prose-h3-border) 0%,
-                var(--prose-blockquote-bg) 60%,
+                var(--rule-start) 0%,
+                var(--rule-end) 60%,
                 transparent 100%
             );
         }
@@ -241,7 +245,7 @@
 
         /* Podcast type badge — text + border only, no fill */
         .podcast-badge {
-            font-size: 0.5625rem;
+            font-size: 0.6875rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -274,7 +278,7 @@
             border: 1px solid var(--border-low);
         }
         .resource-thumb span {
-            font-size: 0.5625rem;
+            font-size: 0.6875rem;
             font-weight: 600;
             letter-spacing: 0.02em;
             color: var(--text-muted);
@@ -314,10 +318,10 @@
             <section class="card p-6 md:p-8 border-t-4 border-spectrum-2">
                 <div class="flex justify-between items-start mb-6 gap-4">
                     <div>
-                        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02 &bull; Next Meeting</span>
+                        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02</span>
                         <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Deep Modules &amp; Complexity Sink</h2>
                     </div>
-                    <span class="shrink-0 text-[9px] font-bold uppercase tracking-widest bg-spectrum-2 text-white px-3 py-1">Upcoming</span>
+                    <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest bg-spectrum-2 text-white px-3 py-1">Upcoming</span>
                 </div>
 
                 <div class="border p-5 mb-7" style="background: var(--wash-2); border-color: var(--wash-2-strong-border);">
@@ -336,8 +340,8 @@
             </section>
 
             <!-- Archive -->
-            <div>
-                <h2 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
+            <section aria-labelledby="section-archive">
+                <h2 id="section-archive" class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     The Archive
                     <span class="spectrum-rule"></span>
                 </h2>
@@ -345,33 +349,33 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="archive-cards-container">
                     <!-- Cards rendered by JavaScript -->
                 </div>
-            </div>
+            </section>
 
             <!-- Knowledge Base -->
-            <div>
-                <h2 class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
+            <section aria-labelledby="section-kb">
+                <h2 id="section-kb" class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     Knowledge Base
                     <span class="spectrum-rule"></span>
                 </h2>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     <a href="#p=docs/glossary.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);">
                         <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true">📚</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Glossary</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Glossary</span>
                     </a>
                     <a href="#p=docs/design-principles.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-1" style="background: var(--wash-1);">
                         <span class="icon-pill" style="background: var(--wash-1-icon);" aria-hidden="true">⚖️</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
                     </a>
                     <a href="#p=templates/prompts/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);">
                         <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true">🤖</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
                     </a>
                     <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-5" style="background: var(--wash-5);">
                         <span class="icon-pill" style="background: var(--wash-5-icon);" aria-hidden="true">📂</span>
-                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">Inbox</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">Inbox</span>
                     </a>
                 </div>
-            </div>
+            </section>
 
         </main>
     </div>
@@ -385,7 +389,7 @@
             </a>
             <span class="text-[10px] swiss-light">Synthesis Reader</span>
         </nav>
-        <div class="spectrum-bar" style="height: 2px;"></div>
+        <div class="spectrum-bar spectrum-bar--slim"></div>
 
         <div id="reader-status" role="status" class="sr-only"></div>
         <main class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto pb-24">
@@ -395,7 +399,7 @@
     </div>
 
     <footer id="site-footer" class="py-8 border-t border-black/5 text-center">
-        <p class="text-[9px] font-semibold text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
+        <p class="text-[10px] font-semibold text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
     </footer>
 
     <script src="dist/app.js"></script>
