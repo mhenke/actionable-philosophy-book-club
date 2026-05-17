@@ -32,9 +32,9 @@ jobs:
           for dir in meetings/meeting-*/; do
             id=$(basename "$dir")
             [[ "$id" == "meeting-99-new" ]] && continue
-            if ! grep -q "id: '${id}'" index.html; then
-              echo "UNREGISTERED: $dir exists but '${id}' has no entry in the MEETINGS manifest in index.html"
-              echo "Add a MEETINGS entry or remove the directory."
+            if ! grep -q "id: '${id}'" index.html dist/app.js 2>/dev/null; then
+              echo "UNREGISTERED: $dir exists but '${id}' has no entry in the MEETINGS manifest"
+              echo "Add a MEETINGS entry in dist/app.js or remove the directory."
               ERRORS=$((ERRORS + 1))
             fi
           done
@@ -107,7 +107,7 @@ jobs:
               echo "BROKEN: #p=$path"
               ERRORS=$((ERRORS+1))
             fi
-          done < <(grep -oP '(?<=href="#p=)[^"]+' index.html)
+          done < <(grep -oP '(?<=href="#p=)[^"]+' index.html; grep -oP "(?<=#p=)[^\"]+" dist/app.js 2>/dev/null)
           [ "$ERRORS" -eq 0 ] && echo "Hash-route link check passed" || exit 1
 
       - name: Install Node dependencies
