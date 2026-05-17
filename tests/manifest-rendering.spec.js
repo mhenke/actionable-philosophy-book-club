@@ -78,7 +78,7 @@ test.describe('Manifest Rendering', () => {
     test('spectrum-rule spans content width', async ({ page }) => {
         await page.goto('/');
         await page.setViewportSize({ width: 1024, height: 768 });
-        const ruleWidth = await page.locator('.spectrum-rule').evaluate(el => el.getBoundingClientRect().width);
+        const ruleWidth = await page.locator('.spectrum-rule').first().evaluate(el => el.getBoundingClientRect().width);
         expect(ruleWidth).toBeGreaterThan(200);
     });
 
