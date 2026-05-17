@@ -747,6 +747,7 @@
         if (backBtn) backBtn.addEventListener('click', e => {
             e.preventDefault();
             window.location.hash = '';
+            showDashboard();
         });
 
         // Esc key returns to dashboard from reader view, or closes video player
@@ -760,6 +761,7 @@
                 }
                 if (!reader.classList.contains('hidden-view')) {
                     window.location.hash = '';
+                    showDashboard();
                 }
             }
         });
