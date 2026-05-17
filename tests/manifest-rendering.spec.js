@@ -50,7 +50,7 @@ test.describe('Manifest Rendering', () => {
         await upcoming.waitFor({ state: 'visible' });
         await expect(upcoming.locator('[data-testid="meeting-02-canonical"] .asset-link')).toBeVisible();
         await expect(upcoming.locator('[data-testid="meeting-02-canonical"] .asset-link')).toContainText('Video');
-        await expect(upcoming.locator('.asset-link').filter({ hasText: 'Slide' })).toBeVisible();
+        await expect(upcoming.locator('.asset-link').filter({ hasText: 'Slides' })).toBeVisible();
         await expect(upcoming.getByText(/coming soon/i)).toHaveCount(0);
     });
 

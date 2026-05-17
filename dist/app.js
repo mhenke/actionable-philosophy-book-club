@@ -16,7 +16,7 @@
                 wash: '--wash-2',
                 readmeUrl: 'meetings/meeting-02/README.md',
                 video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Primer', variant: 'canonical' },
-                slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'View Slides', variant: 'canonical' },
+                slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'Slides', variant: 'canonical' },
                 podcasts: [
                     { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4' },
                     { type: 'deep-dive', label: 'Why Clean Code Rots Your Codebase', file: 'meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a' },
@@ -38,7 +38,7 @@
                 wash: '--wash-3',
                 readmeUrl: 'meetings/meeting-01/README.md',
                 video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Primer', variant: 'canonical' },
-                slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'View Slides', variant: 'canonical' },
+                slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slides', variant: 'canonical' },
                 podcasts: [
                     { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
                     { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a' },
@@ -60,7 +60,7 @@
                 wash: '--wash-1',
                 readmeUrl: 'meetings/meeting-00/README.md',
                 video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Primer', variant: 'canonical' },
-                slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'View Slides', variant: 'canonical' },
+                slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slides', variant: 'canonical' },
                 podcasts: [],
                 resources: []
             },
@@ -225,7 +225,7 @@
                     <div class="asset-row opacity-50">
                         <span class="asset-link cursor-default">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            View Slides <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                            Slides <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
                         </span>
                     </div>`);
             }
