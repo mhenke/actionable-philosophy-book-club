@@ -6,10 +6,10 @@
 A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This session focuses on the anatomy of "Deep Modules"—architectural complexity sinks that take on internal suffering to provide simple, powerful interfaces for the rest of the system.
 
 ## Agenda (60 Minutes)
-1. **Refresher Video (5-10 min):** "The Responsibility of Suffering" — why great modules take on complexity.
-2. **Discussion (30 min):** Identifying "pass-through methods" and "decorators" in our current codebase.
+1. **Refresher Video (5-10 min):** ["The Responsibility of Suffering"](recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4) — why great modules take on complexity.
+2. **Discussion (30 min):** Identifying "pass-through methods" and "decorators" in our current codebase. — [Slides](slides/02-the-complexity-case.pptx)
 3. **Wrap-up (Last 10 min):**
-   - **Future Planning:** Decide next meeting reading/topic.
+   - **Future Planning:** Decide next meeting reading/topic. — [Choose Your Next Meeting](resources/02-choose-your-next-meeting.png)
    - **Action Item Review:** Book club book thank you cards.
 
 ## Discussion Points
