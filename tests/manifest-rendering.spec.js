@@ -47,9 +47,9 @@ test.describe('Manifest Rendering', () => {
     test('upcoming card shows meeting 02 video and slide links', async ({ page }) => {
         await page.goto('/');
         const upcoming = page.locator('#upcoming-materials-container');
-        await expect(upcoming.getByRole('link', { name: 'Video Recap', exact: true })).toBeVisible();
+        await expect(upcoming.getByRole('link', { name: 'Video Primer', exact: true })).toBeVisible();
         await expect(upcoming.getByRole('link', { name: 'Slide Deck', exact: true })).toBeVisible();
-        await expect(page.getByText(/coming soon/i)).toHaveCount(0);
+        await expect(upcoming.getByText(/coming soon/i)).toHaveCount(0);
     });
 
     test('archive cards and upcoming container both present on dashboard', async ({ page }) => {
@@ -73,6 +73,13 @@ test.describe('Manifest Rendering', () => {
         await expect(page.locator('#archive-cards-container .card')).toHaveCount(expectedDone);
         await expect(page.locator('#archive-cards-container')).not.toContainText('meeting-03');
         await expect(page.locator('#archive-cards-container')).not.toContainText('meeting-04');
+    });
+
+    test('spectrum-rule spans content width', async ({ page }) => {
+        await page.goto('/');
+        await page.setViewportSize({ width: 1024, height: 768 });
+        const ruleWidth = await page.locator('.spectrum-rule').evaluate(el => el.getBoundingClientRect().width);
+        expect(ruleWidth).toBeGreaterThan(200);
     });
 
 });
