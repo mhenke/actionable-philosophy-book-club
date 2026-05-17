@@ -491,11 +491,13 @@
                         <p class="text-sm uppercase tracking-widest text-muted mb-4">Document unavailable.</p>
                         <div class="flex gap-4 justify-center">
                             <button id="retry-load" class="text-sm uppercase tracking-widest text-spectrum-2 underline">Try again</button>
-                            <a href="#" class="text-sm uppercase tracking-widest text-muted underline">Return to Dashboard</a>
+                            <button id="return-dashboard" class="text-sm uppercase tracking-widest text-muted underline">Return to Dashboard</button>
                         </div>
                     </div>`;
                 const retryBtn = content.querySelector('#retry-load');
                 if (retryBtn) retryBtn.addEventListener('click', () => loadPage(path));
+                const returnBtn = content.querySelector('#return-dashboard');
+                if (returnBtn) returnBtn.addEventListener('click', showDashboard);
                 readerStatus.textContent = 'Document unavailable.';
             } finally {
                 content.setAttribute('aria-busy', 'false');

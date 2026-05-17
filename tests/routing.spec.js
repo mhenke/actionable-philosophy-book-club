@@ -63,7 +63,7 @@ test.describe('Routing & Navigation', () => {
 
         await expect(page.locator('#markdown-content')).toHaveAttribute('aria-busy', 'false');
         await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
-        await page.getByRole('link', { name: 'Return to Dashboard' }).click();
+        await page.getByRole('button', { name: 'Return to Dashboard' }).click();
         await expect(page.locator('#dashboard-view')).toBeVisible();
     });
 
