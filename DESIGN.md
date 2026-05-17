@@ -30,11 +30,11 @@ Zero decorative type. Hierarchy is achieved entirely through **weight contrast**
 - **Typeface:** System font stack (ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans', 'Liberation Sans', sans-serif). This ensures zero-latency rendering and matches the "Zero Ceremony" mandate. Inter font files are self-hosted in `assets/fonts/` as a fallback for specific brand-critical elements if needed.
 - **Titles (Large/Primary):** All-caps, **Medium weight**, tight tracking (`-0.04em`).
 - **Author/Metadata:** All-caps, **Light/Thin weight**, set noticeably smaller or to the right of titles.
-- **Body:** Sans-serif, high-legibility, standard case. Line length capped at **65–75ch**.
+- **Body:** Sans-serif, high-legibility, standard case. Line length fills the shared `max-w-6xl` content container (same width as the dashboard) for visual consistency across views — no independent prose max-width.
 
 ## Layout & Components
 - **The Banner Bar:** Dark charcoal anchor containing the title (Medium) and author (Light) on the same baseline.
-- **The Spectrum Bar:** A 6px high-precision linear gradient bar (Navy to Sage) serving as the primary visual divider.
+- **The Spectrum Bar:** A 4px high-precision linear gradient bar (Navy to Sage) serving as the primary visual divider. Both dashboard and reader always show the full gradient — the reader does not override to a per-meeting solid color, so headers are visually identical across pages.
 - **Structural Minimalism:** Only necessary text elements; generous whitespace; no side-stripe borders or gradient text.
 - **Material Cards:** Flat white cards with subtle 1px borders (`rgba(0,0,0,0.06)`). Hover states trigger an upward shift and a spectrum-tinted shadow.
 - **A11y:** 44px minimum touch targets; focus-within rings using `--spectrum-3`.

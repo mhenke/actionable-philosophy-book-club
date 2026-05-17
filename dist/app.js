@@ -211,7 +211,7 @@
             if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
                 rows.push(`
                     <div class="asset-row">
-                        <a href="${buildOfficeViewerURL(meeting.slides.file)}" target="_blank" rel="noopener" class="asset-link">
+                        <a href="${buildOfficeViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
                             ${escapeHTML(meeting.slides.label)}
                         </a>
@@ -252,7 +252,7 @@
                     (meeting.resources || [])
                         .filter(r => isSafeAssetPath(r.file))
                         .map(res => `
-                        <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener" class="resource-thumb">
+                        <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
                             <img src="${escapeHTML(res.file)}" alt="${escapeHTML(res.label)}" loading="lazy" width="200" height="80">
                             <span>${escapeHTML(res.label)}</span>
                         </a>`).join('')}
@@ -290,11 +290,11 @@
             const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: true });
 
                 const card = document.createElement('div');
-                card.className = 'card p-6 border-t-2 flex flex-col';
+                card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
                 card.style.borderTopColor = accentColor;
 
                 card.innerHTML = `
-                    <div class="flex justify-between items-start mb-5 gap-3">
+                    <div class="flex justify-between items-start mb-5 gap-4">
                         <div>
                             <span class="text-[11px] font-semibold uppercase tracking-[0.25em] block mb-1 text-muted">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
                             <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
@@ -343,12 +343,9 @@
 
         function updateReaderTheme(meetingId) {
             const meeting = MEETINGS.find(m => m.id === meetingId);
-            const readerBar = reader.querySelector('.spectrum-bar');
             if (meeting) {
-                readerBar.style.background = `var(--${meeting.color})`;
                 content.style.setProperty('--prose-h3-border', `var(--wash-${meeting.color.split('-')[1]}-strong-border)`);
             } else {
-                readerBar.style.background = '';
                 content.style.removeProperty('--prose-h3-border');
             }
         }
