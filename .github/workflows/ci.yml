@@ -161,10 +161,15 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@v4
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p deploy
+          cp index.html deploy/
+          cp -r dist/ meetings/ docs/ templates/ .nojekyll deploy/
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: 'deploy'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

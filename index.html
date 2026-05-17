@@ -695,7 +695,7 @@
                     : colorMap['spectrum-2'];
                 const safeWash = validWashes.has(meeting.wash) ? meeting.wash : '--wash-1';
 
-                const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
+            const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: true });
 
                 const card = document.createElement('div');
                 card.className = 'card p-6 border-t-2';
