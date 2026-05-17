@@ -9,8 +9,10 @@ test('disclosure summary shows Additional Resources prefix and no duplicate emoj
   await expect(summary).toBeVisible();
 
   const text = await summary.innerText();
-  expect(text.trim().startsWith('Additional Resources:')).toBe(true);
+  // Strip common leading emoji glyphs (icon-pill is visible but aria-hidden)
+  const normalized = text.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\uFE0F]+/u, '').trim();
+  expect(normalized.startsWith('Additional Resources:')).toBe(true);
   await expect(summary.locator('.icon-pill')).toBeVisible();
-  await expect(text).toMatch(/\d+ Video/);
-  await expect(text).toMatch(/\d+ Podcast/);
+  await expect(normalized).toMatch(/\d+ Video/);
+  await expect(normalized).toMatch(/\d+ Podcast/);
 });
