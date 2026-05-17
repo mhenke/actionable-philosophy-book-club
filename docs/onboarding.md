@@ -30,4 +30,4 @@ Each session follows the same flow:
 
 ## Questions?
 
-Reach out in the book-club chat or check the [Glossary](docs/glossary.md) for domain terms.
+Reach out in the book-club chat or check the [Glossary](glossary.md) for domain terms.
