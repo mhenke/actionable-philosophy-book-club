@@ -411,10 +411,18 @@
             try {
                 const text = await fetchMarkdownCached(path);
                 ensureDOMPurifyHooks();
-                content.innerHTML = DOMPurify.sanitize(marked.parse(text), {
+                const sanitized = DOMPurify.sanitize(marked.parse(text), {
                     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
                     FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput']
                 });
+
+                // Smooth cross-fade: keep placeholder visible, replace content and fade in to avoid snapping
+                content.style.transition = 'opacity 240ms ease';
+                // Start from transparent to allow transition when content is replaced
+                content.style.opacity = '0';
+                content.innerHTML = sanitized;
+                // Trigger transition to visible
+                requestAnimationFrame(() => { content.style.opacity = '1'; });
 
                 // Site root handles both localhost '/' and GitHub Pages '/repo-name/'
                 const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
