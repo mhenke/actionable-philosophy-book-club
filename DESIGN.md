@@ -34,7 +34,7 @@ Zero decorative type. Hierarchy is achieved entirely through **weight contrast**
 
 ## Layout & Components
 - **The Banner Bar:** Dark charcoal anchor containing the title (Medium) and author (Light) on the same baseline.
-- **The Spectrum Bar:** A 4px high-precision linear gradient bar (Navy to Sage) serving as the primary visual divider. Both dashboard and reader always show the full gradient — the reader does not override to a per-meeting solid color, so headers are visually identical across pages.
+- **The Spectrum Bar:** A 6px high-precision linear gradient bar (Navy to Sage) serving as the primary visual divider. Both dashboard and reader always show the full gradient — the reader does not override to a per-meeting solid color, so headers are visually identical across pages.
 - **Structural Minimalism:** Only necessary text elements; generous whitespace; no side-stripe borders or gradient text.
 - **Material Cards:** Flat white cards with subtle 1px borders (`rgba(0,0,0,0.06)`). Hover states trigger an upward shift and a spectrum-tinted shadow.
 - **A11y:** 44px minimum touch targets; focus-within rings using `--spectrum-3`.
