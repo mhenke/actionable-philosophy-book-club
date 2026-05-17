@@ -69,6 +69,8 @@
             outline: 2px solid var(--spectrum-3);
             outline-offset: 2px;
         }
+        #main-content:focus,
+        #markdown-content:focus { outline: none; }
         .swiss-caps {
             letter-spacing: -0.04em;
             font-weight: 500;
@@ -80,13 +82,21 @@
         .banner-bar {
             background-color: var(--banner);
             color: var(--white);
-            padding: 1.25rem 1.5rem;
+        }
+        .banner-inner {
+            max-width: 72rem;
+            margin: 0 auto;
+            padding: 1.25rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            width: 100%;
         }
         @media (min-width: 768px) {
-            .banner-bar { padding: 1.5rem 2rem; }
+            .banner-inner { padding: 1.25rem 2.5rem; }
+        }
+        @media (min-width: 1024px) {
+            .banner-inner { padding: 1.5rem 4rem; }
         }
         .spectrum-bar {
             height: 4px;
@@ -306,8 +316,10 @@
     <div id="dashboard-view">
         <header class="sticky top-0 z-50">
             <div class="banner-bar">
-                <h1 class="text-sm md:text-base swiss-caps">A Philosophy of Software Design</h1>
-                <span class="text-[10px] swiss-light">John Ousterhout</span>
+                <div class="banner-inner">
+                    <h1 class="text-sm md:text-base swiss-caps">A Philosophy of Software Design</h1>
+                    <span class="text-[10px] swiss-light">John Ousterhout</span>
+                </div>
             </div>
             <div class="spectrum-bar"></div>
         </header>
@@ -383,11 +395,13 @@
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
         <nav class="banner-bar" aria-label="Reader navigation">
-            <a href="#" id="back-to-dashboard" class="text-xs swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                Dashboard
-            </a>
-            <span class="text-[10px] swiss-light">Synthesis Reader</span>
+            <div class="banner-inner">
+                <a href="#" id="back-to-dashboard" class="text-xs swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
+                    Dashboard
+                </a>
+                <span class="text-[10px] swiss-light">Synthesis Reader</span>
+            </div>
         </nav>
         <div class="spectrum-bar spectrum-bar--slim"></div>
 

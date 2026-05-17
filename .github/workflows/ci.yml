@@ -106,7 +106,7 @@ jobs:
               echo "BROKEN: #p=$path"
               ERRORS=$((ERRORS+1))
             fi
-          done < <(grep -oP '(?<=href="#p=)[^"]+' index.html; grep -oP "(?<=#p=)[^\"]+" dist/app.js 2>/dev/null)
+          done < <(grep -oP '(?<=href="#p=)[^"]+' index.html; grep -oP '(?<=href="#p=)[^"]+' dist/app.js 2>/dev/null)
           [ "$ERRORS" -eq 0 ] && echo "Hash-route link check passed" || exit 1
 
       - name: Install Node dependencies
