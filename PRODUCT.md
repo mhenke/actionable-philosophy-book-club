@@ -2,7 +2,7 @@
 
 ## Register
 
-Register at [github.com/mhenke/actionable-philosophy-book-club](https://github.com/mhenke/actionable-philosophy-book-club) to receive meeting notifications, contribute discussion guides, or suggest topics. The dashboard itself requires no registration — it serves all materials publicly via GitHub Pages.
+Register at [github.com/mhenke/actionable-philosophy-book-club](https://github.com/mhenke/actionable-philosophy-book-club) to receive meeting notifications, contribute session materials, or suggest topics. The dashboard itself requires no registration — it serves all materials publicly via GitHub Pages.
 
 ## Users
 Engineering team members participating in the book club. They are often on the go, accessing the dashboard from their phones to watch refresher videos, download slides, or listen to discussion podcasts during commutes.

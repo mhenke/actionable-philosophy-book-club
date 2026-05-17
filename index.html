@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
-    <meta name="description" content="Meeting notes, recordings, and discussion guides for A Philosophy of Software Design book club.">
+    <meta name="description" content="Meeting notes, recordings, and session materials for A Philosophy of Software Design book club.">
     <meta property="og:title" content="Actionable Philosophy Book Club">
-    <meta property="og:description" content="Meeting notes, recordings, and discussion guides for A Philosophy of Software Design.">
+    <meta property="og:description" content="Meeting notes, recordings, and session materials for A Philosophy of Software Design.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mhenke.github.io/actionable-philosophy-book-club/">
     <meta name="color-scheme" content="light">
@@ -258,6 +258,16 @@
         .prose blockquote { background: var(--wash-2); border: 1px solid var(--wash-2-border); padding: 1.25rem 1.75rem; margin: 2rem 0; font-style: italic; color: var(--text-muted); }
         .prose a { color: var(--spectrum-2); text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
         .prose a:hover { color: var(--spectrum-1); }
+
+        /* Reserve vertical space for reader content to prevent layout shift when markdown loads */
+        #markdown-content {
+            min-height: 60vh; /* ensures visible reader area while content loads */
+            transition: min-height 0.2s ease;
+        }
+        @media (min-width: 768px) {
+            /* On larger viewports reserve space accounting for header/footer */
+            #markdown-content { min-height: calc(100vh - 14rem); }
+        }
         .prose code { background: var(--prose-code-bg); padding: 0.15rem 0.35rem; font-size: 0.875em; font-family: monospace; border-radius: 2px; }
 
         /* Meeting Materials — file tree, post-processed by JS */
