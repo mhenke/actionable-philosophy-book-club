@@ -310,25 +310,23 @@
 
         .hidden-view { display: none !important; }
 
-        /* Ghost button — archive Meeting Notes link */
+        /* Ghost button — archive Meeting Notes link, matches KB tile visual language */
         .btn-ghost {
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            width: 100%;
             font-size: 0.6875rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.2em;
             color: var(--spectrum-2);
-            border: 1px solid var(--wash-2-border);
+            background: var(--wash-2);
+            border-top: 1px solid var(--wash-2-border);
             padding: 8px 16px;
             min-height: 44px;
-            transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+            transition: color 0.15s;
         }
-        .btn-ghost:hover {
-            color: var(--spectrum-1);
-            border-color: var(--wash-2-strong-border);
-            background-color: var(--wash-2);
-        }
+        .btn-ghost:hover { color: var(--spectrum-1); }
 
         /* Podcast progressive disclosure */
         .podcast-disclosure {
