@@ -549,8 +549,15 @@
         <main id="main-content" tabindex="-1" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 py-10 pb-24">
             <h1 class="sr-only">Actionable Philosophy Book Club</h1>
 
-            <!-- Onboarding banner injected here by JS -->
-            <!-- Tagline removed to reduce vertical noise on small screens (see UX distill decision) -->
+            <!-- Onboarding banner (moved into main for a11y + mobile UX) -->
+            <div id="onboarding-banner" class="hidden-view onboarding-banner" style="margin-bottom:1rem;">
+                <p>
+                    <strong>New here?</strong>
+                    This dashboard connects you to book-club sessions — watch primers, review slides that open the discussion, and explore deeper audio.
+                    <a href="#p=docs/onboarding.md">Learn more &rarr;</a>
+                </p>
+                <button class="close-btn" id="onboarding-dismiss" aria-label="Dismiss welcome banner">&times;</button>
+            </div>
 
             <!-- Next Meeting -->
             <section class="card p-6 md:p-8">
@@ -601,7 +608,7 @@
             </section>
 
             <!-- Knowledge Base -->
-            <section aria-labelledby="section-kb">
+            <section aria-labelledby="section-kb" class="sm:-order-3">
                 <h2 id="section-kb" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     Knowledge Base
                     <span class="spectrum-rule"></span>
@@ -640,7 +647,7 @@
                 <div class="banner-inner">
                     <a href="#" id="back-to-dashboard" class="text-sm md:text-base swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]" title="Press Esc to return">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
-                        Dashboard
+                        Dashboard <span class="hidden sm:inline text-[0.75rem] font-normal ml-1 opacity-75">(Esc)</span>
                     </a>
                     <div class="flex items-center gap-2">
                         <button id="copy-link-btn"
@@ -670,15 +677,7 @@
     <!-- Toast container -->
     <div id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
-    <!-- Onboarding banner (hidden by default, shown by JS if not dismissed) -->
-    <div id="onboarding-banner" class="hidden-view onboarding-banner" style="margin-bottom:1rem;">
-        <p>
-            <strong>New here?</strong>
-            This dashboard connects you to book-club sessions — watch primers, review slides that open the discussion, and explore deeper audio.
-            <a href="#p=docs/onboarding.md">Learn more &rarr;</a>
-        </p>
-        <button class="close-btn" id="onboarding-dismiss" aria-label="Dismiss welcome banner">&times;</button>
-    </div>
+    <!-- Onboarding banner removed from here (now in <main>) -->
 
     <!-- Inline video player overlay -->
     <dialog id="video-player-overlay" aria-label="Video player">

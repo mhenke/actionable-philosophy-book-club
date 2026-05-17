@@ -239,6 +239,9 @@
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
                     const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type), title: '' };
+                    // Enhance accessibility: improve aria-label for download button with file type hint
+                    const fileExt = pod.file.split('.').pop() || 'file';
+                    const downloadLabel = `Download ${escapeHTML(pod.label)} (${fileExt.toUpperCase()} audio)`;
                     podcastRows.push(`
                     <div class="asset-row">
                         <a href="${escapeHTML(pod.file)}" class="asset-link asset-link--stacked">
@@ -250,7 +253,7 @@
                             <span class="podcast-caption">${escapeHTML(cfg.title || '')}</span>
                         </a>
                         <a href="${escapeHTML(pod.file)}" download
-                           aria-label="Download ${escapeHTML(pod.label)}"
+                           aria-label="${downloadLabel}"
                            class="asset-dl">${DL_ICON}</a>
                     </div>`);
                 });
