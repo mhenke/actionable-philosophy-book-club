@@ -66,7 +66,7 @@ Each meeting folder must follow this structure:
 
 ```
 meetings/meeting-NN/
-├── README.md              ← contains session notes and Section Materials
+├── README.md              ← contains meeting notes and Section Materials
 ├── recordings/
 │   └── NN-*.mp4          ← video recap file(s)
 ├── slides/
@@ -158,7 +158,7 @@ When adding a meeting to the `MEETINGS` array in `index.html`, these fields cont
 
 ### Required fields
 - `id` — `'meeting-NN'` matching the directory name
-- `session` — display label e.g. `'Session 01'`
+- `session` — display label e.g. `'Meeting 01'`
 - `date` — display date e.g. `'01 May 26'`
 - `title` — short session title
 - `status` — `'done'` | `'upcoming'` | `'draft'`

@@ -2,13 +2,13 @@
         const reader    = document.getElementById('reader-view');
         const content   = document.getElementById('markdown-content');
         const readerStatus = document.getElementById('reader-status');
-        const mdCache   = new Map();  // Session markdown cache (Promises)
+        const mdCache   = new Map();  // Meeting markdown cache (Promises)
 
         // Meeting data manifest
         const MEETINGS = [
             {
                 id: 'meeting-02',
-                session: 'Session 02',
+                session: 'Meeting 02',
                 date: '15 May 26',
                 title: 'Complexity Engineering',
                 status: 'upcoming',
@@ -30,7 +30,7 @@
             },
             {
                 id: 'meeting-01',
-                session: 'Session 01',
+                session: 'Meeting 01',
                 date: '01 May 26',
                 title: 'Deep Systems',
                 status: 'done',
@@ -52,7 +52,7 @@
             },
             {
                 id: 'meeting-00',
-                session: 'Session 00',
+                session: 'Meeting 00',
                 date: '29 Apr 26',
                 title: 'The Kickoff',
                 status: 'done',
@@ -66,7 +66,7 @@
             },
             {
                 id: 'meeting-03',
-                session: 'Session 03',
+                session: 'Meeting 03',
                 date: 'TBD',
                 title: 'TBD',
                 status: 'draft',
@@ -80,7 +80,7 @@
             },
             {
                 id: 'meeting-04',
-                session: 'Session 04',
+                session: 'Meeting 04',
                 date: 'TBD',
                 title: 'TBD',
                 status: 'draft',
@@ -339,7 +339,7 @@
             return new Set(['meetings', 'docs', 'templates']).has(firstSegment);
         }
 
-        // Looks for the first <ul> under an <h2> matching "session materials" (case-insensitive)
+        // Looks for the first <ul> under an <h2> matching "Session Materials" (case-insensitive)
         // and prepends tree connector spans to each <li>. Convention defined in docs/content-contract.md.
         function renderFileTree(ul, prefix) {
             [...ul.children].forEach((li, i, arr) => {
@@ -432,7 +432,7 @@
 
                 content.querySelectorAll('h2').forEach(h2 => {
                     if (/session materials/i.test(h2.textContent)) {
-                        // Looks for the first <ul> under an <h2> matching "session materials" (case-insensitive)
+                        // Convention defined in docs/content-contract.md — transforms the file tree under this heading
                         // and prepends tree connector spans to each <li>. Convention defined in docs/content-contract.md.
                         let el = h2.nextElementSibling;
                         while (el && el.tagName !== 'H2') {
@@ -484,7 +484,7 @@
                     return;
                 }
 
-                // Apply session-specific theming if this is a meeting README
+                // Apply meeting-specific theming if this is a meeting README
                 const meeting = MEETINGS.find(m => m.readmeUrl === path);
                 updateReaderTheme(meeting ? meeting.id : null);
 
