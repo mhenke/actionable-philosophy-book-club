@@ -28,6 +28,6 @@ We will remove all Jekyll-specific files and implement a **Single-Page Markdown 
 
 ### `renderFileTree` Post-Processing
 
-When the reader renders a document, it looks for `<h2>` headings matching "Session Materials" (case-insensitive) in the rendered HTML. For each match, it finds the immediately following `<ul>` element and prepends tree-connector spans (`├──`, `└──`) to each `<li>` using `renderFileTree()`. This transforms plain Markdown lists into a styled file-tree visualization.
+When the reader renders a document, it looks for `<h2>` headings matching "Meeting Materials" (case-insensitive) in the rendered HTML. For each match, it finds the immediately following `<ul>` element and prepends tree-connector spans (`├──`, `└──`) to each `<li>` using `renderFileTree()`. This transforms plain Markdown lists into a styled file-tree visualization.
 
-**Convention:** Meeting README files should use `## Session Materials` to trigger this transformation. See `docs/content-contract.md` for details.
+**Convention:** Meeting README files should use `## Meeting Materials` to trigger this transformation. See `docs/content-contract.md` for details.

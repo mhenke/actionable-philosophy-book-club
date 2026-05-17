@@ -506,8 +506,8 @@ Update `AGENTS.md:54` with the correct count.
 
 **File:** `docs/content-contract.md`
 
-Add a note warning about the `## Session Materials` heading requirement:
-> **Important:** The exact heading `## Session Materials` (case-insensitive) is required for the file-tree renderer to format this section as a structured asset list. Any other heading (e.g., `## Materials`, `## Resources`) will produce a plain unformatted list.
+Add a note warning about the `## Meeting Materials` heading requirement:
+> **Important:** The exact heading `## Meeting Materials` (case-insensitive) is required for the file-tree renderer to format this section as a structured asset list. Any other heading (e.g., `## Materials`, `## Resources`) will produce a plain unformatted list.
 
 ---
 

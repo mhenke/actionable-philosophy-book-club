@@ -6,15 +6,15 @@ This document defines the expected format for meeting notes and materials. Adher
 
 The dashboard uses specific heading names as markers for rendering. **Heading names are case-insensitive but the specific text must match exactly.**
 
-### Required Heading: `## Session Materials`
+### Required Heading: `## Meeting Materials`
 
-> **Important:** The exact heading `## Session Materials` (case-insensitive) is required for the file-tree renderer. Any other heading (e.g., `## Materials`, `## Resources`) will produce a plain unformatted list.
+> **Important:** The exact heading `## Meeting Materials` (case-insensitive) is required for the file-tree renderer. Any other heading (e.g., `## Materials`, `## Resources`) will produce a plain unformatted list.
 
 The dashboard looks for this heading and transforms the list beneath it into a styled file tree with icons.
 
 **What you write:**
 ```markdown
-## Session Materials
+## Meeting Materials
 - [recordings/](recordings/)
   - [01-governance.mp4](recordings/01-governance.mp4) (Displayed as "Video Recap")
   - [01-governance-alt.mp4](recordings/01-governance-alt.mp4) (Displayed as "Video Recap Alt")
@@ -42,7 +42,7 @@ These headings have no automated behavior; they're just readable structure for h
 
 ## Asset Link Format
 
-Links in **Session Materials** must be:
+Links in **Meeting Materials** must be:
 1. **Relative to the README file location**, not absolute
 2. **Point to actual files** that exist in the repository
 

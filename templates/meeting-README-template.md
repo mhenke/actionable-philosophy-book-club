@@ -27,7 +27,7 @@ A curated synthesis of the design trade-offs, philosophical tensions, and tactic
 ## Action Items
 - [ ] 
 
-## Session Materials
+## Meeting Materials
 - Video Recaps (Coming Soon)
 - Resources (Coming Soon)
 - Slides (Coming Soon)

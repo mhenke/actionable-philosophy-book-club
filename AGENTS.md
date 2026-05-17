@@ -21,7 +21,7 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 - **Hash router** — `#p=path/to/file.md` triggers `loadPage()` which fetches + renders markdown via marked + DOMPurify.
 - **MEETINGS manifest** — JS array in `dist/app.js` with all session data (title, date, video/slides/podcasts/resources, status, color, wash).
 - **Dashboard** — `renderUpcomingMaterials()` + `renderArchiveCards()` use shared `buildAssetRows()`.
-- **Reader** — `loadPage()` with AbortController, link rewriting, Session Materials file tree, theme inheritance from meeting color.
+- **Reader** — `loadPage()` with AbortController, link rewriting, Meeting Materials file tree, theme inheritance from meeting color.
 
 ## Critical functions
 
@@ -33,7 +33,7 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 | `isSafeRepoPath()` | `dist/app.js` | Validates `#p=` paths — allowlist: `meetings/`, `docs/`, `templates/` |
 | `isSafeAssetPath()` | `dist/app.js` | Validates asset hrefs — only `meetings/` and `assets/` with known extensions |
 | `showDashboard()` | `dist/app.js` | Focuses `#main-content`, announces "Dashboard" via `role="status"`, clears stale reader content |
-| `renderFileTree()` | `dist/app.js` | Post-processes `## Session Materials` lists into styled file trees |
+| `renderFileTree()` | `dist/app.js` | Post-processes `## Meeting Materials` lists into styled file trees |
 
 ## Styling
 
@@ -44,7 +44,7 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 
 ## Content conventions
 
-- `## Session Materials` heading in README.md triggers file tree rendering (case-insensitive).
+- `## Meeting Materials` heading in README.md triggers file tree rendering (case-insensitive).
 - Meeting directories must have a matching entry in the `MEETINGS` manifest or CI fails.
 - Meeting IDs: `meeting-00`, `meeting-01`, etc. The `meeting-99-new/` directory is a staging area — no manifest entry.
 - `docs/content-contract.md` defines the full manifest schema.

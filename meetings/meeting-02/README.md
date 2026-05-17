@@ -32,7 +32,7 @@ A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This
 ## Action Items
 - [ ] Sign thank you card for books
 
-## Session Materials
+## Meeting Materials
 - [02-essential-questions.md](02-essential-questions.md)
 - [02-non-obvious-insights.md](02-non-obvious-insights.md)
 - [recordings/](recordings/)

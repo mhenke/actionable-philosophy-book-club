@@ -65,7 +65,7 @@ Dashboard and reader use the same header structure, same container constraints, 
 - Prose h2 and h3 have top border dividers — functional hierarchy within documents, not decoration.
 - Prose links are underlined — reading context convention.
 - Prose body text is larger (1.0625rem) than UI text (0.875rem) — intentional mode signal.
-- File tree (Session Materials) rendered in monospace with spectrum-3 connectors.
+- File tree (Meeting Materials) rendered in monospace with spectrum-3 connectors.
 
 ### A11y
 - 44px minimum touch targets on all interactive elements.

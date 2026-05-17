@@ -377,7 +377,7 @@
             return new Set(['meetings', 'docs', 'templates']).has(firstSegment);
         }
 
-        // Looks for the first <ul> under an <h2> matching "Session Materials" (case-insensitive)
+        // Looks for the first <ul> under an <h2> matching "Meeting Materials" (case-insensitive)
         // and prepends tree connector spans to each <li>. Convention defined in docs/content-contract.md.
         function renderFileTree(ul, prefix) {
             [...ul.children].forEach((li, i, arr) => {

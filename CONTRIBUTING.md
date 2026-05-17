@@ -39,13 +39,13 @@ The dashboard renderer looks for specific section headings. **Use these exactly:
 
 | Heading | Purpose | What happens if you change it |
 |---|---|---|
-| `## Session Materials` | Triggers the file-tree renderer | Plain text list instead of styled tree |
+| `## Meeting Materials` | Triggers the file-tree renderer | Plain text list instead of styled tree |
 | `## Discussion Points` | Standard prose section | No special behaviour |
 | `## Action Items` | Renders as task list checkboxes | No special behaviour |
 
-Links inside `## Session Materials` must be relative to the README file:
+Links inside `## Meeting Materials` must be relative to the README file:
 ```markdown
-## Session Materials
+## Meeting Materials
 - [recordings/](recordings/)
   - [NN-video-title.mp4](recordings/NN-video-title.mp4)
 - [slides/](slides/)

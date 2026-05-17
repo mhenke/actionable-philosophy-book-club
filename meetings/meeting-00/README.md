@@ -15,7 +15,7 @@ The inaugural kickoff for the Actionable Philosophy Book Club. We established ou
 - Discussion on cadence and frequency.
 - Agreement on "low-ceremony" approach.
 
-## Session Materials
+## Meeting Materials
 - [recordings/](recordings/)
   - [00-The-Complexity-Governor.mp4](recordings/00-The-Complexity-Governor.mp4)
 - [resources/](resources/)
