@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__TEST__ = true; }); });
+
 test.describe('Performance: Markdown Prefetch', () => {
   test('prefetch function populates mdCache when called', async ({ page }) => {
     await page.route('**/meetings/meeting-00/README.md', route => {

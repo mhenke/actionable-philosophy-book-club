@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__TEST__ = true; }); });
+
 // isSafeRepoPath is exposed on window via index.html for testing
 const check = (page, path) => page.evaluate(p => window.isSafeRepoPath(p), path);
 

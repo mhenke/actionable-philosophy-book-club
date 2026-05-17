@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__TEST__ = true; }); });
+
 async function rerenderUpcoming(page) {
     await page.evaluate(() => {
         if (typeof renderUpcomingMaterials === 'function') renderUpcomingMaterials();

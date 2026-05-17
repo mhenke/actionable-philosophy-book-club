@@ -1,10 +1,11 @@
-const CACHE = 'v3';
+const CACHE = 'dev';  // replaced at deploy time by CI inject step
 const PRECACHE = [
-  '/',
-  '/index.html',
-  '/dist/app.js',
-  '/dist/tailwind.css',
-  '/.nojekyll',
+  './',
+  './index.html',
+  './dist/app.js',
+  './dist/tailwind.css',
+  './dist/vendor/marked.min.js',
+  './dist/vendor/purify.min.js',
 ];
 
 self.addEventListener('install', event => {

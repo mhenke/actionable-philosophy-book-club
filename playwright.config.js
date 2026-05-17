@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  timeout: 40_000,
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
@@ -9,9 +10,12 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:8000',
+    actionTimeout: 10_000,
+    navigationTimeout: 15_000,
     trace: 'on-first-retry',
-    timeout: 40000,
   },
+
+
 
   projects: [
     {

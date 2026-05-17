@@ -28,7 +28,7 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 | Function | Location | Purpose |
 |---|---|---|
 | `buildAssetRows()` | `dist/app.js` | Shared renderer for video/slides/podcasts/resource rows |
-| `fetchMarkdownCached()` | `dist/app.js` | Promise-based fetch cache with 20-entry LRU eviction + AbortController |
+| `fetchMarkdownCached()` | `dist/app.js` | Promise-based fetch cache with 20-entry LRU eviction + internal path validation + AbortController |
 | `ensureDOMPurifyHooks()` | `dist/app.js` | Adds `rel=noopener noreferrer` to external links, strips invalid hrefs |
 | `isSafeRepoPath()` | `dist/app.js` | Validates `#p=` paths — allowlist: `meetings/`, `docs/`, `templates/` |
 | `isSafeAssetPath()` | `dist/app.js` | Validates asset hrefs — only `meetings/` and `assets/` with known extensions |
@@ -51,9 +51,9 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 
 ## Testing
 
-- 71 Playwright E2E tests across 8 files in `tests/`.
+- Playwright E2E tests in `tests/`.
 - Key test files: `path-validator.spec.js` (isSafeRepoPath), `dashboard-xss.spec.js` (4 XSS content-based tests), `routing.spec.js` (navigation + error recovery), `prefetch.spec.js` (cache behavior).
-- Tests expose internal functions via `window.*` — `window.isSafeRepoPath`, `window.MEETINGS`, `window.renderUpcomingMaterials`, `window.renderArchiveCards`.
+- Tests expose internal functions via `window.*` when `window.__TEST__` is set — `window.isSafeRepoPath`, `window.MEETINGS`, `window.renderUpcomingMaterials`, `window.renderArchiveCards`.
 - Pre-existing test results may be stale after CSS changes — always re-run.
 
 ## CI pipeline (`.github/workflows/ci.yml`)
@@ -69,7 +69,7 @@ Checks in order: ShellCheck → manifest drift → image size gate → shellchec
 ## CSP
 
 ```
-default-src 'none'; script-src 'self' https://cdn.jsdelivr.net;
+default-src 'none'; script-src 'self';
 style-src 'self' 'unsafe-inline'; img-src 'self' data:;
 frame-src https://view.officeapps.live.com; base-uri 'self';
 form-action 'none'; frame-ancestors 'none';

@@ -18,7 +18,7 @@ while IFS= read -r path; do
     echo "BROKEN asset href: $path"
     ERRORS=$((ERRORS + 1))
   fi
-done < <(grep -oP '(?<=href=")[^"]+\.(mp4|pptx|png)(?=")' index.html)
+done < <(grep -oP '(?<=href=")[^"]+\.(mp4|m4a|pptx|pdf|png|jpg|jpeg)(?=")' index.html)
 
 if [ "$ERRORS" -gt 0 ]; then
   exit 1

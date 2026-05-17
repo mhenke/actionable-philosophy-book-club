@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__TEST__ = true; }); });
+
 test.describe('Manifest Rendering', () => {
 
     test('dashboard renders upcoming and archive containers', async ({ page }) => {

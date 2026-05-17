@@ -1,3 +1,4 @@
+        'use strict';
         const dashboard = document.getElementById('dashboard-view');
         const reader    = document.getElementById('reader-view');
         const content   = document.getElementById('markdown-content');
@@ -94,14 +95,35 @@
             }
         ];
 
-        let currentFetch = null;
+        const LS = 'apbc:';
+        const CONFIG = {
+            CACHE_MAX: 20,
+            RESUME_MIN_SECONDS: 5,
+            PROGRESS_SAVE_MS: 3000,
+            TOAST_DURATION_MS: 4500,
+            TOAST_FADE_MS: 300,
+            HIGHLIGHT_DURATION_MS: 2000,
+            STATUS_RESET_MS: 1000,
+            PATH_MAX_LENGTH: 256,
+        };
+        let activeReaderController = null;
 
-        function fetchMarkdownCached(path) {
-            if (mdCache.has(path)) return mdCache.get(path);
-            if (currentFetch) currentFetch.abort();
+        function fetchMarkdownCached(path, { isReaderLoad = false } = {}) {
+            if (!isSafeRepoPath(path)) return Promise.reject(new Error('Unsafe path: ' + path));
+            if (mdCache.has(path)) {
+                const val = mdCache.get(path);
+                mdCache.delete(path);
+                mdCache.set(path, val);
+                return val;
+            }
+
             const controller = new AbortController();
-            currentFetch = controller;
-            if (mdCache.size >= 20) {
+
+            if (isReaderLoad) {
+                if (activeReaderController) activeReaderController.abort();
+                activeReaderController = controller;
+            }
+            if (mdCache.size >= CONFIG.CACHE_MAX) {
                 mdCache.delete(mdCache.keys().next().value);
             }
             const promise = fetch(path, { signal: controller.signal }).then(response => {
@@ -123,17 +145,12 @@
             });
         }
 
-        function attachPrefetchListeners() {
-            // Attach prefetch listeners to all elements with data-prefetch-path attribute
-            document.querySelectorAll('[data-prefetch-path]').forEach(element => {
-                element.addEventListener('pointerenter', () => {
-                    const path = element.dataset.prefetchPath;
-                    if (path && isSafeRepoPath(path)) {
-                        prefetchMarkdown(path);
-                    }
-                });
-            });
-        }
+        document.addEventListener('pointerenter', (e) => {
+            const el = e.target.closest('[data-prefetch-path]');
+            if (!el) return;
+            const path = el.dataset.prefetchPath;
+            if (path && isSafeRepoPath(path)) prefetchMarkdown(path);
+        }, true);
 
         function escapeHTML(value) {
             return String(value).replace(/[&<>"']/g, c => ({
@@ -145,16 +162,17 @@
             }[c]));
         }
 
+        const RAW_CONTENT_BASE = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
         function buildOfficeViewerURL(path) {
             if (!isSafeAssetPath(path)) return '#';
-            const src = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/' + path;
-            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(src);
+            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(RAW_CONTENT_BASE + path);
         }
 
         function isSafeAssetPath(path) {
-            if (typeof path !== 'string' || path.length === 0 || path.length > 256) return false;
-            if (path.includes('..')) return false;
-            return /^(meetings|assets)\/[A-Za-z0-9._/-]+\.(mp4|m4a|pptx|pdf|png|jpg|jpeg)$/i.test(path);
+            if (typeof path !== 'string' || path.length === 0 || path.length > CONFIG.PATH_MAX_LENGTH) return false;
+            const segments = path.split('/');
+            if (segments.some(s => s === '' || s === '.' || s === '..')) return false;
+            return /^(meetings|assets)(\/[A-Za-z0-9_][A-Za-z0-9._-]*)+\.(mp4|m4a|pptx|pdf|png|jpg|jpeg)$/i.test(path);
         }
 
         // Shared rendering constants
@@ -183,11 +201,7 @@
                            class="asset-dl">${DL_ICON}</a>
                     </div>`);
 
-                (meeting.podcasts || [])
-                    .filter(() => false)
-                    .forEach(alt => {
-                        /* alternate recordings intentionally excluded from primaryRows; they are surfaced in the podcast disclosure */
-                    });
+                /* alternate recordings render in the podcast disclosure below, not in primaryRows */
             } else if (includePlaceholders) {
                 primaryRows.push(`
                     <div class="asset-row opacity-50">
@@ -284,10 +298,10 @@
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
             if (!archiveContainer) return;
+            const done = MEETINGS.filter(m => m.status === 'done');
 
-            archiveContainer.innerHTML = '';
-
-            MEETINGS.filter(m => m.status === 'done').forEach(meeting => {
+            const fragment = document.createDocumentFragment();
+            done.forEach(meeting => {
                 const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
                 const podcastSection = podcastRows.length > 0
                     ? `<details class="podcast-disclosure"><summary><span class="asset-link"><span class="icon-pill" style="background:var(--wash-3-border);" aria-hidden="true">📦</span>${escapeHTML(podcastSummary)}</span><svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
@@ -311,18 +325,20 @@
                     <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost mt-auto" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
                 `;
 
-                archiveContainer.appendChild(card);
+                fragment.appendChild(card);
             });
 
+            archiveContainer.innerHTML = '';
+            archiveContainer.appendChild(fragment);
         }
 
         function renderHorizonCards() {
             const horizonContainer = document.getElementById('horizon-cards-container');
             if (!horizonContainer) return;
+            const drafts = MEETINGS.filter(m => m.status === 'draft');
 
-            horizonContainer.innerHTML = '';
-
-            MEETINGS.filter(m => m.status === 'draft').forEach(meeting => {
+            const fragment = document.createDocumentFragment();
+            drafts.forEach(meeting => {
                 const card = document.createElement('div');
                 card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
                 card.style.borderTopColor = 'var(--border-low)';
@@ -338,13 +354,16 @@
                     <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>
                 `;
 
-                horizonContainer.appendChild(card);
+                fragment.appendChild(card);
             });
+
+            horizonContainer.innerHTML = '';
+            horizonContainer.appendChild(fragment);
         }
 
         function isSafeRepoPath(p) {
             if (!p || typeof p !== 'string') return false;
-            if (p.length === 0 || p.length > 256) return false;
+            if (p.length === 0 || p.length > CONFIG.PATH_MAX_LENGTH) return false;
             if (!p.endsWith('.md')) return false;
             if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;   // any scheme
             if (p.startsWith('//') || p.startsWith('/')) return false; // protocol-relative, absolute
@@ -384,9 +403,17 @@
 
         function ensureDOMPurifyHooks() {
             if (window.__domPurifyHooksInstalled) return;
+            DOMPurify.addHook('beforeSanitizeAttributes', node => {
+                if (node.tagName !== 'A') return;
+                const href = node.getAttribute('href');
+                if (href && /^#/.test(href)) node.setAttribute('data-dp-href', href);
+            });
             DOMPurify.addHook('afterSanitizeAttributes', node => {
                 if (node.tagName !== 'A') return;
-                const href = node.getAttribute('href') || '';
+                const savedHref = node.getAttribute('data-dp-href');
+                let href = node.getAttribute('href') || savedHref || '';
+                node.removeAttribute('data-dp-href');
+                if (savedHref && !node.getAttribute('href')) node.setAttribute('href', savedHref);
                 if (/^https?:/i.test(href)) {
                     node.setAttribute('target', '_blank');
                     node.setAttribute('rel', 'noopener noreferrer');
@@ -418,11 +445,12 @@
             content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading session notes&hellip;</div>';
 
             try {
-                const text = await fetchMarkdownCached(path);
+                const text = await fetchMarkdownCached(path, { isReaderLoad: true });
                 ensureDOMPurifyHooks();
                 const sanitized = DOMPurify.sanitize(marked.parse(text), {
                     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
-                    FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput', 'onmouseover', 'onmouseenter', 'onfocus', 'onkeydown', 'onkeyup']
+                    FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput', 'onmouseover', 'onmouseenter', 'onfocus', 'onkeydown', 'onkeyup'],
+
                 });
 
                 // Smooth cross-fade: keep placeholder visible, replace content and fade in to avoid snapping
@@ -522,26 +550,7 @@
             if (mainEl) mainEl.focus({ preventScroll: true });
             if (readerStatus) {
                 readerStatus.textContent = 'Dashboard';
-                setTimeout(() => { if (readerStatus) readerStatus.textContent = ''; }, 1000);
-            }
-        }
-
-        function handleRoute() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#p=')) {
-                const path = decodeURIComponent(hash.slice(3));
-                if (!isSafeRepoPath(path)) {
-                    showDashboard();
-                    return;
-                }
-
-                // Apply meeting-specific theming if this is a meeting README
-                const meeting = MEETINGS.find(m => m.readmeUrl === path);
-                updateReaderTheme(meeting ? meeting.id : null);
-
-                loadPage(path);
-            } else {
-                showDashboard();
+                setTimeout(() => { if (readerStatus) readerStatus.textContent = ''; }, CONFIG.STATUS_RESET_MS);
             }
         }
 
@@ -556,8 +565,8 @@
             requestAnimationFrame(() => el.classList.add('toast--visible'));
             setTimeout(() => {
                 el.classList.remove('toast--visible');
-                setTimeout(() => el.remove(), 300);
-            }, 4500);
+                setTimeout(() => el.remove(), CONFIG.TOAST_FADE_MS);
+            }, CONFIG.TOAST_DURATION_MS);
         }
 
         // ── Asset availability check ──
@@ -571,7 +580,14 @@
         }
 
         // ── Inline video player ──
+        let videoPlayerCleanup = null;
+
         function openVideoPlayer(filePath, label) {
+            if (videoPlayerCleanup) {
+                videoPlayerCleanup();
+                videoPlayerCleanup = null;
+            }
+
             const overlay = document.getElementById('video-player-overlay');
             const video = document.getElementById('vp-video');
             const title = document.getElementById('vp-title');
@@ -585,49 +601,55 @@
             video.src = filePath;
             video.load();
 
-            const storageKey = 'vp_resume_' + filePath;
-            const saved = localStorage.getItem(storageKey);
+            const vpKey = LS + 'vp:' + filePath;
+            const saved = localStorage.getItem(vpKey);
             const savedTime = saved ? parseFloat(saved) : 0;
 
             resumeBar.style.display = 'none';
-            if (savedTime > 5) {
+            if (savedTime > CONFIG.RESUME_MIN_SECONDS) {
                 const mins = Math.floor(savedTime / 60);
                 const secs = Math.floor(savedTime % 60);
                 resumeText.textContent = `Resume from ${mins}:${secs.toString().padStart(2, '0')}?`;
                 resumeBar.style.display = 'flex';
                 resumeBtn.onclick = () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); };
-                startBtn.onclick = () => { localStorage.removeItem(storageKey); resumeBar.style.display = 'none'; video.play(); };
+                startBtn.onclick = () => { localStorage.removeItem(vpKey); resumeBar.style.display = 'none'; video.play(); };
             }
 
             const saveProgress = () => {
                 const t = video.currentTime;
-                if (t > 5) localStorage.setItem(storageKey, String(t));
+                if (t > CONFIG.RESUME_MIN_SECONDS) localStorage.setItem(vpKey, String(t));
             };
-            const interval = setInterval(saveProgress, 3000);
+            const vpInterval = setInterval(saveProgress, CONFIG.PROGRESS_SAVE_MS);
 
             const onClose = () => {
-                clearInterval(interval);
+                clearInterval(vpInterval);
                 saveProgress();
                 video.pause();
                 video.removeAttribute('src');
                 video.load();
-                overlay.classList.remove('vp--open');
+                overlay.close();
+                if (videoPlayerCleanup) {
+                    videoPlayerCleanup();
+                    videoPlayerCleanup = null;
+                }
             };
             const closeBtn = document.getElementById('vp-close');
             closeBtn.onclick = onClose;
             overlay.onclick = (e) => { if (e.target === overlay) onClose(); };
-            document.addEventListener('keydown', function vpEsc(e) {
-                if (e.key === 'Escape') { onClose(); document.removeEventListener('keydown', vpEsc); }
-            });
+            overlay.addEventListener('cancel', (e) => { e.preventDefault(); onClose(); });
 
-            overlay.classList.add('vp--open');
-            // Don't autoplay — let user click play or resume
+            video.addEventListener('error', () => {
+                onClose();
+                showToast('This file is not available yet. Materials appear closer to the meeting date.');
+            }, { once: true });
+
+            overlay.showModal();
         }
 
         // ── Asset click delegation (dashboard) ──
         function setupAssetClickDelegation(container) {
             if (!container) return;
-            container.addEventListener('click', async (e) => {
+            container.addEventListener('click', (e) => {
                 const link = e.target.closest('.asset-link');
                 if (!link) return;
                 const dl = e.target.closest('.asset-dl');
@@ -639,12 +661,6 @@
 
                 // Update permalink hash
                 history.replaceState(null, '', '#a=' + href);
-
-                const available = await checkAssetAvailable(href);
-                if (!available) {
-                    showToast('This file is not available yet. Materials appear closer to the meeting date.');
-                    return;
-                }
 
                 if (href.endsWith('.mp4')) {
                     const labelEl = link.querySelector('.asset-link-top') || link;
@@ -660,7 +676,7 @@
             const banner = document.getElementById('onboarding-banner');
             const dismissBtn = document.getElementById('onboarding-dismiss');
             if (!banner || !dismissBtn) return;
-            if (localStorage.getItem('onboarding_dismissed')) return;
+            if (localStorage.getItem(LS + 'onboarding_dismissed')) return;
             // Move banner into the dashboard main content area
             const mainContent = document.getElementById('main-content');
             if (mainContent && banner.parentNode !== mainContent) {
@@ -669,7 +685,7 @@
             banner.classList.remove('hidden-view');
             dismissBtn.addEventListener('click', () => {
                 banner.classList.add('hidden-view');
-                localStorage.setItem('onboarding_dismissed', '1');
+                localStorage.setItem(LS + 'onboarding_dismissed', '1');
             });
         }
 
@@ -693,7 +709,7 @@
                         // Highlight the asset link briefly
                         link.style.transition = 'background 0.5s';
                         link.style.background = 'var(--wash-3-border)';
-                        setTimeout(() => { link.style.background = ''; }, 2000);
+                        setTimeout(() => { link.style.background = ''; }, CONFIG.HIGHLIGHT_DURATION_MS);
                         return;
                     }
                 }
@@ -712,7 +728,7 @@
                 const banner = document.getElementById('onboarding-banner');
                 if (banner && !banner.classList.contains('hidden-view')) {
                     banner.classList.add('hidden-view');
-                    localStorage.setItem('onboarding_dismissed', '1');
+                    localStorage.setItem(LS + 'onboarding_dismissed', '1');
                 }
 
                 const meeting = MEETINGS.find(m => m.readmeUrl === path);
@@ -733,18 +749,19 @@
         // Expose for tests
         // Register service worker for offline support
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').catch(() => {});
+            navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(console.warn);
         }
 
-        // Expose for tests
-        window.isSafeRepoPath = isSafeRepoPath;
-        window.prefetchMarkdown = prefetchMarkdown;
-        window.mdCache = mdCache;
-        window.renderUpcomingMaterials = renderUpcomingMaterials;
-        window.renderArchiveCards = renderArchiveCards;
-        window.renderHorizonCards = renderHorizonCards;
-        window.MEETINGS = MEETINGS;
-        window.showToast = showToast;
+        if (window.__TEST__ === true) {
+            window.isSafeRepoPath = isSafeRepoPath;
+            window.prefetchMarkdown = prefetchMarkdown;
+            window.mdCache = mdCache;
+            window.renderUpcomingMaterials = renderUpcomingMaterials;
+            window.renderArchiveCards = renderArchiveCards;
+            window.renderHorizonCards = renderHorizonCards;
+            window.MEETINGS = MEETINGS;
+            window.showToast = showToast;
+        }
 
         window.addEventListener('hashchange', handleRoute);
 
@@ -781,14 +798,9 @@
                     setTimeout(() => {
                         copyLinkBtn.setAttribute('aria-label', 'Copy link to these session notes');
                         copyLinkBtn.title = 'Copy link';
-                    }, 2000);
+                    }, CONFIG.HIGHLIGHT_DURATION_MS);
                 }).catch(() => {
-                    const input = document.createElement('input');
-                    input.value = window.location.href;
-                    document.body.appendChild(input);
-                    input.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(input);
+                    showToast('Copy failed: ' + window.location.href);
                 });
             });
         }
@@ -797,7 +809,6 @@
         renderUpcomingMaterials();
         renderArchiveCards();
         renderHorizonCards();
-        attachPrefetchListeners();
 
         // Set up asset click delegation on dashboard containers
         setupAssetClickDelegation(document.getElementById('upcoming-materials-container'));
@@ -820,7 +831,7 @@
         // Wait for CDN libs before enabling the reader
         document.addEventListener('DOMContentLoaded', () => {
             if (typeof marked !== 'undefined') {
-                marked.use({ gfm: true, breaks: true, headerIds: false, mangle: false });
+                marked.use({ gfm: true, breaks: true });
             }
             handleRoute();
         });

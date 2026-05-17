@@ -54,7 +54,7 @@ Links inside `## Session Materials` must be relative to the README file:
 
 ### 3. Add the meeting to the dashboard manifest
 
-Open `index.html` and find the `const MEETINGS = [...]` block near the top of the `<script>` section. Add a new entry **at the top of the array** (newest first):
+Open `dist/app.js` and find the `const MEETINGS = [...]` block (near the top, after the imports). Add a new entry **at the top of the array** (newest first):
 
 ```js
 {
@@ -62,17 +62,20 @@ Open `index.html` and find the `const MEETINGS = [...]` block near the top of th
     session: 'Session NN',
     date: 'DD Mon YY',
     title: 'Your Session Title',
-    status: 'upcoming',          // change to 'done' after the session
-    color: 'spectrum-2',         // pick a spectrum stop: spectrum-1 through spectrum-3
-    wash: '--wash-2',            // match the number: wash-1, wash-2, or wash-3
+    status: 'upcoming',
+    color: 'spectrum-2',
+    wash: '--wash-2',
     readmeUrl: 'meetings/meeting-NN/README.md',
-    video:  { file: 'meetings/meeting-NN/recordings/NN-video-title.mp4',  label: 'Video Recap', variant: 'canonical' },
-    slides: { file: 'meetings/meeting-NN/slides/NN-slide-title.pptx',     label: 'Slide Deck', variant: 'canonical' }
+    video:  { file: 'meetings/meeting-NN/recordings/NN-video-title.mp4',  label: 'Video Primer', variant: 'canonical' },
+    slides: { file: 'meetings/meeting-NN/slides/NN-slide-title.pptx',     label: 'Slides', variant: 'canonical' },
+    podcasts: [],
+    resources: []
 },
-
 ```
 
-Change the previous "upcoming" session entry's `status` from `'upcoming'` to `'done'`.
+Then change the previous "upcoming" entry's `status` from `'upcoming'` to `'done'`.
+
+The manifest lives in `dist/app.js` — this file is the canonical source (not a build artifact). It was extracted from an inline `<script>` for CSP compliance and is edited directly.
 
 ### 4. Construct the Slide Deck viewer URL (Office Online)
 
