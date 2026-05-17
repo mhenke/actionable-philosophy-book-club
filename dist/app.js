@@ -424,19 +424,36 @@
                     FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput']
                 });
 
+                // Site root handles both localhost '/' and GitHub Pages '/repo-name/'
+                const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
+
                 content.querySelectorAll('a').forEach(link => {
                     const href = link.getAttribute('href');
-                    if (!href || /^https?:/i.test(href) || !href.endsWith('.md')) return;
+                    if (!href || /^https?:/i.test(href)) return;
                     const base = new URL(path, window.location.href);
                     const resolved = new URL(href, base);
-                    const absolutePath = resolved.pathname.slice(1);
-                    if (!isSafeRepoPath(absolutePath)) {
-                        link.removeAttribute('href');
-                        link.setAttribute('aria-disabled', 'true');
-                        link.setAttribute('title', 'Link target is outside allowed directories');
-                        return;
+                    const repoPath = resolved.pathname.startsWith(siteRoot)
+                        ? resolved.pathname.slice(siteRoot.length)
+                        : resolved.pathname.slice(1);
+
+                    if (href.endsWith('.md')) {
+                        if (!isSafeRepoPath(repoPath)) {
+                            link.removeAttribute('href');
+                            link.setAttribute('aria-disabled', 'true');
+                            link.setAttribute('title', 'Link target is outside allowed directories');
+                            return;
+                        }
+                        link.setAttribute('href', '#p=' + repoPath);
+                    } else if (!href.endsWith('/')) {
+                        // Relative asset link — rewrite to repo-root-relative path so it
+                        // resolves correctly regardless of deployment subdirectory.
+                        if (isSafeAssetPath(repoPath)) {
+                            link.setAttribute('href', repoPath);
+                        } else {
+                            link.removeAttribute('href');
+                            link.setAttribute('aria-disabled', 'true');
+                        }
                     }
-                    link.setAttribute('href', '#p=' + absolutePath);
                 });
                 const h1 = content.querySelector('h1');
                 if (h1) {
