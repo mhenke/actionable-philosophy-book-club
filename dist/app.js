@@ -304,7 +304,7 @@
             const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: true });
 
                 const card = document.createElement('div');
-                card.className = 'card p-6 border-t-2';
+                card.className = 'card p-6 border-t-2 flex flex-col';
                 card.style.borderTopColor = colorValue;
                 card.style.background = `var(${safeWash})`;
 
@@ -318,7 +318,7 @@
                     </div>
                     ${rows.join('')}
                     ${resourceStrip}
-                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-2 flex items-center min-h-[44px]" style="color:${colorValue}" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
+                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link text-[9px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-auto pt-3 flex items-center min-h-[44px]" style="color:${colorValue}" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
                 `;
 
                 archiveContainer.appendChild(card);
