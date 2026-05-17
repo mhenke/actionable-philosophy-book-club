@@ -23,7 +23,7 @@ test.describe('Performance: Markdown Prefetch', () => {
     });
     
     expect(cached).toBeTruthy();
-    expect(cached).toContain('Meeting Zero');
+    expect(cached).toContain('Meeting 00');
   });
 
   test('hovering over meeting notes link triggers prefetch', async ({ page }) => {
