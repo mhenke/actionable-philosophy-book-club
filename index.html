@@ -186,14 +186,19 @@
             flex-shrink: 0;
         }
 
-        /* Section divider — gradient rule */
+        /* Section divider — spectrum gradient rule, mirrors header bar */
         .spectrum-rule {
             flex-grow: 1;
+            max-width: 240px;
             height: 2px;
             background: linear-gradient(90deg,
-                var(--rule-start) 0%,
-                var(--rule-end) 60%,
-                transparent 100%
+                var(--spectrum-1)  0%,
+                var(--spectrum-2) 20%,
+                var(--spectrum-3) 40%,
+                var(--spectrum-4) 60%,
+                var(--spectrum-5) 80%,
+                var(--spectrum-6) 95%,
+                rgb(168 216 185 / 0) 100%
             );
         }
 
