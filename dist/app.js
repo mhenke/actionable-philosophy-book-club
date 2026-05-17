@@ -183,21 +183,9 @@
                     </div>`);
 
                 (meeting.podcasts || [])
-                    .filter(p => p.variant === 'alternate' || p.type === 'alternate')
+                    .filter(() => false)
                     .forEach(alt => {
-                        if (!isSafeAssetPath(alt.file)) return;
-                        const altIcon = alt.file.endsWith('.mp4') ? '🎬' : '🎙';
-                        primaryRows.push(`
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-alternate">
-                        <a href="${escapeHTML(alt.file)}" class="asset-link">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${altIcon}</span>
-                            ${escapeHTML(alt.label || 'Alternate Recording')}
-                            <span class="podcast-badge" style="color:var(--spectrum-3)">Alternative</span>
-                        </a>
-                        <a href="${escapeHTML(alt.file)}" download
-                           aria-label="Download alternate — ${escapeHTML(meeting.session)}"
-                           class="asset-dl">${DL_ICON}</a>
-                    </div>`);
+                        /* alternate recordings intentionally excluded from primaryRows; they are surfaced in the podcast disclosure */
                     });
             } else if (includePlaceholders) {
                 primaryRows.push(`
@@ -231,7 +219,6 @@
             }
 
             (meeting.podcasts || [])
-                .filter(p => p.variant !== 'alternate' && p.type !== 'alternate')
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
                     const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type), title: '' };
