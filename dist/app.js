@@ -167,7 +167,7 @@
         const RAW_CONTENT_BASE = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
         function buildPPTXViewerURL(path) {
             if (!isSafeAssetPath(path)) return '#';
-            return 'https://docs.google.com/viewer?url=' + encodeURIComponent(RAW_CONTENT_BASE + path);
+            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(RAW_CONTENT_BASE + path);
         }
 
         function isSafeAssetPath(path) {
@@ -854,3 +854,156 @@
             }
             handleRoute();
         });
+
+        // Command palette (Ctrl/Cmd+K) - lightweight, accessible, iterative
+        (function(){
+            const meetings = (typeof MEETINGS !== 'undefined') ? MEETINGS : (window.MEETINGS || []);
+            if (!meetings || meetings.length === 0) return;
+
+            // Styles
+            const style = document.createElement('style');
+            style.textContent = `
+                #cmd-palette-overlay { position: fixed; inset: 0; display: none; align-items: flex-start; justify-content: center; z-index: 9999; }
+                #cmd-palette-overlay.p--open { display: flex; }
+                #cmd-palette { margin-top: 8vh; width: min(720px, 92%); background: white; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; }
+                #cmd-palette .cp-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border: none; outline: none; font-size: 16px; }
+                #cmd-palette .cp-list { max-height: 320px; overflow: auto; margin: 0; padding: 0; list-style: none; }
+                #cmd-palette .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid rgba(0,0,0,0.04); }
+                #cmd-palette .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.04); }
+                #cmd-palette .cp-meta { color: #666; font-size: 13px; }
+                @media (prefers-reduced-motion: reduce) { #cmd-palette { transition: none; } }
+            `;
+            document.head.appendChild(style);
+
+            // DOM
+            const overlay = document.createElement('div');
+            overlay.id = 'cmd-palette-overlay';
+            overlay.setAttribute('aria-hidden', 'true');
+            overlay.innerHTML = `
+                <div id="cmd-palette" role="dialog" aria-modal="true" aria-label="Command palette">
+                    <input class="cp-input" placeholder="Jump to meeting by id or title (Cmd/Ctrl+K)" aria-label="Search meetings" />
+                    <ul class="cp-list" role="listbox" aria-label="Search results"></ul>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+
+            const input = overlay.querySelector('.cp-input');
+            const list = overlay.querySelector('.cp-list');
+            let lastFocus = null;
+            let results = [];
+            let selected = 0;
+
+            function openPalette() {
+                lastFocus = document.activeElement;
+                overlay.classList.add('p--open');
+                overlay.setAttribute('aria-hidden', 'false');
+                input.value = '';
+                renderResults([]);
+                setTimeout(() => input.focus(), 50);
+                document.body.style.overflow = 'hidden';
+            }
+            function closePalette() {
+                overlay.classList.remove('p--open');
+                overlay.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+            }
+            function togglePalette() { if (overlay.classList.contains('p--open')) closePalette(); else openPalette(); }
+
+            function normalize(s){ return (s||'').toString().toLowerCase(); }
+            function scoreMatch(q, m){
+                // simple scoring: id prefix > id contains > title contains
+                if (!q) return 1;
+                const id = normalize(m.id);
+                const title = normalize(m.title || m.name || '');
+                if (id.startsWith(q)) return 5;
+                if (id.includes(q)) return 4;
+                if (title.includes(q)) return 3;
+                return 0;
+            }
+
+            function renderResults(listItems){
+                results = listItems;
+                selected = 0;
+                list.innerHTML = '';
+                if (results.length === 0) {
+                    const li = document.createElement('li');
+                    li.className = 'cp-item';
+                    li.textContent = 'No results';
+                    li.setAttribute('aria-disabled', 'true');
+                    list.appendChild(li);
+                    return;
+                }
+                for (let i=0;i<results.length;i++){
+                    const m = results[i];
+                    const li = document.createElement('li');
+                    li.className = 'cp-item';
+                    li.setAttribute('role','option');
+                    li.dataset.index = i;
+                    if (i===0) li.setAttribute('aria-selected','true');
+                    li.innerHTML = `<div style="flex:1"><strong>${m.id}</strong> <span class="cp-meta">— ${m.title||m.name||''}</span></div>`;
+                    li.addEventListener('click', () => activateIndex(i));
+                    list.appendChild(li);
+                }
+            }
+
+            function activateIndex(i){
+                const m = results[i];
+                if (!m) return;
+                // prefer opening reader; fallback to scrolling to card
+                if (m.readmeUrl) {
+                    closePalette();
+                    window.location.hash = '#p=' + encodeURIComponent(m.readmeUrl);
+                    return;
+                }
+                closePalette();
+                // try to scroll to card by id
+                const card = document.querySelector(`[data-meeting-id=\"${m.id}\"]`);
+                if (card) card.scrollIntoView({behavior:'smooth', block:'start'});
+            }
+
+            input.addEventListener('input', (e) => {
+                const q = normalize(e.target.value.trim());
+                if (!q) { renderResults(meetings.slice(0,6)); return; }
+                const candidates = meetings.map(m => ({m, score: scoreMatch(q,m)}))
+                    .filter(x => x.score>0)
+                    .sort((a,b)=>b.score-a.score)
+                    .map(x=>x.m)
+                    .slice(0,8);
+                renderResults(candidates);
+            });
+
+            input.addEventListener('keydown', (e) => {
+                const items = Array.from(list.querySelectorAll('.cp-item'));
+                if (e.key === 'ArrowDown') { e.preventDefault(); selected = Math.min(selected+1, items.length-1); updateSelection(items); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); selected = Math.max(selected-1, 0); updateSelection(items); }
+                else if (e.key === 'Enter') { e.preventDefault(); activateIndex(selected); }
+                else if (e.key === 'Escape') { e.preventDefault(); closePalette(); }
+            });
+
+            function updateSelection(items){
+                items.forEach((it, idx) => it.setAttribute('aria-selected', idx===selected ? 'true' : 'false'));
+                const el = items[selected]; if (el) el.scrollIntoView({block:'nearest'});
+            }
+
+            // Global key handler: Ctrl/Cmd+K
+            document.addEventListener('keydown', (e) => {
+                const isMac = navigator.platform && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+                if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')){
+                    e.preventDefault(); togglePalette();
+                }
+                // When palette open, allow Esc to close
+                if (overlay.classList.contains('p--open') && e.key === 'Escape') {
+                    e.preventDefault(); closePalette();
+                }
+            });
+
+            // clicking outside closes
+            overlay.addEventListener('mousedown', (ev) => {
+                if (ev.target === overlay) closePalette();
+            });
+
+            // seed with top meetings
+            renderResults(meetings.slice(0,6));
+        })();
+
