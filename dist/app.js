@@ -269,7 +269,7 @@
             if (!meeting) return;
             const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
             if (rows.length === 0 && !resourceStrip) {
-                container.innerHTML = `<p class="text-[11px] font-semibold uppercase tracking-[0.25em] text-muted">Materials available closer to the meeting.</p>`;
+                container.innerHTML = `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`;
                 return;
             }
             container.innerHTML = rows.join('') + resourceStrip;
@@ -296,14 +296,14 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div>
-                            <span class="text-[11px] font-semibold uppercase tracking-[0.25em] block mb-1 text-muted">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
                             <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
                         </div>
                         <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
                     </div>
                     ${rows.join('')}
                     ${resourceStrip}
-                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link text-[11px] font-semibold uppercase tracking-[0.25em] hover:text-spectrum-1 mt-auto pt-3 flex items-center min-h-[44px] text-spectrum-2" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
+                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link text-[11px] font-semibold uppercase tracking-[0.2em] hover:text-spectrum-1 mt-auto pt-3 flex items-center min-h-[44px] text-spectrum-2" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
                 `;
 
                 archiveContainer.appendChild(card);
