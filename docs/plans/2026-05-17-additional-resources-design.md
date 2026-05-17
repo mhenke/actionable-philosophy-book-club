@@ -49,3 +49,16 @@ Notes
 
 - Label choice: "Additional Resources" chosen for clarity and translatability.
 - Keep visual style and icon-pill tokens (`--wash-*-border`) consistent with existing asset pills.
+
+Implementation
+
+- Files changed:
+  - dist/app.js (buildAssetRows summary construction)
+  - tests/additional-resources-summary.spec.js (Playwright test)
+
+- Commits:
+  - 110280e feat: always prepend 'Additional Resources:' to podcast/asset summaries
+  - aaedf34 test: normalize summary text by stripping leading emoji; update assertions
+
+- Verification: All Playwright tests passed locally (66 passed).
+
