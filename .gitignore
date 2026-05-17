@@ -1,13 +1,29 @@
+# Dependencies
+node_modules/
+
+# Test artifacts
+playwright-report/
+test-results/
+
+# AI tool artifacts
+impeccable-report*.json
+
+# Environment
+.env
+.env.*
+
 # OS files
 .DS_Store
 Thumbs.db
 
-# Media files that should be on S3 (Optional example)
-# recordings/*.m4
-# recordings/*.mp4
-
 # Temporary files
 *.tmp
 *.log
+
+# Claude Code worktrees
 .worktrees/
 .claude/worktrees/
+
+# Media files that should be on S3 (Optional example)
+# recordings/*.m4
+# recordings/*.mp4
