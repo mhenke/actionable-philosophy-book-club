@@ -8,6 +8,8 @@ The dashboard uses specific heading names as markers for rendering. **Heading na
 
 ### Required Heading: `## Session Materials`
 
+> **Important:** The exact heading `## Session Materials` (case-insensitive) is required for the file-tree renderer. Any other heading (e.g., `## Materials`, `## Resources`) will produce a plain unformatted list.
+
 The dashboard looks for this heading and transforms the list beneath it into a styled file tree with icons.
 
 **What you write:**

@@ -28,6 +28,13 @@ Thumbs.db
 .worktrees/
 .claude/worktrees/
 
+# Review artifacts
+.full-review/
+.full-review-archived-*/
+
+# Screenshot dev scripts output
+/tmp/screenshot*.png
+
 # Media files that should be on S3 (Optional example)
 # recordings/*.m4
 # recordings/*.mp4

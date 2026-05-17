@@ -10,6 +10,8 @@
     <meta property="og:description" content="Meeting notes, recordings, and session materials for A Philosophy of Software Design.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mhenke.github.io/actionable-philosophy-book-club/">
+    <meta property="og:image" content="https://mhenke.github.io/actionable-philosophy-book-club/assets/social-preview.png">
+    <link rel="canonical" href="https://mhenke.github.io/actionable-philosophy-book-club/">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="light">
@@ -21,7 +23,6 @@
     <script defer src="dist/vendor/purify.min.js"></script>
     <style>
         :root {
-            color-scheme: light;
             --surface:      #F7F7F7;
             --banner:       #222222;
             --text-primary: #222222;
@@ -538,7 +539,7 @@
         <header class="sticky top-0 z-50">
             <div class="banner-bar">
                 <div class="banner-inner">
-                    <h1 class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</h1>
+                    <p class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]" aria-hidden="true">A Philosophy of Software Design</p>
                     <span class="text-[0.6875rem] swiss-light">John Ousterhout</span>
                 </div>
             </div>
@@ -546,6 +547,7 @@
         </header>
 
         <main id="main-content" tabindex="-1" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 py-10 pb-24">
+            <h1 class="sr-only">Actionable Philosophy Book Club</h1>
 
             <!-- Onboarding banner injected here by JS -->
             <!-- Tagline removed to reduce vertical noise on small screens (see UX distill decision) -->
@@ -661,7 +663,7 @@
         </main>
     </div>
 
-    <footer id="site-footer" class="py-8 text-center" style="border-top: 2px solid var(--spectrum-2);">
+    <footer id="site-footer" class="py-8 text-center border-t-2" style="border-color: var(--spectrum-2);">
         <p class="text-[0.6875rem] font-semibold text-muted">Actionable Philosophy Book Club &bull; 2026</p>
     </footer>
 

@@ -133,7 +133,7 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#return-dashboard')).toBeVisible();
     });
 
-    test('reader status announces loaded and unavailable states', async ({ page }) => {
+    test('reader status announces loaded state', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route =>
             route.fulfill({ body: '# Loaded' })
         );
@@ -141,11 +141,11 @@ test.describe('Routing & Navigation', () => {
         await page.goto('/#p=meetings/meeting-01/README.md');
         await page.waitForSelector('#markdown-content h1');
         await expect(page.locator('#reader-status')).toHaveText('Document loaded.');
+    });
 
-        await page.route('**/meetings/meeting-00/README.md', route =>
-            route.fulfill({ status: 404, body: '' })
-        );
-        await page.goto('/#p=meetings/meeting-00/README.md');
+    test('reader status announces unavailable for fetch error', async ({ page }) => {
+        await page.route('**/meetings/missing-file/README.md', route => route.abort('failed'));
+        await page.goto('/#p=meetings/missing-file/README.md');
         await page.waitForLoadState('networkidle');
         await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
     });

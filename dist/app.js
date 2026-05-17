@@ -41,7 +41,6 @@
                 video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Primer', variant: 'canonical' },
                 slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slides', variant: 'canonical' },
                 podcasts: [
-                    { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity-alternate.mp4', variant: 'alternate', source_filename: '01-The-Architects-of-Complexity-alternate.mp4' },
                     { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a' },
                     { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a' },
                     { type: 'critique', label: 'How Tactical Programming Creates Complexity', file: 'meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a' }
@@ -145,12 +144,15 @@
             });
         }
 
-        document.addEventListener('pointerenter', (e) => {
-            const el = e.target.closest('[data-prefetch-path]');
-            if (!el) return;
-            const path = el.dataset.prefetchPath;
-            if (path && isSafeRepoPath(path)) prefetchMarkdown(path);
-        }, true);
+        function attachPrefetchListeners() {
+            document.querySelectorAll('[data-prefetch-path]').forEach(element => {
+                element.addEventListener('pointerenter', () => {
+                    const path = element.dataset.prefetchPath;
+                    if (path && isSafeRepoPath(path)) prefetchMarkdown(path);
+                });
+            });
+        }
+        attachPrefetchListeners();
 
         function escapeHTML(value) {
             return String(value).replace(/[&<>"']/g, c => ({
@@ -418,26 +420,29 @@
                     node.setAttribute('target', '_blank');
                     node.setAttribute('rel', 'noopener noreferrer');
                 }
-                if (href && !/^(https?:|#|[A-Za-z0-9._/-]+\.md)/i.test(href)) {
+                if (href && !/^(https?:|#|[A-Za-z0-9._/-]+\.(md|mp4|m4a|pptx|ppt|png|jpg|jpeg|gif|pdf|svg))/i.test(href)) {
                     node.removeAttribute('href');
                 }
             });
             window.__domPurifyHooksInstalled = true;
         }
 
+        function setView(view) {
+            const isDashboard = view === 'dashboard';
+            dashboard.classList.toggle('hidden-view', !isDashboard);
+            reader.classList.toggle('hidden-view', isDashboard);
+            const footer = document.getElementById('site-footer');
+            if (footer) footer.classList.toggle('hidden', !isDashboard);
+        }
+
         async function loadPage(path) {
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
-                const readerEl = document.getElementById('reader-view');
                 const contentEl = document.getElementById('markdown-content');
                 if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and try reloading the page.</p>';
-                if (readerEl) readerEl.classList.remove('hidden-view');
-                if (dashboard) dashboard.classList.add('hidden-view');
+                setView('reader');
                 return;
             }
-            const footer = document.getElementById('site-footer');
-            if (footer) footer.classList.add('hidden-view');
-            dashboard.classList.add('hidden-view');
-            reader.classList.remove('hidden-view');
+            setView('reader');
             content.focus({ preventScroll: true });
             window.scrollTo(0, 0);
             readerStatus.textContent = 'Loading document...';
@@ -500,6 +505,7 @@
                 const h1 = content.querySelector('h1');
                 if (h1) {
                     document.title = `${h1.textContent.trim()} — Actionable Philosophy Book Club`;
+                    content.setAttribute('aria-label', h1.textContent.trim());
                 }
 
                 content.querySelectorAll('h2').forEach(h2 => {
@@ -539,10 +545,7 @@
 
         function showDashboard() {
             document.title = 'Actionable Philosophy Book Club Dashboard';
-            const footer = document.getElementById('site-footer');
-            if (footer) footer.classList.remove('hidden-view');
-            dashboard.classList.remove('hidden-view');
-            reader.classList.add('hidden-view');
+            setView('dashboard');
             readerStatus.textContent = '';
             content.innerHTML = '';
             window.scrollTo(0, 0);
@@ -611,8 +614,8 @@
                 const secs = Math.floor(savedTime % 60);
                 resumeText.textContent = `Resume from ${mins}:${secs.toString().padStart(2, '0')}?`;
                 resumeBar.style.display = 'flex';
-                resumeBtn.onclick = () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); };
-                startBtn.onclick = () => { localStorage.removeItem(vpKey); resumeBar.style.display = 'none'; video.play(); };
+                resumeBtn.addEventListener('click', () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); }, { once: true });
+                startBtn.addEventListener('click', () => { localStorage.removeItem(vpKey); resumeBar.style.display = 'none'; video.play(); }, { once: true });
             }
 
             const saveProgress = () => {

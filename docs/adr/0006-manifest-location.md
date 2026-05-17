@@ -1,0 +1,18 @@
+# ADR-0006: MEETINGS Manifest Location
+
+**Status:** Accepted  
+**Date:** 2026
+
+## Decision
+
+Keep the MEETINGS manifest as a JavaScript array inline in `dist/app.js`.
+
+## Alternatives Considered
+
+- `meetings/manifest.json` — would enable JSON Schema validation and non-developer contributions, but requires an async fetch at boot
+
+## Rationale
+
+- Zero-network-request first paint — the manifest is available immediately when the script executes
+- No async loading complexity — avoids a fetch waterfall at startup
+- The downsides (developer-only edits, no schema validation) are mitigated by CI checks that validate meeting directory existence and manifest structure
