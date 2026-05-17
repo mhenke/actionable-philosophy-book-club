@@ -38,3 +38,4 @@ Thumbs.db
 # Media files that should be on S3 (Optional example)
 # recordings/*.m4
 # recordings/*.mp4
+lighthouse-report*.json
