@@ -14,6 +14,7 @@ module.exports = {
     'pt-3',
     'px-2',
     'py-12',
+    'text-[0.6875rem]',
     'text-xl',
     'tracking-[0.25em]',
     'tracking-wider',

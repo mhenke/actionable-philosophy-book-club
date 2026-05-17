@@ -10,6 +10,7 @@
     <meta property="og:description" content="Meeting notes, recordings, and discussion guides for A Philosophy of Software Design.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mhenke.github.io/actionable-philosophy-book-club/">
+    <meta name="color-scheme" content="light">
     <link rel="stylesheet" href="dist/tailwind.css">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <script defer
@@ -22,6 +23,7 @@
       crossorigin="anonymous"></script>
     <style>
         :root {
+            color-scheme: light;
             --surface:      #F7F7F7;
             --banner:       #222222;
             --text-primary: #222222;
@@ -288,6 +290,7 @@
         .resource-thumb img {
             height: 80px;
             width: auto;
+            max-width: 120px;
             object-fit: cover;
             border: 1px solid var(--border-low);
         }
@@ -307,6 +310,7 @@
             .card:hover { transform: none; }
             .btn-primary:hover, .btn-primary:active { transform: none; }
             .asset-link:active, .asset-dl:active { transform: none; opacity: 1; }
+            .animate-pulse { animation: none !important; }
         }
     </style>
 </head>
@@ -322,7 +326,7 @@
             <div class="banner-bar">
                 <div class="banner-inner">
                     <h1 class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</h1>
-                    <span class="text-[10px] swiss-light">John Ousterhout</span>
+                    <span class="text-[0.6875rem] swiss-light">John Ousterhout</span>
                 </div>
             </div>
             <div class="spectrum-bar"></div>
@@ -334,14 +338,14 @@
             <section class="card p-6 md:p-8 border-t-4 border-spectrum-2">
                 <div class="flex justify-between items-start mb-6 gap-4">
                     <div>
-                        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02</span>
+                        <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02</span>
                         <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Deep Modules &amp; Complexity Sink</h2>
                     </div>
                     <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest bg-spectrum-2 text-white px-3 py-1">Upcoming</span>
                 </div>
 
                 <div class="border p-5 mb-7" style="background: var(--wash-2); border-color: var(--wash-2-strong-border);">
-                    <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
+                    <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
                     <p class="text-lg leading-snug italic text-banner">"A well-designed module is a <strong class="not-italic font-bold">complexity sink</strong>: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
                 </div>
 
@@ -357,19 +361,19 @@
 
             <!-- Archive -->
             <section aria-labelledby="section-archive">
-                <h2 id="section-archive" class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
+                <h2 id="section-archive" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     The Archive
                     <span class="spectrum-rule"></span>
                 </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8" id="archive-cards-container">
+                <div class="grid gap-5 md:gap-8" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));" id="archive-cards-container">
                     <!-- Cards rendered by JavaScript -->
                 </div>
             </section>
 
             <!-- Knowledge Base -->
             <section aria-labelledby="section-kb">
-                <h2 id="section-kb" class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
+                <h2 id="section-kb" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
                     Knowledge Base
                     <span class="spectrum-rule"></span>
                 </h2>
@@ -405,7 +409,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
                         Dashboard
                     </a>
-                    <span class="text-[10px] swiss-light">Synthesis Reader</span>
+                    <span class="text-[0.6875rem] swiss-light">Synthesis Reader</span>
                 </div>
             </nav>
             <div class="spectrum-bar"></div>
@@ -418,8 +422,8 @@
         </main>
     </div>
 
-    <footer id="site-footer" class="py-8 border-t border-black/5 text-center">
-        <p class="text-[10px] font-semibold text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
+    <footer id="site-footer" class="py-8 text-center" style="border-top: 1px solid var(--border-low);">
+        <p class="text-[0.6875rem] font-semibold text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
     </footer>
 
     <script src="dist/app.js"></script>

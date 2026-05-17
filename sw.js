@@ -1,4 +1,5 @@
-const CACHE = 'v1';
+// Bump this string on every deploy to invalidate cached JS/CSS for existing users.
+const CACHE = 'v2';
 const PRECACHE = [
   '/',
   '/index.html',

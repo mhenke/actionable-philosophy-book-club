@@ -299,7 +299,7 @@
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
                             <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
                         </div>
-                        <span class="shrink-0 text-[10px] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
+                        <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
                     </div>
                     ${rows.join('')}
                     ${resourceStrip}
@@ -370,7 +370,7 @@
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
                 const readerEl = document.getElementById('reader-view');
                 const contentEl = document.getElementById('markdown-content');
-                if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and reload.</p>';
+                if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and try reloading the page.</p>';
                 if (readerEl) readerEl.classList.remove('hidden-view');
                 if (dashboard) dashboard.classList.add('hidden-view');
                 return;
@@ -441,6 +441,7 @@
         }
 
         function showDashboard() {
+            document.title = 'Actionable Philosophy Book Club Dashboard';
             const footer = document.getElementById('site-footer');
             if (footer) footer.classList.remove('hidden-view');
             dashboard.classList.remove('hidden-view');
@@ -490,7 +491,8 @@
         window.MEETINGS = MEETINGS;
 
         window.addEventListener('hashchange', handleRoute);
-        document.getElementById('back-to-dashboard').addEventListener('click', e => {
+        const backBtn = document.getElementById('back-to-dashboard');
+        if (backBtn) backBtn.addEventListener('click', e => {
             e.preventDefault();
             window.location.hash = '';
         });
