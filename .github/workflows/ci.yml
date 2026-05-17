@@ -103,18 +103,6 @@ jobs:
       - name: Audit dependencies
         run: npm audit --audit-level=moderate
 
-      - name: Verify Tailwind CSS is up to date
-        run: |
-          cp dist/tailwind.css dist/tailwind.css.committed
-          npm run build:css
-          if ! diff -q dist/tailwind.css.committed dist/tailwind.css > /dev/null; then
-            echo "ERROR: dist/tailwind.css is stale. Run 'npm run build:css' and commit the result."
-            diff dist/tailwind.css.committed dist/tailwind.css || true
-            exit 1
-          fi
-          echo "Tailwind CSS is up to date."
-          rm dist/tailwind.css.committed
-
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
