@@ -45,7 +45,7 @@ test.describe('Manifest Rendering', () => {
         
         expect(meeting00Data.id).toBe('meeting-00');
         expect(meeting00Data.videoDuration).toBe(52);
-        expect(meeting00Data.videoFileSize).toBe(11.5);
+        expect(meeting00Data.videoFileSize).toBe(840);
         expect(meeting00Data.podcastsCount).toBeGreaterThan(0);
         expect(meeting00Data.firstPodcastDuration).toBe(45);
         expect(meeting00Data.firstPodcastFileSize).toBe(120);
