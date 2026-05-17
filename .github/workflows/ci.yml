@@ -167,7 +167,7 @@ jobs:
           cp index.html deploy/
           cp -r dist/ meetings/ docs/ templates/ .nojekyll deploy/
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: 'deploy'
       - name: Deploy to GitHub Pages
