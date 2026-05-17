@@ -28,27 +28,27 @@
             --white:        #FFFFFF;
             --spectrum-1:   #1A3A5C;
             --spectrum-2:   #2B6CB0;
-            --spectrum-3:   #4BA3C7;
-            --spectrum-4:   #48BDB8;
-            --spectrum-5:   #72C9A8;
-            --spectrum-6:   #A8D8B9;
+            --spectrum-3:   #5A7A8A;
+            --spectrum-4:   #6B8A7E;
+            --spectrum-5:   #7A9A8E;
+            --spectrum-6:   #8A9A9A;
             --border-low:   rgb(34 34 34 / 0.06);
             /* Spectrum wash tokens — centralised tints used throughout */
             --wash-1: rgb(26 58 92 / 0.04);
             --wash-2: rgb(43 108 176 / 0.05);
-            --wash-3: rgb(75 163 199 / 0.04);
-            --wash-4: rgb(72 189 184 / 0.04);
-            --wash-5: rgb(114 201 168 / 0.04);
+            --wash-3: rgb(90 122 138 / 0.04);
+            --wash-4: rgb(107 138 126 / 0.04);
+            --wash-5: rgb(122 154 142 / 0.04);
             --wash-2-border: rgb(43 108 176 / 0.12);
-            --wash-3-border: rgb(75 163 199 / 0.12);
+            --wash-3-border: rgb(90 122 138 / 0.12);
             --wash-2-strong-border: rgb(43 108 176 / 0.15);
             --wash-1-icon: rgb(26 58 92 / 0.10);
             --wash-2-icon: rgb(43 108 176 / 0.12);
-            --wash-3-icon: rgb(75 163 199 / 0.12);
-            --wash-4-icon: rgb(72 189 184 / 0.12);
-            --wash-5-icon: rgb(114 201 168 / 0.12);
+            --wash-3-icon: rgb(90 122 138 / 0.12);
+            --wash-4-icon: rgb(107 138 126 / 0.12);
+            --wash-5-icon: rgb(122 154 142 / 0.12);
             --shadow-sticky: rgb(34 34 34 / 0.15);
-            --shadow-card-hover: rgb(75 163 199 / 0.20);
+            --shadow-card-hover: rgb(26 58 92 / 0.15);
             --prose-h3-border: rgb(75 163 199 / 0.30);
             --prose-blockquote-bg: rgb(72 189 184 / 0.06);
             --prose-blockquote-border: rgb(72 189 184 / 0.20);
@@ -57,15 +57,19 @@
             --materials-panel-border: rgb(34 34 34 / 0.08);
         }
         body {
-            font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+            font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Noto Sans', 'Liberation Sans', sans-serif;
             background-color: var(--surface);
             color: var(--text-primary);
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
+            margin: 0;
         }
         :focus-visible {
             outline: 2px solid var(--spectrum-3);
             outline-offset: 2px;
+        }
+        #markdown-content:focus-visible {
+            outline: none;
         }
         .swiss-caps {
             letter-spacing: -0.04em;
@@ -87,24 +91,15 @@
             .banner-bar { padding: 1.5rem 2rem; }
         }
         .spectrum-bar {
-            height: 4px;
-            background: linear-gradient(90deg,
-                var(--spectrum-1)  0%,
-                var(--spectrum-2) 20%,
-                var(--spectrum-3) 40%,
-                var(--spectrum-4) 60%,
-                var(--spectrum-5) 80%,
-                var(--spectrum-6) 100%
-            );
+            height: 2px;
+            background: var(--spectrum-2);
         }
         header.sticky {
             box-shadow: 0 4px 20px -4px var(--shadow-sticky);
         }
         .card {
             background: var(--white);
-            border: 1px solid var(--border-low);
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card:hover {
@@ -134,9 +129,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid var(--border-low);
         }
-        .asset-row:last-child { border-bottom: none; }
         .asset-link {
             display: flex;
             align-items: center;
@@ -171,6 +164,9 @@
             flex-shrink: 0;
         }
 
+        /* Constrain text width for readability */
+        .dashboard-text { max-width: 65ch; }
+
         /* Section divider — gradient rule */
         .spectrum-rule {
             flex-grow: 1;
@@ -196,8 +192,8 @@
         }
 
         /* Reader */
-        .prose { max-width: 75ch; margin: 0 auto; color: var(--text-primary); }
-        .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
+        .prose { margin: 0 auto; color: var(--text-primary); }
+        .prose h1 { font-size: clamp(1.25rem, 4vw, 2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 1.5rem; color: var(--banner); }
         .prose h2 { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
         .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; padding-top: 0.5rem; color: var(--spectrum-1); border-top: 1px solid var(--prose-h3-border); }
         .prose p { font-size: 1.0625rem; line-height: 1.7; margin-bottom: 1.25rem; color: var(--text-muted); }
@@ -308,7 +304,7 @@
             <div class="spectrum-bar"></div>
         </header>
 
-        <main id="main-content" tabindex="-1" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 py-10 pb-24">
+        <main id="main-content" tabindex="-1" class="p-6 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 py-10 pb-24">
 
             <!-- Next Meeting -->
             <section class="card p-6 md:p-8 border-t-4 border-spectrum-2">
@@ -320,7 +316,7 @@
                     <span class="shrink-0 text-[9px] font-bold uppercase tracking-widest bg-spectrum-2 text-white px-3 py-1">Upcoming</span>
                 </div>
 
-                <div class="border p-5 mb-7" style="background: var(--wash-2); border-color: var(--wash-2-strong-border);">
+                <div class="border p-5 mb-7 dashboard-text" style="background: var(--wash-2); border-color: var(--wash-2-strong-border);">
                     <p class="text-[10px] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
                     <p class="text-lg leading-snug italic text-banner">"A well-designed module is a <strong class="not-italic font-bold">complexity sink</strong>: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
                 </div>
@@ -394,7 +390,7 @@
         </main>
     </div>
 
-    <footer id="site-footer" class="py-8 border-t border-black/5 text-center">
+    <footer id="site-footer" class="py-8 px-6 border-t border-black/5 text-center">
         <p class="text-[9px] font-semibold text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
     </footer>
 
