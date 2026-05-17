@@ -47,6 +47,7 @@ test.describe('Manifest Rendering', () => {
     test('upcoming card shows meeting 02 video and slide links', async ({ page }) => {
         await page.goto('/');
         const upcoming = page.locator('#upcoming-materials-container');
+        await upcoming.waitFor({ state: 'visible' });
         await expect(upcoming.getByRole('link', { name: 'Video Primer', exact: true })).toBeVisible();
         await expect(upcoming.getByRole('link', { name: 'Slide Deck', exact: true })).toBeVisible();
         await expect(upcoming.getByText(/coming soon/i)).toHaveCount(0);
