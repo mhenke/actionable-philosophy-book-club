@@ -9,7 +9,7 @@
             {
                 id: 'meeting-02',
                 session: 'Meeting 02',
-                date: '15 May 26',
+                date: '27 May 26',
                 title: 'Complexity Engineering',
                 status: 'upcoming',
                 color: 'spectrum-2',
@@ -31,7 +31,7 @@
             {
                 id: 'meeting-01',
                 session: 'Meeting 01',
-                date: '01 May 26',
+                date: '13 May 26',
                 title: 'Deep Systems',
                 status: 'done',
                 color: 'spectrum-3',
@@ -67,7 +67,7 @@
             {
                 id: 'meeting-03',
                 session: 'Meeting 03',
-                date: 'TBD',
+                date: '10 Jun 26',
                 title: 'TBD',
                 status: 'draft',
                 color: 'spectrum-1',
@@ -81,7 +81,7 @@
             {
                 id: 'meeting-04',
                 session: 'Meeting 04',
-                date: 'TBD',
+                date: '24 Jun 26',
                 title: 'TBD',
                 status: 'draft',
                 color: 'spectrum-2',

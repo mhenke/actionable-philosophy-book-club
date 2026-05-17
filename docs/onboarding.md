@@ -4,7 +4,7 @@ This site is your hub for every book-club session. Here's how it works.
 
 ## What you'll find on the Dashboard
 
-- **Next Meeting card** — Shows the upcoming session: watch the video recap, then review the slides which set the stage and open the discussion. After the session, find related podcasts and resources.
+- **Next Meeting card** — Shows the upcoming session: watch the video primer, then review the slides which set the stage and open the discussion. After the session, find related podcasts and resources.
 - **The Archive** — Past sessions with all their materials. Click "Meeting Notes" to read the session notes and materials.
 - **Knowledge Base** — Reference docs: glossary of terms, design principles, and AI prompt templates.
 - **The Horizon** — Planned sessions that aren't yet scheduled.

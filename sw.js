@@ -1,5 +1,4 @@
-// Bump this string on every deploy to invalidate cached JS/CSS for existing users.
-const CACHE = 'v2';
+const CACHE = 'v3';
 const PRECACHE = [
   '/',
   '/index.html',
@@ -22,6 +21,15 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request))
+    caches.match(event.request).then(cached => {
+      const fetchPromise = fetch(event.request).then(response => {
+        if (response.ok) {
+          const cloned = response.clone();
+          caches.open(CACHE).then(cache => cache.put(event.request, cloned));
+        }
+        return response;
+      }).catch(() => cached);
+      return cached || fetchPromise;
+    })
   );
 });
