@@ -159,18 +159,19 @@
 
         // Shared rendering constants
         const PODCAST_CONFIG = {
-            'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive' },
-            'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique' },
-            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate' },
+            'deep-dive': { icon: '🎙', color: 'var(--spectrum-3)', label: 'Deep Dive', title: 'An in-depth solo exploration of the session topic' },
+            'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
+            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate',    title: 'A structured debate between two design perspectives' },
         };
 
         const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
 
         function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
-            const rows = [];
+            const primaryRows = [];
+            const podcastRows = [];
 
             if (meeting.video && isSafeAssetPath(meeting.video.file)) {
-                rows.push(`
+                primaryRows.push(`
                     <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical">
                         <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
@@ -186,7 +187,7 @@
                     .forEach(alt => {
                         if (!isSafeAssetPath(alt.file)) return;
                         const altIcon = alt.file.endsWith('.mp4') ? '🎬' : '🎙';
-                        rows.push(`
+                        primaryRows.push(`
                     <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-alternate">
                         <a href="${escapeHTML(alt.file)}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${altIcon}</span>
@@ -199,7 +200,7 @@
                     </div>`);
                     });
             } else if (includePlaceholders) {
-                rows.push(`
+                primaryRows.push(`
                     <div class="asset-row opacity-50">
                         <span class="asset-link cursor-default">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
@@ -209,18 +210,19 @@
             }
 
             if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
-                rows.push(`
+                primaryRows.push(`
                     <div class="asset-row">
                         <a href="${buildOfficeViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
                             ${escapeHTML(meeting.slides.label)}
+                            <span class="text-[0.6875rem] text-muted ml-1" aria-label="Opens in Office Online">↗</span>
                         </a>
                         <a href="${escapeHTML(meeting.slides.file)}" download
                            aria-label="Download slides — ${escapeHTML(meeting.session)}"
                            class="asset-dl">${DL_ICON}</a>
                     </div>`);
             } else if (includePlaceholders) {
-                rows.push(`
+                primaryRows.push(`
                     <div class="asset-row opacity-50">
                         <span class="asset-link cursor-default">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
@@ -233,13 +235,13 @@
                 .filter(p => p.variant !== 'alternate' && p.type !== 'alternate')
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
-                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type) };
-                    rows.push(`
+                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type), title: '' };
+                    podcastRows.push(`
                     <div class="asset-row">
                         <a href="${escapeHTML(pod.file)}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
                             ${escapeHTML(pod.label)}
-                            <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
+                            <span class="podcast-badge" style="color:${cfg.color}" title="${escapeHTML(cfg.title || '')}">${escapeHTML(cfg.label)}</span>
                         </a>
                         <a href="${escapeHTML(pod.file)}" download
                            aria-label="Download ${escapeHTML(pod.label)}"
@@ -259,7 +261,7 @@
                 </div>`
                 : '';
 
-            return { rows, resourceStrip };
+            return { primaryRows, podcastRows, resourceStrip };
         }
 
         function renderUpcomingMaterials() {
@@ -267,12 +269,15 @@
             if (!container) return;
             const meeting = MEETINGS.find(m => m.status === 'upcoming');
             if (!meeting) return;
-            const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
-            if (rows.length === 0 && !resourceStrip) {
+            const { primaryRows, podcastRows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: false });
+            if (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip) {
                 container.innerHTML = `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`;
                 return;
             }
-            container.innerHTML = rows.join('') + resourceStrip;
+            const podcastSection = podcastRows.length > 0
+                ? `<details class="podcast-disclosure"><summary>${podcastRows.length} audio format${podcastRows.length > 1 ? 's' : ''}</summary>${podcastRows.join('')}</details>`
+                : '';
+            container.innerHTML = primaryRows.join('') + podcastSection + resourceStrip;
         }
 
         function renderArchiveCards() {
@@ -287,7 +292,10 @@
                     : 'spectrum-2';
                 const accentColor = `var(--${safeColorKey})`;
 
-            const { rows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: true });
+                const { primaryRows, podcastRows, resourceStrip } = buildAssetRows(meeting, { includePlaceholders: true });
+                const podcastSection = podcastRows.length > 0
+                    ? `<details class="podcast-disclosure"><summary>${podcastRows.length} audio format${podcastRows.length > 1 ? 's' : ''}</summary>${podcastRows.join('')}</details>`
+                    : '';
 
                 const card = document.createElement('div');
                 card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
@@ -301,9 +309,29 @@
                         </div>
                         <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
                     </div>
-                    ${rows.join('')}
+                    ${primaryRows.join('')}
+                    ${podcastSection}
                     ${resourceStrip}
-                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link text-[11px] font-semibold uppercase tracking-[0.2em] hover:text-spectrum-1 mt-auto pt-3 flex items-center min-h-[44px] text-spectrum-2" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
+                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost mt-auto" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
+                `;
+
+                archiveContainer.appendChild(card);
+            });
+
+            MEETINGS.filter(m => m.status === 'draft').forEach(meeting => {
+                const card = document.createElement('div');
+                card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
+                card.style.cssText = 'border-top-color: var(--border-low); opacity: 0.6;';
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-5 gap-4">
+                        <div>
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)}</span>
+                            <h3 class="text-xl font-bold tracking-tight text-muted">Coming Soon</h3>
+                        </div>
+                        <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-muted px-2 py-1" style="border: 1px solid var(--text-muted)">Planned</span>
+                    </div>
+                    <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>
                 `;
 
                 archiveContainer.appendChild(card);
@@ -432,8 +460,13 @@
                 content.innerHTML = `
                     <div class="py-12 text-center">
                         <p class="text-sm uppercase tracking-widest text-muted mb-4">Document unavailable.</p>
-                        <a href="#" class="text-sm uppercase tracking-widest underline">Return to Dashboard</a>
+                        <div class="flex gap-4 justify-center">
+                            <button id="retry-load" class="text-sm uppercase tracking-widest text-spectrum-2 underline">Try again</button>
+                            <a href="#" class="text-sm uppercase tracking-widest text-muted underline">Return to Dashboard</a>
+                        </div>
                     </div>`;
+                const retryBtn = content.querySelector('#retry-load');
+                if (retryBtn) retryBtn.addEventListener('click', () => loadPage(path));
                 readerStatus.textContent = 'Document unavailable.';
             } finally {
                 content.setAttribute('aria-busy', 'false');

@@ -305,6 +305,51 @@
 
         .hidden-view { display: none !important; }
 
+        /* Ghost button — archive Meeting Notes link */
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--spectrum-2);
+            border: 1px solid var(--wash-2-border);
+            padding: 8px 16px;
+            min-height: 44px;
+            transition: color 0.15s, border-color 0.15s, background-color 0.15s;
+        }
+        .btn-ghost:hover {
+            color: var(--spectrum-1);
+            border-color: var(--wash-2-strong-border);
+            background-color: var(--wash-2);
+        }
+
+        /* Podcast progressive disclosure */
+        .podcast-disclosure {
+            border-top: 1px solid var(--border-low);
+        }
+        .podcast-disclosure summary {
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 8px 0;
+            min-height: 44px;
+            user-select: none;
+        }
+        .podcast-disclosure summary::-webkit-details-marker { display: none; }
+        .podcast-disclosure summary::after {
+            content: '▾';
+            font-size: 0.75rem;
+            color: var(--spectrum-3);
+            margin-left: auto;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .card, .btn, a { transition: none !important; }
             .card:hover { transform: none; }
@@ -338,7 +383,7 @@
             <section class="card p-6 md:p-8 border-t-4 border-spectrum-2">
                 <div class="flex justify-between items-start mb-6 gap-4">
                     <div>
-                        <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02</span>
+                        <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02 &bull; 15 May 26</span>
                         <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Deep Modules &amp; Complexity Sink</h2>
                     </div>
                     <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest bg-spectrum-2 text-white px-3 py-1">Upcoming</span>
@@ -423,7 +468,7 @@
     </div>
 
     <footer id="site-footer" class="py-8 text-center" style="border-top: 1px solid var(--border-low);">
-        <p class="text-[0.6875rem] font-semibold text-muted">Actionable Philosophy Book Club &bull; Spare Time Excellence &bull; 2026</p>
+        <p class="text-[0.6875rem] font-semibold text-muted">Actionable Philosophy Book Club &bull; 2026</p>
     </footer>
 
     <script src="dist/app.js"></script>
