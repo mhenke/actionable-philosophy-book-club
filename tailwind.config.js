@@ -1,6 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['index.html'],
+  safelist: [
+    'animate-pulse',
+    'cursor-default',
+    'gap-3',
+    'hover:text-spectrum-1',
+    'mb-4',
+    'mb-5',
+    'ml-auto',
+    'mt-auto',
+    'opacity-50',
+    'pt-3',
+    'px-2',
+    'py-12',
+    'text-xl',
+    'tracking-[0.25em]',
+    'tracking-wider',
+  ],
   theme: {
     extend: {
       colors: {

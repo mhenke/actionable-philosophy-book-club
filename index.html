@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none'; frame-ancestors 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
     <meta name="description" content="Meeting notes, recordings, and discussion guides for A Philosophy of Software Design book club.">
     <meta property="og:title" content="Actionable Philosophy Book Club">
@@ -11,6 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mhenke.github.io/actionable-philosophy-book-club/">
     <link rel="stylesheet" href="dist/tailwind.css">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <script defer
       src="https://cdn.jsdelivr.net/npm/marked@5.1.2/marked.min.js"
       integrity="sha384-tP9zQHkeb4OfJ9PanaUpV7hxoPxP8KY4mYVYu+FK51pzcM3/idOlmVlA4kPO2SL2"
@@ -210,7 +211,7 @@
         }
 
         /* Reader */
-        .prose { max-width: 75ch; margin: 0 auto; color: var(--text-primary); }
+        .prose { color: var(--text-primary); }
         .prose h1 { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 2.5rem; color: var(--banner); }
         .prose h2 { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; margin-top: 3.5rem; border-top: 1px solid var(--banner); padding-top: 1.25rem; margin-bottom: 1.25rem; }
         .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; padding-top: 0.5rem; color: var(--spectrum-1); border-top: 1px solid var(--prose-h3-border); }
@@ -419,8 +420,5 @@
     </footer>
 
     <script src="dist/app.js"></script>
-</body>
-</html>
-ipt>
 </body>
 </html>
