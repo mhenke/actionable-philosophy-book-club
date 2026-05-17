@@ -495,7 +495,23 @@
                         // Relative asset link — rewrite to repo-root-relative path so it
                         // resolves correctly regardless of deployment subdirectory.
                         if (isSafeAssetPath(repoPath)) {
-                            link.setAttribute('href', repoPath);
+                            if (/\.pptx?$/i.test(repoPath)) {
+                                link.setAttribute('href', buildOfficeViewerURL(repoPath));
+                                link.setAttribute('target', '_blank');
+                                link.setAttribute('rel', 'noopener noreferrer');
+                            } else if (/\.(png|jpe?g|gif|svg|webp)$/i.test(repoPath)) {
+                                link.setAttribute('href', repoPath);
+                                link.setAttribute('target', '_blank');
+                                link.setAttribute('rel', 'noopener noreferrer');
+                            } else if (/\.mp4$/i.test(repoPath)) {
+                                link.setAttribute('href', repoPath);
+                                link.addEventListener('click', (e) => {
+                                    e.preventDefault();
+                                    openVideoPlayer(repoPath, link.textContent.trim() || repoPath);
+                                });
+                            } else {
+                                link.setAttribute('href', repoPath);
+                            }
                         } else {
                             link.removeAttribute('href');
                             link.setAttribute('aria-disabled', 'true');
@@ -509,7 +525,7 @@
                 }
 
                 content.querySelectorAll('h2').forEach(h2 => {
-                    if (/session materials/i.test(h2.textContent)) {
+                    if (/meeting materials/i.test(h2.textContent)) {
                         // Convention defined in docs/content-contract.md — transforms the file tree under this heading.
                         let el = h2.nextElementSibling;
                         while (el && el.tagName !== 'H2') {
