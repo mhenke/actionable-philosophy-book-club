@@ -271,8 +271,8 @@
             const videoCount = safePodcasts.filter(p => p.type === 'alternate').length;
             const podcastCount = safePodcasts.filter(p => p.type !== 'alternate').length;
             const summaryParts = [];
-            if (videoCount > 0) summaryParts.push(`🎬 ${videoCount} Video${videoCount > 1 ? 's' : ''}`);
-            if (podcastCount > 0) summaryParts.push(`🎧 ${podcastCount} Podcast${podcastCount > 1 ? 's' : ''}`);
+            if (videoCount > 0) summaryParts.push(`${videoCount} Video${videoCount > 1 ? 's' : ''}`);
+            if (podcastCount > 0) summaryParts.push(`${podcastCount} Podcast${podcastCount > 1 ? 's' : ''}`);
             const podcastSummary = summaryParts.join(' · ');
 
             return { primaryRows, podcastRows, resourceStrip, podcastSummary };
