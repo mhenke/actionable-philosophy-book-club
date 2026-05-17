@@ -629,6 +629,9 @@
             const startBtn = document.getElementById('vp-start-btn');
             if (!overlay || !video) return;
 
+            // preserve and restore focus for accessibility
+            const lastFocusBeforeVideo = document.activeElement;
+
             title.textContent = label || filePath;
             video.src = filePath;
             video.load();
@@ -660,6 +663,10 @@
                 video.removeAttribute('src');
                 video.load();
                 overlay.close();
+                // restore previous focus when closing the overlay
+                if (lastFocusBeforeVideo && typeof lastFocusBeforeVideo.focus === 'function') {
+                    try { lastFocusBeforeVideo.focus(); } catch(e) { /* ignore */ }
+                }
                 if (videoPlayerCleanup) {
                     videoPlayerCleanup();
                     videoPlayerCleanup = null;
@@ -911,7 +918,8 @@
                 #cmd-palette .cp-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border: none; outline: none; font-size: 16px; }
                 #cmd-palette .cp-list { max-height: 320px; overflow: auto; margin: 0; padding: 0; list-style: none; }
                 #cmd-palette .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid rgba(0,0,0,0.04); }
-                #cmd-palette .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.04); }
+                #cmd-palette .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.12); }
+                #cmd-palette .cp-item:focus { outline: 2px solid var(--spectrum-3); outline-offset: -2px; }
                 #cmd-palette .cp-meta { color: #666; font-size: 13px; }
                 #cmd-palette .cp-right { min-width:120px; text-align:right; color:#666; font-size:13px; }
                 #cmd-palette .cp-id { font-weight:600; }
@@ -1035,8 +1043,11 @@
                     li.setAttribute('role','option');
                     li.dataset.index = i;
                     if (i===0) li.setAttribute('aria-selected','true');
+                    // make item programmatically focusable for keyboard focus-trap
+                    li.tabIndex = -1;
                     li.innerHTML = `<div style="flex:1"><span class="cp-id">${escapeHtml(m.id)}</span> <span class="cp-meta cp-title">— ${escapeHtml(m.title||m.name||'')}</span></div><div class="cp-right"><div>${m.date?escapeHtml(formatDate(m.date)) : ''}</div><div class="cp-meta">${m.status?escapeHtml(m.status):''}</div></div>`;
                     li.addEventListener('click', () => activateIndex(i));
+                    li.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateIndex(i); } });
                     list.appendChild(li);
                 }
             }
@@ -1109,6 +1120,26 @@
             // clicking outside closes
             overlay.addEventListener('mousedown', (ev) => {
                 if (ev.target === overlay) closePalette();
+            });
+
+            // Focus trap: keep Tab cycling between input and list items
+            overlay.addEventListener('keydown', (ev) => {
+                if (!overlay.classList.contains('p--open')) return;
+                if (ev.key !== 'Tab') return;
+                const items = Array.from(list.querySelectorAll('.cp-item')).filter(it => it.getAttribute('aria-disabled') !== 'true');
+                const first = input;
+                const last = items.length ? items[items.length-1] : null;
+                if (ev.shiftKey) {
+                    if (document.activeElement === first) {
+                        ev.preventDefault();
+                        if (last) { selected = items.length-1; updateSelection(items); last.tabIndex = 0; last.focus(); last.tabIndex = -1; }
+                    }
+                } else {
+                    if (last && document.activeElement === last) {
+                        ev.preventDefault();
+                        input.focus();
+                    }
+                }
             });
 
             // seed with top meetings
