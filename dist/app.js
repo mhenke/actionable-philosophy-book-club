@@ -791,8 +791,9 @@
             showDashboard();
         });
 
-        // Esc key returns to dashboard from reader view, or closes video player
+        // Key handlers: Esc returns to dashboard; when reader open, support prev/next with ArrowLeft/ArrowRight and J/K
         document.addEventListener('keydown', e => {
+            // Close video overlay on Escape
             if (e.key === 'Escape') {
                 const vp = document.getElementById('video-player-overlay');
                 if (vp && vp.classList.contains('vp--open')) {
@@ -803,6 +804,34 @@
                 if (!reader.classList.contains('hidden-view')) {
                     window.location.hash = '';
                     showDashboard();
+                }
+                return;
+            }
+
+            // Reader navigation: left/right arrows and j/k (when not focused on input/textarea)
+            const active = document.activeElement;
+            const isTyping = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+            if (isTyping) return;
+            if (!reader.classList.contains('hidden-view')) {
+                // find current meeting index from hash
+                function getCurrentIndex(){
+                    const hash = window.location.hash;
+                    if (!hash.startsWith('#p=')) return -1;
+                    const path = decodeURIComponent(hash.slice(3));
+                    return MEETINGS.findIndex(m=>m.readmeUrl===path);
+                }
+                const idx = getCurrentIndex();
+                if (idx !== -1) {
+                    if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'j') {
+                        const next = MEETINGS[idx+1];
+                        if (next && next.readmeUrl) { window.location.hash = '#p=' + encodeURIComponent(next.readmeUrl); }
+                        return;
+                    }
+                    if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'k') {
+                        const prev = MEETINGS[idx-1];
+                        if (prev && prev.readmeUrl) { window.location.hash = '#p=' + encodeURIComponent(prev.readmeUrl); }
+                        return;
+                    }
                 }
             }
         });
@@ -871,6 +900,10 @@
                 #cmd-palette .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid rgba(0,0,0,0.04); }
                 #cmd-palette .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.04); }
                 #cmd-palette .cp-meta { color: #666; font-size: 13px; }
+                #cmd-palette .cp-right { min-width:120px; text-align:right; color:#666; font-size:13px; }
+                #cmd-palette .cp-id { font-weight:600; }
+                #cmd-palette .cp-title { color:#333; margin-left:6px; }
+                .cp-sr { position: absolute !important; left: -9999px !important; }
                 @media (prefers-reduced-motion: reduce) { #cmd-palette { transition: none; } }
             `;
             document.head.appendChild(style);
@@ -883,6 +916,7 @@
                 <div id="cmd-palette" role="dialog" aria-modal="true" aria-label="Command palette">
                     <input class="cp-input" placeholder="Jump to meeting by id or title (Cmd/Ctrl+K)" aria-label="Search meetings" />
                     <ul class="cp-list" role="listbox" aria-label="Search results"></ul>
+                    <div id="cp-count" class="cp-sr" aria-live="polite"></div>
                 </div>
             `;
             document.body.appendChild(overlay);
@@ -912,14 +946,61 @@
 
             function normalize(s){ return (s||'').toString().toLowerCase(); }
             function scoreMatch(q, m){
-                // simple scoring: id prefix > id contains > title contains
+                // Balanced weighted scoring with trigram fallback
                 if (!q) return 1;
-                const id = normalize(m.id);
+                const id = normalize(m.id || '');
                 const title = normalize(m.title || m.name || '');
-                if (id.startsWith(q)) return 5;
-                if (id.includes(q)) return 4;
-                if (title.includes(q)) return 3;
-                return 0;
+                let score = 0;
+
+                // Exact and prefix matches are very strong signals
+                if (id === q) score += 300;
+                else if (id.startsWith(q)) score += 180;
+                else if (id.includes(q)) score += 120;
+
+                // Title matches (word matches are stronger)
+                const qWords = q.split(/\s+/).filter(Boolean);
+                for (const w of qWords) {
+                    if (title === w) score += 120;
+                    else if (title.startsWith(w)) score += 90;
+                    else if (title.includes(w)) score += 60;
+                }
+
+                // Boost upcoming or recent meetings slightly
+                if (m.status && (m.status === 'upcoming' || m.status === 'next' || m.status === 'featured')) score += 20;
+
+                // Short-id fuzzy: allow small typos via trigram similarity
+                if (score === 0) {
+                    const sim = trigramSimilarity(id + ' ' + title, q);
+                    score += Math.round(sim * 150); // scale similarity to score
+                }
+
+                return score;
+
+                // Local helper: trigram similarity (simple, fast, tolerant)
+                function trigrams(s){
+                    const t = [];
+                    const ss = ('  ' + (s||'') + '  ').replace(/\s+/g,' ');
+                    for (let i=0;i<ss.length-2;i++) t.push(ss.slice(i,i+3));
+                    return t;
+                }
+                function trigramSimilarity(a,b){
+                    if (!a || !b) return 0;
+                    const A = trigrams(a);
+                    const B = trigrams(b);
+                    const As = new Set(A);
+                    let inter = 0;
+                    for (const x of B) if (As.has(x)) inter++;
+                    const union = As.size + B.length - inter;
+                    return union === 0 ? 0 : inter / union;
+                }
+            }
+
+            // Helpers: small escape and date formatter
+            function escapeHtml(s){
+                return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+            }
+            function formatDate(d){
+                try{ const dt = new Date(d); if (isNaN(dt)) return ''; return dt.toLocaleDateString(); }catch(e){return '';}
             }
 
             function renderResults(listItems){
@@ -941,7 +1022,7 @@
                     li.setAttribute('role','option');
                     li.dataset.index = i;
                     if (i===0) li.setAttribute('aria-selected','true');
-                    li.innerHTML = `<div style="flex:1"><strong>${m.id}</strong> <span class="cp-meta">— ${m.title||m.name||''}</span></div>`;
+                    li.innerHTML = `<div style="flex:1"><span class="cp-id">${escapeHtml(m.id)}</span> <span class="cp-meta cp-title">— ${escapeHtml(m.title||m.name||'')}</span></div><div class="cp-right"><div>${m.date?escapeHtml(formatDate(m.date)) : ''}</div><div class="cp-meta">${m.status?escapeHtml(m.status):''}</div></div>`;
                     li.addEventListener('click', () => activateIndex(i));
                     list.appendChild(li);
                 }
@@ -977,7 +1058,21 @@
                 const items = Array.from(list.querySelectorAll('.cp-item'));
                 if (e.key === 'ArrowDown') { e.preventDefault(); selected = Math.min(selected+1, items.length-1); updateSelection(items); }
                 else if (e.key === 'ArrowUp') { e.preventDefault(); selected = Math.max(selected-1, 0); updateSelection(items); }
-                else if (e.key === 'Enter') { e.preventDefault(); activateIndex(selected); }
+                else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (e.shiftKey) {
+                        // open in new tab (Shift+Enter)
+                        const m = results[selected];
+                        if (m && m.readmeUrl) {
+                            // open as absolute URL preserving hash
+                            const url = window.location.href.split('#')[0] + '#p=' + encodeURIComponent(m.readmeUrl);
+                            window.open(url, '_blank');
+                            closePalette();
+                        }
+                    } else {
+                        activateIndex(selected);
+                    }
+                }
                 else if (e.key === 'Escape') { e.preventDefault(); closePalette(); }
             });
 
