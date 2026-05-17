@@ -59,9 +59,11 @@
                 color: 'spectrum-1',
                 wash: '--wash-1',
                 readmeUrl: 'meetings/meeting-00/README.md',
-                video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Primer', variant: 'canonical' },
+                video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Primer', variant: 'canonical', duration: 52, fileSize: 11.5 },
                 slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slides', variant: 'canonical' },
-                podcasts: [],
+                podcasts: [
+                    { type: 'deep-dive', label: 'Deep Dive Discussion', file: 'meetings/meeting-00/podcast-deepdive.m4a', duration: 45, fileSize: 120 }
+                ],
                 resources: []
             },
             {

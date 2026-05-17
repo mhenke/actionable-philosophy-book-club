@@ -19,4 +19,36 @@ test.describe('Manifest Rendering', () => {
         await expect(page.locator('#archive-cards-container')).not.toContainText('meeting-04');
     });
 
+    test('manifest loads with duration and fileSize fields', async ({ page }) => {
+        await page.goto('/');
+        
+        // Verify dashboard renders (manifest is valid)
+        const upcoming = await page.locator('#upcoming-materials-container');
+        await expect(upcoming).toBeVisible();
+        
+        // Verify meeting-00 is present
+        const meeting00 = await page.locator('text=/Meeting 00/');
+        await expect(meeting00).toBeVisible();
+        
+        // Verify meeting-00 has duration and fileSize in video object
+        const meeting00Data = await page.evaluate(() => {
+            const meeting = window.MEETINGS.find(m => m.id === 'meeting-00');
+            return {
+                id: meeting.id,
+                videoDuration: meeting.video?.duration,
+                videoFileSize: meeting.video?.fileSize,
+                podcastsCount: meeting.podcasts?.length || 0,
+                firstPodcastDuration: meeting.podcasts?.[0]?.duration,
+                firstPodcastFileSize: meeting.podcasts?.[0]?.fileSize
+            };
+        });
+        
+        expect(meeting00Data.id).toBe('meeting-00');
+        expect(meeting00Data.videoDuration).toBe(52);
+        expect(meeting00Data.videoFileSize).toBe(11.5);
+        expect(meeting00Data.podcastsCount).toBeGreaterThan(0);
+        expect(meeting00Data.firstPodcastDuration).toBe(45);
+        expect(meeting00Data.firstPodcastFileSize).toBe(120);
+    });
+
 });
