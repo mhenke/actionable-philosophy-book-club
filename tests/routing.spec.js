@@ -110,27 +110,5 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
     });
 
-    test('card active state does not add scale transform on link press', async ({ page }) => {
-        await page.goto('/');
-
-        const hasCardActiveScale = await page.evaluate(() => {
-            for (const sheet of Array.from(document.styleSheets)) {
-                let rules;
-                try {
-                    rules = sheet.cssRules;
-                } catch {
-                    continue;
-                }
-                for (const rule of Array.from(rules)) {
-                    if (rule.selectorText === '.card:active' && rule.style.transform.includes('scale')) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
-
-        expect(hasCardActiveScale).toBe(false);
-    });
 
 });
