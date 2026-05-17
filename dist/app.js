@@ -165,7 +165,7 @@
         }
 
         const RAW_CONTENT_BASE = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
-        function buildOfficeViewerURL(path) {
+        function buildPPTXViewerURL(path) {
             if (!isSafeAssetPath(path)) return '#';
             return 'https://docs.google.com/viewer?url=' + encodeURIComponent(RAW_CONTENT_BASE + path);
         }
@@ -217,7 +217,7 @@
             if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
                 primaryRows.push(`
                     <div class="asset-row">
-                        <a href="${buildOfficeViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link">
+                        <a href="${buildPPTXViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
                             ${escapeHTML(meeting.slides.label)}
                         </a>
@@ -496,7 +496,7 @@
                         // resolves correctly regardless of deployment subdirectory.
                         if (isSafeAssetPath(repoPath)) {
                             if (/\.pptx?$/i.test(repoPath)) {
-                                link.setAttribute('href', buildOfficeViewerURL(repoPath));
+                                link.setAttribute('href', buildPPTXViewerURL(repoPath));
                                 link.setAttribute('target', '_blank');
                                 link.setAttribute('rel', 'noopener noreferrer');
                             } else if (/\.(png|jpe?g|gif|svg|webp)$/i.test(repoPath)) {
