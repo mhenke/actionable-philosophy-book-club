@@ -167,7 +167,7 @@
         const RAW_CONTENT_BASE = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
         function buildOfficeViewerURL(path) {
             if (!isSafeAssetPath(path)) return '#';
-            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(RAW_CONTENT_BASE + path);
+            return 'https://docs.google.com/viewer?url=' + encodeURIComponent(RAW_CONTENT_BASE + path);
         }
 
         function isSafeAssetPath(path) {
