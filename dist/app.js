@@ -363,9 +363,9 @@
                         <span class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-widest px-2 py-1" style="border:1px solid var(--text-muted);color:var(--text-muted)">Done</span>
                     </div>
                     ${primaryRows.join('')}
-                    ${podcastSection}
                     ${resourceStrip}
                     <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost mt-auto" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
+                    ${podcastSection}
                 `;
 
                 fragment.appendChild(card);
@@ -905,7 +905,7 @@
                     copyLinkBtn.setAttribute('aria-label', 'Link copied!');
                     copyLinkBtn.title = 'Copied!';
                     setTimeout(() => {
-                        copyLinkBtn.setAttribute('aria-label', 'Copy link to these session notes');
+                        copyLinkBtn.setAttribute('aria-label', 'Copy link');
                         copyLinkBtn.title = 'Copy link';
                     }, CONFIG.HIGHLIGHT_DURATION_MS);
                 } catch (err) {

@@ -6,10 +6,10 @@
 A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software Design." This session explored the "Complexity Waterfall"—identifying the symptoms of unknown unknowns and cognitive load—and established the critical distinction between tactical speed and strategic depth.
 
 ## Agenda (60 Minutes)
-1. **Refresher Video (5-10 min):** ["The Architects of Complexity"](recordings/01-The-Architects-of-Complexity.mp4) — visualizing the shallow vs. deep module gap.
-2. **Discussion (30 min):** Core debate on "Classitis" and why small functions aren't always clean. — [Slides](slides/01-Architecting-Deep-Systems.pptx)
+1. **Refresher Video (5-10 min):** Visualizing the shallow vs. deep module gap. [Video Primer](recordings/01-The-Architects-of-Complexity.mp4)
+2. **Discussion (30 min):** Core debate on "Classitis" and why small functions aren't always clean. [Slides](slides/01-Architecting-Deep-Systems.pptx)
 3. **Wrap-up (Last 10 min):**
-   - **Future Planning:** Decide next meeting reading/topic. — [Choose Your Adventure](resources/01-choose-your-adventure.png)
+   - **Future Planning:** Decide next meeting reading/topic. [Choose Your Adventure](resources/01-choose-your-adventure.png)
    - **Retrospective:** Moving beyond tactical tornados in our PRs.
 
 ## Discussion Points

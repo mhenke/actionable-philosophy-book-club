@@ -80,8 +80,18 @@ See the [asset-compressor skill](asset-compressor.skill) for full compression an
 
 ## 📐 Architecture Decision Records
 
-Key design decisions are documented in [docs/adr/](docs/adr/):
+Key design decisions are documented in **[docs/adr/](docs/adr/)**.
 
-- **[ADR-0001](docs/adr/0001-powerpoint-viewer-selection.md)** — PowerPoint Viewer Selection (Microsoft Office Online)
-- **[ADR-0002](docs/adr/0002-single-page-reader.md)** — Single-Page Reader Architecture (partially superseded by ADR-0003)
-- **[ADR-0003](docs/adr/0003-ci-environment-standardization.md)** — CI Environment Standardization (npm-based tooling for validation)
+| ADR | Title | Status |
+|---|---|---|
+| [0001](docs/adr/0001-powerpoint-viewer-selection.md) | PowerPoint Viewer Selection | Superseded |
+| [0002](docs/adr/0002-single-page-reader.md) | Single-Page Markdown Reader vs. Jekyll | Accepted |
+| [0003](docs/adr/0003-ci-environment-standardization.md) | CI Environment Standardization | Accepted |
+| [0004](docs/adr/0004-tailwind-css.md) | Tailwind CSS for Utility Styles | Accepted |
+| [0005](docs/adr/0005-markdown-rendering.md) | Markdown Rendering with `marked` + `DOMPurify` | Accepted |
+| [0006](docs/adr/0006-manifest-location.md) | MEETINGS Manifest Location | Superseded |
+| [0007](docs/adr/0007-command-palette-removal.md) | Command Palette Removed | Accepted |
+| [0008](docs/adr/0008-behavior-first-test-strategy.md) | Behavior-First Test Strategy | Accepted |
+| [0009](docs/adr/0009-plain-language-section-naming.md) | Plain Language Section Naming | Accepted |
+| [0010](docs/adr/0010-manifest-fetch-resilience.md) | Manifest Fetch Resilience | Accepted |
+| [0011](docs/adr/0011-prose-section-separators.md) | Prose Section Separators — Whitespace Over Borders | Accepted |

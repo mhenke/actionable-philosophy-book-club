@@ -32,7 +32,7 @@ Spectrum-tinted surface overlays used for highlighted content. All highlighted s
 ### Scale
 - **Section heading (h1 in prose):** 1.5rem mobile / 1.875rem desktop — matches the dashboard card heading scale (`text-2xl md:text-3xl`).
 - **Section label (h2 in prose, section headers on dashboard):** 0.8125rem (prose) / 0.625rem (dashboard), both uppercase with `letter-spacing: 0.2em`.
-- **Sub-section heading (h3 in prose):** 1rem, spectrum-1 color, light border-top divider.
+- **Sub-section heading (h3 in prose):** 1rem, spectrum-1 color, spectrum-5 border-top divider (2px).
 - **Body text (prose paragraphs):** 1.0625rem, line-height 1.7, text-muted color.
 - **UI text (asset links, buttons):** 0.875rem, text-primary color.
 - **Small labels (archive metadata, KB tiles, badges):** 0.6875–0.6875rem, uppercase, `letter-spacing: 0.2em`.
@@ -57,15 +57,41 @@ Dashboard and reader use the same header structure, same container constraints, 
 - **The Banner Bar:** Dark charcoal anchor, `max-w-6xl` constrained inner content aligned to the main container.
 - **The Spectrum Bar:** 6px linear gradient (Navy to Sage), always full gradient on both views.
 - **Section Dividers:** `.spectrum-rule` — same 6-stop spectrum gradient as the header bar, `max-width: 240px`, fading to transparent. Appears next to section heading labels on the dashboard.
-- **Borders:** All surface borders use `--border-low` (`rgb(34 34 34 / 0.06)`) — card edges, prose h2 dividers, file tree panel. One consistent weight.
+- **Borders:** All surface borders use `--border-low` (`rgb(34 34 34 / 0.06)`) — card edges, file tree panel. One consistent weight.
 - **Highlighted content (blockquotes, Key Takeaway on dashboard):** `--wash-1` background / `--border-low` border — near-neutral tint so the highlight does not compete with the primary CTA. Prose blockquotes in the reader use `--wash-2` / `--wash-2-border` (stronger tint is appropriate in a reading context).
 - **Material Cards:** Flat white, `--border-low` border, hover triggers `translateY(-2px)` + spectrum-3 shadow.
 
 ### Reader-Specific
-- Prose h2 and h3 have top border dividers — functional hierarchy within documents, not decoration.
+- **Prose h2:** No border. Section separation via `margin-top: 3.5rem` (56px) only. Uppercase tracked label is the visual anchor. See ADR-0011.
+- **Prose h3:** `border-top: 2px solid var(--spectrum-5)` — sub-section divider within an h2 section. Retained because nested sections benefit from a lighter visual divider at smaller scale.
+- **Reader header label:** Updates dynamically to reflect the document's H1 on each load; resets to "Session Notes" on dashboard return.
+- **Copy Link:** Icon-only button in the reader header. No text label — the link icon is self-sufficient; the `title` attribute handles discoverability.
 - Prose links are underlined — reading context convention.
 - Prose body text is larger (1.0625rem) than UI text (0.875rem) — intentional mode signal.
 - File tree (Meeting Materials) rendered in monospace with spectrum-3 connectors.
+
+### Dashboard Card Conventions
+
+**Content order within every meeting card** (upcoming and archive):
+1. Primary assets (video, slides)
+2. Resource thumbnails (PNG strip)
+3. Meeting Notes CTA / link
+4. Additional Resources (podcast disclosure)
+
+This order is consistent across card types. The upcoming card uses the same sequence as archive cards.
+
+**Session / date metadata:** Rendered as two visually distinct elements within a single line. Session identifier (`Meeting NN`) uses `font-semibold` at `text-primary` color. Date uses `font-normal` at `text-muted` color. Never concatenated into a single styled span.
+
+**Date format:** `DD Mon YYYY` (e.g., `13 May 2026`). 4-digit year required — 2-digit year is ambiguous alongside day numbers.
+
+**Status badges:**
+- **Upcoming:** Outline style, `spectrum-2` border and color.
+- **Done:** Outline style, `text-muted` border and color. Not filled — "Done" is archival context, not an action requiring emphasis.
+- **Planned** (Coming Up cards): Outline style, `text-muted` border and color.
+
+**Podcast disclosure chevron:** `spectrum-2` color in both open and closed states. Matches the summary label color for visual consistency.
+
+**Section visibility:** The "Coming Up" section is hidden entirely when no `draft` meetings exist in the manifest. Never render a section heading above an empty container.
 
 ### Dashboard Spacing Model
 
