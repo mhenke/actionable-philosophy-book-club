@@ -60,7 +60,7 @@ Open `dist/app.js` and find the `const MEETINGS = [...]` block (near the top, af
 {
     id: 'meeting-NN',
     session: 'Session NN',
-    date: 'DD Mon YY',
+    date: 'DD Mon YYYY',
     title: 'Your Session Title',
     status: 'upcoming',
     color: 'spectrum-2',

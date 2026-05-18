@@ -556,10 +556,8 @@
         </header>
 
         <main id="main-content" tabindex="-1" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto space-y-14 pb-24">
-            <h1 class="sr-only">Actionable Philosophy Book Club</h1>
-
-            <!-- Onboarding banner (moved into main for a11y + mobile UX) -->
-            <div id="onboarding-banner" class="hidden-view onboarding-banner" style="margin-bottom:1rem;">
+            <!-- Onboarding banner — first child so space-y-14 adds no top gap -->
+            <div id="onboarding-banner" class="hidden-view onboarding-banner">
                 <p>
                     <strong>New here?</strong>
                     Watch primers, download slides, and explore discussion audio for each session.
@@ -567,6 +565,8 @@
                 </p>
                 <button class="close-btn" id="onboarding-dismiss" aria-label="Dismiss welcome banner">&times;</button>
             </div>
+
+            <h1 class="sr-only">Actionable Philosophy Book Club</h1>
 
             <!-- Next Meeting — header + CTA rendered by renderUpcomingMaterials() from manifest -->
             <section class="card p-6 md:p-8" aria-labelledby="next-meeting-heading">

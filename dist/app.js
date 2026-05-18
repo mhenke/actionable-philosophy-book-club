@@ -302,7 +302,7 @@
                 headerContainer.innerHTML = `
                     <div class="flex justify-between items-start gap-4">
                         <div class="card-title">
-                            <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
+                            <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
                             <h2 id="next-meeting-heading" class="text-2xl md:text-3xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h2>
                         </div>
                         <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest px-2 py-1" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2);">Upcoming</span>
@@ -357,7 +357,7 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div class="card-title">
-                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
                             <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
                         </div>
                         <span class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-widest px-2 py-1" style="border:1px solid var(--text-muted);color:var(--text-muted)">Done</span>
@@ -397,7 +397,7 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div class="card-title">
-                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)}</span>
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
                             <h3 class="text-xl font-bold tracking-tight text-muted">Coming Soon</h3>
                         </div>
                         <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-muted px-2 py-1" style="border: 1px solid var(--text-muted)">Planned</span>
@@ -742,10 +742,10 @@
                 if (!link) return;
                 const dl = e.target.closest('.asset-dl');
                 if (dl) return; // Let download buttons behave normally
-                e.preventDefault();
 
                 const href = link.getAttribute('href');
-                if (!href || !isSafeAssetPath(href)) return;
+                if (!href || !isSafeAssetPath(href)) return; // External/Office URLs use natural link behaviour
+                e.preventDefault();
 
                 if (href.endsWith('.mp4')) {
                     const labelEl = link.querySelector('.asset-link-top') || link;
