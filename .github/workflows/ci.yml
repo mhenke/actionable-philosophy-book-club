@@ -36,15 +36,15 @@ jobs:
           for dir in meetings/meeting-*/; do
             id=$(basename "$dir")
             [[ "$id" == "meeting-99-new" ]] && continue
-            if ! grep -q "id: '${id}'" index.html dist/app.js 2>/dev/null; then
+            if ! grep -qE "\"id\": \"${id}\"|id: '${id}'" index.html dist/app.js docs/manifest.json 2>/dev/null; then
               echo "UNREGISTERED: $dir exists but '${id}' has no entry in the MEETINGS manifest"
-              echo "Add a MEETINGS entry in dist/app.js or remove the directory."
+              echo "Add a MEETINGS entry in docs/manifest.json or remove the directory."
               ERRORS=$((ERRORS + 1))
             fi
           done
           if [ "$ERRORS" -gt 0 ]; then
             echo ""
-            echo "Fix: Add entries for the above meeting IDs to the MEETINGS array in index.html."
+            echo "Fix: Add entries for the above meeting IDs to docs/manifest.json."
             echo "See CONTRIBUTING.md for the manifest schema."
             exit 1
           fi

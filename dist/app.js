@@ -94,8 +94,10 @@
         function formatDuration(seconds) {
             if (!Number.isFinite(seconds)) return '';
             const totalSeconds = Math.round(seconds);
-            const mins = Math.floor(totalSeconds / 60);
+            const hours = Math.floor(totalSeconds / 3600);
+            const mins = Math.floor((totalSeconds % 3600) / 60);
             const secs = totalSeconds % 60;
+            if (hours > 0) return `${hours}h ${mins}m`;
             return `${mins}m ${secs}s`;
         }
 
@@ -135,14 +137,14 @@
                 const videoDuration = meeting.video.duration ? formatDuration(meeting.video.duration) : '';
                 const videoSize = meeting.video.fileSize ? formatFileSize(meeting.video.fileSize) : '';
                 const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
-                const metaDisplay = videoMeta ? ` · ${videoMeta}` : '';
+                const metaSpan = videoMeta ? `<span class="font-normal text-[11px] tracking-wide" style="color:var(--text-muted)">${videoMeta}</span>` : '';
                 const videoSlug = meeting.video.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
                 const videoAssetId = `asset-${escapeHTML(meeting.id)}-video-${videoSlug}`;
                 primaryRows.push(`
                     <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" id="${videoAssetId}">
                         <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            ${escapeHTML(meeting.video.label)}${metaDisplay}
+                            ${escapeHTML(meeting.video.label)}${metaSpan}
                         </a>
                         <a href="${escapeHTML(meeting.video.file)}" download
                            aria-label="Download video — ${escapeHTML(meeting.session)}"
@@ -162,12 +164,12 @@
 
             if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
                 const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
-                const slidesMeta = slidesSize ? ` · ${slidesSize}` : '';
+                const slidesMetaSpan = slidesSize ? `<span class="font-normal text-[11px] tracking-wide" style="color:var(--text-muted)">${slidesSize}</span>` : '';
                 primaryRows.push(`
                     <div class="asset-row">
                         <a href="${buildPPTXViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            ${escapeHTML(meeting.slides.label)}${slidesMeta}
+                            ${escapeHTML(meeting.slides.label)}${slidesMetaSpan}
                         </a>
                         <a href="${escapeHTML(meeting.slides.file)}" download
                            aria-label="Download slides — ${escapeHTML(meeting.session)}"
@@ -190,7 +192,7 @@
                     const podDuration = pod.duration ? formatDuration(pod.duration) : '';
                     const podSize = pod.fileSize ? formatFileSize(pod.fileSize) : '';
                     const podMeta = [podDuration, podSize].filter(Boolean).join(' · ');
-                    const metaDisplay = podMeta ? ` · ${podMeta}` : '';
+                    const podMetaSpan = podMeta ? `<span class="font-normal text-[11px] tracking-wide" style="color:var(--text-muted)">${podMeta}</span>` : '';
                     const podSlug = pod.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
                     const podAssetId = `asset-${escapeHTML(meeting.id)}-podcast-${podSlug}`;
                     // Enhance accessibility: improve aria-label for download button with file type hint
@@ -201,7 +203,7 @@
                         <a href="${escapeHTML(pod.file)}" class="asset-link asset-link--stacked">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                                ${escapeHTML(pod.label)}${metaDisplay}
+                                ${escapeHTML(pod.label)}${podMetaSpan}
                                 <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
                             </span>
                             <span class="podcast-caption">${escapeHTML(cfg.title || '')}</span>
