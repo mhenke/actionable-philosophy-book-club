@@ -63,19 +63,64 @@ test.describe('Asset behaviour — what users actually do', () => {
         await expect(heading).not.toBeEmpty();
     });
 
-    test('asset copy comes from manifest registry', async ({ page }) => {
+    test('asset copy comes from fetched manifest registry', async ({ page }) => {
         const manifestPath = new URL('../docs/manifest.json', import.meta.url);
-        const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+        await page.route('**/docs/manifest.json', async route => {
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            manifest.assetCopy.alternate = {
+                label: 'Route Alternate Label',
+                title: 'Route Alternate Title'
+            };
+            manifest.assetCopy['deep-dive'] = {
+                label: 'Route Deep Dive Label',
+                title: 'Route Deep Dive Title'
+            };
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify(manifest)
+            });
+        });
 
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
 
         await page.locator('#upcoming-podcasts details').evaluate(el => { el.open = true; });
 
-        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy.alternate.label);
-        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy.alternate.title);
-        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy['deep-dive'].label);
-        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy['deep-dive'].title);
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Label');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Title');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Deep Dive Label');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Deep Dive Title');
+
+        const loadedCopy = await page.evaluate(() => window.ASSET_COPY);
+        expect(loadedCopy.alternate.label).toBe('Route Alternate Label');
+        expect(loadedCopy['deep-dive'].title).toBe('Route Deep Dive Title');
+    });
+
+    test('invalid asset copy registry surfaces a manifest error', async ({ page }) => {
+        const manifestPath = new URL('../docs/manifest.json', import.meta.url);
+
+        await page.route('**/docs/manifest.json', async route => {
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            manifest.assetCopy = {
+                alternate: {
+                    label: 'Route Alternate Label',
+                    title: 'Route Alternate Title'
+                }
+            };
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify(manifest)
+            });
+        });
+
+        await page.goto('/');
+
+        await expect(page.locator('#upcoming-card-header')).toContainText("Couldn't load sessions");
+        await expect(page.locator('#upcoming-card-header')).toContainText('asset copy registry');
+        await expect(page.locator('#upcoming-materials-container')).toBeEmpty();
     });
 
     test('archive cards render with Meeting Notes links', async ({ page }) => {

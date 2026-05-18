@@ -9,6 +9,62 @@
         let MEETINGS = [];
         let ASSET_COPY = {};
 
+        const DEFAULT_ASSET_COPY = Object.freeze({
+            alternate: {
+                label: 'Alternate Cut',
+                title: 'A companion recording of the session'
+            },
+            'deep-dive': {
+                label: 'Deep Dive',
+                title: 'A solo exploration of the session topic'
+            },
+            critique: {
+                label: 'Critique',
+                title: 'A critical analysis of the key arguments and trade-offs'
+            },
+            debate: {
+                label: 'Debate',
+                title: 'A structured debate between two design perspectives'
+            }
+        });
+
+        function validateAssetCopyRegistry(assetCopy) {
+            if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
+                throw new Error('Invalid manifest asset copy registry: expected an object.');
+            }
+
+            const expectedKeys = Object.keys(DEFAULT_ASSET_COPY);
+            const actualKeys = Object.keys(assetCopy);
+            const missing = expectedKeys.filter(key => !(key in assetCopy));
+            const extra = actualKeys.filter(key => !expectedKeys.includes(key));
+
+            if (missing.length || extra.length) {
+                const parts = [];
+                if (missing.length) parts.push(`missing ${missing.join(', ')}`);
+                if (extra.length) parts.push(`unexpected ${extra.join(', ')}`);
+                throw new Error(`Invalid manifest asset copy registry: ${parts.join('; ')}.`);
+            }
+
+            const registry = {};
+            expectedKeys.forEach(key => {
+                const entry = assetCopy[key];
+                if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+                    throw new Error(`Invalid manifest asset copy registry: assetCopy.${key} must be an object.`);
+                }
+                if (typeof entry.label !== 'string' || !entry.label.trim()) {
+                    throw new Error(`Invalid manifest asset copy registry: assetCopy.${key}.label must be a non-empty string.`);
+                }
+                if (typeof entry.title !== 'string' || !entry.title.trim()) {
+                    throw new Error(`Invalid manifest asset copy registry: assetCopy.${key}.title must be a non-empty string.`);
+                }
+                registry[key] = {
+                    label: entry.label,
+                    title: entry.title
+                };
+            });
+            return registry;
+        }
+
         async function loadManifest() {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 8000);
@@ -18,8 +74,9 @@
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
+                const assetCopy = validateAssetCopyRegistry(data.assetCopy);
                 MEETINGS = data.meetings;
-                ASSET_COPY = data.assetCopy && typeof data.assetCopy === 'object' ? data.assetCopy : {};
+                ASSET_COPY = assetCopy;
                 window.MEETINGS = MEETINGS;
                 window.ASSET_COPY = ASSET_COPY;
             } finally {
@@ -27,14 +84,16 @@
             }
         }
 
-        function showManifestError() {
+        function showManifestError(err) {
             const upcomingHeader = document.getElementById('upcoming-card-header');
             const upcomingMaterials = document.getElementById('upcoming-materials-container');
             const upcomingCta = document.getElementById('upcoming-cta');
             const archiveContainer = document.getElementById('archive-cards-container');
             const horizonContainer = document.getElementById('horizon-cards-container');
+            const message = err && err.message ? err.message : 'Manifest validation failed.';
             if (upcomingHeader) upcomingHeader.innerHTML = `
                 <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted mb-3">Couldn't load sessions</p>
+                <p class="text-xs leading-5 text-muted mb-3">${escapeHTML(message)}</p>
                 <button id="manifest-retry-btn" class="text-sm uppercase tracking-widest underline" style="color:var(--spectrum-2)">Tap to retry</button>`;
             if (upcomingMaterials) upcomingMaterials.innerHTML = '';
             if (upcomingCta) upcomingCta.innerHTML = '';
@@ -942,8 +1001,8 @@
                 renderUpcomingMaterials();
                 renderArchiveCards();
                 renderHorizonCards();
-            } catch (_) {
-                showManifestError();
+            } catch (err) {
+                showManifestError(err);
             }
 
             handleRoute();
