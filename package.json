@@ -14,7 +14,7 @@
   "devDependencies": {
     "@playwright/test": "^1.60.0",
     "dompurify": "^3.4.4",
-    "marked": "^15.0.12",
+    "marked": "^18.0.3",
     "tailwindcss": "3.4.17",
     "terser": "^5.47.1"
   }
