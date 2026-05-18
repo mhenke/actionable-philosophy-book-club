@@ -509,6 +509,7 @@
                 li.insertBefore(pre, li.firstChild);
                 const nested = li.querySelector(':scope > ul');
                 if (nested) renderFileTree(nested, childPrefix);
+                li.classList.add(nested ? 'tree-folder' : 'tree-file');
             });
         }
 

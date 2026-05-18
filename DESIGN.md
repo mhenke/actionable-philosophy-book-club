@@ -67,7 +67,7 @@ Dashboard and reader use the same header structure, same container constraints, 
 - **Reader header label:** Updates dynamically to reflect the document's H1 on each load; resets to "Session Notes" on dashboard return.
 - Prose links are underlined — reading context convention.
 - Prose body text is larger (1.0625rem) than UI text (0.875rem) — intentional mode signal.
-- File tree (Meeting Materials) rendered in monospace with spectrum-3 connectors.
+- **File tree (Meeting Materials):** Monospace panel, `line-height: 1.5`. Tree connectors in spectrum-3. Folder nodes (`.tree-folder`) get `font-weight: 600`, `text-primary` color — structural, not navigation targets. File nodes (`.tree-file`) get `font-weight: 400`, `spectrum-2` color — actionable. `renderFileTree()` tags each `li` with the appropriate class based on whether it has a child `ul`.
 
 ### Dashboard Card Conventions
 
