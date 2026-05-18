@@ -181,12 +181,12 @@
                 const videoAssetId = `asset-${escapeHTML(meeting.id)}-video-${videoSlug}`;
                 primaryRows.push(`
                     <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" data-canonical="true" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link" aria-label="Canonical video — ${escapeHTML(meeting.session)}">
+                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link" aria-label="${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} — ${escapeHTML(meeting.session)}">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                             ${escapeHTML(meeting.video.label)}${metaSpan}
                         </a>
                         <a href="${escapeHTML(meeting.video.file)}" download
-                           aria-label="Download video — ${escapeHTML(meeting.session)}"
+                           aria-label="Download ${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} — ${escapeHTML(meeting.session)}"
                            class="asset-dl">${DL_ICON}</a>
                     </div>`);
 
@@ -236,7 +236,7 @@
                     const podAssetId = `asset-${escapeHTML(meeting.id)}-podcast-${podSlug}`;
                     // Enhance accessibility: improve aria-label for download button with file type hint
                     const fileExt = pod.file.split('.').pop() || 'file';
-                    const downloadLabel = `Download ${escapeHTML(pod.label)} (${fileExt.toUpperCase()} audio)`;
+                    const downloadLabel = `Download ${escapeHTML(pod.label)}${podDuration ? ', ' + podDuration : ''} (${fileExt.toUpperCase()} audio)`;
                     podcastRows.push(`
                     <div class="asset-row" id="${podAssetId}">
                         <a href="${escapeHTML(pod.file)}" class="asset-link asset-link--stacked">

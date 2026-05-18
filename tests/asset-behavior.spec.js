@@ -31,12 +31,13 @@ test.describe('Asset behaviour — what users actually do', () => {
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
 
-        // The upcoming canonical video should have data-canonical="true" and its link should include "Canonical" in the accessible name
+        // The upcoming canonical video should have data-canonical="true" and its link should use the video label in the accessible name
         const canonical = page.locator('#upcoming-materials-container .asset-row[data-testid$="-canonical"]');
         await expect(canonical).toHaveAttribute('data-canonical', 'true');
         const link = canonical.locator('.asset-link');
         const name = await link.getAttribute('aria-label');
-        expect(name).toContain('Canonical');
+        expect(name).toBeTruthy();
+        expect(name).not.toContain('Canonical');
     });
 
     test('Meeting Notes CTA navigates to reader', async ({ page }) => {
