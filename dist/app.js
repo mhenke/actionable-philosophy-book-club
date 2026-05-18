@@ -100,7 +100,7 @@
         // Load meetings manifest from external JSON with fallback to inline data
         async function loadManifest() {
             try {
-                const response = await fetch('docs/manifest.json?t=' + Date.now());
+                const response = await fetch('docs/manifest.json');
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
@@ -1036,16 +1036,16 @@
             style.textContent = `
                 #cmd-palette-overlay { position: fixed; inset: 0; display: none; align-items: flex-start; justify-content: center; z-index: 9999; }
                 #cmd-palette-overlay.p--open { display: flex; }
-                #cmd-palette { margin-top: 8vh; width: min(720px, 92%); background: white; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; }
+                #cmd-palette { margin-top: 8vh; width: min(720px, 92%); background: var(--surface); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; }
                 #cmd-palette .cp-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border: none; outline: none; font-size: 16px; }
                 #cmd-palette .cp-list { max-height: 320px; overflow: auto; margin: 0; padding: 0; list-style: none; }
-                #cmd-palette .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid rgba(0,0,0,0.04); }
+                #cmd-palette .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid var(--border-low); }
                 #cmd-palette .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.12); }
                 #cmd-palette .cp-item:focus { outline: 2px solid var(--spectrum-3); outline-offset: -2px; }
-                #cmd-palette .cp-meta { color: #666; font-size: 13px; }
-                #cmd-palette .cp-right { min-width:120px; text-align:right; color:#666; font-size:13px; }
+                #cmd-palette .cp-meta { color: var(--text-muted); font-size: 13px; }
+                #cmd-palette .cp-right { min-width:120px; text-align:right; color: var(--text-muted); font-size:13px; }
                 #cmd-palette .cp-id { font-weight:600; }
-                #cmd-palette .cp-title { color:#333; margin-left:6px; }
+                #cmd-palette .cp-title { color: var(--text-primary); margin-left:6px; }
                 .cp-sr { position: absolute !important; left: -9999px !important; }
                 @media (prefers-reduced-motion: reduce) { #cmd-palette { transition: none; } }
             `;
