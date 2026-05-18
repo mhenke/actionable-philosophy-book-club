@@ -10,7 +10,7 @@ A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This
 2. **Discussion (30 min):** Identifying "pass-through methods" and "decorators" in our current codebase. [Slides](slides/02-the-complexity-case.pptx)
 3. **Wrap-up (Last 10 min):**
    - **Future Planning:** Decide next meeting reading/topic. [Choose Your Next Meeting](resources/02-choose-your-next-meeting.png)
-   - **Action Item Review:** Book club book thank you cards.
+   - **Action Item Review:** Book club book thank you cards, review web application.
 
 ## Discussion Points
 
@@ -31,6 +31,7 @@ A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design." This
 
 ## Action Items
 - [ ] Sign thank you card for books
+- [ ] Review web application
 
 ## Meeting Materials
 - [02-essential-questions.md](02-essential-questions.md)
