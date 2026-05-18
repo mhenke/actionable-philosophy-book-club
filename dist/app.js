@@ -161,7 +161,7 @@
         // Shared rendering constants
         const PODCAST_CONFIG = {
             'alternate': { icon: '🎬', color: 'var(--spectrum-2)', label: 'Video', title: 'An alternate recording of the session' },
-            'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)', label: 'Deep Dive', title: 'An in-depth solo exploration of the session topic' },
+            'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)', label: 'Deep Dive', title: 'A two-host exploration of the session topics' },
             'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
             'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate',    title: 'A structured debate between two design perspectives' },
         };
@@ -953,4 +953,3 @@
             });
 
         });
-
