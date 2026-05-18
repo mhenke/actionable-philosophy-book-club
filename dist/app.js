@@ -431,6 +431,21 @@
                 const repoPath = resolved.pathname.startsWith(siteRoot)
                     ? resolved.pathname.slice(siteRoot.length)
                     : resolved.pathname.slice(1);
+
+                // Handle folder links (trailing slash) by mapping to a README in that folder when possible
+                if (href.endsWith('/')) {
+                    const readmePath = repoPath.endsWith('/') ? repoPath + 'README.md' : repoPath + '/README.md';
+                    if (isSafeRepoPath(readmePath)) {
+                        // Route into the reader for the folder's README
+                        link.setAttribute('href', '#p=' + readmePath);
+                    } else {
+                        link.removeAttribute('href');
+                        link.setAttribute('aria-disabled', 'true');
+                        link.setAttribute('title', 'Link target is outside allowed directories');
+                    }
+                    return;
+                }
+
                 if (href.endsWith('.md')) {
                     if (!isSafeRepoPath(repoPath)) {
                         link.removeAttribute('href');
