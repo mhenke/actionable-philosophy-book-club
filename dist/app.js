@@ -247,7 +247,7 @@
             const podcastContainer = document.getElementById('upcoming-podcasts');
             if (!container) return;
             const meeting = MEETINGS.find(m => m.status === 'upcoming');
-            if (!meeting) return;
+            if (!meeting) { container.innerHTML = ''; return; }
             const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
             if (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip) {
                 container.innerHTML = `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`;
