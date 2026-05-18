@@ -29,38 +29,29 @@
         });
 
         function validateAssetCopyRegistry(assetCopy) {
+            const registry = { ...DEFAULT_ASSET_COPY };
             if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
-                throw new Error('Invalid manifest asset copy registry: expected an object.');
+                console.warn('Invalid manifest asset copy registry: expected an object. Falling back to defaults.');
+                return registry;
             }
 
             const expectedKeys = Object.keys(DEFAULT_ASSET_COPY);
-            const actualKeys = Object.keys(assetCopy);
             const missing = expectedKeys.filter(key => !(key in assetCopy));
-            const extra = actualKeys.filter(key => !expectedKeys.includes(key));
+            const extra = Object.keys(assetCopy).filter(key => !expectedKeys.includes(key));
 
             if (missing.length || extra.length) {
-                const parts = [];
-                if (missing.length) parts.push(`missing ${missing.join(', ')}`);
-                if (extra.length) parts.push(`unexpected ${extra.join(', ')}`);
-                throw new Error(`Invalid manifest asset copy registry: ${parts.join('; ')}.`);
+                console.warn(`Invalid manifest asset copy registry: ${[
+                    missing.length ? `missing ${missing.join(', ')}` : '',
+                    extra.length ? `unexpected ${extra.join(', ')}` : ''
+                ].filter(Boolean).join('; ')}. Falling back to defaults for missing entries.`);
             }
 
-            const registry = {};
             expectedKeys.forEach(key => {
                 const entry = assetCopy[key];
-                if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
-                    throw new Error(`Invalid manifest asset copy registry: assetCopy.${key} must be an object.`);
-                }
-                if (typeof entry.label !== 'string' || !entry.label.trim()) {
-                    throw new Error(`Invalid manifest asset copy registry: assetCopy.${key}.label must be a non-empty string.`);
-                }
-                if (typeof entry.title !== 'string' || !entry.title.trim()) {
-                    throw new Error(`Invalid manifest asset copy registry: assetCopy.${key}.title must be a non-empty string.`);
-                }
-                registry[key] = {
-                    label: entry.label,
-                    title: entry.title
-                };
+                if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return;
+                const label = typeof entry.label === 'string' && entry.label.trim() ? entry.label : DEFAULT_ASSET_COPY[key].label;
+                const title = typeof entry.title === 'string' && entry.title.trim() ? entry.title : DEFAULT_ASSET_COPY[key].title;
+                registry[key] = { label, title };
             });
             return registry;
         }
@@ -290,7 +281,7 @@
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
                     const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)' };
-                    const copy = ASSET_COPY[pod.type] && typeof ASSET_COPY[pod.type] === 'object' ? ASSET_COPY[pod.type] : {};
+                    const copy = ASSET_COPY[pod.type] && typeof ASSET_COPY[pod.type] === 'object' ? ASSET_COPY[pod.type] : DEFAULT_ASSET_COPY[pod.type] || {};
                     const label = copy.label || cfg.label || pod.type;
                     const title = copy.title || cfg.title || '';
                     const podDuration = pod.duration ? formatDuration(pod.duration) : '';
