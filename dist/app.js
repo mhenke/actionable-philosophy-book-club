@@ -720,7 +720,7 @@
                 const t = video.currentTime;
                 if (t > CONFIG.RESUME_MIN_SECONDS) {
                     try { sessionStorage.setItem(sessionKey, String(t)); } catch (_) {}
-                    localStorage.setItem(vpKey, String(t));
+                    try { localStorage.setItem(vpKey, String(t)); } catch (_) {}
                 }
             };
             const vpInterval = setInterval(saveProgress, CONFIG.PROGRESS_SAVE_MS);
@@ -736,6 +736,9 @@
                 video.removeAttribute('src');
                 video.load();
                 overlay.close();
+                if (window.location.hash.startsWith('#a=')) {
+                    history.replaceState(null, '', window.location.pathname + window.location.search);
+                }
                 // restore previous focus when closing the overlay
                 if (lastFocusBeforeVideo && typeof lastFocusBeforeVideo.focus === 'function') {
                     try { lastFocusBeforeVideo.focus(); } catch(e) { /* ignore */ }
@@ -899,7 +902,7 @@
             // Close video overlay on Escape
             if (e.key === 'Escape') {
                 const vp = document.getElementById('video-player-overlay');
-                if (vp && vp.classList.contains('vp--open')) {
+                if (vp && vp.open) {
                     const closeBtn = document.getElementById('vp-close');
                     if (closeBtn) closeBtn.click();
                     return;
