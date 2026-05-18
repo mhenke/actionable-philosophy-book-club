@@ -15,3 +15,4 @@ All architectural and design decisions for the Actionable Philosophy Book Club d
 | [0009](0009-plain-language-section-naming.md) | Plain Language Section Naming | Accepted |
 | [0010](0010-manifest-fetch-resilience.md) | Manifest Fetch Resilience | Accepted |
 | [0011](0011-prose-section-separators.md) | Prose Section Separators — Whitespace Over Borders | Accepted |
+| [0012](0012-copy-link-removal.md) | Copy Link Button Removed from Reader Header | Accepted |
