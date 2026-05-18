@@ -180,8 +180,8 @@
                 const videoSlug = meeting.video.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
                 const videoAssetId = `asset-${escapeHTML(meeting.id)}-video-${videoSlug}`;
                 primaryRows.push(`
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link">
+                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" data-canonical="true" id="${videoAssetId}">
+                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link" aria-label="Canonical video — ${escapeHTML(meeting.session)}">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                             ${escapeHTML(meeting.video.label)}${metaSpan}
                         </a>
@@ -731,6 +731,7 @@
             };
 
             const onClose = () => {
+                if (!overlay.open) return;
                 saveProgress();
                 video.pause();
                 video.removeAttribute('src');
@@ -851,7 +852,7 @@
             showDashboard();
         });
 
-        // Key handlers: Esc returns to dashboard; when reader open, support prev/next with ArrowLeft/ArrowRight and J/K
+        // Key handlers: when reader open, support prev/next with ArrowLeft/ArrowRight and J/K
         document.addEventListener('keydown', e => {
             // Close video overlay on Escape
             if (e.key === 'Escape') {
@@ -859,11 +860,6 @@
                 if (vp && vp.open) {
                     const closeBtn = document.getElementById('vp-close');
                     if (closeBtn) closeBtn.click();
-                    return;
-                }
-                if (!reader.classList.contains('hidden-view')) {
-                    window.location.hash = '';
-                    showDashboard();
                 }
                 return;
             }
