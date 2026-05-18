@@ -56,6 +56,8 @@
             --materials-panel-bg: rgb(34 34 34 / 0.025);
             --rule-start: rgb(75 163 199 / 0.30);
             --rule-end:   rgb(72 189 184 / 0.06);
+            /* Backdrop token for modal overlays — keeps them in the token system */
+            --overlay-backdrop: rgba(0, 0, 0, 0.85);
         }
         body {
             font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
@@ -65,7 +67,7 @@
             -webkit-font-smoothing: antialiased;
         }
         :focus-visible {
-            outline: 2px solid var(--spectrum-3);
+            outline: 2px solid var(--spectrum-2);
             outline-offset: 2px;
         }
         #main-content:focus,
@@ -185,7 +187,7 @@
             align-items: center;
             justify-content: center;
             padding: 8px;
-            color: var(--spectrum-3);
+            color: var(--spectrum-2);
             min-height: 44px;
             min-width: 44px;
             transition: color 0.15s, background-color 0.15s;
@@ -281,7 +283,7 @@
         }
         .materials-panel li { padding: 0; border: none; color: var(--text-primary); margin-bottom: 0; }
         .materials-panel ul { list-style-type: none !important; padding: 0 !important; margin: 0; }
-        .tree-connector { color: var(--spectrum-3); user-select: none; }
+        .tree-connector { color: var(--text-muted); user-select: none; }
         .materials-panel a { color: var(--spectrum-2); font-weight: 400; text-decoration: none; font-family: inherit; }
         .materials-panel a:hover  { color: var(--spectrum-1); text-decoration: underline; }
         .materials-panel a:active { opacity: 0.6; }
@@ -409,7 +411,10 @@
             opacity: 0;
             transform: translateY(0.5rem);
             transition: opacity 0.2s, transform 0.2s;
-            white-space: nowrap;
+            white-space: normal;
+            max-width: calc(100vw - 2rem);
+            text-align: center;
+            word-break: break-word;
         }
         .toast.toast--visible {
             opacity: 1;
@@ -461,7 +466,7 @@
             width: 100%;
         }
         #video-player-overlay::backdrop {
-            background: rgba(0, 0, 0, 0.85);
+            background: var(--overlay-backdrop);
         }
         .vp-header {
             display: flex;
@@ -541,13 +546,13 @@
 </head>
 <body>
     <a href="#main-content"
-       class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:px-4 focus:py-2 focus:bg-white focus:text-spectrum-1 focus:font-semibold focus:shadow-lg">
+       class="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:top-2 focus-visible:left-2 focus-visible:z-[200] focus-visible:px-4 focus-visible:py-2 focus-visible:bg-white focus-visible:text-spectrum-1 focus-visible:font-semibold focus-visible:shadow-lg">
         Skip to main content
     </a>
 
     <!-- Dashboard View -->
     <div id="dashboard-view">
-        <header class="sticky top-0 z-50">
+        <header class="sticky top-0 z-50" role="banner">
             <div class="banner-bar">
                 <div class="banner-inner">
                     <p class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</p>
@@ -644,7 +649,7 @@
 
     <!-- Reader View -->
     <div id="reader-view" class="hidden-view">
-        <header class="sticky top-0 z-50">
+        <header class="sticky top-0 z-50" role="banner">
             <nav class="banner-bar" aria-label="Reader navigation">
                 <div class="banner-inner">
                     <a href="#" id="back-to-dashboard" class="text-sm md:text-base swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]" title="Press Esc to return">

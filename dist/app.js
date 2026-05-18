@@ -160,8 +160,8 @@
 
         // Shared rendering constants
         const PODCAST_CONFIG = {
-            'alternate': { icon: '🎬', color: 'var(--spectrum-3)', label: 'Video', title: 'An alternate recording of the session' },
-            'deep-dive': { icon: '🔬', color: 'var(--spectrum-3)', label: 'Deep Dive', title: 'An in-depth solo exploration of the session topic' },
+            'alternate': { icon: '🎬', color: 'var(--spectrum-2)', label: 'Video', title: 'An alternate recording of the session' },
+            'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)', label: 'Deep Dive', title: 'An in-depth solo exploration of the session topic' },
             'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
             'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate',    title: 'A structured debate between two design perspectives' },
         };
@@ -695,6 +695,9 @@
                 const mins = Math.floor(savedTime / 60);
                 const secs = Math.floor(savedTime % 60);
                 resumeText.textContent = `Resume from ${mins}:${secs.toString().padStart(2, '0')}?`;
+                // Add contextual aria-labels for screen readers
+                try { if (resumeBtn && typeof resumeBtn.setAttribute === 'function') resumeBtn.setAttribute('aria-label', 'Resume ' + (label || filePath)); } catch(e) { /* ignore */ }
+                try { if (startBtn && typeof startBtn.setAttribute === 'function') startBtn.setAttribute('aria-label', 'Start ' + (label || filePath) + ' from the beginning'); } catch(e) { /* ignore */ }
                 resumeBar.style.display = 'flex';
                 resumeBtn.addEventListener('click', () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); }, { once: true });
                 startBtn.addEventListener('click', () => { clearVideoResumePosition(filePath); resumeBar.style.display = 'none'; video.play(); }, { once: true });
