@@ -38,6 +38,8 @@ A styled, expandable tree view with folder icons and file descriptors.
 
 These headings have no automated behavior; they're just readable structure for humans.
 
+**Empty section rule:** If a section has no content, either omit the heading entirely or write `None.` as the body. Never leave a heading with no content beneath it — it renders as a hanging label with nothing below it.
+
 ---
 
 ## Asset Link Format

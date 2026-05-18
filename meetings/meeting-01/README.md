@@ -30,7 +30,8 @@ A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software 
 *   *See full details in [01-non-obvious-insights.md](01-non-obvious-insights.md)*
 
 ## Action Items
-- [ ] 
+
+None.
 
 ## Meeting Materials
 - [01-essential-questions.md](01-essential-questions.md)
