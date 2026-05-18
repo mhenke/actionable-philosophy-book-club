@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
@@ -60,6 +61,38 @@ test.describe('Asset behaviour — what users actually do', () => {
         const heading = page.locator('#next-meeting-heading');
         await expect(heading).toBeVisible();
         await expect(heading).not.toBeEmpty();
+    });
+
+    test('asset copy falls back to defaults at render time for missing registry types', async ({ page }) => {
+        const manifestPath = new URL('../docs/manifest.json', import.meta.url);
+
+        await page.route('**/docs/manifest.json', async route => {
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            manifest.assetCopy.alternate = {
+                label: 'Route Alternate Label',
+                title: 'Route Alternate Title'
+            };
+            delete manifest.assetCopy['deep-dive'];
+            await route.fulfill({
+                status: 200,
+                contentType: 'application/json',
+                body: JSON.stringify(manifest)
+            });
+        });
+
+        await page.goto('/');
+        await page.waitForFunction(() => window.__manifestLoaded === true);
+
+        await page.locator('#upcoming-podcasts details').evaluate(el => { el.open = true; });
+
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Label');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Title');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Deep Dive');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('A solo exploration of the session topic');
+
+        const loadedCopy = await page.evaluate(() => window.ASSET_COPY);
+        expect(loadedCopy.alternate.label).toBe('Route Alternate Label');
+        expect(loadedCopy['deep-dive']).toBeUndefined();
     });
 
     test('archive cards render with Meeting Notes links', async ({ page }) => {

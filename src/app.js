@@ -7,6 +7,48 @@
 
         // Meeting data manifest, loaded from docs/manifest.json at startup.
         let MEETINGS = [];
+        let ASSET_COPY = {};
+
+        const DEFAULT_ASSET_COPY = Object.freeze({
+            alternate: { label: 'Alternate Cut', title: 'A companion recording of the session' },
+            'deep-dive': { label: 'Deep Dive', title: 'A solo exploration of the session topic' },
+            critique: { label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
+            debate: { label: 'Debate', title: 'A structured debate between two design perspectives' },
+        });
+
+        function loadAssetCopyRegistry(assetCopy) {
+            const registry = {};
+            if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
+                console.warn('Invalid manifest asset copy registry: expected an object. Falling back to defaults.');
+                return registry;
+            }
+            const expectedKeys = Object.keys(DEFAULT_ASSET_COPY);
+            const missing = expectedKeys.filter(key => !(key in assetCopy));
+            const extra = Object.keys(assetCopy).filter(key => !expectedKeys.includes(key));
+            if (missing.length || extra.length) {
+                console.warn(`Invalid manifest asset copy registry: ${[
+                    missing.length ? `missing ${missing.join(', ')}` : '',
+                    extra.length ? `unexpected ${extra.join(', ')}` : ''
+                ].filter(Boolean).join('; ')}. Using defaults at render time for missing entries.`);
+            }
+            expectedKeys.forEach(key => {
+                const entry = assetCopy[key];
+                if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return;
+                const sanitized = {};
+                if (typeof entry.label === 'string' && entry.label.trim()) sanitized.label = entry.label;
+                if (typeof entry.title === 'string' && entry.title.trim()) sanitized.title = entry.title;
+                if (Object.keys(sanitized).length > 0) registry[key] = sanitized;
+            });
+            return registry;
+        }
+
+        function getAssetCopy(type) {
+            const entry = ASSET_COPY[type];
+            if (entry && typeof entry === 'object' && !Array.isArray(entry)) {
+                return { ...(DEFAULT_ASSET_COPY[type] || {}), ...entry };
+            }
+            return DEFAULT_ASSET_COPY[type] || {};
+        }
 
         async function loadManifest() {
             const controller = new AbortController();
@@ -17,8 +59,11 @@
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
+                const assetCopy = loadAssetCopyRegistry(data.assetCopy);
                 MEETINGS = data.meetings;
+                ASSET_COPY = assetCopy;
                 window.MEETINGS = MEETINGS;
+                window.ASSET_COPY = ASSET_COPY;
             } finally {
                 clearTimeout(timeoutId);
             }
@@ -176,10 +221,10 @@
 
         // Shared rendering constants
         const PODCAST_CONFIG = {
-            'alternate': { icon: '🎬', color: 'var(--spectrum-2)', label: 'Video', title: 'An alternate recording of the session' },
-            'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)', label: 'Deep Dive', title: 'A two-host exploration of the session topics' },
-            'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
-            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate',    title: 'A structured debate between two design perspectives' },
+            'alternate': { icon: '🎬', color: 'var(--spectrum-2)' },
+            'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)' },
+            'critique':  { icon: '🔍', color: 'var(--spectrum-1)' },
+            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)' },
         };
 
         const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
@@ -245,7 +290,10 @@
         }
 
         function buildPodcastRow(pod, meeting) {
-            const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type), title: '' };
+            const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)' };
+            const copy = getAssetCopy(pod.type);
+            const badgeLabel = copy.label || pod.type;
+            const caption = copy.title || '';
             const podDuration = pod.duration ? formatDuration(pod.duration) : '';
             const podSize = pod.fileSize ? formatFileSize(pod.fileSize) : '';
             const podMeta = [podDuration, podSize].filter(Boolean).join(' · ');
@@ -260,10 +308,10 @@
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
                                 ${escapeHTML(pod.label)}
-                                <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
+                                <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(badgeLabel)}</span>
                             </span>
                             ${metaLine}
-                            <span class="podcast-caption">${escapeHTML(cfg.title || '')}</span>
+                            <span class="podcast-caption">${escapeHTML(caption)}</span>
                         </a>
                         <a href="${escapeHTML(pod.file)}" download
                            aria-label="${downloadLabel}"

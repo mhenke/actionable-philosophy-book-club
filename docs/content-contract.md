@@ -186,6 +186,11 @@ The manifest lives at **`docs/manifest.json`** and is loaded at runtime. Add new
   - `'alternate'` — 🎬 badge, alternate recording (appears in the podcast disclosure, not primary rows)
 - `resources` — array of `{ label, file, fileSize }` for PNG/image thumbnails shown in cards
 
+### Asset copy registry
+`assetCopy` is a top-level manifest object used by the dashboard runtime for podcast labels and descriptions.
+
+The runtime treats it as a source of truth where values exist, but missing or partial entries fall back to built-in defaults per type. Unknown podcast kinds still use the existing safe fallback behavior.
+
 ---
 
 ## Agenda Link Conventions
@@ -205,6 +210,8 @@ Links in the `## Agenda` section of a meeting README must follow a consistent pa
 | Video recording | `Video Primer` |
 | Slide deck | `Slides` |
 | Resource image | The image's title (e.g., `Choose Your Adventure`) |
+
+Podcast badge labels (e.g. `Deep Dive`, `Critique`) are sourced from the `assetCopy` registry in the manifest.
 
 ### Template
 
