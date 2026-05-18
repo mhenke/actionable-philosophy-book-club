@@ -895,25 +895,6 @@
             } catch (_) {}
         }
 
-        // Copy-link button — copies the current URL to clipboard
-        const copyLinkBtn = document.getElementById('copy-link-btn');
-        if (copyLinkBtn) {
-            copyLinkBtn.addEventListener('click', async () => {
-                const url = window.location.href;
-                try {
-                    await navigator.clipboard.writeText(url);
-                    copyLinkBtn.setAttribute('aria-label', 'Link copied!');
-                    copyLinkBtn.title = 'Copied!';
-                    setTimeout(() => {
-                        copyLinkBtn.setAttribute('aria-label', 'Copy link');
-                        copyLinkBtn.title = 'Copy link';
-                    }, CONFIG.HIGHLIGHT_DURATION_MS);
-                } catch (err) {
-                    showToast('Copy failed: ' + url);
-                }
-            });
-        }
-
         // Set up asset click delegation on dashboard containers
         setupAssetClickDelegation(document.getElementById('upcoming-materials-container'));
         setupAssetClickDelegation(document.getElementById('archive-cards-container'));

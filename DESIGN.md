@@ -65,7 +65,6 @@ Dashboard and reader use the same header structure, same container constraints, 
 - **Prose h2:** No border. Section separation via `margin-top: 3.5rem` (56px) only. Uppercase tracked label is the visual anchor. See ADR-0011.
 - **Prose h3:** `border-top: 2px solid var(--spectrum-5)` — sub-section divider within an h2 section. Retained because nested sections benefit from a lighter visual divider at smaller scale.
 - **Reader header label:** Updates dynamically to reflect the document's H1 on each load; resets to "Session Notes" on dashboard return.
-- **Copy Link:** Icon-only button in the reader header. No text label — the link icon is self-sufficient; the `title` attribute handles discoverability.
 - Prose links are underlined — reading context convention.
 - Prose body text is larger (1.0625rem) than UI text (0.875rem) — intentional mode signal.
 - File tree (Meeting Materials) rendered in monospace with spectrum-3 connectors.

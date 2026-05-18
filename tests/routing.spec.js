@@ -160,37 +160,12 @@ test.describe('Routing & Navigation', () => {
         await expect(escHint).toBeVisible();
     });
 
-    test('copy-link button is visible and clickable in reader', async ({ page, context }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-        await page.route('**/meetings/meeting-01/README.md', route =>
-            route.fulfill({ body: '# Deep Systems\n\nContent here.' })
-        );
-        await page.goto('/#p=meetings/meeting-01/README.md');
-        await page.waitForSelector('#markdown-content', { state: 'attached' });
-        const copyBtn = page.locator('#copy-link-btn');
-        await expect(copyBtn).toBeVisible();
-        await expect(copyBtn).toBeEnabled();
-    });
-
     test('mobile video: asset links are clickable on small viewport', async ({ page }) => {
         await page.setViewportSize({ width: 375, height: 667 });
         await page.goto('/');
         const videoLink = page.locator('#archive-cards-container [id*="-video-"] .asset-link').first();
         await expect(videoLink).toBeVisible();
         await expect(videoLink).toBeEnabled();
-    });
-
-    test('copy-link: button click shows copied feedback', async ({ page, context }) => {
-        await context.grantPermissions(['clipboard-read', 'clipboard-write']);
-        await page.route('**/meetings/meeting-01/README.md', route =>
-            route.fulfill({ body: '# Deep Systems\n\nContent here.' })
-        );
-        await page.goto('/#p=meetings/meeting-01/README.md');
-        await page.waitForSelector('#markdown-content', { state: 'attached' });
-        const copyBtn = page.locator('#copy-link-btn');
-        await expect(copyBtn).toBeVisible();
-        await copyBtn.click();
-        await expect(copyBtn).toHaveAttribute('aria-label', 'Link copied!', { timeout: 3000 });
     });
 
     test('hash route #a= is ignored', async ({ page }) => {
