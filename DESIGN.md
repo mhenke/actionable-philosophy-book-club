@@ -77,7 +77,7 @@ Dashboard and reader use the same header structure, same container constraints, 
 3. Meeting Notes CTA / link
 4. Additional Resources (podcast disclosure)
 
-This order is consistent across card types. The upcoming card uses the same sequence as archive cards.
+This order is consistent across card types. The upcoming card uses the same sequence as archive cards. Meeting Notes has no `mt-auto` — it sits naturally after the last content item. Do not add vertical pushing; it causes misalignment in the grid when cards have differing amounts of content below Meeting Notes.
 
 **Session / date metadata:** Rendered as two visually distinct elements within a single line. Session identifier (`Meeting NN`) uses `font-semibold` at `text-primary` color. Date uses `font-normal` at `text-muted` color. Never concatenated into a single styled span.
 
@@ -96,7 +96,7 @@ This order is consistent across card types. The upcoming card uses the same sequ
 
 No `space-y` utility on `<main>`. Spacing is explicit:
 - **Upcoming card:** no top margin — sits at the container's padding distance from the header (20px mobile, 40px desktop via `p-5`/`md:p-10`).
-- **Horizon, Archive, Knowledge Base sections:** `mt-14` (56px) — intentional section separation.
+- **Horizon, Archive, Knowledge Base sections:** `mt-14` (56px) — intentional section separation. Each section `<h2>` label also has `pt-2` (8px) so the label text breathes from the content above within the 56px gap.
 - **Onboarding banner (when visible):** `mb-6` (24px) below the banner to the upcoming card — tighter than section gaps since the banner is a utility element, not a major section.
 
 Rationale: `space-y` on the container applies the gap to every child including invisible elements (`display:none`, `position:absolute`), producing phantom top gaps on the first visible section.
