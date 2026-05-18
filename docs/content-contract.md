@@ -193,6 +193,41 @@ The runtime treats it as a source of truth where values exist, but missing or pa
 
 ---
 
+## Agenda Link Conventions
+
+Links in the `## Agenda` section of a meeting README must follow a consistent pattern so the reader view and dashboard vocabulary stay aligned.
+
+### Rules
+
+1. **End-appended, never inline.** The link follows the agenda item description. It does not replace the descriptive text or appear mid-sentence.
+2. **Labels match the dashboard.** Use the same label the manifest assigns to the asset. Do not use the video's descriptive subtitle as the link text.
+3. **No em dashes before links.** Append the link directly after the sentence ends, or after a period.
+
+### Canonical labels
+
+| Asset type | Link label |
+|---|---|
+| Video recording | `Video Primer` |
+| Slide deck | `Slides` |
+| Resource image | The image's title (e.g., `Choose Your Adventure`) |
+
+Podcast badge labels (e.g. `Deep Dive`, `Critique`) are sourced from the `assetCopy` registry in the manifest.
+
+### Template
+
+```markdown
+1. **Refresher Video (5-10 min):** One-sentence description of what it covers. [Video Primer](recordings/NN-filename.mp4)
+2. **Discussion (30 min):** One-sentence description of the discussion focus. [Slides](slides/NN-filename.pptx)
+3. **Wrap-up (Last 10 min):**
+   - **Future Planning:** Brief description. [Resource Title](resources/NN-filename.png)
+```
+
+### Why
+
+The dashboard asset rows display "Video Primer" and "Slides" (from manifest labels). Using different vocabulary in the agenda (e.g., the video's full subtitle) creates a mismatch — a user sees one name on the card and a different name in the notes for the same file.
+
+---
+
 ## Questions?
 
 If a heading or link structure isn't working as expected:

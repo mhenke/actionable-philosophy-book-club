@@ -28,7 +28,7 @@
             }
         });
 
-        function validateAssetCopyRegistry(assetCopy) {
+        function loadAssetCopyRegistry(assetCopy) {
             const registry = {};
             if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
                 console.warn('Invalid manifest asset copy registry: expected an object. Falling back to defaults.');
@@ -74,7 +74,7 @@
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
-                const assetCopy = validateAssetCopyRegistry(data.assetCopy);
+                const assetCopy = loadAssetCopyRegistry(data.assetCopy);
                 MEETINGS = data.meetings;
                 ASSET_COPY = assetCopy;
                 window.MEETINGS = MEETINGS;
@@ -84,16 +84,14 @@
             }
         }
 
-        function showManifestError(err) {
+        function showManifestError() {
             const upcomingHeader = document.getElementById('upcoming-card-header');
             const upcomingMaterials = document.getElementById('upcoming-materials-container');
             const upcomingCta = document.getElementById('upcoming-cta');
             const archiveContainer = document.getElementById('archive-cards-container');
             const horizonContainer = document.getElementById('horizon-cards-container');
-            const message = err && err.message ? err.message : 'Manifest validation failed.';
             if (upcomingHeader) upcomingHeader.innerHTML = `
                 <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted mb-3">Couldn't load sessions</p>
-                <p class="text-xs leading-5 text-muted mb-3">${escapeHTML(message)}</p>
                 <button id="manifest-retry-btn" class="text-sm uppercase tracking-widest underline" style="color:var(--spectrum-2)">Tap to retry</button>`;
             if (upcomingMaterials) upcomingMaterials.innerHTML = '';
             if (upcomingCta) upcomingCta.innerHTML = '';
@@ -224,8 +222,8 @@
         const PODCAST_CONFIG = {
             'alternate': { icon: '🎬', color: 'var(--spectrum-2)' },
             'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)' },
-            'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
-            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate',    title: 'A structured debate between two design perspectives' },
+            'critique':  { icon: '🔍', color: 'var(--spectrum-1)' },
+            'debate':    { icon: '⚔️', color: 'var(--spectrum-2)' },
         };
 
         const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
@@ -1001,8 +999,8 @@
                 renderUpcomingMaterials();
                 renderArchiveCards();
                 renderHorizonCards();
-            } catch (err) {
-                showManifestError(err);
+            } catch (_) {
+                showManifestError();
             }
 
             handleRoute();
