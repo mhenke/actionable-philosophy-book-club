@@ -17,6 +17,14 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 
 - **`index.html`** — all HTML + CSS in `<style>` block. JS loaded from `dist/app.js`.
 - **`dist/app.js`** — inline script extracted for CSP compliance (`script-src 'self'`).
+- **`src/`** — JS source split into 7 numbered modules concatenated at build time:
+  - `00-setup.js` — DOM refs, constants, global let/const declarations
+  - `01-utils.js` — pure utility functions (formatting, path validation, fetch cache, video resume)
+  - `02-manifest.js` — manifest loading and asset copy registry
+  - `03-assets.js` — asset row builders (video/slides/podcast/resource)
+  - `04-dashboard.js` — dashboard rendering (upcoming, archive, horizon cards)
+  - `05-reader.js` — reader rendering, view management, content link rewriting
+  - `06-app.js` — init, hash routing, key handlers, test exports, DOMContentLoaded
 - **Hash router** — `#p=path/to/file.md` triggers `loadPage()` which fetches + renders markdown via marked + DOMPurify.
 - **MEETINGS manifest** — JS array in `dist/app.js` with all session data (title, date, video/slides/podcasts/resources, status, color, wash).
 - **Dashboard** — `renderUpcomingMaterials()` + `renderArchiveCards()` use shared `buildAssetRows()`.
@@ -26,12 +34,12 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 
 | Function | Location | Purpose |
 |---|---|---|
-| `buildAssetRows()` | `dist/app.js` | Shared renderer for video/slides/podcasts/resource rows |
-| `fetchMarkdownCached()` | `dist/app.js` | Promise-based fetch cache with 20-entry LRU eviction + internal path validation + AbortController |
-| `ensureDOMPurifyHooks()` | `dist/app.js` | Adds `rel=noopener noreferrer` to external links, strips invalid hrefs |
-| `isSafeRepoPath()` | `dist/app.js` | Validates `#p=` paths — allowlist: `meetings/`, `docs/`, `templates/` |
-| `isSafeAssetPath()` | `dist/app.js` | Validates asset hrefs — only `meetings/` and `assets/` with known extensions |
-| `showDashboard()` | `dist/app.js` | Focuses `#main-content`, announces "Dashboard" via `role="status"`, clears stale reader content |
+| `buildAssetRows()` | `03-assets.js` | Shared renderer for video/slides/podcasts/resource rows |
+| `fetchMarkdownCached()` | `01-utils.js` | Promise-based fetch cache with 20-entry LRU eviction + internal path validation + AbortController |
+| `ensureDOMPurifyHooks()` | `05-reader.js` | Adds `rel=noopener noreferrer` to external links, strips invalid hrefs |
+| `isSafeRepoPath()` | `01-utils.js` | Validates `#p=` paths — allowlist: `meetings/`, `docs/`, `templates/` |
+| `isSafeAssetPath()` | `01-utils.js` | Validates asset hrefs — only `meetings/` and `assets/` with known extensions |
+| `showDashboard()` | `04-dashboard.js` | Focuses `#main-content`, announces "Dashboard" via `role="status"`, clears stale reader content |
 | `renderFileTree()` | `dist/app.js` | Post-processes `## Meeting Materials` lists into styled file trees |
 
 ## Styling
