@@ -58,7 +58,7 @@ Dashboard and reader use the same header structure, same container constraints, 
 - **The Spectrum Bar:** 6px linear gradient (Navy to Sage), always full gradient on both views.
 - **Section Dividers:** `.spectrum-rule` — same 6-stop spectrum gradient as the header bar, `max-width: 240px`, fading to transparent. Appears next to section heading labels on the dashboard.
 - **Borders:** All surface borders use `--border-low` (`rgb(34 34 34 / 0.06)`) — card edges, prose h2 dividers, file tree panel. One consistent weight.
-- **Highlighted content (blockquotes, Key Takeaway):** `--wash-2` background / `--wash-2-border` border — spectrum-2 tint shared across both views.
+- **Highlighted content (blockquotes, Key Takeaway on dashboard):** `--wash-1` background / `--border-low` border — near-neutral tint so the highlight does not compete with the primary CTA. Prose blockquotes in the reader use `--wash-2` / `--wash-2-border` (stronger tint is appropriate in a reading context).
 - **Material Cards:** Flat white, `--border-low` border, hover triggers `translateY(-2px)` + spectrum-3 shadow.
 
 ### Reader-Specific
@@ -66,6 +66,26 @@ Dashboard and reader use the same header structure, same container constraints, 
 - Prose links are underlined — reading context convention.
 - Prose body text is larger (1.0625rem) than UI text (0.875rem) — intentional mode signal.
 - File tree (Meeting Materials) rendered in monospace with spectrum-3 connectors.
+
+### Dashboard Spacing Model
+
+No `space-y` utility on `<main>`. Spacing is explicit:
+- **Upcoming card:** no top margin — sits at the container's padding distance from the header (20px mobile, 40px desktop via `p-5`/`md:p-10`).
+- **Horizon, Archive, Knowledge Base sections:** `mt-14` (56px) — intentional section separation.
+- **Onboarding banner (when visible):** `mb-6` (24px) below the banner to the upcoming card — tighter than section gaps since the banner is a utility element, not a major section.
+
+Rationale: `space-y` on the container applies the gap to every child including invisible elements (`display:none`, `position:absolute`), producing phantom top gaps on the first visible section.
+
+### Skeleton Loading System
+
+Every container that is empty before the manifest loads must have a skeleton placeholder. Rules:
+
+- **Shape matches content.** Asset-row skeletons use `.asset-row` flex structure with icon-pill placeholder (28×28px), label bar, and download-icon placeholder — not a solid full-width block.
+- **Color is always `--border-low`.** No spectrum fills, no opacity hacks on colored tokens. `--border-low` is the correct subtle neutral.
+- **Animation is `animate-pulse`.** Suppressed by `prefers-reduced-motion`.
+- **`aria-hidden="true"` on every skeleton.** Screen readers skip placeholder content.
+- **Percentages for text bars, not fixed px.** Prevents overflow on narrow viewports where the bar would exceed its flex container.
+- **Count matches expected content.** Archive skeleton has 2 cards (2 done meetings), Horizon has 2 (2 draft meetings). Update when meeting counts change.
 
 ### A11y
 - 44px minimum touch targets on all interactive elements.

@@ -156,27 +156,33 @@ The GitHub Actions CI pipeline also runs this check on every push.
 
 ## Dashboard Manifest Fields
 
-When adding a meeting to the `MEETINGS` array in `index.html`, these fields control dashboard rendering:
+The manifest lives at **`docs/manifest.json`** and is loaded at runtime. Add new meetings at the top of the `meetings` array (newest first). Change the previous upcoming entry's `status` from `'upcoming'` to `'done'` when rotating meetings.
 
 ### Required fields
 - `id` — `'meeting-NN'` matching the directory name
 - `session` — display label e.g. `'Meeting 01'`
-- `date` — display date e.g. `'01 May 26'`
+- `date` — display date e.g. `'01 May 2026'` (full four-digit year)
 - `title` — short session title
 - `status` — `'done'` | `'upcoming'` | `'draft'`
 - `color` — **only** `'spectrum-1'`, `'spectrum-2'`, or `'spectrum-3'` (other values silently break card styling)
 - `wash` — CSS variable name: `'--wash-1'` through `'--wash-5'`
 - `readmeUrl` — relative path e.g. `'meetings/meeting-01/README.md'`
 
+### Optional fields
+- `keyTakeaway` — plain-text string. When present on an `upcoming` meeting, renders as a highlighted quote block on the dashboard card below the asset rows. Omit for archive/draft meetings (has no effect). Example:
+  ```json
+  "keyTakeaway": "A well-designed module is a complexity sink: it takes on internal implementation suffering so the rest of the system can stay simple."
+  ```
+
 ### Asset fields
-- `video` — `{ file, label }` or `null` for upcoming/no-recording
-- `slides` — `{ file, label }` or `null`
-- `podcasts` — array of `{ type, label, file }` where `type` is one of:
-  - `'deep-dive'` — 🎙 badge, steel blue
+- `video` — `{ file, label, duration, fileSize }` or `null` for upcoming/no-recording
+- `slides` — `{ file, label, fileSize }` or `null`
+- `podcasts` — array of `{ type, label, file, duration, fileSize }` where `type` is one of:
+  - `'deep-dive'` — 🔬 badge, steel blue
   - `'critique'` — 🔍 badge, navy
   - `'debate'` — ⚔️ badge, medium blue
-  - (Use `variant: 'alternate'` for alternate recordings, not a `type`)
-- `resources` — array of `{ label, file }` for PNG/image thumbnails shown in cards
+  - `'alternate'` — 🎬 badge, alternate recording (appears in the podcast disclosure, not primary rows)
+- `resources` — array of `{ label, file, fileSize }` for PNG/image thumbnails shown in cards
 
 ---
 

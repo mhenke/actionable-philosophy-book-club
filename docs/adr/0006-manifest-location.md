@@ -1,6 +1,6 @@
 # ADR-0006: MEETINGS Manifest Location
 
-**Status:** Accepted  
+**Status:** Superseded (2026-05-17) — manifest moved to `docs/manifest.json`
 **Date:** 2026
 
 ## Decision
