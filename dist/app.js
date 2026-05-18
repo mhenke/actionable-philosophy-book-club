@@ -327,6 +327,75 @@
             horizonContainer.appendChild(fragment);
         }
 
+        // ── getCurrentMeetingIndex — reader navigation, extracted from keydown ──
+        function getCurrentMeetingIndex() {
+            const hash = window.location.hash;
+            if (!hash.startsWith('#p=')) return -1;
+            const path = decodeURIComponent(hash.slice(3));
+            return MEETINGS.findIndex(m => m.readmeUrl === path);
+        }
+
+        // ── rewriteContentLinks — link post-processing, extracted from loadPage ─
+        function rewriteContentLinks(container, docPath) {
+            const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
+            container.querySelectorAll('a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (!href || /^https?:/i.test(href)) return;
+                const base = new URL(docPath, window.location.href);
+                const resolved = new URL(href, base);
+                const repoPath = resolved.pathname.startsWith(siteRoot)
+                    ? resolved.pathname.slice(siteRoot.length)
+                    : resolved.pathname.slice(1);
+                if (href.endsWith('.md')) {
+                    if (!isSafeRepoPath(repoPath)) {
+                        link.removeAttribute('href');
+                        link.setAttribute('aria-disabled', 'true');
+                        link.setAttribute('title', 'Link target is outside allowed directories');
+                        return;
+                    }
+                    link.setAttribute('href', '#p=' + repoPath);
+                } else if (!href.endsWith('/')) {
+                    if (isSafeAssetPath(repoPath)) {
+                        if (/\.pptx?$/i.test(repoPath)) {
+                            link.setAttribute('href', buildPPTXViewerURL(repoPath));
+                            link.setAttribute('target', '_blank');
+                            link.setAttribute('rel', 'noopener noreferrer');
+                        } else if (/\.(png|jpe?g|gif|svg|webp)$/i.test(repoPath)) {
+                            link.setAttribute('href', repoPath);
+                            link.setAttribute('target', '_blank');
+                            link.setAttribute('rel', 'noopener noreferrer');
+                        } else if (/\.mp4$/i.test(repoPath)) {
+                            link.setAttribute('href', repoPath);
+                            link.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                openVideoPlayer(repoPath, link.textContent.trim() || repoPath);
+                            });
+                        } else {
+                            link.setAttribute('href', repoPath);
+                        }
+                    } else {
+                        link.removeAttribute('href');
+                        link.setAttribute('aria-disabled', 'true');
+                    }
+                }
+            });
+        }
+
+        // ── applyMeetingMaterialsTree — file tree post-processing, from loadPage ─
+        function applyMeetingMaterialsTree(container) {
+            container.querySelectorAll('h2').forEach(h2 => {
+                if (!/meeting materials/i.test(h2.textContent)) return;
+                let el = h2.nextElementSibling;
+                while (el && el.tagName !== 'H2') {
+                    if (el.tagName === 'UL') {
+                        el.classList.add('materials-panel');
+                        renderFileTree(el, '');
+                    }
+                    el = el.nextElementSibling;
+                }
+            });
+        }
+
         function isSafeRepoPath(p) {
             if (!p || typeof p !== 'string') return false;
             if (p.length === 0 || p.length > CONFIG.PATH_MAX_LENGTH) return false;
@@ -422,85 +491,29 @@
 
                 });
 
-                // Smooth cross-fade: keep placeholder visible, replace content and fade in to avoid snapping
-                content.style.transition = 'opacity 240ms ease';
-                // Start from transparent to allow transition when content is replaced
+                // Cut to invisible, swap content, then fade in — avoids mid-transition content swap flash
+                content.style.transition = 'none';
                 content.style.opacity = '0';
                 content.innerHTML = sanitized;
-                // Trigger transition to visible
-                requestAnimationFrame(() => { content.style.opacity = '1'; });
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    content.style.transition = 'opacity 200ms ease';
+                    content.style.opacity = '1';
+                }));
 
                 content.querySelectorAll('img').forEach(img => {
                     if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
                     if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
                 });
 
-                // Site root handles both localhost '/' and GitHub Pages '/repo-name/'
-                const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
+                rewriteContentLinks(content, path);
 
-                content.querySelectorAll('a').forEach(link => {
-                    const href = link.getAttribute('href');
-                    if (!href || /^https?:/i.test(href)) return;
-                    const base = new URL(path, window.location.href);
-                    const resolved = new URL(href, base);
-                    const repoPath = resolved.pathname.startsWith(siteRoot)
-                        ? resolved.pathname.slice(siteRoot.length)
-                        : resolved.pathname.slice(1);
-
-                    if (href.endsWith('.md')) {
-                        if (!isSafeRepoPath(repoPath)) {
-                            link.removeAttribute('href');
-                            link.setAttribute('aria-disabled', 'true');
-                            link.setAttribute('title', 'Link target is outside allowed directories');
-                            return;
-                        }
-                        link.setAttribute('href', '#p=' + repoPath);
-                    } else if (!href.endsWith('/')) {
-                        // Relative asset link — rewrite to repo-root-relative path so it
-                        // resolves correctly regardless of deployment subdirectory.
-                        if (isSafeAssetPath(repoPath)) {
-                            if (/\.pptx?$/i.test(repoPath)) {
-                                link.setAttribute('href', buildPPTXViewerURL(repoPath));
-                                link.setAttribute('target', '_blank');
-                                link.setAttribute('rel', 'noopener noreferrer');
-                            } else if (/\.(png|jpe?g|gif|svg|webp)$/i.test(repoPath)) {
-                                link.setAttribute('href', repoPath);
-                                link.setAttribute('target', '_blank');
-                                link.setAttribute('rel', 'noopener noreferrer');
-                            } else if (/\.mp4$/i.test(repoPath)) {
-                                link.setAttribute('href', repoPath);
-                                link.addEventListener('click', (e) => {
-                                    e.preventDefault();
-                                    openVideoPlayer(repoPath, link.textContent.trim() || repoPath);
-                                });
-                            } else {
-                                link.setAttribute('href', repoPath);
-                            }
-                        } else {
-                            link.removeAttribute('href');
-                            link.setAttribute('aria-disabled', 'true');
-                        }
-                    }
-                });
                 const h1 = content.querySelector('h1');
                 if (h1) {
                     document.title = `${h1.textContent.trim()} — Actionable Philosophy Book Club`;
                     content.setAttribute('aria-label', h1.textContent.trim());
                 }
 
-                content.querySelectorAll('h2').forEach(h2 => {
-                    if (/meeting materials/i.test(h2.textContent)) {
-                        // Convention defined in docs/content-contract.md — transforms the file tree under this heading.
-                        let el = h2.nextElementSibling;
-                        while (el && el.tagName !== 'H2') {
-                            if (el.tagName === 'UL') {
-                                el.classList.add('materials-panel');
-                                renderFileTree(el, '');
-                            }
-                            el = el.nextElementSibling;
-                        }
-                    }
-                });
+                applyMeetingMaterialsTree(content);
                 // Scroll to anchor if present and valid
                 if (anchorId) {
                     requestAnimationFrame(() => {
@@ -720,6 +733,9 @@
             window.formatDuration = formatDuration;
             window.formatFileSize = formatFileSize;
             window.saveVideoResumePosition = saveVideoResumePosition;
+            window.getCurrentMeetingIndex = getCurrentMeetingIndex;
+            window.rewriteContentLinks = rewriteContentLinks;
+            window.applyMeetingMaterialsTree = applyMeetingMaterialsTree;
         }
 
         window.addEventListener('hashchange', handleRoute);
@@ -753,22 +769,15 @@
             const isTyping = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
             if (isTyping) return;
             if (!reader.classList.contains('hidden-view')) {
-                // find current meeting index from hash
-                function getCurrentIndex(){
-                    const hash = window.location.hash;
-                    if (!hash.startsWith('#p=')) return -1;
-                    const path = decodeURIComponent(hash.slice(3));
-                    return MEETINGS.findIndex(m=>m.readmeUrl===path);
-                }
-                const idx = getCurrentIndex();
+                const idx = getCurrentMeetingIndex();
                 if (idx !== -1) {
                     if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'j') {
-                        const next = MEETINGS[idx+1];
+                        const next = MEETINGS[idx + 1];
                         if (next && next.readmeUrl) { window.location.hash = '#p=' + encodeURIComponent(next.readmeUrl); }
                         return;
                     }
                     if (e.key === 'ArrowLeft' || e.key.toLowerCase() === 'k') {
-                        const prev = MEETINGS[idx-1];
+                        const prev = MEETINGS[idx - 1];
                         if (prev && prev.readmeUrl) { window.location.hash = '#p=' + encodeURIComponent(prev.readmeUrl); }
                         return;
                     }
@@ -859,242 +868,5 @@
                 });
             });
 
-            // Command palette needs MEETINGS populated, so init here after loadManifest
-            initCommandPalette();
         });
 
-        // Command palette (Ctrl/Cmd+K) - lightweight, accessible, iterative
-        function initCommandPalette() {
-            const meetings = MEETINGS;
-            if (!meetings || meetings.length === 0) return;
-
-            // Styles
-            const style = document.createElement('style');
-            style.textContent = `
-                #cmd-palette-overlay { position: fixed; top: 8vh; left: 50%; transform: translateX(-50%); margin: 0; width: min(720px, 92%); background: var(--surface); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; padding: 0; border: none; }
-                #cmd-palette-overlay::backdrop { background: transparent; }
-                #cmd-palette-overlay .cp-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border: none; outline: none; font-size: 16px; background: var(--surface); color: var(--text-primary); }
-                #cmd-palette-overlay .cp-list { max-height: 320px; overflow: auto; margin: 0; padding: 0; list-style: none; }
-                #cmd-palette-overlay .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid var(--border-low); }
-                #cmd-palette-overlay .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.08); }
-                #cmd-palette-overlay .cp-item:focus { outline: 2px solid var(--spectrum-3); outline-offset: -2px; }
-                #cmd-palette-overlay .cp-meta { color: var(--text-muted); font-size: 13px; }
-                #cmd-palette-overlay .cp-right { min-width:120px; text-align:right; color: var(--text-muted); font-size:13px; }
-                #cmd-palette-overlay .cp-id { font-weight:600; }
-                #cmd-palette-overlay .cp-title { color: var(--text-primary); margin-left:6px; }
-                .cp-sr { position: absolute !important; left: -9999px !important; }
-                @media (prefers-reduced-motion: reduce) { #cmd-palette-overlay { transition: none; } }
-            `;
-            document.head.appendChild(style);
-
-            // DOM
-            const overlay = document.createElement('dialog');
-            overlay.id = 'cmd-palette-overlay';
-            overlay.setAttribute('aria-label', 'Command palette');
-            overlay.innerHTML = `
-                <input class="cp-input" placeholder="Jump to meeting by id or title (Cmd/Ctrl+K)" aria-label="Search meetings" />
-                <ul class="cp-list" role="listbox" aria-label="Search results"></ul>
-                <div id="cp-count" class="cp-sr" aria-live="polite"></div>
-            `;
-            document.body.appendChild(overlay);
-
-            const input = overlay.querySelector('.cp-input');
-            const list = overlay.querySelector('.cp-list');
-            let lastFocus = null;
-            let results = [];
-            let selected = 0;
-
-            function openPalette() {
-                lastFocus = document.activeElement;
-                overlay.showModal();
-                input.value = '';
-                renderResults([]);
-                setTimeout(() => input.focus(), 50);
-                document.body.style.overflow = 'hidden';
-            }
-            function closePalette() {
-                overlay.close();
-                document.body.style.overflow = '';
-                if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
-            }
-            function togglePalette() { if (overlay.open) closePalette(); else openPalette(); }
-
-            function normalize(s){ return (s||'').toString().toLowerCase(); }
-            function scoreMatch(q, m){
-                // Balanced weighted scoring with trigram fallback
-                if (!q) return 1;
-                const id = normalize(m.id || '');
-                const title = normalize(m.title || m.name || '');
-                let score = 0;
-
-                // Exact and prefix matches are very strong signals
-                if (id === q) score += 300;
-                else if (id.startsWith(q)) score += 180;
-                else if (id.includes(q)) score += 120;
-
-                // Title matches (word matches are stronger)
-                const qWords = q.split(/\s+/).filter(Boolean);
-                for (const w of qWords) {
-                    if (title === w) score += 120;
-                    else if (title.startsWith(w)) score += 90;
-                    else if (title.includes(w)) score += 60;
-                }
-
-                // Boost upcoming or recent meetings slightly
-                if (m.status && (m.status === 'upcoming' || m.status === 'next' || m.status === 'featured')) score += 20;
-
-                // Short-id fuzzy: allow small typos via trigram similarity
-                if (score === 0) {
-                    const sim = trigramSimilarity(id + ' ' + title, q);
-                    score += Math.round(sim * 150); // scale similarity to score
-                }
-
-                return score;
-
-                // Local helper: trigram similarity (simple, fast, tolerant)
-                function trigrams(s){
-                    const t = [];
-                    const ss = ('  ' + (s||'') + '  ').replace(/\s+/g,' ');
-                    for (let i=0;i<ss.length-2;i++) t.push(ss.slice(i,i+3));
-                    return t;
-                }
-                function trigramSimilarity(a,b){
-                    if (!a || !b) return 0;
-                    const A = trigrams(a);
-                    const B = trigrams(b);
-                    const As = new Set(A);
-                    let inter = 0;
-                    for (const x of B) if (As.has(x)) inter++;
-                    const union = As.size + B.length - inter;
-                    return union === 0 ? 0 : inter / union;
-                }
-            }
-
-            // Helpers: small escape and date formatter
-            function escapeHtml(s){
-                return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
-            }
-            function formatDate(d){
-                try{ const dt = new Date(d); if (isNaN(dt)) return ''; return dt.toLocaleDateString(); }catch(e){return '';}
-            }
-
-            function renderResults(listItems){
-                results = listItems;
-                selected = 0;
-                list.innerHTML = '';
-                if (results.length === 0) {
-                    const li = document.createElement('li');
-                    li.className = 'cp-item';
-                    li.textContent = 'No results';
-                    li.setAttribute('aria-disabled', 'true');
-                    list.appendChild(li);
-                    return;
-                }
-                for (let i=0;i<results.length;i++){
-                    const m = results[i];
-                    const li = document.createElement('li');
-                    li.className = 'cp-item';
-                    li.setAttribute('role','option');
-                    li.dataset.index = i;
-                    if (i===0) li.setAttribute('aria-selected','true');
-                    // make item programmatically focusable for keyboard focus-trap
-                    li.tabIndex = -1;
-                    li.innerHTML = `<div style="flex:1"><span class="cp-id">${escapeHtml(m.id)}</span> <span class="cp-meta cp-title">— ${escapeHtml(m.title||m.name||'')}</span></div><div class="cp-right"><div>${m.date?escapeHtml(formatDate(m.date)) : ''}</div><div class="cp-meta">${m.status?escapeHtml(m.status):''}</div></div>`;
-                    li.addEventListener('click', () => activateIndex(i));
-                    li.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateIndex(i); } });
-                    list.appendChild(li);
-                }
-            }
-
-            function activateIndex(i){
-                const m = results[i];
-                if (!m) return;
-                // prefer opening reader; fallback to scrolling to card
-                if (m.readmeUrl) {
-                    closePalette();
-                    window.location.hash = '#p=' + encodeURIComponent(m.readmeUrl);
-                    return;
-                }
-                closePalette();
-                // try to scroll to card by id
-                const card = document.querySelector(`[data-meeting-id=\"${m.id}\"]`);
-                if (card) card.scrollIntoView({behavior:'smooth', block:'start'});
-            }
-
-            input.addEventListener('input', (e) => {
-                const q = normalize(e.target.value.trim());
-                if (!q) { renderResults(meetings.slice(0,6)); return; }
-                const candidates = meetings.map(m => ({m, score: scoreMatch(q,m)}))
-                    .filter(x => x.score>0)
-                    .sort((a,b)=>b.score-a.score)
-                    .map(x=>x.m)
-                    .slice(0,8);
-                renderResults(candidates);
-            });
-
-            input.addEventListener('keydown', (e) => {
-                const items = Array.from(list.querySelectorAll('.cp-item'));
-                if (e.key === 'ArrowDown') { e.preventDefault(); selected = Math.min(selected+1, items.length-1); updateSelection(items); }
-                else if (e.key === 'ArrowUp') { e.preventDefault(); selected = Math.max(selected-1, 0); updateSelection(items); }
-                else if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (e.shiftKey) {
-                        // open in new tab (Shift+Enter)
-                        const m = results[selected];
-                        if (m && m.readmeUrl) {
-                            // open as absolute URL preserving hash
-                            const url = window.location.href.split('#')[0] + '#p=' + encodeURIComponent(m.readmeUrl);
-                            window.open(url, '_blank');
-                            closePalette();
-                        }
-                    } else {
-                        activateIndex(selected);
-                    }
-                }
-                else if (e.key === 'Escape') { e.preventDefault(); closePalette(); }
-            });
-
-            function updateSelection(items){
-                items.forEach((it, idx) => it.setAttribute('aria-selected', idx===selected ? 'true' : 'false'));
-                const el = items[selected]; if (el) el.scrollIntoView({block:'nearest'});
-            }
-
-            // Global key handler: Ctrl/Cmd+K
-            document.addEventListener('keydown', (e) => {
-                const isMac = navigator.platform.startsWith('Mac');
-                if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')){
-                    e.preventDefault(); togglePalette();
-                }
-            });
-
-            // Native cancel event (Escape) — intercept to run our cleanup
-            overlay.addEventListener('cancel', (e) => { e.preventDefault(); closePalette(); });
-
-            // Clicks on the ::backdrop arrive with target === overlay
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) closePalette();
-            });
-
-            // Focus trap: keep Tab cycling between input and list items
-            overlay.addEventListener('keydown', (ev) => {
-                if (!overlay.open) return;
-                if (ev.key !== 'Tab') return;
-                const items = Array.from(list.querySelectorAll('.cp-item')).filter(it => it.getAttribute('aria-disabled') !== 'true');
-                const first = input;
-                const last = items.length ? items[items.length-1] : null;
-                if (ev.shiftKey) {
-                    if (document.activeElement === first) {
-                        ev.preventDefault();
-                        if (last) { selected = items.length-1; updateSelection(items); last.tabIndex = 0; last.focus(); last.tabIndex = -1; }
-                    }
-                } else {
-                    if (last && document.activeElement === last) {
-                        ev.preventDefault();
-                        input.focus();
-                    }
-                }
-            });
-
-            // seed with top meetings
-            renderResults(meetings.slice(0,6));
-        }
