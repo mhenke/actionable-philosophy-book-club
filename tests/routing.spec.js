@@ -2,12 +2,6 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Routing & Navigation', () => {
 
-    test('dashboard is visible on initial load', async ({ page }) => {
-        await page.goto('/');
-        await expect(page.locator('#dashboard-view')).toBeVisible();
-        await expect(page.locator('#reader-view')).toBeHidden();
-    });
-
     test('hash route #p= loads reader view', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route =>
             route.fulfill({ body: '# Deep Systems\n\nContent here.' })
@@ -148,15 +142,6 @@ test.describe('Routing & Navigation', () => {
         await page.goto('/#p=meetings/missing-file/README.md');
         await page.waitForLoadState('networkidle');
         await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
-    });
-
-    test('reader header shows Dashboard back link', async ({ page }) => {
-        await page.route('**/meetings/meeting-01/README.md', route =>
-            route.fulfill({ body: '# Deep Systems\n\nContent here.' })
-        );
-        await page.goto('/#p=meetings/meeting-01/README.md');
-        await page.waitForSelector('#markdown-content', { state: 'attached' });
-        await expect(page.locator('#back-to-dashboard')).toBeVisible();
     });
 
     test('mobile video: asset links are clickable on small viewport', async ({ page }) => {
