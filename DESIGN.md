@@ -98,7 +98,7 @@ This order is consistent across card types. The upcoming card uses the same sequ
 
 No `space-y` utility on `<main>`. Spacing is explicit:
 - **Upcoming card:** no top margin — sits at the container's padding distance from the header (20px mobile, 40px desktop via `p-5`/`md:p-10`).
-- **Horizon, Archive, Knowledge Base sections:** `mt-14` (56px) — intentional section separation. Each section `<h2>` label also has `pt-2` (8px) so the label text breathes from the content above within the 56px gap.
+- **Horizon, Archive, Knowledge Base sections:** `mt-20` (80px) — intentional section separation. Each section `<h2>` label has `mb-4` (16px) below it to its content. No top padding on the h2 — the section margin provides all breathing room above.
 - **Onboarding banner (when visible):** `mb-6` (24px) below the banner to the upcoming card — tighter than section gaps since the banner is a utility element, not a major section.
 
 Rationale: `space-y` on the container applies the gap to every child including invisible elements (`display:none`, `position:absolute`), producing phantom top gaps on the first visible section.
