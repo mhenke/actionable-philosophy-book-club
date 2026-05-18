@@ -945,7 +945,8 @@
             let closestDistance = Infinity;
             for (const asset of assets) {
                 const rect = asset.getBoundingClientRect();
-                const dist = Math.abs(rect.top);
+                if (rect.top < 0) continue;
+                const dist = rect.top;
                 if (dist < closestDistance) {
                     closestAsset = asset;
                     closestDistance = dist;
