@@ -9,6 +9,7 @@
       "color": "spectrum-2",
       "wash": "--wash-2",
       "readmeUrl": "meetings/meeting-02/README.md",
+      "keyTakeaway": "A well-designed module is a complexity sink: it takes on internal implementation suffering so the rest of the system can stay simple.",
       "video": {
         "file": "meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4",
         "label": "Video Primer",

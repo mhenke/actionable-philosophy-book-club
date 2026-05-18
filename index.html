@@ -377,7 +377,7 @@
         .podcast-disclosure summary .podcast-chevron {
             flex-shrink: 0;
             margin-left: auto;
-            color: var(--spectrum-3);
+            color: var(--spectrum-2);
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .podcast-disclosure[open] summary .podcast-chevron { transform: rotate(180deg); }
@@ -554,8 +554,8 @@
             <div id="onboarding-banner" class="hidden-view onboarding-banner" style="margin-bottom:1rem;">
                 <p>
                     <strong>New here?</strong>
-                    This dashboard connects you to book-club sessions — watch primers, review slides that open the discussion, and explore deeper audio.
-                    <a href="#p=docs/onboarding.md">Learn more &rarr;</a>
+                    Watch primers, download slides, and explore discussion audio for each session.
+                    Start with the <a href="#p=docs/onboarding.md">Onboarding guide</a> in the Knowledge Base below.
                 </p>
                 <button class="close-btn" id="onboarding-dismiss" aria-label="Dismiss welcome banner">&times;</button>
             </div>
@@ -578,6 +578,7 @@
                             <div class="asset-row"><div style="height:20px;width:120px;background:var(--border-low);border-radius:2px;"></div></div>
                         </div>
                     </div>
+                    <div id="upcoming-key-takeaway"></div>
                     <div id="upcoming-cta">
                         <div class="animate-pulse" aria-hidden="true" style="height:52px;background:var(--spectrum-2);opacity:0.15;border-radius:2px;"></div>
                     </div>
@@ -588,7 +589,7 @@
             <!-- The Horizon -->
             <section aria-labelledby="section-horizon">
                 <h2 id="section-horizon" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-7 flex items-center gap-4">
-                    The Horizon
+                    Coming Up
                     <span class="spectrum-rule"></span>
                 </h2>
                 <div class="grid gap-5 md:gap-8" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));" id="horizon-cards-container">
@@ -651,8 +652,8 @@
                     </a>
                     <a href="#p=meetings/meeting-99-new/README.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);" aria-describedby="kb-desc-inbox">
                         <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" /></svg></span>
-                        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">Inbox</span>
-                        <span id="kb-desc-inbox" class="sr-only">Staging area for new meeting materials and draft content</span>
+                        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">Drafts</span>
+                        <span id="kb-desc-inbox" class="sr-only">Staging area for materials being prepared before a session is confirmed</span>
                     </a>
                 </div>
             </section>
@@ -677,7 +678,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /></svg>
                             <span class="text-[0.75rem] font-semibold uppercase tracking-[0.15em]">Copy Link</span>
                         </button>
-                        <span class="text-[0.6875rem] swiss-light">Session Notes</span>
+                        <span id="reader-doc-label" class="text-[0.6875rem] swiss-light">Session Notes</span>
                     </div>
                 </div>
             </nav>

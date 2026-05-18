@@ -9,16 +9,55 @@
         let MEETINGS = [];
 
         async function loadManifest() {
-            const response = await fetch('docs/manifest.json');
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+            try {
+                const response = await fetch('docs/manifest.json', { signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
+                MEETINGS = data.meetings;
+                window.MEETINGS = MEETINGS;
+            } finally {
+                clearTimeout(timeoutId);
             }
-            const data = await response.json();
-            if (!data.meetings || !Array.isArray(data.meetings)) {
-                throw new Error('Invalid manifest structure');
+        }
+
+        function showManifestError() {
+            const upcomingHeader = document.getElementById('upcoming-card-header');
+            const upcomingMaterials = document.getElementById('upcoming-materials-container');
+            const upcomingCta = document.getElementById('upcoming-cta');
+            const archiveContainer = document.getElementById('archive-cards-container');
+            const horizonContainer = document.getElementById('horizon-cards-container');
+            if (upcomingHeader) upcomingHeader.innerHTML = `
+                <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted mb-3">Couldn't load sessions</p>
+                <button id="manifest-retry-btn" class="text-sm uppercase tracking-widest underline" style="color:var(--spectrum-2)">Tap to retry</button>`;
+            if (upcomingMaterials) upcomingMaterials.innerHTML = '';
+            if (upcomingCta) upcomingCta.innerHTML = '';
+            if (archiveContainer) archiveContainer.innerHTML = '';
+            if (horizonContainer) {
+                horizonContainer.innerHTML = '';
+                const horizonSection = horizonContainer.closest('section');
+                if (horizonSection) horizonSection.classList.add('hidden-view');
             }
-            MEETINGS = data.meetings;
-            window.MEETINGS = MEETINGS;
+            const retryBtn = document.getElementById('manifest-retry-btn');
+            if (retryBtn) {
+                retryBtn.addEventListener('click', async () => {
+                    retryBtn.textContent = 'Retrying...';
+                    retryBtn.disabled = true;
+                    try {
+                        await loadManifest();
+                        if (upcomingHeader) upcomingHeader.innerHTML = '';
+                        renderUpcomingMaterials();
+                        renderArchiveCards();
+                        renderHorizonCards();
+                    } catch (_) {
+                        retryBtn.textContent = 'Tap to retry';
+                        retryBtn.disabled = false;
+                    }
+                });
+            }
         }
 
         const LS = 'apbc:';
@@ -246,6 +285,7 @@
             const container = document.getElementById('upcoming-materials-container');
             const podcastContainer = document.getElementById('upcoming-podcasts');
             const headerContainer = document.getElementById('upcoming-card-header');
+            const quoteContainer = document.getElementById('upcoming-key-takeaway');
             const ctaContainer = document.getElementById('upcoming-cta');
             if (!container) return;
 
@@ -253,6 +293,7 @@
             if (!meeting) {
                 container.innerHTML = '';
                 if (headerContainer) headerContainer.innerHTML = '';
+                if (quoteContainer) quoteContainer.innerHTML = '';
                 if (ctaContainer) ctaContainer.innerHTML = '';
                 return;
             }
@@ -272,6 +313,15 @@
             container.innerHTML = (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip)
                 ? `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`
                 : primaryRows.join('') + resourceStrip;
+
+            if (quoteContainer) {
+                quoteContainer.innerHTML = meeting.keyTakeaway
+                    ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
+                           <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
+                           <p class="text-lg leading-relaxed italic text-banner">${escapeHTML(meeting.keyTakeaway)}</p>
+                       </div>`
+                    : '';
+            }
 
             if (ctaContainer && meeting.readmeUrl) {
                 ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
@@ -310,7 +360,7 @@
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1 text-muted">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
                             <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
                         </div>
-                        <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-white px-2 py-1" style="background-color:var(--banner)">Done</span>
+                        <span class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-widest px-2 py-1" style="border:1px solid var(--text-muted);color:var(--text-muted)">Done</span>
                     </div>
                     ${primaryRows.join('')}
                     ${podcastSection}
@@ -329,6 +379,14 @@
             const horizonContainer = document.getElementById('horizon-cards-container');
             if (!horizonContainer) return;
             const drafts = MEETINGS.filter(m => m.status === 'draft');
+            const horizonSection = horizonContainer.closest('section');
+
+            if (drafts.length === 0) {
+                horizonContainer.innerHTML = '';
+                if (horizonSection) horizonSection.classList.add('hidden-view');
+                return;
+            }
+            if (horizonSection) horizonSection.classList.remove('hidden-view');
 
             const fragment = document.createDocumentFragment();
             drafts.forEach(meeting => {
@@ -538,6 +596,8 @@
                 if (h1) {
                     document.title = `${h1.textContent.trim()} — Actionable Philosophy Book Club`;
                     content.setAttribute('aria-label', h1.textContent.trim());
+                    const readerDocLabel = document.getElementById('reader-doc-label');
+                    if (readerDocLabel) readerDocLabel.textContent = h1.textContent.trim();
                 }
 
                 applyMeetingMaterialsTree(content);
@@ -572,6 +632,8 @@
 
         function showDashboard() {
             document.title = 'Actionable Philosophy Book Club Dashboard';
+            const readerDocLabel = document.getElementById('reader-doc-label');
+            if (readerDocLabel) readerDocLabel.textContent = 'Session Notes';
             setView('dashboard');
             readerStatus.textContent = '';
             content.innerHTML = '';
@@ -867,13 +929,16 @@
                 marked.use({ gfm: true, breaks: true });
             }
 
-            await loadManifest();
-            if (window.__TEST__ === true) window.__manifestLoaded = true;
+            try {
+                await loadManifest();
+                if (window.__TEST__ === true) window.__manifestLoaded = true;
+                renderUpcomingMaterials();
+                renderArchiveCards();
+                renderHorizonCards();
+            } catch (_) {
+                showManifestError();
+            }
 
-            renderUpcomingMaterials();
-            renderArchiveCards();
-            renderHorizonCards();
-            
             handleRoute();
 
             // Apply will-change dynamically on card hover for performance
