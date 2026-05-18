@@ -432,17 +432,11 @@
                     ? resolved.pathname.slice(siteRoot.length)
                     : resolved.pathname.slice(1);
 
-                // Handle folder links (trailing slash) by mapping to a README in that folder when possible
+                // Do not make folder links clickable. Disable hrefs that end with '/' so folders remain structural.
                 if (href.endsWith('/')) {
-                    const readmePath = repoPath.endsWith('/') ? repoPath + 'README.md' : repoPath + '/README.md';
-                    if (isSafeRepoPath(readmePath)) {
-                        // Route into the reader for the folder's README
-                        link.setAttribute('href', '#p=' + readmePath);
-                    } else {
-                        link.removeAttribute('href');
-                        link.setAttribute('aria-disabled', 'true');
-                        link.setAttribute('title', 'Link target is outside allowed directories');
-                    }
+                    link.removeAttribute('href');
+                    link.setAttribute('aria-disabled', 'true');
+                    link.setAttribute('title', 'Folder — not a navigable file');
                     return;
                 }
 
@@ -515,6 +509,17 @@
         function renderFileTree(ul, prefix) {
             [...ul.children].forEach((li, i, arr) => {
                 if (li.querySelector(':scope > .tree-connector')) return;
+                // If the first child is an anchor that points to a folder (href ends with '/'), make it inert
+                const firstAnchor = li.querySelector(':scope > a');
+                if (firstAnchor) {
+                    const href = firstAnchor.getAttribute('href') || '';
+                    if (href.endsWith('/')) {
+                        const span = document.createElement('span');
+                        span.className = firstAnchor.className || '';
+                        span.innerHTML = firstAnchor.innerHTML;
+                        li.replaceChild(span, firstAnchor);
+                    }
+                }
                 const isLast = i === arr.length - 1;
                 const connector = isLast ? '└── ' : '├── ';
                 const childPrefix = prefix + (isLast ? '    ' : '│   ');
