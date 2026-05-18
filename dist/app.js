@@ -245,15 +245,42 @@
         function renderUpcomingMaterials() {
             const container = document.getElementById('upcoming-materials-container');
             const podcastContainer = document.getElementById('upcoming-podcasts');
+            const headerContainer = document.getElementById('upcoming-card-header');
+            const ctaContainer = document.getElementById('upcoming-cta');
             if (!container) return;
+
             const meeting = MEETINGS.find(m => m.status === 'upcoming');
-            if (!meeting) { container.innerHTML = ''; return; }
-            const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
-            if (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip) {
-                container.innerHTML = `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`;
+            if (!meeting) {
+                container.innerHTML = '';
+                if (headerContainer) headerContainer.innerHTML = '';
+                if (ctaContainer) ctaContainer.innerHTML = '';
                 return;
             }
-            container.innerHTML = primaryRows.join('') + resourceStrip;
+
+            if (headerContainer) {
+                headerContainer.innerHTML = `
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="card-title">
+                            <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">${escapeHTML(meeting.session)} &bull; ${escapeHTML(meeting.date)}</span>
+                            <h2 id="next-meeting-heading" class="text-2xl md:text-3xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h2>
+                        </div>
+                        <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest px-2 py-1" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2);">Upcoming</span>
+                    </div>`;
+            }
+
+            const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
+            container.innerHTML = (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip)
+                ? `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`
+                : primaryRows.join('') + resourceStrip;
+
+            if (ctaContainer && meeting.readmeUrl) {
+                ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
+                const ctaLink = ctaContainer.querySelector('[data-prefetch-path]');
+                if (ctaLink) ctaLink.addEventListener('pointerenter', () => {
+                    if (isSafeRepoPath(meeting.readmeUrl)) prefetchMarkdown(meeting.readmeUrl);
+                });
+            }
+
             if (podcastContainer) {
                 podcastContainer.innerHTML = podcastRows.length > 0
                     ? `<details class="podcast-disclosure"><summary><span class="asset-link"><span class="icon-pill" style="background:var(--wash-3-border);" aria-hidden="true">📦</span>${escapeHTML(podcastSummary)}</span><svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${podcastRows.join('')}</details>`
@@ -468,7 +495,7 @@
             if (footer) footer.classList.toggle('hidden', !isDashboard);
         }
 
-        async function loadPage(path, fallback, anchorId) {
+        async function loadPage(path, anchorId) {
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
                 const contentEl = document.getElementById('markdown-content');
                 if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and try reloading the page.</p>';
@@ -534,7 +561,7 @@
                         </div>
                     </div>`;
                 const retryBtn = content.querySelector('#retry-load');
-                if (retryBtn) retryBtn.addEventListener('click', () => loadPage(path, null, anchorId));
+                if (retryBtn) retryBtn.addEventListener('click', () => loadPage(path, anchorId));
                 const returnBtn = content.querySelector('#return-dashboard');
                 if (returnBtn) returnBtn.addEventListener('click', showDashboard);
                 readerStatus.textContent = 'Document unavailable.';
@@ -573,15 +600,6 @@
         }
 
         // ── Asset availability check ──
-        async function checkAssetAvailable(path) {
-            try {
-                const resp = await fetch(path, { method: 'HEAD' });
-                return resp.ok;
-            } catch {
-                return false;
-            }
-        }
-
         // ── Inline video player ──
         let videoPlayerCleanup = null;
 
@@ -713,7 +731,7 @@
                 }
                 const meeting = MEETINGS.find(m => m.readmeUrl === path);
                 updateReaderTheme(meeting ? meeting.id : null);
-                loadPage(path, null, null);
+                loadPage(path, null);
             } else {
                 showDashboard();
             }

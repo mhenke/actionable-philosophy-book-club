@@ -560,16 +560,17 @@
                 <button class="close-btn" id="onboarding-dismiss" aria-label="Dismiss welcome banner">&times;</button>
             </div>
 
-            <!-- Next Meeting -->
+            <!-- Next Meeting — header + CTA rendered by renderUpcomingMaterials() from manifest -->
             <section class="card p-6 md:p-8" aria-labelledby="next-meeting-heading">
-                <div class="flex justify-between items-start mb-6 gap-4">
-                    <div class="card-title">
-                        <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">Meeting 02 &bull; 27 May 26</span>
-                        <h2 id="next-meeting-heading" class="text-2xl md:text-3xl font-bold tracking-tight">Deep Modules &amp; Complexity Sink</h2>
+                <div id="upcoming-card-header" class="mb-6">
+                    <div class="animate-pulse flex justify-between items-start gap-4" aria-hidden="true">
+                        <div class="card-title">
+                            <div style="height:12px;width:120px;background:var(--border-low);border-radius:2px;margin-bottom:8px;"></div>
+                            <div style="height:26px;width:260px;background:var(--border-low);border-radius:2px;"></div>
+                        </div>
+                        <div style="height:22px;width:64px;background:var(--border-low);border-radius:2px;"></div>
                     </div>
-                    <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest px-2 py-1" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2);">Upcoming</span>
                 </div>
-
                 <div class="space-y-5">
                     <div id="upcoming-materials-container">
                         <div class="animate-pulse" aria-hidden="true">
@@ -577,14 +578,9 @@
                             <div class="asset-row"><div style="height:20px;width:120px;background:var(--border-low);border-radius:2px;"></div></div>
                         </div>
                     </div>
-                    <div class="border p-5" style="background: var(--wash-1); border-color: var(--border-low);">
-                        <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
-                        <p class="text-lg leading-relaxed italic text-banner">"A well-designed module is a <strong class="not-italic font-bold">complexity sink</strong>: it takes on internal implementation suffering so the rest of the system can stay simple."</p>
+                    <div id="upcoming-cta">
+                        <div class="animate-pulse" aria-hidden="true" style="height:52px;background:var(--spectrum-2);opacity:0.15;border-radius:2px;"></div>
                     </div>
-                    <a href="#p=meetings/meeting-02/README.md" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]" data-prefetch-path="meetings/meeting-02/README.md">
-                        Meeting Notes
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                    </a>
                     <div id="upcoming-podcasts"></div>
                 </div>
             </section>
