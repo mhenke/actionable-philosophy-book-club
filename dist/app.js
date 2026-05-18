@@ -257,11 +257,13 @@
             }
 
             if (meeting.slides && isSafeAssetPath(meeting.slides.file)) {
+                const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
+                const slidesMeta = slidesSize ? ` · ${slidesSize}` : '';
                 primaryRows.push(`
                     <div class="asset-row">
                         <a href="${buildPPTXViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            ${escapeHTML(meeting.slides.label)}
+                            ${escapeHTML(meeting.slides.label)}${slidesMeta}
                         </a>
                         <a href="${escapeHTML(meeting.slides.file)}" download
                            aria-label="Download slides — ${escapeHTML(meeting.session)}"
