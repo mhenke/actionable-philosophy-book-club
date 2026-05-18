@@ -29,7 +29,7 @@
         });
 
         function validateAssetCopyRegistry(assetCopy) {
-            const registry = { ...DEFAULT_ASSET_COPY };
+            const registry = {};
             if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
                 console.warn('Invalid manifest asset copy registry: expected an object. Falling back to defaults.');
                 return registry;
@@ -43,17 +43,26 @@
                 console.warn(`Invalid manifest asset copy registry: ${[
                     missing.length ? `missing ${missing.join(', ')}` : '',
                     extra.length ? `unexpected ${extra.join(', ')}` : ''
-                ].filter(Boolean).join('; ')}. Falling back to defaults for missing entries.`);
+                ].filter(Boolean).join('; ')}. Using defaults at render time for missing entries.`);
             }
 
             expectedKeys.forEach(key => {
                 const entry = assetCopy[key];
                 if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return;
-                const label = typeof entry.label === 'string' && entry.label.trim() ? entry.label : DEFAULT_ASSET_COPY[key].label;
-                const title = typeof entry.title === 'string' && entry.title.trim() ? entry.title : DEFAULT_ASSET_COPY[key].title;
-                registry[key] = { label, title };
+                const sanitized = {};
+                if (typeof entry.label === 'string' && entry.label.trim()) sanitized.label = entry.label;
+                if (typeof entry.title === 'string' && entry.title.trim()) sanitized.title = entry.title;
+                if (Object.keys(sanitized).length > 0) registry[key] = sanitized;
             });
             return registry;
+        }
+
+        function getAssetCopy(type) {
+            const entry = ASSET_COPY[type];
+            if (entry && typeof entry === 'object' && !Array.isArray(entry)) {
+                return { ...(DEFAULT_ASSET_COPY[type] || {}), ...entry };
+            }
+            return DEFAULT_ASSET_COPY[type] || {};
         }
 
         async function loadManifest() {
@@ -281,7 +290,7 @@
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
                     const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)' };
-                    const copy = ASSET_COPY[pod.type] && typeof ASSET_COPY[pod.type] === 'object' ? ASSET_COPY[pod.type] : DEFAULT_ASSET_COPY[pod.type] || {};
+                    const copy = getAssetCopy(pod.type);
                     const label = copy.label || cfg.label || pod.type;
                     const title = copy.title || cfg.title || '';
                     const podDuration = pod.duration ? formatDuration(pod.duration) : '';

@@ -63,7 +63,7 @@ test.describe('Asset behaviour — what users actually do', () => {
         await expect(heading).not.toBeEmpty();
     });
 
-    test('asset copy falls back to defaults for missing registry entries', async ({ page }) => {
+    test('asset copy falls back to defaults at render time for missing registry types', async ({ page }) => {
         const manifestPath = new URL('../docs/manifest.json', import.meta.url);
 
         await page.route('**/docs/manifest.json', async route => {
@@ -72,11 +72,7 @@ test.describe('Asset behaviour — what users actually do', () => {
                 label: 'Route Alternate Label',
                 title: 'Route Alternate Title'
             };
-            manifest.assetCopy.critique = {
-                label: 'Route Critique Label'
-            };
             delete manifest.assetCopy['deep-dive'];
-            delete manifest.assetCopy.debate;
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -91,16 +87,12 @@ test.describe('Asset behaviour — what users actually do', () => {
 
         await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Label');
         await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Title');
-        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Critique Label');
-        await expect(page.locator('#upcoming-podcasts')).toContainText('A critical analysis of the key arguments and trade-offs');
         await expect(page.locator('#upcoming-podcasts')).toContainText('Deep Dive');
         await expect(page.locator('#upcoming-podcasts')).toContainText('A solo exploration of the session topic');
 
         const loadedCopy = await page.evaluate(() => window.ASSET_COPY);
         expect(loadedCopy.alternate.label).toBe('Route Alternate Label');
-        expect(loadedCopy.critique.title).toBe('A critical analysis of the key arguments and trade-offs');
-        expect(loadedCopy['deep-dive'].label).toBe('Deep Dive');
-        expect(loadedCopy.debate.title).toBe('A structured debate between two design perspectives');
+        expect(loadedCopy['deep-dive']).toBeUndefined();
     });
 
     test('archive cards render with Meeting Notes links', async ({ page }) => {
