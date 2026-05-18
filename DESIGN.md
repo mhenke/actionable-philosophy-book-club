@@ -101,17 +101,6 @@ No `space-y` utility on `<main>`. Spacing is explicit:
 
 Rationale: `space-y` on the container applies the gap to every child including invisible elements (`display:none`, `position:absolute`), producing phantom top gaps on the first visible section.
 
-### Skeleton Loading System
-
-Every container that is empty before the manifest loads must have a skeleton placeholder. Rules:
-
-- **Shape matches content.** Asset-row skeletons use `.asset-row` flex structure with icon-pill placeholder (28×28px), label bar, and download-icon placeholder — not a solid full-width block.
-- **Color is always `--border-low`.** No spectrum fills, no opacity hacks on colored tokens. `--border-low` is the correct subtle neutral.
-- **Animation is `animate-pulse`.** Suppressed by `prefers-reduced-motion`.
-- **`aria-hidden="true"` on every skeleton.** Screen readers skip placeholder content.
-- **Percentages for text bars, not fixed px.** Prevents overflow on narrow viewports where the bar would exceed its flex container.
-- **Count matches expected content.** Archive skeleton has 2 cards (2 done meetings), Horizon has 2 (2 draft meetings). Update when meeting counts change.
-
 ### A11y
 - 44px minimum touch targets on all interactive elements.
 - Focus rings: `2px solid var(--spectrum-3)` via `:focus-visible`.
