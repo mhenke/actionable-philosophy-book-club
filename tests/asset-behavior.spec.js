@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
@@ -60,6 +61,21 @@ test.describe('Asset behaviour — what users actually do', () => {
         const heading = page.locator('#next-meeting-heading');
         await expect(heading).toBeVisible();
         await expect(heading).not.toBeEmpty();
+    });
+
+    test('asset copy comes from manifest registry', async ({ page }) => {
+        const manifestPath = new URL('../docs/manifest.json', import.meta.url);
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+        await page.goto('/');
+        await page.waitForFunction(() => window.__manifestLoaded === true);
+
+        await page.locator('#upcoming-podcasts details').evaluate(el => { el.open = true; });
+
+        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy.alternate.label);
+        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy.alternate.title);
+        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy['deep-dive'].label);
+        await expect(page.locator('#upcoming-podcasts')).toContainText(manifest.assetCopy['deep-dive'].title);
     });
 
     test('archive cards render with Meeting Notes links', async ({ page }) => {

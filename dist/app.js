@@ -7,6 +7,7 @@
 
         // Meeting data manifest, loaded from docs/manifest.json at startup.
         let MEETINGS = [];
+        let ASSET_COPY = {};
 
         async function loadManifest() {
             const controller = new AbortController();
@@ -18,7 +19,9 @@
                 const data = await response.json();
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
                 MEETINGS = data.meetings;
+                ASSET_COPY = data.assetCopy && typeof data.assetCopy === 'object' ? data.assetCopy : {};
                 window.MEETINGS = MEETINGS;
+                window.ASSET_COPY = ASSET_COPY;
             } finally {
                 clearTimeout(timeoutId);
             }
@@ -160,8 +163,8 @@
 
         // Shared rendering constants
         const PODCAST_CONFIG = {
-            'alternate': { icon: '🎬', color: 'var(--spectrum-2)', label: 'Video', title: 'An alternate recording of the session' },
-            'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)', label: 'Deep Dive', title: 'An in-depth solo exploration of the session topic' },
+            'alternate': { icon: '🎬', color: 'var(--spectrum-2)' },
+            'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)' },
             'critique':  { icon: '🔍', color: 'var(--spectrum-1)', label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
             'debate':    { icon: '⚔️', color: 'var(--spectrum-2)', label: 'Debate',    title: 'A structured debate between two design perspectives' },
         };
@@ -227,7 +230,10 @@
             (meeting.podcasts || [])
                 .forEach(pod => {
                     if (!isSafeAssetPath(pod.file)) return;
-                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)', label: escapeHTML(pod.type), title: '' };
+                    const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)' };
+                    const copy = ASSET_COPY[pod.type] && typeof ASSET_COPY[pod.type] === 'object' ? ASSET_COPY[pod.type] : {};
+                    const label = copy.label || cfg.label || pod.type;
+                    const title = copy.title || cfg.title || '';
                     const podDuration = pod.duration ? formatDuration(pod.duration) : '';
                     const podSize = pod.fileSize ? formatFileSize(pod.fileSize) : '';
                     const podMeta = [podDuration, podSize].filter(Boolean).join(' · ');
@@ -243,9 +249,9 @@
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
                                 ${escapeHTML(pod.label)}${podMetaSpan}
-                                <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(cfg.label)}</span>
+                                <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(label)}</span>
                             </span>
-                            <span class="podcast-caption">${escapeHTML(cfg.title || '')}</span>
+                            <span class="podcast-caption">${escapeHTML(title)}</span>
                         </a>
                         <a href="${escapeHTML(pod.file)}" download
                            aria-label="${downloadLabel}"
@@ -953,4 +959,3 @@
             });
 
         });
-
