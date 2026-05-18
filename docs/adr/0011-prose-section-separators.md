@@ -30,4 +30,7 @@ Remove `border-top` and `padding-top` from `.prose h2`. Section separation is co
 - **Positive:** Reader content is quieter and more readable.
 - **Positive:** The dashboard's spectrum-rule motif remains exclusive to the navigation layer.
 - **Negative:** Section breaks are less visually emphatic on dense pages.
-- **Note:** `.prose h3` retains its `border-top: 2px solid var(--spectrum-5)` — h3 sub-sections are nested within h2 sections and benefit from a lighter visual divider at a smaller scale. The issue was five repeated identical h2 borders, not the use of borders per se.
+
+## Amendment (2026-05-18)
+
+`.prose h3` borders were also removed. The original rationale ("nested sections benefit from a lighter divider at smaller scale") did not hold in practice — the h3 border above headings like "Essential Questions" and "Non-Obvious Insights" created the same clutter pattern immediately below an h2. The emoji prefixes, font weight, spectrum-1 color, and `margin-top: 2rem` provide sufficient visual identity. Whitespace-only separation now applies to both h2 and h3.

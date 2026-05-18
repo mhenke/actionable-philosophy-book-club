@@ -32,7 +32,7 @@ Spectrum-tinted surface overlays used for highlighted content. All highlighted s
 ### Scale
 - **Section heading (h1 in prose):** 1.5rem mobile / 1.875rem desktop — matches the dashboard card heading scale (`text-2xl md:text-3xl`).
 - **Section label (h2 in prose, section headers on dashboard):** 0.8125rem (prose) / 0.625rem (dashboard), both uppercase with `letter-spacing: 0.2em`.
-- **Sub-section heading (h3 in prose):** 1rem, spectrum-1 color, spectrum-5 border-top divider (2px).
+- **Sub-section heading (h3 in prose):** 1rem, spectrum-1 color. No border — margin-top separation only.
 - **Body text (prose paragraphs):** 1.0625rem, line-height 1.7, text-muted color.
 - **UI text (asset links, buttons):** 0.875rem, text-primary color.
 - **Small labels (archive metadata, KB tiles, badges):** 0.6875–0.6875rem, uppercase, `letter-spacing: 0.2em`.
@@ -63,7 +63,7 @@ Dashboard and reader use the same header structure, same container constraints, 
 
 ### Reader-Specific
 - **Prose h2:** No border. Section separation via `margin-top: 3.5rem` (56px) only. Uppercase tracked label is the visual anchor. See ADR-0011.
-- **Prose h3:** `border-top: 2px solid var(--spectrum-5)` — sub-section divider within an h2 section. Retained because nested sections benefit from a lighter visual divider at smaller scale.
+- **Prose h3:** No border. Separation via `margin-top: 2rem` only. Spectrum-1 color and font weight distinguish h3 from body text without a divider line.
 - **Reader header label:** Updates dynamically to reflect the document's H1 on each load; resets to "Session Notes" on dashboard return.
 - Prose links are underlined — reading context convention.
 - Prose body text is larger (1.0625rem) than UI text (0.875rem) — intentional mode signal.
