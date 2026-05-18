@@ -1,57 +1,76 @@
-# Persona Red Flags
+# Persona Red Flags — Decisions (2026-05-18)
 
-This file collects persona-based red flags to help prioritize UX fixes and acceptance criteria.
+This file records the original persona red flags and the team's decisions about what to address now, what to defer, and what to explore further. Use this as the single source of truth for prioritization and implementation notes.
 
-## Alex (Impatient Power User)
-- Context: Desktop user who wants to quickly share or deep-jump to specific assets.
-- Pain points:
-  - No shareable anchored URLs for individual media files (videos, podcasts). Hash routing supports `#p=` for documents but not per-asset anchors.
-  - No anchors or keyboard-accessible shortcuts to jump to a specific podcast type (e.g., Debate, Deep-Dive) within a meeting card.
-  - Must scroll past the entire Next Meeting hero card to reach the Archive section when trying to access older meetings quickly.
-  - Expanding a meeting's podcast disclosure often shows multiple audio rows with no time/duration metadata for `.m4a` files; it's hard to know which recording is the debate without guessing from labels.
-  - No Esc key alternative to close the reader overlay or return focus; the only visible escape is the "Dashboard" link in the header.
-  - Reader lacks sequential navigation between meeting siblings (e.g., "next meeting" / "previous meeting"); users must return to the Dashboard to move between sessions.
-- Time on task: longer than necessary.
-- Frustration trigger: unable to send a direct link to the deep-dive audio or link to a specific podcast type.
-
-## Casey (Distracted Mobile User / Commuting Engineer)
-- Context: Mobile (≈375–390px) user, often one-handed during short sessions or on commutes.
-- Pain points:
-  - Video Primer rows (canonical vs alternate) can look visually identical; users may tap the alternate cut by mistake.
-  - The Key Takeaway box and multiple asset rows can push the primary CTA below the fold on small phones, requiring extra scrolls.
-  - Download icons placed in the upper-right are hard to reach with the thumb; the primary action (play) should be surfaced as a large, reachable tap target.
-  - Video links currently open raw `.mp4` (downloads or external player); in-page playback with resume would improve the mobile experience.
-  - The Knowledge Base is the last section of the page; new users who need onboarding or the Onboarding doc must scroll past Next Meeting, Horizon, and Archive before finding it.
-  - The onboarding banner is injected by JS and positioned above <main>; on tall phones this places it outside the primary thumb zone and therefore less likely to be acted upon.
-- Resolved: Reader error recovery shows "Document unavailable / Try again" when connections drop (fixed).
-- Usability impact: increased taps, misclicks, and likely abandonment for quick tasks.
-
-## Sam (Screen Reader User)
-- Context: Blind or low-vision user relying on screen reader and keyboard navigation.
-- Observations:
-  - Skip links and ARIA landmarks are present and usable.
-  - `aria-busy` and `role="status"` live region behavior is implemented and announces reader state.
-  - Emoji icon-pills are correctly marked `aria-hidden="true"` so they don't pollute assistive output.
-  - Native `<details>` for podcast disclosures are announced correctly by most screen readers.
-- Remaining concern:
-  - The copy-link button currently has a correct `aria-label` but is visually low-opacity (opacity-40). Sighted users may miss it while screen reader users can still find it; consider increasing visible affordance or adding an alternative visible state.
-  - The visible banner text "A Philosophy of Software Design" is marked `aria-hidden="true"` while the page's `<h1>` is `.sr-only`. This intentionally separates visual and accessible title delivery but can create a mismatch between sighted and non-sighted users' perception of the page title.
-  - The onboarding banner is injected and moved by JS after initial DOM load; if JS hasn't run, the DOM order places the banner between the dashboard and footer, which may break expected tab order.
-  - Podcast episode rows do not expose duration or file size for `.m4a` assets; screen reader users cannot determine which episode to download without additional metadata.
-
-## Marcus (Engineer, 3rd Week / New Club Member)
-- Context: Returning participant and/or first-time visitor.
-- Pain points:
-  - Labels like "Synthesis Reader" are unclear without a short explanation or "New here?" entry point.
-  - The Knowledge Base is a glossary of domain terms, not a product-orientation guide; new members look for "where to start" content.
-  - No clear onboarding microcopy or banner guiding new users to playlists, expected session cadence, or how to use the reader.
-- Outcome: confusion about where to begin, missed expectations about meeting cadence and where to find learning paths.
+## Legend
+- DONE — Implemented
+- WILL NOT ADDRESS — Intentionally not planning work now
+- IN PROGRESS — Work started; partial
+- EXPLORE — Gather more information / prototypes before committing
 
 ---
 
-### Recommended acceptance checks (examples)
-- Add anchorable/permalink URLs for media assets and confirm shareable links open the expected player or page.
-- Ensure primary media actions are reachable on 375–390px screens within a single thumb zone; prefer inline play over raw downloads.
-- Provide an onboarding microcopy or a "New here?" banner linking to a short explainer page (one-paragraph + CTAs).
-- Add keyboard shortcuts or in-page anchors for jumping to podcast types within a meeting card.
-- Make the copy-link-btn visually discoverable (increase opacity or add a visible focus state) while preserving correct ARIA labels.
+## Alex (Impatient Power User)
+- Context: Desktop user who wants to quickly share or deep-jump to specific assets.
+
+Decisions:
+- Shareable per-asset anchors (per-asset permalinks) — WILL NOT ADDRESS
+  - Rationale: Adds routing complexity and limited immediate value; deprioritized.
+- Keyboard shortcuts / in-page anchors for podcast types — WILL NOT ADDRESS
+  - Rationale: Low ROI vs. engineering cost; consider in future if usage data shows demand.
+- Jump/scroll behavior to reach Archive quickly — WILL NOT ADDRESS (CONSIDER: TOC/anchor approach)
+  - Note: Can be explored later via a lightweight table-of-contents or anchor links; not in scope now.
+- Podcast duration metadata (show duration in rows) — DONE
+  - Rationale: Implemented; exposes durations for both sighted and screen-reader users.
+- Esc to close & focus restore — WILL NOT ADDRESS (no additional work planned)
+  - Note: Existing behavior is acceptable; user flagged as low-value.
+- Reader previous/next navigation between meetings — DONE
+  - Rationale: Implemented to improve sequential reading.
+
+---
+
+## Casey (Distracted Mobile User / Commuting Engineer)
+- Context: Mobile (≈375–390px) user, often one-handed.
+
+Decisions:
+- Distinguish canonical vs alternate video rows visually — WILL NOT ADDRESS
+  - Rationale: Not planned; maintain current labeling conventions.
+- Primary media reachability on 375–390px (tap targets, layout width parity) — IN PROGRESS
+  - Rationale: Partial adjustments made; need a follow-up pass to ensure index and reader pages share consistent max-widths and tappable areas.
+- Inline playback for `.mp4` (resume-capable in-page player) — WILL NOT ADDRESS
+  - Rationale: Adds playback and state complexity; defer for now.
+- Onboarding banner placement (mobile thumb zone) — DONE
+  - Rationale: Banner placement adjusted earlier; no further change planned.
+
+---
+
+## Sam (Screen Reader User)
+- Context: Blind or low-vision user relying on screen reader and keyboard navigation.
+
+Decisions:
+- Copy-link button visual affordance (increase opacity / visible state) — WILL NOT ADDRESS
+  - Rationale: Visual affordance change considered low priority; keep current ARIA-correct implementation.
+- Visual vs accessible title mismatch — FIX (IN PROGRESS)
+  - Rationale: Aligning visual title and accessible title semantics to avoid confusion; small markup change underway.
+- Podcast duration & file-size availability for screen readers — DONE (duration exposed)
+  - Rationale: Duration metadata surfaced and exposed to assistive tech.
+
+---
+
+## Marcus (Returning participant / New member)
+- Context: Returning participant and/or first-time visitor.
+
+Decisions:
+- Onboarding microcopy / "New here?" explainer + CTAs — DONE
+  - Rationale: Short onboarding microcopy added to help new users find starting points.
+
+---
+
+## What to Explore (low-cost investigations)
+- Lightweight Table-of-Contents / anchor links on long pages to provide quick jumps to Archive (low-effort prototype).
+- Consistent max-width and layout tokens for index + reader pages to ensure visual parity across entry points (design pass).
+- Small A/B of copy-link visual affordance vs analytics to verify if sighted users actually miss the control.
+
+---
+
+If anything here needs different wording or additional decisions, reply with the exact line(s) to change and those edits will be applied and committed.
