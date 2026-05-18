@@ -27,6 +27,8 @@ A muted blue → teal → sage green gradient spectrum on white.
 ### Wash Tokens
 Spectrum-tinted surface overlays used for highlighted content. All highlighted surfaces (Key Takeaway box, blockquotes, Knowledge Base tiles) use `--wash-2` / `--wash-2-border` (spectrum-2) to share the same visual DNA.
 
+Implementation note: Define the spectrum color tokens as CSS variables in :root (e.g., `--spectrum-1`..`--spectrum-6`) and reference them in styles via `var(--spectrum-N)`. Do not hardcode hex values in runtime styles; keep hex values documented here only and use variables in source files.
+
 ## Typography
 
 ### Scale
@@ -35,7 +37,7 @@ Spectrum-tinted surface overlays used for highlighted content. All highlighted s
 - **Sub-section heading (h3 in prose):** 1rem, spectrum-1 color. No border — margin-top separation only.
 - **Body text (prose paragraphs):** 1.0625rem, line-height 1.7, text-muted color.
 - **UI text (asset links, buttons):** 0.875rem, text-primary color.
-- **Small labels (archive metadata, KB tiles, badges):** 0.6875–0.6875rem, uppercase, `letter-spacing: 0.2em`.
+- **Small labels (archive metadata, KB tiles, badges):** 0.6875rem, uppercase, `letter-spacing: 0.2em`.
 
 ### Tracking Scale
 Three intentional levels — no other values:
@@ -53,7 +55,7 @@ System font stack: `ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 
 ### Both Views — Identical Structure
 Dashboard and reader use the same header structure, same container constraints, and same token vocabulary. The visual system does not change between modes.
 
-- **Content container:** `max-w-6xl mx-auto` with `p-5 md:p-10 lg:px-16` horizontal padding — identical on both pages. Prose article fills this container; no independent line-length cap.
+- **Content container:** `max-w-6xl mx-auto` with `p-5 md:p-10 lg:px-16` horizontal padding — identical on both pages. Prose article fills this container; line-length is capped at 75ch for optimal legibility (see GEMINI.md).
 - **The Banner Bar:** Dark charcoal anchor, `max-w-6xl` constrained inner content aligned to the main container.
 - **The Spectrum Bar:** 6px linear gradient (Navy to Sage), always full gradient on both views.
 - **Section Dividers:** `.spectrum-rule` — same 6-stop spectrum gradient as the header bar, `max-width: 240px`, fading to transparent. Appears next to section heading labels on the dashboard.
