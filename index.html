@@ -60,7 +60,7 @@
             --overlay-backdrop: rgba(0, 0, 0, 0.85);
         }
         body {
-            font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+            font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Noto Sans', 'Liberation Sans', Arial, sans-serif;
             background-color: var(--surface);
             color: var(--text-primary);
             line-height: 1.5;
@@ -117,6 +117,7 @@
         .card {
             background: var(--white);
             border: 1px solid var(--border-low);
+            will-change: transform;
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -136,6 +137,7 @@
             font-size: 0.875rem;
             transition: background-color 0.2s, transform 0.2s;
         }
+        .icon-btn-label { display:inline-block; will-change: transform, opacity; transform-origin: left; }
         .btn-primary {
             background-color: var(--spectrum-2);
             color: var(--white);
