@@ -150,14 +150,13 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
     });
 
-    test('reader header shows (press Esc) hint', async ({ page }) => {
+    test('reader header shows Dashboard back link', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route =>
             route.fulfill({ body: '# Deep Systems\n\nContent here.' })
         );
         await page.goto('/#p=meetings/meeting-01/README.md');
         await page.waitForSelector('#markdown-content', { state: 'attached' });
-        const escHint = page.locator('text=/press Esc/i');
-        await expect(escHint).toBeVisible();
+        await expect(page.locator('#back-to-dashboard')).toBeVisible();
     });
 
     test('mobile video: asset links are clickable on small viewport', async ({ page }) => {
