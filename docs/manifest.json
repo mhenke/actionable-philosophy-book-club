@@ -13,7 +13,7 @@
         "file": "meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 488,
+        "duration": 189,
         "fileSize": 31
       },
       "slides": {
@@ -29,21 +29,21 @@
           "file": "meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4",
           "variant": "alternate",
           "source_filename": "02-Clean-Code-Paradox-deep-dive.mp4",
-          "duration": 8,
+          "duration": 488,
           "fileSize": 31
         },
         {
           "type": "deep-dive",
           "label": "Why Clean Code Rots Your Codebase",
           "file": "meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a",
-          "duration": 1092,
+          "duration": 1093,
           "fileSize": 17
         },
         {
           "type": "debate",
           "label": "Deep Modules vs Small Functions",
           "file": "meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a",
-          "duration": 1318,
+          "duration": 1319,
           "fileSize": 20
         },
         {
@@ -80,7 +80,7 @@
         "file": "meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 286,
+        "duration": 287,
         "fileSize": 17
       },
       "slides": {
@@ -101,14 +101,14 @@
           "type": "debate",
           "label": "Deep Modules vs Clean Code for AI",
           "file": "meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a",
-          "duration": 1414,
+          "duration": 1415,
           "fileSize": 22
         },
         {
           "type": "critique",
           "label": "How Tactical Programming Creates Complexity",
           "file": "meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a",
-          "duration": 1079,
+          "duration": 1080,
           "fileSize": 17
         }
       ],
@@ -138,7 +138,7 @@
         "file": "meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 179,
+        "duration": 180,
         "fileSize": 11
       },
       "slides": {

@@ -20,13 +20,13 @@ test('disclosure summary shows Additional Resources prefix and no duplicate emoj
 test('video asset shows duration and file size when present in manifest', async ({ page }) => {
   await page.goto('/');
   const videoLink = page.locator('#archive-cards-container .card').last().locator('a.asset-link[href*=".mp4"]').first();
-  await expect(videoLink).toContainText(/52m/);
-  await expect(videoLink).toContainText(/840 MB/);
+  await expect(videoLink).toContainText(/3m 0s/);
+  await expect(videoLink).toContainText(/11 MB/);
 });
 
 test('podcast asset shows duration and file size when present in manifest', async ({ page }) => {
   await page.goto('/');
   const podcastLink = page.locator('#archive-cards-container .card').first().locator('a.asset-link[href*=".m4a"]').first();
-  await expect(podcastLink).toContainText(/18m/);
+  await expect(podcastLink).toContainText(/17m 45s/);
   await expect(podcastLink).toContainText(/16 MB/);
 });

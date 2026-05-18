@@ -17,7 +17,6 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 
 - **`index.html`** — all HTML + CSS in `<style>` block. JS loaded from `dist/app.js`.
 - **`dist/app.js`** — inline script extracted for CSP compliance (`script-src 'self'`).
-- **`sw.js`** — service worker for offline caching of app shell.
 - **Hash router** — `#p=path/to/file.md` triggers `loadPage()` which fetches + renders markdown via marked + DOMPurify.
 - **MEETINGS manifest** — JS array in `dist/app.js` with all session data (title, date, video/slides/podcasts/resources, status, color, wash).
 - **Dashboard** — `renderUpcomingMaterials()` + `renderArchiveCards()` use shared `buildAssetRows()`.

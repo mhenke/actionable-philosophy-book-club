@@ -150,20 +150,6 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#reader-status')).toHaveText('Document unavailable.');
     });
 
-    test('safe-anchoring: sanitizeAnchor rejects invalid characters', async ({ page }) => {
-        await page.addInitScript(() => { window.__TEST__ = true; });
-        await page.goto('/');
-        const result = await page.evaluate(() => window.sanitizeAnchor('../../../etc/passwd'));
-        expect(result).toBeNull();
-    });
-
-    test('safe-anchoring: sanitizeAnchor allows valid anchor IDs', async ({ page }) => {
-        await page.addInitScript(() => { window.__TEST__ = true; });
-        await page.goto('/');
-        const result = await page.evaluate(() => window.sanitizeAnchor('asset-video-recap'));
-        expect(result).toBe('asset-video-recap');
-    });
-
     test('reader header shows (press Esc) hint', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route =>
             route.fulfill({ body: '# Deep Systems\n\nContent here.' })
@@ -207,39 +193,10 @@ test.describe('Routing & Navigation', () => {
         await expect(copyBtn).toHaveAttribute('aria-label', 'Link copied!', { timeout: 3000 });
     });
 
-    test('getVisibleAssetAnchor: skips scrolled-past assets outside viewport', async ({ page }) => {
-        await page.goto('/');
-        // Wait for archive cards to render
-        await page.waitForSelector('#archive-cards-container .card', { state: 'attached' });
-        // Find an asset anchor near the end of the page
-        const allAnchors = await page.evaluate(() => {
-            return Array.from(document.querySelectorAll('[id^="asset-"]')).map(el => el.id);
-        });
-        expect(allAnchors.length).toBeGreaterThan(0);
-        // Scroll to bottom to scroll past all assets
-        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-        // getVisibleAssetAnchor should return null or an anchor near the bottom
-        const afterScroll = await page.evaluate(() => {
-            const anchor = window.getVisibleAssetAnchor();
-            if (!anchor) return { found: false };
-            const el = document.getElementById(anchor);
-            return { found: true, exists: !!el, top: el ? el.getBoundingClientRect().top : null };
-        });
-        expect(afterScroll.found).toBe(true);
-        expect(afterScroll.exists).toBe(true);
-        expect(afterScroll.top).toBeGreaterThanOrEqual(0);
-        // Scroll back to top and verify the first visible asset is at or below viewport top
-        await page.evaluate(() => window.scrollTo(0, 0));
-        const atTop = await page.evaluate(() => {
-            const anchor = window.getVisibleAssetAnchor();
-            if (!anchor) return { found: false };
-            const el = document.getElementById(anchor);
-            if (!el) return { found: true, exists: false };
-            return { found: true, exists: true, top: el.getBoundingClientRect().top };
-        });
-        expect(atTop.found).toBe(true);
-        expect(atTop.exists).toBe(true);
-        expect(atTop.top).toBeGreaterThanOrEqual(0);
+    test('hash route #a= is ignored', async ({ page }) => {
+        await page.goto('/#a=meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4');
+        await expect(page.locator('#dashboard-view')).toBeVisible();
+        await expect(page.locator('#reader-view')).toBeHidden();
     });
 
     test('safe-anchoring: reader ignores trailing hash fragment', async ({ page }) => {

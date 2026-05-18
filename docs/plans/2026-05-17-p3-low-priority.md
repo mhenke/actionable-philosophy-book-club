@@ -46,23 +46,9 @@ startBtn.addEventListener('click', () => { ... }, { once: true });
 
 ---
 
-### A3 — Add `clients.claim()` to SW Activate Handler [BP-18]
+### A3 — Retired: service worker caching removed
 
-**File:** `sw.js:17-21`
-
-Without `clients.claim()`, open tabs remain controlled by the prior SW version until they reload.
-
-```js
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys()
-            .then(keys => Promise.all(
-                keys.filter(k => k !== CACHE).map(k => caches.delete(k))
-            ))
-            .then(() => self.clients.claim())  // add this
-    );
-});
-```
+This item is no longer applicable. The app no longer registers or ships a service worker, so there is nothing to patch here.
 
 ---
 
@@ -139,38 +125,9 @@ Replace direct `classList` manipulation in `showDashboard` and `loadPage` with `
 
 ## Group B — Testing Additions
 
-### B1 — Add Test: SW Registration Succeeds [T-02]
+### B1 — Retired: SW registration test
 
-**File:** New test in `tests/sw.spec.js`
-
-```js
-import { test, expect } from '@playwright/test';
-
-test('service worker registers and becomes active', async ({ page }) => {
-    await page.goto('/');
-    // First visit registers the SW
-    await page.goto('/');  // second visit — SW should now be controlling
-
-    const swActive = await page.evaluate(() =>
-        navigator.serviceWorker.controller !== null
-    );
-    expect(swActive).toBe(true);
-});
-
-test('SW precache includes critical assets', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForTimeout(500);  // allow SW install
-
-    const cached = await page.evaluate(async () => {
-        const cache = await caches.open(/* CACHE name */);
-        const keys = await cache.keys();
-        return keys.map(r => r.url);
-    });
-
-    expect(cached.some(url => url.includes('dist/app.js'))).toBe(true);
-    expect(cached.some(url => url.includes('dist/tailwind.css'))).toBe(true);
-});
-```
+This test is obsolete because service worker support has been removed.
 
 ---
 
@@ -202,23 +159,9 @@ test('mdCache FIFO eviction keeps most recently loaded entry', async ({ page }) 
 
 ---
 
-### B3 — Add Test: `#a=` Asset Permalink Route [T-11]
+### B3 — Retired: `#a=` asset permalink route
 
-**File:** `tests/routing.spec.js`
-
-```js
-test('navigating to #a= permalink scrolls to and highlights the asset', async ({ page }) => {
-    await page.goto('/');
-    await page.waitForSelector('.card');
-
-    // Navigate to an asset permalink
-    await page.goto('/#a=meetings/meeting-01/recordings/01-recording.mp4');
-
-    // A card should be highlighted (or scrolled to)
-    const highlightedCard = page.locator('.card.card--highlighted, .card:focus');
-    await expect(highlightedCard).toBeVisible();
-});
-```
+Asset permalinks were removed along with the surrounding dashboard highlight logic.
 
 ---
 

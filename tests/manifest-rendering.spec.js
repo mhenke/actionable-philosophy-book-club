@@ -41,10 +41,10 @@ test.describe('Manifest Rendering', () => {
         });
 
         expect(meeting01Data.id).toBe('meeting-01');
-        expect(meeting01Data.videoDuration).toBe(48);
-        expect(meeting01Data.videoFileSize).toBe(780);
+        expect(meeting01Data.videoDuration).toBe(287);
+        expect(meeting01Data.videoFileSize).toBe(17);
         expect(meeting01Data.podcastsCount).toBeGreaterThan(0);
-        expect(meeting01Data.firstPodcastDuration).toBe(18);
+        expect(meeting01Data.firstPodcastDuration).toBe(1065);
         expect(meeting01Data.firstPodcastFileSize).toBe(16);
     });
 
@@ -55,79 +55,21 @@ test.describe('Manifest Rendering', () => {
         await expect(banner).toContainText(/New/i);
     });
 
-    test('falls back to inline MEETINGS when manifest fetch fails', async ({ page }) => {
-        // Block manifest.json so fetch falls back to inline data
-        await page.route('**/docs/manifest.json', route => route.abort('failed'));
+    test('manifest loads from docs/manifest.json only', async ({ page }) => {
         await page.goto('/');
-        // Wait for dashboard to render (fallback path should use inline MEETINGS)
-        await expect(page.locator('#archive-cards-container')).toBeVisible();
-        // Verify meetings rendered from inline fallback data
-        await expect(page.locator('#archive-cards-container .card')).not.toHaveCount(0);
-    });
-
-    test('inline MEETINGS_INLINE matches manifest.json meeting IDs', async ({ page }) => {
-        await page.goto('/');
-        const inlineIds = await page.evaluate(() => {
-            const inline = window.MEETINGS_INLINE || [];
-            return inline.map(m => m.id).sort();
+        const manifestMeta = await page.evaluate(() => {
+            const meeting = window.MEETINGS.find(m => m.id === 'meeting-01');
+            return {
+                ids: window.MEETINGS.map(m => m.id).sort(),
+                inlinePresent: typeof window.MEETINGS_INLINE !== 'undefined',
+                meetingId: meeting?.id,
+            };
         });
-        const manifestIds = await page.evaluate(() => {
-            return (window.MEETINGS || []).map(m => m.id).sort();
-        });
-        expect(inlineIds).toEqual(manifestIds);
-    });
-
-    test('inline MEETINGS_INLINE has same fields as manifest.json', async ({ page }) => {
-        await page.goto('/');
-        const fields = await page.evaluate(() => {
-            const inline = window.MEETINGS_INLINE || [];
-            const manifest = window.MEETINGS || [];
-            const keys = new Set();
-            inline.forEach(m => Object.keys(m).forEach(k => keys.add(k)));
-            manifest.forEach(m => Object.keys(m).forEach(k => keys.add(k)));
-            const results = [];
-            for (const key of keys) {
-                for (let i = 0; i < Math.max(inline.length, manifest.length); i++) {
-                    const iVal = i < inline.length ? inline[i][key] : undefined;
-                    const mVal = i < manifest.length ? manifest[i][key] : undefined;
-                    if (key === 'video' || key === 'slides') {
-                        const iKeys = iVal ? Object.keys(iVal).sort() : [];
-                        const mKeys = mVal ? Object.keys(mVal).sort() : [];
-                        if (JSON.stringify(iKeys) !== JSON.stringify(mKeys)) {
-                            results.push({ meeting: inline[i]?.id || manifest[i]?.id, field: key, inline: iKeys, manifest: mKeys });
-                        }
-                    } else if (key === 'podcasts' || key === 'resources') {
-                        const iLen = Array.isArray(iVal) ? iVal.length : 0;
-                        const mLen = Array.isArray(mVal) ? mVal.length : 0;
-                        if (iLen !== mLen) {
-                            results.push({ meeting: inline[i]?.id || manifest[i]?.id, field: key, inline: `${iLen} items`, manifest: `${mLen} items` });
-                        }
-                        for (let j = 0; j < Math.max(iLen, mLen); j++) {
-                            const iKeys = j < iLen && iVal[j] ? Object.keys(iVal[j]).sort() : [];
-                            const mKeys = j < mLen && mVal[j] ? Object.keys(mVal[j]).sort() : [];
-                            if (JSON.stringify(iKeys) !== JSON.stringify(mKeys)) {
-                                results.push({ meeting: inline[i]?.id || manifest[i]?.id, field: `${key}[${j}]`, inline: iKeys, manifest: mKeys });
-                            }
-                            // Compare leaf values within matching array items
-                            if (j < iLen && j < mLen && iVal[j] && mVal[j]) {
-                                const allKeys = [...new Set([...Object.keys(iVal[j]), ...Object.keys(mVal[j])])];
-                                for (const fk of allKeys) {
-                                    if (JSON.stringify(iVal[j][fk]) !== JSON.stringify(mVal[j][fk])) {
-                                        results.push({ meeting: inline[i]?.id || manifest[i]?.id, field: `${key}[${j}].${fk}`, inline: iVal[j][fk], manifest: mVal[j][fk] });
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        if (iVal !== mVal) {
-                            results.push({ meeting: inline[i]?.id || manifest[i]?.id, field: key, inline: iVal, manifest: mVal });
-                        }
-                    }
-                }
-            }
-            return results;
-        });
-        expect(fields).toEqual([]);
+        expect(manifestMeta.inlinePresent).toBe(false);
+        expect(manifestMeta.meetingId).toBe('meeting-01');
+        expect(manifestMeta.ids).toContain('meeting-00');
+        expect(manifestMeta.ids).toContain('meeting-01');
+        expect(manifestMeta.ids).toContain('meeting-02');
     });
 
     test('Knowledge Base cards have accessible descriptions', async ({ page }) => {

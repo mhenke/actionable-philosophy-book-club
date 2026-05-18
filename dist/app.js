@@ -5,115 +5,19 @@
         const readerStatus = document.getElementById('reader-status');
         const mdCache   = new Map();  // Meeting markdown cache (Promises)
 
-        // Meeting data manifest (loaded from docs/manifest.json at startup)
+        // Meeting data manifest, loaded from docs/manifest.json at startup.
         let MEETINGS = [];
 
-        // Fallback inline meetings array (used if JSON load fails)
-        const MEETINGS_INLINE = [
-            {
-                id: 'meeting-02',
-                session: 'Meeting 02',
-                date: '27 May 26',
-                title: 'Complexity Engineering',
-                status: 'upcoming',
-                color: 'spectrum-2',
-                wash: '--wash-2',
-                readmeUrl: 'meetings/meeting-02/README.md',
-                video: { file: 'meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4', label: 'Video Primer', variant: 'canonical', duration: 55, fileSize: 920 },
-                slides: { file: 'meetings/meeting-02/slides/02-the-complexity-case.pptx', label: 'Slides', variant: 'canonical' },
-                podcasts: [
-                    { type: 'alternate', label: 'Video Primer', file: 'meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4', variant: 'alternate', source_filename: '02-Clean-Code-Paradox-deep-dive.mp4', duration: 8, fileSize: 31 },
-                    { type: 'deep-dive', label: 'Why Clean Code Rots Your Codebase', file: 'meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a', duration: 18, fileSize: 17 },
-                    { type: 'debate', label: 'Deep Modules vs Small Functions', file: 'meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a', duration: 22, fileSize: 20 },
-                    { type: 'critique', label: 'General Purpose Design Stops Information Leaks', file: 'meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a', duration: 20, fileSize: 19 }
-                ],
-                resources: [
-                    { label: 'Four Strategies', file: 'meetings/meeting-02/resources/02-four-strategies.png' },
-                    { label: 'Choose Your Next Meeting', file: 'meetings/meeting-02/resources/02-choose-your-next-meeting.png' }
-                ]
-            },
-            {
-                id: 'meeting-01',
-                session: 'Meeting 01',
-                date: '13 May 26',
-                title: 'Deep Systems',
-                status: 'done',
-                color: 'spectrum-3',
-                wash: '--wash-3',
-                readmeUrl: 'meetings/meeting-01/README.md',
-                video: { file: 'meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4', label: 'Video Primer', variant: 'canonical', duration: 48, fileSize: 780 },
-                slides: { file: 'meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx', label: 'Slides', variant: 'canonical' },
-                podcasts: [
-                    { type: 'deep-dive', label: 'Strategic Software Design and Deep Modules', file: 'meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a', duration: 18, fileSize: 16 },
-                    { type: 'debate', label: 'Deep Modules vs Clean Code for AI', file: 'meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a', duration: 24, fileSize: 22 },
-                    { type: 'critique', label: 'How Tactical Programming Creates Complexity', file: 'meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a', duration: 18, fileSize: 17 }
-                ],
-                resources: [
-                    { label: 'Architecture of Simplicity', file: 'meetings/meeting-01/resources/01-architecture-of-simplicity.png' },
-                    { label: 'Choose Your Adventure',      file: 'meetings/meeting-01/resources/01-choose-your-adventure.png' }
-                ]
-            },
-            {
-                id: 'meeting-00',
-                session: 'Meeting 00',
-                date: '29 Apr 26',
-                title: 'The Kickoff',
-                status: 'done',
-                color: 'spectrum-1',
-                wash: '--wash-1',
-                readmeUrl: 'meetings/meeting-00/README.md',
-                video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Primer', variant: 'canonical', duration: 52, fileSize: 840 },
-                slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slides', variant: 'canonical' },
-                podcasts: [],
-                resources: []
-            },
-            {
-                id: 'meeting-03',
-                session: 'Meeting 03',
-                date: '10 Jun 26',
-                title: 'TBD',
-                status: 'draft',
-                color: 'spectrum-1',
-                wash: '--wash-1',
-                readmeUrl: 'meetings/meeting-03/README.md',
-                video: null,
-                slides: null,
-                podcasts: [],
-                resources: []
-            },
-            {
-                id: 'meeting-04',
-                session: 'Meeting 04',
-                date: '24 Jun 26',
-                title: 'TBD',
-                status: 'draft',
-                color: 'spectrum-2',
-                wash: '--wash-2',
-                readmeUrl: 'meetings/meeting-04/README.md',
-                video: null,
-                slides: null,
-                podcasts: [],
-                resources: []
-            }
-        ];
-
-        // Load meetings manifest from external JSON with fallback to inline data
         async function loadManifest() {
-            try {
-                const response = await fetch('docs/manifest.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                const data = await response.json();
-                if (data.meetings && Array.isArray(data.meetings)) {
-                    MEETINGS = data.meetings;
-                } else {
-                    throw new Error('Invalid manifest structure');
-                }
-            } catch (err) {
-                console.warn('Failed to load manifest.json, falling back to inline MEETINGS:', err.message);
-                MEETINGS = MEETINGS_INLINE;
+            const response = await fetch('docs/manifest.json');
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
             }
+            const data = await response.json();
+            if (!data.meetings || !Array.isArray(data.meetings)) {
+                throw new Error('Invalid manifest structure');
+            }
+            MEETINGS = data.meetings;
             window.MEETINGS = MEETINGS;
         }
 
@@ -187,12 +91,12 @@
             }[c]));
         }
 
-        function formatDuration(minutes) {
-            if (!Number.isFinite(minutes)) return '';
-            const m = Math.round(minutes);
-            if (m >= 120) return `${Math.floor(m / 60)}h ${m % 60}m`;
-            if (m === 0) return '';
-            return `${m}m`;
+        function formatDuration(seconds) {
+            if (!Number.isFinite(seconds)) return '';
+            const totalSeconds = Math.round(seconds);
+            const mins = Math.floor(totalSeconds / 60);
+            const secs = totalSeconds % 60;
+            return `${mins}m ${secs}s`;
         }
 
         function formatFileSize(value) {
@@ -419,11 +323,6 @@
 
             horizonContainer.innerHTML = '';
             horizonContainer.appendChild(fragment);
-        }
-
-        function sanitizeAnchor(anchor) {
-            if (typeof anchor !== 'string') return null;
-            return /^[a-zA-Z0-9_-]+$/.test(anchor) ? anchor : null;
         }
 
         function isSafeRepoPath(p) {
@@ -693,18 +592,7 @@
             video.src = filePath;
             video.load();
 
-            const vpKey = LS + 'vp:' + filePath;
-            const sessionKey = LS + 'vs:' + filePath;
-            // Prefer sessionStorage (tab-scoped), fall back to localStorage (cross-tab)
-            let savedTime = 0;
-            try {
-                const ss = sessionStorage.getItem(sessionKey);
-                if (ss) savedTime = parseFloat(ss);
-            } catch (_) {}
-            if (!savedTime) {
-                const ls = localStorage.getItem(vpKey);
-                if (ls) savedTime = parseFloat(ls);
-            }
+            const savedTime = getSavedVideoResumeTime(filePath);
 
             resumeBar.style.display = 'none';
             if (savedTime > CONFIG.RESUME_MIN_SECONDS) {
@@ -713,16 +601,10 @@
                 resumeText.textContent = `Resume from ${mins}:${secs.toString().padStart(2, '0')}?`;
                 resumeBar.style.display = 'flex';
                 resumeBtn.addEventListener('click', () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); }, { once: true });
-                startBtn.addEventListener('click', () => { localStorage.removeItem(vpKey); try { sessionStorage.removeItem(sessionKey); } catch (_) {} resumeBar.style.display = 'none'; video.play(); }, { once: true });
+                startBtn.addEventListener('click', () => { clearVideoResumePosition(filePath); resumeBar.style.display = 'none'; video.play(); }, { once: true });
             }
 
-            const saveProgress = () => {
-                const t = video.currentTime;
-                if (t > CONFIG.RESUME_MIN_SECONDS) {
-                    try { sessionStorage.setItem(sessionKey, String(t)); } catch (_) {}
-                    try { localStorage.setItem(vpKey, String(t)); } catch (_) {}
-                }
-            };
+            const saveProgress = () => saveVideoResumePosition(filePath, video.currentTime);
             const vpInterval = setInterval(saveProgress, CONFIG.PROGRESS_SAVE_MS);
             videoPlayerCleanup = () => {
                 clearInterval(vpInterval);
@@ -735,9 +617,6 @@
                 video.removeAttribute('src');
                 video.load();
                 overlay.close();
-                if (window.location.hash.startsWith('#a=')) {
-                    history.replaceState(null, '', window.location.pathname + window.location.search);
-                }
                 // restore previous focus when closing the overlay
                 if (lastFocusBeforeVideo && typeof lastFocusBeforeVideo.focus === 'function') {
                     try { lastFocusBeforeVideo.focus(); } catch(e) { /* ignore */ }
@@ -773,9 +652,6 @@
                 const href = link.getAttribute('href');
                 if (!href || !isSafeAssetPath(href)) return;
 
-                // Update permalink hash
-                history.replaceState(null, '', '#a=' + href);
-
                 if (href.endsWith('.mp4')) {
                     const labelEl = link.querySelector('.asset-link-top') || link;
                     openVideoPlayer(href, (labelEl.textContent || '').trim() || href);
@@ -803,33 +679,6 @@
             });
         }
 
-        // ── Handle #a= permalink to scroll to asset on dashboard ──
-        function handleAssetPermalink(assetPath) {
-            showDashboard();
-            // Remove the reader-status text set by showDashboard()
-            if (readerStatus) readerStatus.textContent = '';
-
-            // Try to find the card containing this asset and scroll to it
-            const cards = document.querySelectorAll('.card');
-            for (const card of cards) {
-                const links = card.querySelectorAll('.asset-link');
-                for (const link of links) {
-                    if (link.getAttribute('href') === assetPath) {
-                        // Expand any parent podcast disclosure
-                        const disclosure = card.querySelector('.podcast-disclosure');
-                        if (disclosure) disclosure.open = true;
-                        // Scroll to the card
-                        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        // Highlight the asset link briefly
-                        link.style.transition = 'background 0.5s';
-                        link.style.background = 'var(--wash-3-border)';
-                        setTimeout(() => { link.style.background = ''; }, CONFIG.HIGHLIGHT_DURATION_MS);
-                        return;
-                    }
-                }
-            }
-        }
-
         function handleRoute() {
             const hash = window.location.hash;
             if (hash.startsWith('#p=')) {
@@ -837,8 +686,6 @@
                 // Split on last # to separate path from anchor (if any)
                 const lastHashIndex = fullPath.lastIndexOf('#');
                 const path = lastHashIndex > 0 ? fullPath.substring(0, lastHashIndex) : fullPath;
-                const rawAnchor = lastHashIndex > 0 ? fullPath.substring(lastHashIndex + 1) : null;
-                const anchorId = rawAnchor ? sanitizeAnchor(rawAnchor) : null;
                 if (!isSafeRepoPath(path)) {
                     showDashboard();
                     return;
@@ -849,27 +696,15 @@
                     banner.classList.add('hidden-view');
                     localStorage.setItem(LS + 'onboarding_dismissed', '1');
                 }
-
                 const meeting = MEETINGS.find(m => m.readmeUrl === path);
                 updateReaderTheme(meeting ? meeting.id : null);
-                loadPage(path, null, anchorId);
-            } else if (hash.startsWith('#a=')) {
-                const path = decodeURIComponent(hash.slice(3));
-                if (!isSafeAssetPath(path)) {
-                    showDashboard();
-                    return;
-                }
-                handleAssetPermalink(path);
+                loadPage(path, null, null);
             } else {
                 showDashboard();
             }
         }
 
         // Expose for tests
-        // Register service worker for offline support (skip in automated/test env to avoid cache interference)
-        if (!navigator.webdriver && 'serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(console.warn);
-        }
 
         if (window.__TEST__ === true) {
             window.isSafeRepoPath = isSafeRepoPath;
@@ -882,9 +717,7 @@
             window.showToast = showToast;
             window.formatDuration = formatDuration;
             window.formatFileSize = formatFileSize;
-            window.sanitizeAnchor = sanitizeAnchor;
-            window.getVisibleAssetAnchor = getVisibleAssetAnchor;
-            window.MEETINGS_INLINE = MEETINGS_INLINE;
+            window.saveVideoResumePosition = saveVideoResumePosition;
         }
 
         window.addEventListener('hashchange', handleRoute);
@@ -941,33 +774,41 @@
             }
         });
 
-        function getVisibleAssetAnchor() {
-            const assets = document.querySelectorAll('[id^="asset-"]');
-            let closestAsset = null;
-            let closestDistance = Infinity;
-            for (const asset of assets) {
-                const rect = asset.getBoundingClientRect();
-                if (rect.top < 0) continue;
-                const dist = rect.top;
-                if (dist < closestDistance) {
-                    closestAsset = asset;
-                    closestDistance = dist;
-                }
-            }
-            return closestAsset ? closestAsset.id : null;
+        function getVideoResumeKey(filePath) {
+            return LS + 'vs:' + filePath;
         }
 
-        // Copy-link button — copies current URL (includes #p= or #a= hash) to clipboard
+        function getSavedVideoResumeTime(filePath) {
+            try {
+                const saved = sessionStorage.getItem(getVideoResumeKey(filePath));
+                return saved ? parseFloat(saved) : 0;
+            } catch (_) {
+                return 0;
+            }
+        }
+
+        function saveVideoResumePosition(filePath, currentTime) {
+            const key = getVideoResumeKey(filePath);
+            try {
+                if (currentTime > CONFIG.RESUME_MIN_SECONDS) {
+                    sessionStorage.setItem(key, String(currentTime));
+                } else {
+                    sessionStorage.removeItem(key);
+                }
+            } catch (_) {}
+        }
+
+        function clearVideoResumePosition(filePath) {
+            try {
+                sessionStorage.removeItem(getVideoResumeKey(filePath));
+            } catch (_) {}
+        }
+
+        // Copy-link button — copies the current URL to clipboard
         const copyLinkBtn = document.getElementById('copy-link-btn');
         if (copyLinkBtn) {
             copyLinkBtn.addEventListener('click', async () => {
-                const isReaderMode = window.location.hash.startsWith('#p=');
-                const url = isReaderMode ? window.location.href : (() => {
-                    const assetAnchor = getVisibleAssetAnchor();
-                    const base = window.location.href.split('#')[0];
-                    const hash = window.location.hash;
-                    return assetAnchor ? `${base}${hash}#${assetAnchor}` : window.location.href;
-                })();
+                const url = window.location.href;
                 try {
                     await navigator.clipboard.writeText(url);
                     copyLinkBtn.setAttribute('aria-label', 'Link copied!');
@@ -992,20 +833,14 @@
 
         // Wait for CDN libs before enabling the reader
         document.addEventListener('DOMContentLoaded', async () => {
-            // Render immediately with inline data to avoid empty flash
-            MEETINGS = MEETINGS_INLINE;
-            window.MEETINGS = MEETINGS;
+            if (window.__TEST__ === true) window.__manifestLoaded = false;
             if (typeof marked !== 'undefined') {
                 marked.use({ gfm: true, breaks: true });
             }
-            renderUpcomingMaterials();
-            renderArchiveCards();
-            renderHorizonCards();
 
-            // Load meetings from external manifest (overrides inline if successful)
             await loadManifest();
-            
-            // Re-render with fetched manifest data
+            if (window.__TEST__ === true) window.__manifestLoaded = true;
+
             renderUpcomingMaterials();
             renderArchiveCards();
             renderHorizonCards();
@@ -1034,33 +869,30 @@
             // Styles
             const style = document.createElement('style');
             style.textContent = `
-                #cmd-palette-overlay { position: fixed; inset: 0; display: none; align-items: flex-start; justify-content: center; z-index: 9999; }
-                #cmd-palette-overlay.p--open { display: flex; }
-                #cmd-palette { margin-top: 8vh; width: min(720px, 92%); background: var(--surface); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; }
-                #cmd-palette .cp-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border: none; outline: none; font-size: 16px; }
-                #cmd-palette .cp-list { max-height: 320px; overflow: auto; margin: 0; padding: 0; list-style: none; }
-                #cmd-palette .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid var(--border-low); }
-                #cmd-palette .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.12); }
-                #cmd-palette .cp-item:focus { outline: 2px solid var(--spectrum-3); outline-offset: -2px; }
-                #cmd-palette .cp-meta { color: var(--text-muted); font-size: 13px; }
-                #cmd-palette .cp-right { min-width:120px; text-align:right; color: var(--text-muted); font-size:13px; }
-                #cmd-palette .cp-id { font-weight:600; }
-                #cmd-palette .cp-title { color: var(--text-primary); margin-left:6px; }
+                #cmd-palette-overlay { position: fixed; top: 8vh; left: 50%; transform: translateX(-50%); margin: 0; width: min(720px, 92%); background: var(--surface); border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.12); overflow: hidden; padding: 0; border: none; }
+                #cmd-palette-overlay::backdrop { background: transparent; }
+                #cmd-palette-overlay .cp-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border: none; outline: none; font-size: 16px; background: var(--surface); color: var(--text-primary); }
+                #cmd-palette-overlay .cp-list { max-height: 320px; overflow: auto; margin: 0; padding: 0; list-style: none; }
+                #cmd-palette-overlay .cp-item { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor: pointer; border-top: 1px solid var(--border-low); }
+                #cmd-palette-overlay .cp-item[aria-selected="true"] { background: rgba(0,0,0,0.08); }
+                #cmd-palette-overlay .cp-item:focus { outline: 2px solid var(--spectrum-3); outline-offset: -2px; }
+                #cmd-palette-overlay .cp-meta { color: var(--text-muted); font-size: 13px; }
+                #cmd-palette-overlay .cp-right { min-width:120px; text-align:right; color: var(--text-muted); font-size:13px; }
+                #cmd-palette-overlay .cp-id { font-weight:600; }
+                #cmd-palette-overlay .cp-title { color: var(--text-primary); margin-left:6px; }
                 .cp-sr { position: absolute !important; left: -9999px !important; }
-                @media (prefers-reduced-motion: reduce) { #cmd-palette { transition: none; } }
+                @media (prefers-reduced-motion: reduce) { #cmd-palette-overlay { transition: none; } }
             `;
             document.head.appendChild(style);
 
             // DOM
-            const overlay = document.createElement('div');
+            const overlay = document.createElement('dialog');
             overlay.id = 'cmd-palette-overlay';
-            overlay.setAttribute('aria-hidden', 'true');
+            overlay.setAttribute('aria-label', 'Command palette');
             overlay.innerHTML = `
-                <div id="cmd-palette" role="dialog" aria-modal="true" aria-label="Command palette">
-                    <input class="cp-input" placeholder="Jump to meeting by id or title (Cmd/Ctrl+K)" aria-label="Search meetings" />
-                    <ul class="cp-list" role="listbox" aria-label="Search results"></ul>
-                    <div id="cp-count" class="cp-sr" aria-live="polite"></div>
-                </div>
+                <input class="cp-input" placeholder="Jump to meeting by id or title (Cmd/Ctrl+K)" aria-label="Search meetings" />
+                <ul class="cp-list" role="listbox" aria-label="Search results"></ul>
+                <div id="cp-count" class="cp-sr" aria-live="polite"></div>
             `;
             document.body.appendChild(overlay);
 
@@ -1072,20 +904,18 @@
 
             function openPalette() {
                 lastFocus = document.activeElement;
-                overlay.classList.add('p--open');
-                overlay.setAttribute('aria-hidden', 'false');
+                overlay.showModal();
                 input.value = '';
                 renderResults([]);
                 setTimeout(() => input.focus(), 50);
                 document.body.style.overflow = 'hidden';
             }
             function closePalette() {
-                overlay.classList.remove('p--open');
-                overlay.setAttribute('aria-hidden', 'true');
+                overlay.close();
                 document.body.style.overflow = '';
                 if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
             }
-            function togglePalette() { if (overlay.classList.contains('p--open')) closePalette(); else openPalette(); }
+            function togglePalette() { if (overlay.open) closePalette(); else openPalette(); }
 
             function normalize(s){ return (s||'').toString().toLowerCase(); }
             function scoreMatch(q, m){
@@ -1233,20 +1063,19 @@
                 if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')){
                     e.preventDefault(); togglePalette();
                 }
-                // When palette open, allow Esc to close
-                if (overlay.classList.contains('p--open') && e.key === 'Escape') {
-                    e.preventDefault(); closePalette();
-                }
             });
 
-            // clicking outside closes
-            overlay.addEventListener('mousedown', (ev) => {
-                if (ev.target === overlay) closePalette();
+            // Native cancel event (Escape) — intercept to run our cleanup
+            overlay.addEventListener('cancel', (e) => { e.preventDefault(); closePalette(); });
+
+            // Clicks on the ::backdrop arrive with target === overlay
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closePalette();
             });
 
             // Focus trap: keep Tab cycling between input and list items
             overlay.addEventListener('keydown', (ev) => {
-                if (!overlay.classList.contains('p--open')) return;
+                if (!overlay.open) return;
                 if (ev.key !== 'Tab') return;
                 const items = Array.from(list.querySelectorAll('.cp-item')).filter(it => it.getAttribute('aria-disabled') !== 'true');
                 const first = input;
@@ -1267,4 +1096,3 @@
             // seed with top meetings
             renderResults(meetings.slice(0,6));
         }
-

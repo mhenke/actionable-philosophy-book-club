@@ -7,7 +7,7 @@
 
 **Architecture (as shipped):** 
 - **External JSON manifest** (`docs/manifest.json`) — eliminates regex brittleness, cleaner data layer
-- **Numeric values in manifest** — stored in **minutes and MB** (not raw seconds/bytes); formatting happens in UI layer via `formatDuration()` / `formatFileSize()`
+- **Numeric values in manifest** — stored in **seconds and MB**; formatting happens in UI layer via `formatDuration()` / `formatFileSize()`
 - **Safe hash routing** — strip anchor before path validation via `sanitizeAnchor()`, sanitize slug, ensure uniqueness
 - **Accessibility-first** — `aria-describedby` on KB cards, sr-only text, localized units
 - **sessionStorage + localStorage** — video resume saves to both (sessionStorage preferred for tab-scoped resume)
@@ -20,7 +20,7 @@
 | # | Task | Status | Notes |
 |---|------|--------|-------|
 | 1 | External JSON manifest | **DONE** | `docs/manifest.json` created, `loadManifest()` with inline fallback |
-| 2 | Formatting layer (formatDuration, formatFileSize) | **DONE** | Minutes/MB (not seconds/bytes per review C1) |
+| 2 | Formatting layer (formatDuration, formatFileSize) | **DONE** | Seconds/MB |
 | 3 | Metadata display in buildAssetRows() | **DONE** | Duration + fileSize inline after video/podcast labels |
 | 4 | Safe hash anchoring (#asset-TYPE-SLUG) | **DONE** | `sanitizeAnchor()` strips anchor before path validation |
 | 5 | Copy-link with asset anchor detection | **DONE** | `getVisibleAssetAnchor()` scans `[id^="asset-"]`, copies URL + anchor |
@@ -28,14 +28,14 @@
 | 7 | Onboarding microcopy + KB descriptions | **DONE** | Banner exists, KB cards use `aria-describedby` (not `title`) |
 | 8 | Video player with resume (all viewports) | **DONE** | `<dialog>`-based player for all screen sizes, sessionStorage + localStorage dual save |
 | 9 | Enhanced asset-compressor metadata extraction | **PENDING** | Needs JSON manifest write (not regex on index.html) |
-| 10 | Final test suite + verification | **DONE** | 19 new tests, 87 suite passes (1 skip in SW test) |
+| 10 | Final test suite + verification | **DONE** | 19 new tests, 88 suite passes |
 
 **Key decisions (post-review fixes):**
-- Duration stored in **minutes** (not seconds) — `formatDuration(52)` → `"52m"`
+- Duration stored in **seconds** (not minutes) — `formatDuration(189)` → `"3m 9s"`
 - `title=""` replaced with `aria-describedby` + `sr-only` span for a11y
 - sessionStorage key format: `apbc:vs:{filePath}` (namespaced, try/catch for quota)
 - Manifest fallback test and MEETINGS_INLINE drift detection test added
-- SW registration guarded by `navigator.webdriver` — skipped in automated test environments to prevent SW cache from interfering with `page.route()` mocks
+- Service worker removed, refreshes now use the network for the app shell
 
 **Tech Stack:** Vanilla JS, Playwright, FFmpeg (ffprobe), native HTML5 `<video>`, JSON manifest
 
@@ -73,22 +73,14 @@ Create `docs/manifest.json` with structure:
         "duration": 52,
         "fileSize": 840
       },
-      "podcasts": [
-        {
-          "file": "meetings/meeting-00/podcast-deepdive.m4a",
-          "type": "debate",
-          "label": "Deep Dive",
-          "duration": 45,
-          "fileSize": 120
-        }
-      ]
+      "podcasts": []
     }
   ]
 }
 ```
 
 **Key differences from inline MEETINGS:**
-- `duration` stored in **minutes** (not seconds) — e.g., 52 = 52m
+- `duration` stored in **seconds** (not minutes) — e.g., 189 = 3m 9s
 - `fileSize` stored in **MB** — e.g., 840 MB
 - All numeric data raw; formatting happens only in UI render functions via `formatDuration()` / `formatFileSize()`
 
@@ -162,12 +154,12 @@ git commit -m "feat: move MEETINGS to external docs/manifest.json with raw numbe
 
 **Shipped implementation** in `dist/app.js`:
 ```javascript
-function formatDuration(minutes) {
-    if (!Number.isFinite(minutes)) return '';
-    const m = Math.round(minutes);
-    if (m >= 120) return `${Math.floor(m / 60)}h ${m % 60}m`;
-    if (m === 0) return '';
-    return `${m}m`;
+function formatDuration(seconds) {
+    if (!Number.isFinite(seconds)) return '';
+    const totalSeconds = Math.round(seconds);
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins}m ${secs}s`;
 }
 
 function formatFileSize(value) {
@@ -176,17 +168,17 @@ function formatFileSize(value) {
 }
 ```
 
-**Duration stored in minutes** (per C1 resolution — not seconds). Manifest stores `duration: 52` meaning 52 minutes. `formatDuration(52)` returns `"52m"`. No division by 60.
+**Duration stored in seconds** (not minutes). Manifest stores `duration: 189` meaning 3m 9s. `formatDuration(189)` returns `"3m 9s"`.
 
-**Number.isFinite guard:** Both formatters use `Number.isFinite()` instead of loose truthiness checks (`if (!value)`), which avoids treating `0` as falsy and correctly rejects `NaN`, `Infinity`, and non-numeric types. `formatDuration(0)` returns `""` (empty string — handled explicitly). `formatDuration(150)` returns `"2h 30m"` (hour formatting for ≥120 minutes).
+**Number.isFinite guard:** Both formatters use `Number.isFinite()` instead of loose truthiness checks (`if (!value)`), which avoids treating `0` as falsy and correctly rejects `NaN`, `Infinity`, and non-numeric types. `formatDuration(0)` returns `"0m 0s"`. `formatDuration(150)` returns `"2m 30s"`.
 
 **Tests** in `tests/formatters.spec.js` — test the real functions via `window.formatDuration` / `window.formatFileSize` (set only when `window.__TEST__` is true, avoiding the I6 anti-pattern of defining formatters in `addInitScript`).
 
 ```javascript
-test('formatDuration converts minutes to display string', async ({ page }) => {
+test('formatDuration converts seconds to display string', async ({ page }) => {
     await page.goto('/');
-    const result = await page.evaluate(() => window.formatDuration(52));
-    expect(result).toBe('52m');
+    const result = await page.evaluate(() => window.formatDuration(189));
+    expect(result).toBe('3m 9s');
 });
 ```
 
@@ -198,9 +190,9 @@ test('formatDuration converts minutes to display string', async ({ page }) => {
 - Modify: `dist/app.js` (buildAssetRows function)
 - Test: `tests/additional-resources-summary.spec.js`
 
-**Shipped:** Video and podcast rows append ` · 52m · 840 MB` after the label when `duration` and `fileSize` are present in the manifest. `aria-label` updated accordingly. Podcast metadata rendered inside `asset-link-top` span alongside the existing badge and caption.
+**Shipped:** Video and podcast rows append ` · Mm Ss · MB` after the label when `duration` and `fileSize` are present in the manifest. `aria-label` updated accordingly. Podcast metadata rendered inside `asset-link-top` span alongside the existing badge and caption.
 
-Tests verify meeting-00's video shows "52m" and "840 MB", podcast shows "45m" and "120 MB".
+Tests verify meeting-01's video shows "4m 47s" and "17 MB", podcast shows "17m 45s" and "16 MB".
 
 ---
 
@@ -336,7 +328,7 @@ git commit -m "chore: final persona fixes — all tests pass + manual verificati
 | Task | Status | What shipped |
 |------|--------|-------------|
 | 1. External JSON manifest | **DONE** | `docs/manifest.json`, `loadManifest()` with inline fallback |
-| 2. Formatting layer | **DONE** | `formatDuration(minutes)`, `formatFileSize(MB)` |
+| 2. Formatting layer | **DONE** | `formatDuration(seconds)`, `formatFileSize(MB)` |
 | 3. Metadata rendering | **DONE** | Duration + size inline after video/podcast labels |
 | 4. Safe hash anchoring | **DONE** | `sanitizeAnchor()`, `#asset-TYPE-SLUG` IDs on dashboard |
 | 5. Copy-link with anchor | **DONE** | `getVisibleAssetAnchor()` wired to copy handler |

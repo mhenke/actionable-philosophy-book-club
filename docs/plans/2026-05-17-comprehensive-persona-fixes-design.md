@@ -15,7 +15,7 @@ Address all remaining persona pain points in a coordinated implementation:
 **Problem:** Alex can't tell duration without clicking; Sam doesn't know file size; Casey can't assess download impact.
 
 **Solution:**
-- Extract `duration` (minutes) + `fileSize` (MB) for all `.m4a` and `.mp4` files
+- Extract `duration` (seconds) + `fileSize` (MB) for all `.m4a` and `.mp4` files
 - Metadata harvested by enhanced `asset-compressor` skill at compression time
 - Manifest structure:
   ```javascript
@@ -26,7 +26,7 @@ Address all remaining persona pain points in a coordinated implementation:
     { file: "...", type: "canonical", duration: 52, fileSize: 840 }
   ]
   ```
-- Render inline: "Meeting 01 Deep Dive · 45m · 120 MB"
+- Render inline: "Meeting 01 Strategic Software Design and Deep Modules · 18m · 16 MB"
 - Add aria-labels: "Meeting 01 Deep Dive podcast, 45 minutes, 120 megabytes"
 
 **Rendering locations:**
@@ -50,8 +50,8 @@ Address all remaining persona pain points in a coordinated implementation:
   <div id="asset-meeting-00-video-00-the-complexity-governor">
     <a href="...">Video Primer · 52m · 840 MB</a>
   </div>
-  <div id="asset-meeting-00-podcast-podcast-deepdive">
-    <a href="...">Deep Dive · 45m · 120 MB</a>
+  <div id="asset-meeting-01-podcast-01-strategic-software-design-and-deep-modules-deep-dive">
+    <a href="...">Strategic Software Design and Deep Modules · 18m · 16 MB</a>
   </div>
   ```
 - `loadPage()` parses anchor from hash and scrolls to it after render
@@ -60,7 +60,7 @@ Address all remaining persona pain points in a coordinated implementation:
 
 **URL examples:**
 - `#p=meetings/meeting-00/README.md#asset-meeting-00-video-00-the-complexity-governor` → jumps to video
-- `#p=meetings/meeting-00/README.md#asset-meeting-00-podcast-podcast-deepdive` → jumps to deep-dive audio
+- `#p=meetings/meeting-01/README.md#asset-meeting-01-podcast-01-strategic-software-design-and-deep-modules-deep-dive` → jumps to deep-dive audio
 
 **Impact:** Enables Alex to share, enables Casey (mobile users can send resources).
 
@@ -167,12 +167,12 @@ npm run compress:media
 1. Compress/resize media file
 2. Rename to kebab-case (existing)
 3. **Extract metadata:**
-   - Duration: ffprobe → seconds → convert to minutes
+   - Duration: ffprobe → seconds → display as minutes and seconds
    - File size: bytes → MB
 4. **Auto-update manifest** in `docs/manifest.json`:
    - Add/update `duration` + `fileSize` fields via `JSON.parse()`/`JSON.stringify()` (NOT regex on HTML)
    - Preserve all other asset fields
-   - Log success: "Updated podcast-deepdive.m4a: 45m, 120 MB"
+   - Log success: "Updated 01-strategic-software-design-and-deep-modules-deep-dive.m4a: 18m, 16 MB"
 
 ### Implementation Details (Future)
 - Use ffprobe (FFmpeg tool) for metadata extraction
