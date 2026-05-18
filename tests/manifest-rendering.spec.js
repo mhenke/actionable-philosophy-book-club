@@ -25,11 +25,11 @@ test.describe('Manifest Rendering', () => {
         const upcoming = await page.locator('#upcoming-materials-container');
         await expect(upcoming).toBeVisible();
 
-        const meeting00 = await page.locator('text=/Meeting 00/');
-        await expect(meeting00).toBeVisible();
+        const meeting01 = await page.locator('text=/Meeting 01/');
+        await expect(meeting01).toBeVisible();
 
-        const meeting00Data = await page.evaluate(() => {
-            const meeting = window.MEETINGS.find(m => m.id === 'meeting-00');
+        const meeting01Data = await page.evaluate(() => {
+            const meeting = window.MEETINGS.find(m => m.id === 'meeting-01');
             return {
                 id: meeting.id,
                 videoDuration: meeting.video?.duration,
@@ -40,12 +40,12 @@ test.describe('Manifest Rendering', () => {
             };
         });
 
-        expect(meeting00Data.id).toBe('meeting-00');
-        expect(meeting00Data.videoDuration).toBe(52);
-        expect(meeting00Data.videoFileSize).toBe(840);
-        expect(meeting00Data.podcastsCount).toBeGreaterThan(0);
-        expect(meeting00Data.firstPodcastDuration).toBe(45);
-        expect(meeting00Data.firstPodcastFileSize).toBe(120);
+        expect(meeting01Data.id).toBe('meeting-01');
+        expect(meeting01Data.videoDuration).toBe(48);
+        expect(meeting01Data.videoFileSize).toBe(780);
+        expect(meeting01Data.podcastsCount).toBeGreaterThan(0);
+        expect(meeting01Data.firstPodcastDuration).toBe(18);
+        expect(meeting01Data.firstPodcastFileSize).toBe(16);
     });
 
     test('onboarding banner is visible on dashboard', async ({ page }) => {
@@ -107,6 +107,15 @@ test.describe('Manifest Rendering', () => {
                             const mKeys = j < mLen && mVal[j] ? Object.keys(mVal[j]).sort() : [];
                             if (JSON.stringify(iKeys) !== JSON.stringify(mKeys)) {
                                 results.push({ meeting: inline[i]?.id || manifest[i]?.id, field: `${key}[${j}]`, inline: iKeys, manifest: mKeys });
+                            }
+                            // Compare leaf values within matching array items
+                            if (j < iLen && j < mLen && iVal[j] && mVal[j]) {
+                                const allKeys = [...new Set([...Object.keys(iVal[j]), ...Object.keys(mVal[j])])];
+                                for (const fk of allKeys) {
+                                    if (JSON.stringify(iVal[j][fk]) !== JSON.stringify(mVal[j][fk])) {
+                                        results.push({ meeting: inline[i]?.id || manifest[i]?.id, field: `${key}[${j}].${fk}`, inline: iVal[j][fk], manifest: mVal[j][fk] });
+                                    }
+                                }
                             }
                         }
                     } else {

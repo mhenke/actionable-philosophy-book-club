@@ -140,15 +140,7 @@
         "label": "Slides",
         "variant": "canonical"
       },
-      "podcasts": [
-        {
-          "type": "debate",
-          "label": "Deep Dive Discussion",
-          "file": "meetings/meeting-00/podcast-deepdive.m4a",
-          "duration": 45,
-          "fileSize": 120
-        }
-      ],
+      "podcasts": [],
       "resources": []
     },
     {

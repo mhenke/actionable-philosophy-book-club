@@ -26,7 +26,7 @@ test('video asset shows duration and file size when present in manifest', async 
 
 test('podcast asset shows duration and file size when present in manifest', async ({ page }) => {
   await page.goto('/');
-  const podcastLink = page.locator('#archive-cards-container .card').last().locator('a.asset-link[href*=".m4a"]').first();
-  await expect(podcastLink).toContainText(/45m/);
-  await expect(podcastLink).toContainText(/120 MB/);
+  const podcastLink = page.locator('#archive-cards-container .card').first().locator('a.asset-link[href*=".m4a"]').first();
+  await expect(podcastLink).toContainText(/18m/);
+  await expect(podcastLink).toContainText(/16 MB/);
 });

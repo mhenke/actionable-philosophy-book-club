@@ -64,9 +64,7 @@
                 readmeUrl: 'meetings/meeting-00/README.md',
                 video: { file: 'meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4', label: 'Video Primer', variant: 'canonical', duration: 52, fileSize: 840 },
                 slides: { file: 'meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx', label: 'Slides', variant: 'canonical' },
-                podcasts: [
-                    { type: 'debate', label: 'Deep Dive Discussion', file: 'meetings/meeting-00/podcast-deepdive.m4a', duration: 45, fileSize: 120 }
-                ],
+                podcasts: [],
                 resources: []
             },
             {
@@ -730,7 +728,6 @@
             };
 
             const onClose = () => {
-                clearInterval(vpInterval);
                 saveProgress();
                 video.pause();
                 video.removeAttribute('src');
@@ -1230,7 +1227,7 @@
 
             // Global key handler: Ctrl/Cmd+K
             document.addEventListener('keydown', (e) => {
-                const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.userAgent);
+                const isMac = navigator.platform.startsWith('Mac');
                 if ((isMac && e.metaKey && e.key.toLowerCase() === 'k') || (!isMac && e.ctrlKey && e.key.toLowerCase() === 'k')){
                     e.preventDefault(); togglePalette();
                 }
