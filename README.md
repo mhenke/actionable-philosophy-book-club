@@ -25,7 +25,7 @@ For the best experience, including mobile-optimized navigation, meeting agendas,
 *   **[`asset-compressor/`](asset-compressor/)**: Custom AI tool for optimizing repository media.
 
 ## 🤖 AI-Assisted Workflows
-We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompts/) to extract insights or the [Compression Skill](asset-compressor/) to manage large assets.
+We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompts/) to extract insights, and the [Asset Compressor Skill](asset-compressor.skill) to both compress media files and automatically extract file metadata for the dashboard.
 
 ## 💻 Local Development
 
@@ -55,6 +55,28 @@ Tests verify XSS prevention, path validation, routing, and caching behavior.
 
 ## 🛠 Contributing
 We value **content over ceremony**. See [CONTRIBUTING.md](CONTRIBUTING.md) for details on uploading materials and staying under the 50MB file limit.
+
+### Managing Asset Metadata
+After adding or updating media files (videos, slides, podcasts, images), extract and update the manifest with file metadata:
+
+```bash
+# Extract duration and file size for all assets, patch docs/manifest.json
+python3 scripts/extract_metadata.py --patch docs/manifest.json
+```
+
+This updates the meetings manifest with:
+- **Duration** (seconds) for videos and audio files
+- **File size** (MB) for videos, slides, podcasts, and resource images
+
+The metadata is then consumed by the dashboard to display file information in meeting cards.
+
+**Supported formats:**
+- Video (MP4): duration + fileSize
+- Slides (PPTX): fileSize
+- Podcasts (M4A): duration + fileSize
+- Resources (PNG/JPG): fileSize
+
+See the [asset-compressor skill](asset-compressor.skill) for full compression and metadata extraction capabilities.
 
 ## 📐 Architecture Decision Records
 

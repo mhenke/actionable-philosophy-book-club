@@ -13,13 +13,14 @@
         "file": "meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 55,
-        "fileSize": 920
+        "duration": 488,
+        "fileSize": 31
       },
       "slides": {
         "file": "meetings/meeting-02/slides/02-the-complexity-case.pptx",
         "label": "Slides",
-        "variant": "canonical"
+        "variant": "canonical",
+        "fileSize": 34
       },
       "podcasts": [
         {
@@ -35,32 +36,34 @@
           "type": "deep-dive",
           "label": "Why Clean Code Rots Your Codebase",
           "file": "meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a",
-          "duration": 18,
+          "duration": 1092,
           "fileSize": 17
         },
         {
           "type": "debate",
           "label": "Deep Modules vs Small Functions",
           "file": "meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a",
-          "duration": 22,
+          "duration": 1318,
           "fileSize": 20
         },
         {
           "type": "critique",
           "label": "General Purpose Design Stops Information Leaks",
           "file": "meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a",
-          "duration": 20,
+          "duration": 1206,
           "fileSize": 19
         }
       ],
       "resources": [
         {
           "label": "Four Strategies",
-          "file": "meetings/meeting-02/resources/02-four-strategies.png"
+          "file": "meetings/meeting-02/resources/02-four-strategies.png",
+          "fileSize": 0.4
         },
         {
           "label": "Choose Your Next Meeting",
-          "file": "meetings/meeting-02/resources/02-choose-your-next-meeting.png"
+          "file": "meetings/meeting-02/resources/02-choose-your-next-meeting.png",
+          "fileSize": 0.4
         }
       ]
     },
@@ -77,45 +80,48 @@
         "file": "meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 48,
-        "fileSize": 780
+        "duration": 286,
+        "fileSize": 17
       },
       "slides": {
         "file": "meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx",
         "label": "Slides",
-        "variant": "canonical"
+        "variant": "canonical",
+        "fileSize": 19
       },
       "podcasts": [
         {
           "type": "deep-dive",
           "label": "Strategic Software Design and Deep Modules",
           "file": "meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a",
-          "duration": 18,
+          "duration": 1065,
           "fileSize": 16
         },
         {
           "type": "debate",
           "label": "Deep Modules vs Clean Code for AI",
           "file": "meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a",
-          "duration": 24,
+          "duration": 1414,
           "fileSize": 22
         },
         {
           "type": "critique",
           "label": "How Tactical Programming Creates Complexity",
           "file": "meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a",
-          "duration": 18,
+          "duration": 1079,
           "fileSize": 17
         }
       ],
       "resources": [
         {
           "label": "Architecture of Simplicity",
-          "file": "meetings/meeting-01/resources/01-architecture-of-simplicity.png"
+          "file": "meetings/meeting-01/resources/01-architecture-of-simplicity.png",
+          "fileSize": 0.4
         },
         {
           "label": "Choose Your Adventure",
-          "file": "meetings/meeting-01/resources/01-choose-your-adventure.png"
+          "file": "meetings/meeting-01/resources/01-choose-your-adventure.png",
+          "fileSize": 0.4
         }
       ]
     },
@@ -132,13 +138,14 @@
         "file": "meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 52,
-        "fileSize": 840
+        "duration": 179,
+        "fileSize": 11
       },
       "slides": {
         "file": "meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx",
         "label": "Slides",
-        "variant": "canonical"
+        "variant": "canonical",
+        "fileSize": 6
       },
       "podcasts": [],
       "resources": []
