@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['index.html', 'dist/app.js'],
+  content: ['index.html', 'src/0*.js'],
   safelist: [
     'animate-pulse',
     'cursor-default',

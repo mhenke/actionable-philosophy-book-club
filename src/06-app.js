@@ -27,6 +27,8 @@
 
         if (window.__TEST__ === true) {
             window.isSafeRepoPath = isSafeRepoPath;
+            window.isSafeAssetPath = isSafeAssetPath;
+            window.isSafePath = isSafePath;
             window.prefetchMarkdown = prefetchMarkdown;
             window.mdCache = mdCache;
             window.renderUpcomingMaterials = renderUpcomingMaterials;
@@ -94,22 +96,19 @@
         // Init — runs immediately (script is at end of body, DOM ready)
         (async () => {
             if (window.__TEST__ === true) window.__manifestLoaded = false;
+
+            // Prevent dashboard flash on refresh with #p= reader route — hide dashboard early
+            const initialHash = window.location.hash;
+            if (initialHash.startsWith('#p=')) {
+                dashboard.classList.add('hidden-view');
+                reader.classList.remove('hidden-view');
+            }
             if (typeof marked !== 'undefined') {
                 marked.use({ gfm: true, breaks: true });
             }
 
             try {
-                // Use inline MANIFEST_DATA synchronously (no async gap) when available
-                const inlineData = window.__MANIFEST_DATA || (typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : null);
-                if (inlineData) {
-                    if (!inlineData.meetings || !Array.isArray(inlineData.meetings)) throw new Error('Invalid manifest structure');
-                    MEETINGS = inlineData.meetings;
-                    ASSET_COPY = loadAssetCopyRegistry(inlineData.assetCopy);
-                    window.MEETINGS = MEETINGS;
-                    window.ASSET_COPY = ASSET_COPY;
-                } else {
-                    await loadManifest();
-                }
+                await loadManifest();
             } catch (err) {
                 console.error('Manifest load failed:', err?.message || err);
                 showManifestError();

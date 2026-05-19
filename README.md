@@ -29,6 +29,14 @@ We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompt
 
 ## 💻 Local Development
 
+### Build the JS bundle
+
+```bash
+npm run build:js
+```
+
+`dist/app.js` is a generated artifact (gitignored) — rebuild it after changing source files or manifest data.
+
 ### Preview locally
 ```bash
 # Start a local web server (required for fetch() to work)

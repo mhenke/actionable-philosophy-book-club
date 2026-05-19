@@ -101,7 +101,18 @@ jobs:
         run: npm ci
 
       - name: Audit dependencies
-        run: npm audit --audit-level=moderate
+        run: npm audit --audit-level=high
+
+      - name: Build JS
+        run: npm run build:js
+
+      - name: Check Tailwind CSS freshness
+        run: |
+          npm run build:css
+          git diff --exit-code dist/tailwind.css || (
+            echo "ERROR: dist/tailwind.css is stale. Run 'npm run build:css' and commit the result."
+            exit 1
+          )
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
@@ -127,10 +138,17 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e  # v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install dependencies and build JS
+        run: npm ci && npm run build:js
       - name: Prepare Pages artifact
         run: |
           mkdir -p deploy
           cp index.html deploy/
+          node scripts/minify-html.mjs deploy/index.html
           cp -r dist/ meetings/ docs/ templates/ .nojekyll deploy/
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9  # v5
@@ -142,13 +160,19 @@ jobs:
 
       - name: Smoke test deployed site
         run: |
-          sleep 15
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://mhenke.github.io/actionable-philosophy-book-club/)
-          if [ "$STATUS" != "200" ]; then
-            echo "Smoke test failed: HTTP $STATUS"
-            exit 1
-          fi
-          curl -sf https://mhenke.github.io/actionable-philosophy-book-club/ | \
-            grep -q "A Philosophy of Software Design" || \
-            (echo "Smoke test failed: expected content not found" && exit 1)
-          echo "Smoke test passed"
+          URL="https://mhenke.github.io/actionable-philosophy-book-club/"
+          echo "Waiting for deployment to propagate..."
+          for i in $(seq 1 5); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL" 2>/dev/null || echo "000")
+            if [ "$STATUS" = "200" ]; then
+              echo "Got HTTP 200 on attempt $i"
+              curl -sf "$URL" | grep -q "A Philosophy of Software Design" || \
+                (echo "Smoke test failed: expected content not found" && exit 1)
+              echo "Smoke test passed"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $STATUS — retrying in 15s..."
+            sleep 15
+          done
+          echo "Smoke test failed: HTTP $STATUS after 5 retries"
+          exit 1
