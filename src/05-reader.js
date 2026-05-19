@@ -99,28 +99,11 @@
             }
         }
 
-        function updateReaderTheme(meetingId) {
-            const meeting = MEETINGS.find(m => m.id === meetingId);
-            if (meeting) {
-                content.style.setProperty('--prose-h3-border', `var(--wash-${meeting.color.split('-')[1]}-strong-border)`);
-            } else {
-                content.style.removeProperty('--prose-h3-border');
-            }
-        }
-
         function ensureDOMPurifyHooks() {
             if (window.__domPurifyHooksInstalled) return;
-            DOMPurify.addHook('beforeSanitizeAttributes', node => {
-                if (node.tagName !== 'A') return;
-                const href = node.getAttribute('href');
-                if (href && /^#/.test(href)) node.setAttribute('data-dp-href', href);
-            });
             DOMPurify.addHook('afterSanitizeAttributes', node => {
                 if (node.tagName !== 'A') return;
-                const savedHref = node.getAttribute('data-dp-href');
-                const href = node.getAttribute('href') || savedHref || '';
-                node.removeAttribute('data-dp-href');
-                if (savedHref && !node.getAttribute('href')) node.setAttribute('href', savedHref);
+                const href = node.getAttribute('href') || '';
                 if (/^https?:/i.test(href)) {
                     node.setAttribute('target', '_blank');
                     node.setAttribute('rel', 'noopener noreferrer');

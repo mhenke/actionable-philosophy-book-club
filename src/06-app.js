@@ -12,8 +12,6 @@
                     return;
                 }
                 const anchorId = lastHashIndex > 0 ? fullPath.substring(lastHashIndex + 1) : null;
-                const meeting = MEETINGS.find(m => m.readmeUrl === path);
-                updateReaderTheme(meeting ? meeting.id : null);
                 loadPage(path, anchorId);
             } else {
                 showDashboard();
