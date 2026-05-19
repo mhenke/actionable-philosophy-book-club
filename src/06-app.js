@@ -11,12 +11,6 @@
                     showDashboard();
                     return;
                 }
-                // Dismiss onboarding banner permanently when visiting any content
-                const banner = document.getElementById('onboarding-banner');
-                if (banner && !banner.classList.contains('hidden-view')) {
-                    banner.classList.add('hidden-view');
-                    localStorage.setItem(LS + 'onboarding_dismissed', '1');
-                }
                 const anchorId = lastHashIndex > 0 ? fullPath.substring(lastHashIndex + 1) : null;
                 const meeting = MEETINGS.find(m => m.readmeUrl === path);
                 updateReaderTheme(meeting ? meeting.id : null);
@@ -30,19 +24,10 @@
 
         if (window.__TEST__ === true) {
             window.isSafeRepoPath = isSafeRepoPath;
-            window.isSafeAssetPath = isSafeAssetPath;
-            window.isSafePath = isSafePath;
-            window.prefetchMarkdown = prefetchMarkdown;
-            window.mdCache = mdCache;
             window.renderUpcomingMaterials = renderUpcomingMaterials;
             window.renderArchiveCards = renderArchiveCards;
             window.renderHorizonCards = renderHorizonCards;
-            window.showToast = showToast;
-            window.formatDuration = formatDuration;
-            window.formatFileSize = formatFileSize;
             window.saveVideoResumePosition = saveVideoResumePosition;
-            window.rewriteContentLinks = rewriteContentLinks;
-            window.applyMeetingMaterialsTree = applyMeetingMaterialsTree;
         }
 
         window.addEventListener('hashchange', handleRoute);

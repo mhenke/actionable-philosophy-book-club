@@ -39,12 +39,6 @@
                                 link.setAttribute('href', repoPath);
                                 link.setAttribute('target', '_blank');
                                 link.setAttribute('rel', 'noopener noreferrer');
-                            } else if (/\.mp4$/i.test(repoPath)) {
-                                link.setAttribute('href', repoPath);
-                                link.addEventListener('click', (e) => {
-                                    e.preventDefault();
-                                    openVideoPlayer(repoPath, link.textContent.trim() || repoPath);
-                                });
                             } else {
                                 link.setAttribute('href', repoPath);
                             }
@@ -160,7 +154,7 @@
             content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading session notes&hellip;</div>';
 
             try {
-                const text = await fetchMarkdownCached(path, { isReaderLoad: true });
+                const text = await fetchMarkdown(path, { isReaderLoad: true });
                 if (myEpoch !== _loadPageEpoch) return; // newer load started
                 ensureDOMPurifyHooks();
                 const sanitized = DOMPurify.sanitize(marked.parse(text), {

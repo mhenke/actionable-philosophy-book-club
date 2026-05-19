@@ -1,42 +1,22 @@
-        function fetchMarkdownCached(path, { isReaderLoad = false } = {}) {
+        function fetchMarkdown(path, { isReaderLoad = false } = {}) {
             if (!isSafeRepoPath(path)) return Promise.reject(new Error('Unsafe path: ' + path));
-            if (mdCache.has(path)) {
-                const val = mdCache.get(path);
-                mdCache.delete(path);
-                mdCache.set(path, val);
-                return val;
-            }
-
             const controller = new AbortController();
-            let readerTimeout = null;
-
+            let timeoutId = null;
             if (isReaderLoad) {
                 if (activeReaderController) activeReaderController.abort();
                 activeReaderController = controller;
-                readerTimeout = setTimeout(() => controller.abort(), 15000);
+                timeoutId = setTimeout(() => controller.abort(), 15000);
             }
-            if (mdCache.size >= CONFIG.CACHE_MAX) {
-                mdCache.delete(mdCache.keys().next().value);
-            }
-            const promise = fetch(path, { signal: controller.signal }).then(response => {
-                if (readerTimeout) clearTimeout(readerTimeout);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                return response.text();
-            });
-            mdCache.set(path, promise);
-            promise.catch(() => {
-                if (readerTimeout) clearTimeout(readerTimeout);
-                if (mdCache.get(path) === promise) mdCache.delete(path);
-            });
-            return promise;
-        }
-        function prefetchMarkdown(path) {
-            // Fire-and-forget: fetch markdown into cache if not already cached
-            if (!isSafeRepoPath(path)) return;
-            fetchMarkdownCached(path).catch(() => {
-                // Silent fail: prefetch is an optimization, not critical
-                // User will just experience normal fetch latency if they click
-            });
+            return fetch(path, { signal: controller.signal })
+                .then(response => {
+                    if (timeoutId) clearTimeout(timeoutId);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    return response.text();
+                })
+                .catch(err => {
+                    if (timeoutId) clearTimeout(timeoutId);
+                    throw err;
+                });
         }
 
 

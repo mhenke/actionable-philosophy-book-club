@@ -41,11 +41,7 @@
             }
 
             if (ctaContainer && meeting.readmeUrl) {
-                ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
-                const ctaLink = ctaContainer.querySelector('[data-prefetch-path]');
-                if (ctaLink) ctaLink.addEventListener('pointerenter', () => {
-                    if (isSafeRepoPath(meeting.readmeUrl)) prefetchMarkdown(meeting.readmeUrl);
-                }, { once: true });
+                ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
             }
 
             if (podcastContainer) {
@@ -77,18 +73,11 @@
                     </div>
                     ${primaryRows.join('')}
                     ${resourceStrip}
-                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost" data-prefetch-path="${escapeHTML(meeting.readmeUrl)}">Meeting Notes &rarr;</a>
+                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost">Meeting Notes &rarr;</a>
                     ${podcastSection}
                 `;
 
                 fragment.appendChild(card);
-                const prefetchLink = card.querySelector('[data-prefetch-path]');
-                if (prefetchLink) {
-                    prefetchLink.addEventListener('pointerenter', () => {
-                        const path = prefetchLink.dataset.prefetchPath;
-                        if (path) prefetchMarkdown(path);
-                    }, { once: true });
-                }
             }
 
             archiveContainer.innerHTML = '';
@@ -257,6 +246,23 @@
             overlay.showModal();
         }
 
+        // ── Onboarding banner ──
+        function initOnboardingBanner() {
+            const banner = document.getElementById('onboarding-banner');
+            const dismissBtn = document.getElementById('onboarding-dismiss');
+            if (!banner || !dismissBtn) return;
+            if (localStorage.getItem(LS + 'onboarding_dismissed')) return;
+            const mainContent = document.getElementById('main-content');
+            if (mainContent && banner.parentNode !== mainContent) {
+                mainContent.insertBefore(banner, mainContent.firstChild);
+            }
+            banner.classList.remove('hidden-view');
+            dismissBtn.addEventListener('click', () => {
+                banner.classList.add('hidden-view');
+                localStorage.setItem(LS + 'onboarding_dismissed', '1');
+            });
+        }
+
         // ── Asset click delegation (dashboard) ──
         function setupAssetClickDelegation(container) {
             if (!container || container.__assetDelegationInstalled) return;
@@ -280,20 +286,3 @@
             });
         }
 
-        // ── Onboarding banner ──
-        function initOnboardingBanner() {
-            const banner = document.getElementById('onboarding-banner');
-            const dismissBtn = document.getElementById('onboarding-dismiss');
-            if (!banner || !dismissBtn) return;
-            if (localStorage.getItem(LS + 'onboarding_dismissed')) return;
-            // Move banner into the dashboard main content area
-            const mainContent = document.getElementById('main-content');
-            if (mainContent && banner.parentNode !== mainContent) {
-                mainContent.insertBefore(banner, mainContent.firstChild);
-            }
-            banner.classList.remove('hidden-view');
-            dismissBtn.addEventListener('click', () => {
-                banner.classList.add('hidden-view');
-                localStorage.setItem(LS + 'onboarding_dismissed', '1');
-            });
-        }

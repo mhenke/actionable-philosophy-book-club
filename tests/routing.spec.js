@@ -61,21 +61,6 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#dashboard-view')).toBeVisible();
     });
 
-    test('markdown cache: same path fetched only once per session', async ({ page }) => {
-        let fetchCount = 0;
-        await page.route('**/meetings/meeting-01/README.md', route => {
-            fetchCount++;
-            route.fulfill({ body: '# Cached' });
-        });
-
-        await page.goto('/#p=meetings/meeting-01/README.md');
-        await page.waitForSelector('#markdown-content h1');
-        await page.click('#back-to-dashboard');
-        await page.goto('/#p=meetings/meeting-01/README.md');
-        await page.waitForSelector('#markdown-content h1');
-
-        expect(fetchCount).toBe(1);
-    });
 
     test('aria-busy is false after content loads', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route =>
