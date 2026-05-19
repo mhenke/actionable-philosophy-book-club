@@ -1,13 +1,3 @@
-        // ── getCurrentMeetingIndex — reader navigation, extracted from keydown ──
-        function getCurrentMeetingIndex() {
-            const hash = window.location.hash;
-            if (!hash.startsWith('#p=')) return -1;
-            const full = decodeURIComponent(hash.slice(3));
-            const i = full.lastIndexOf('#');
-            const path = i > 0 ? full.slice(0, i) : full;
-            return MEETINGS.findIndex(m => m.readmeUrl === path);
-        }
-
         // ── rewriteContentLinks — link post-processing, extracted from loadPage ─
         function rewriteContentLinks(container, docPath) {
             const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
