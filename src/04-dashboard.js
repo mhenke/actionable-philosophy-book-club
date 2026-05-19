@@ -6,6 +6,7 @@
             const ctaContainer = document.getElementById('upcoming-cta');
             if (!container) return;
 
+            const upcomingSection = container.closest('section');
             const meeting = MEETINGS.find(m => m.status === 'upcoming');
             if (!meeting) {
                 container.innerHTML = '';
@@ -14,6 +15,7 @@
                 if (ctaContainer) ctaContainer.innerHTML = '';
                 return;
             }
+            if (upcomingSection) upcomingSection.classList.remove('hidden-view');
 
             if (headerContainer) {
                 headerContainer.innerHTML = `

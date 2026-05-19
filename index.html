@@ -393,9 +393,6 @@
         }
 
         /* Layout shift prevention — reserve space before JS populates containers */
-        .card:has(#upcoming-materials-container) {
-            min-height: 120px;
-        }
 
         /* Card title — overflow protection */
         .card-title { min-width: 0; }
@@ -587,7 +584,7 @@
             <h1 class="sr-only">Actionable Philosophy Book Club</h1>
 
             <!-- Next Meeting — header + CTA rendered by renderUpcomingMaterials() from manifest -->
-            <section class="card p-6 md:p-8" aria-labelledby="next-meeting-heading">
+            <section class="card p-6 md:p-8 hidden-view" aria-labelledby="next-meeting-heading">
                 <div id="upcoming-card-header" class="mb-6"></div>
                 <div class="space-y-5">
                     <div id="upcoming-materials-container"></div>
