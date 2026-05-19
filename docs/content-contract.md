@@ -105,7 +105,7 @@ This ensures that clicking links from within a meeting note navigates within the
 
 Each meeting directory may contain an `asset-manifest.json` file written by `rename_asset.sh` when alternate asset variants are organized.
 
-This file is a provenance log — it is not read by `index.html`. The dashboard reads only the `MEETINGS` array in `index.html`. The manifest does not need to match `index.html` and is not validated by CI.
+This file is a provenance log — it is not read by the dashboard. The dashboard reads from `docs/manifest.json` (inlined into `dist/app.js` at build time). The manifest does not need to match the dashboard manifest and is not validated by CI.
 
 Schema:
 
@@ -158,7 +158,7 @@ The GitHub Actions CI pipeline also runs this check on every push.
 
 ## Dashboard Manifest Fields
 
-The manifest lives at **`docs/manifest.json`** and is loaded at runtime. Add new meetings at the top of the `meetings` array (newest first). Change the previous upcoming entry's `status` from `'upcoming'` to `'done'` when rotating meetings.
+The manifest lives at **`docs/manifest.json`** and is the canonical source of truth. It is inlined into `dist/app.js` at build time via `npm run build:js` (the `scripts/inline-manifest.cjs` helper reads `docs/manifest.json` and generates a `const MANIFEST_DATA` that terser bundles with the rest of the JS). Add new meetings at the top of the `meetings` array (newest first). Change the previous upcoming entry's `status` from `'upcoming'` to `'done'` when rotating meetings. After editing, run `npm run build:js` to regenerate `dist/app.js`.
 
 ### Required fields
 - `id` — `'meeting-NN'` matching the directory name

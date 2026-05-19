@@ -54,28 +54,34 @@ Links inside `## Meeting Materials` must be relative to the README file:
 
 ### 3. Add the meeting to the dashboard manifest
 
-Open `dist/app.js` and find the `const MEETINGS = [...]` block (near the top, after the imports). Add a new entry **at the top of the array** (newest first):
+Open `docs/manifest.json` and add a new entry **at the top of the `meetings` array** (newest first):
 
-```js
+```json
 {
-    id: 'meeting-NN',
-    session: 'Session NN',
-    date: 'DD Mon YYYY',
-    title: 'Your Session Title',
-    status: 'upcoming',
-    color: 'spectrum-2',
-    wash: '--wash-2',
-    readmeUrl: 'meetings/meeting-NN/README.md',
-    video:  { file: 'meetings/meeting-NN/recordings/NN-video-title.mp4',  label: 'Video Primer', variant: 'canonical' },
-    slides: { file: 'meetings/meeting-NN/slides/NN-slide-title.pptx',     label: 'Slides', variant: 'canonical' },
-    podcasts: [],
-    resources: []
+    "id": "meeting-NN",
+    "session": "Session NN",
+    "date": "DD Mon YYYY",
+    "title": "Your Session Title",
+    "status": "upcoming",
+    "color": "spectrum-2",
+    "wash": "--wash-2",
+    "readmeUrl": "meetings/meeting-NN/README.md",
+    "video":  { "file": "meetings/meeting-NN/recordings/NN-video-title.mp4",  "label": "Video Primer", "variant": "canonical" },
+    "slides": { "file": "meetings/meeting-NN/slides/NN-slide-title.pptx",     "label": "Slides", "variant": "canonical" },
+    "podcasts": [],
+    "resources": []
 },
 ```
 
-Then change the previous "upcoming" entry's `status` from `'upcoming'` to `'done'`.
+Then change the previous "upcoming" entry's `status` from `"upcoming"` to `"done"`.
 
-The manifest lives in `dist/app.js` — this file is the canonical source (not a build artifact). It was extracted from an inline `<script>` for CSP compliance and is edited directly.
+After editing `docs/manifest.json`, rebuild the JS bundle:
+
+```bash
+npm run build:js
+```
+
+This inlines the manifest data into `dist/app.js` at build time. The canonical source is `docs/manifest.json` — `dist/app.js` is a generated artifact.
 
 ### 4. Construct the Slide Deck viewer URL (Office Online)
 

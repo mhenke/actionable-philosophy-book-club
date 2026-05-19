@@ -13,7 +13,7 @@ The project is built as a "Zero Ceremony" static SPA, meaning it requires no com
 - **Utilities:** FFmpeg-based compression scripts (`asset-compressor/`), Python simple server for local preview.
 
 ## Core Architecture
-The application logic is driven by a central **MEETINGS manifest** located in `index.html`. This manifest defines:
+The application logic is driven by a central **MEETINGS manifest** in `docs/manifest.json`. This manifest defines:
 - **Session Metadata:** Title, date, status (`upcoming` vs `done`).
 - **Asset Links:** Paths to `README.md`, video recordings, and slide decks.
 - **UI Theming:** Spectrum colors (`spectrum-1` through `spectrum-6`) and background washes.
@@ -35,6 +35,9 @@ Open `http://localhost:8000` in your browser. Note: `file://` URLs will not work
 ```bash
 # Optimize CSS (Minifies Tailwind into dist/tailwind.css)
 npm run build:css
+
+# Build JS bundle (inlines manifest from docs/manifest.json, minifies src/ modules into dist/app.js)
+npm run build:js
 
 # Run Playwright tests
 npm test
@@ -65,11 +68,13 @@ npm test
 ## Contribution Workflow
 1.  Create a new meeting directory following the standard structure.
 2.  Populate the `README.md` using the template in `templates/`.
-3.  Add a new entry to the `MEETINGS` array in `index.html` (newest first).
-4.  Run `npm test` to ensure manifest integrity and routing.
+3.  Add a new entry to the `meetings` array in `docs/manifest.json` (newest first).
+4.  Run `npm run build:js && npm test` to rebuild the JS bundle and verify integrity.
 
 ## Key Files
-- `index.html`: Main SPA code and meeting manifest.
+- `index.html`: Main SPA shell (inline CSS in `<style>`, static sections like Knowledge Base).
+- `docs/manifest.json`: Canonical meeting data manifest (inlined into `dist/app.js` at build time).
+- `src/`: JS source modules (00-setup.js through 06-app.js) concatenated into `dist/app.js` via `npm run build:js`.
 - `PRODUCT.md` / `DESIGN.md`: High-level product and aesthetic goals.
 - `asset-compressor/`: Authoritative FFmpeg scripts for asset optimization.
 - `docs/adr/`: Architectural Decision Records (e.g., Office Online for PPTX viewing).

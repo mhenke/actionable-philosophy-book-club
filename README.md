@@ -62,13 +62,16 @@ After adding or updating media files (videos, slides, podcasts, images), extract
 ```bash
 # Extract duration and file size for all assets, patch docs/manifest.json
 python3 scripts/extract_metadata.py --patch docs/manifest.json
+
+# Rebuild the JS bundle to inline the updated manifest
+npm run build:js
 ```
 
 This updates the meetings manifest with:
 - **Duration** (seconds) for videos and audio files
 - **File size** (MB) for videos, slides, podcasts, and resource images
 
-The metadata is then consumed by the dashboard to display file information in meeting cards.
+The manifest data is inlined into `dist/app.js` at build time. The dashboard reads the inlined data synchronously — no fetch required.
 
 **Supported formats:**
 - Video (MP4): duration + fileSize

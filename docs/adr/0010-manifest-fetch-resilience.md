@@ -1,24 +1,31 @@
-# ADR-0010: Manifest Fetch Resilience
+# ADR-0010: Manifest Loading Resilience
 
-**Status:** Accepted
+**Status:** Accepted (partially superseded — manifest is now inlined at build time)
 **Date:** 2026-05-18
+**Updated:** 2026-05-18 — manifest data is no longer fetched at runtime
 
 ## Context
 
-`loadManifest()` fetched `docs/manifest.json` with no timeout and no error handling in the `DOMContentLoaded` handler. If the fetch failed (network error, 404, malformed JSON) or hung (spotty mobile connection), the `renderUpcomingMaterials()`, `renderArchiveCards()`, and `renderHorizonCards()` calls never ran. The skeleton loaders in the HTML remained visible indefinitely with no user feedback and no recovery path.
+Originally, `loadManifest()` fetched `docs/manifest.json` with no timeout and no error handling in the `DOMContentLoaded` handler. If the fetch failed (network error, 404, malformed JSON) or hung (spotty mobile connection), the `renderUpcomingMaterials()`, `renderArchiveCards()`, and `renderHorizonCards()` calls never ran. The skeleton loaders in the HTML remained visible indefinitely with no user feedback and no recovery path.
 
 The primary user persona (Casey) accesses the dashboard on mobile during commutes, where connections drop regularly. A permanent loading state with no retry is a dead end for this use case.
 
-## Decision
+## Decision (original)
 
 1. Add an 8-second `AbortController` timeout to `loadManifest()`.
 2. Wrap the `loadManifest()` call in `DOMContentLoaded` in a `try/catch`.
 3. On failure, call `showManifestError()` which: replaces skeleton content with a "Couldn't load sessions" message and a "Tap to retry" button; clears archive and horizon containers; hides the horizon section.
 4. The retry button re-calls `loadManifest()` and, on success, runs all three render functions.
 
+## Update (2026-05-18): Manifest Inlined
+
+As of 2026-05-18, the manifest is no longer fetched at runtime. The `npm run build:js` step runs `scripts/inline-manifest.cjs` which reads `docs/manifest.json` and generates `src/_manifest.js` containing `const MANIFEST_DATA = {...}`. This is bundled into `dist/app.js` by terser.
+
+`loadManifest()` now checks for the inlined `MANIFEST_DATA` constant first and returns synchronously. A fetch-based fallback is preserved for development (running without a build step). The error-handling infrastructure (`showManifestError`, retry button) is retained for the fallback path and in case the inlined data is somehow invalid.
+
 ## Rationale
 
-**Timeout value (8 seconds):** Long enough for slow connections to succeed; short enough that a hanging fetch fails visibly rather than leaving users waiting. Browser default fetch timeouts are several minutes — far too long for a mobile commute context.
+**Timeout value (8 seconds):** Long enough for slow connections to succeed; short enough that a hanging fetch fails visibly rather than leaving users waiting. Browser default fetch timeouts are several minutes — far too long for a mobile commute context. (Still applies to the dev fallback fetch path.)
 
 **AbortController over `Promise.race` with `setTimeout`:** `AbortController` cleanly cancels the in-flight request. `Promise.race` leaves the original fetch running in the background and consuming bandwidth.
 
@@ -28,7 +35,9 @@ The primary user persona (Casey) accesses the dashboard on mobile during commute
 
 ## Consequences
 
-- **Positive:** Users on spotty connections see a recoverable error state instead of an infinite skeleton.
-- **Positive:** Fetch hangs are bounded to 8 seconds.
-- **Negative:** An 8-second timeout may prematurely fail on unusually slow but valid connections. This is acceptable given the mobile-first use case where a response that takes more than 8 seconds is effectively unusable anyway.
-- **Convention:** All top-level fetch calls in `DOMContentLoaded` must have an `AbortController` timeout and a visible error state with a retry affordance.
+- **Positive:** Manifest loading is now synchronous in production — zero async gap, no fetch timeout.
+- **Positive:** Users on spotty connections never experience a manifest loading failure.
+- **Positive:** The error-handling infrastructure remains available for edge cases.
+- **Positive:** The fetch fallback still works for local dev without a build step.
+- **Negative:** The `retry` affordance in `showManifestError()` is no longer useful in production (the inlined data cannot fail at runtime). It is kept for the dev fallback path.
+- **Convention:** The canonical manifest source is `docs/manifest.json`. After editing it, run `npm run build:js` to regenerate `dist/app.js`.
