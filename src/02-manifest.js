@@ -5,22 +5,23 @@
                 return registry;
             }
             const expectedKeys = Object.keys(DEFAULT_ASSET_COPY);
+            const expectedSet = new Set(expectedKeys);
             const missing = expectedKeys.filter(key => !(key in assetCopy));
-            const extra = Object.keys(assetCopy).filter(key => !expectedKeys.includes(key));
+            const extra = Object.keys(assetCopy).filter(key => !expectedSet.has(key));
             if (missing.length || extra.length) {
                 console.warn(`Invalid manifest asset copy registry: ${[
                     missing.length ? `missing ${missing.join(', ')}` : '',
                     extra.length ? `unexpected ${extra.join(', ')}` : ''
                 ].filter(Boolean).join('; ')}. Using defaults at render time for missing entries.`);
             }
-            expectedKeys.forEach(key => {
+            for (const key of expectedKeys) {
                 const entry = assetCopy[key];
-                if (!entry || typeof entry !== 'object' || Array.isArray(entry)) return;
+                if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
                 const sanitized = {};
                 if (typeof entry.label === 'string' && entry.label.trim()) sanitized.label = entry.label;
                 if (typeof entry.title === 'string' && entry.title.trim()) sanitized.title = entry.title;
                 if (Object.keys(sanitized).length > 0) registry[key] = sanitized;
-            });
+            }
             return registry;
         }
 
@@ -50,7 +51,6 @@
             const timeoutId = setTimeout(() => controller.abort(), 8000);
             try {
                 const response = await fetch('docs/manifest.json', { signal: controller.signal });
-                clearTimeout(timeoutId);
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
                 const data = await response.json();
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');

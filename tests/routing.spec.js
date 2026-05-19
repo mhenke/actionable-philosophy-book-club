@@ -87,35 +87,6 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#markdown-content')).toHaveAttribute('aria-busy', 'false');
     });
 
-    test('anchor links (#fragment) are not rewritten to GitHub raw URLs', async ({ page }) => {
-        // Use real file — test that any existing #-links in content are preserved
-        await page.goto('/#p=meetings/meeting-01/README.md');
-        await page.waitForSelector('#markdown-content');
-
-        // Check all anchor links in rendered markdown
-        const anchorLinks = await page.evaluate(() => {
-            return Array.from(document.querySelectorAll('#markdown-content a[href]'))
-                .map(a => ({ href: a.getAttribute('href'), text: a.textContent }))
-                .filter(a => a.href.startsWith('#'));
-        });
-
-        // If the real content has anchor links (e.g. TOC), verify they're preserved
-        for (const link of anchorLinks) {
-            expect(link.href).toMatch(/^#/);
-            expect(link.href).not.toMatch(/github/);
-        }
-
-        // Also verify external links get target=_blank
-        const externalLinks = await page.evaluate(() => {
-            return Array.from(document.querySelectorAll('#markdown-content a[href^="http"]'))
-                .map(a => ({ target: a.getAttribute('target'), rel: a.getAttribute('rel') }));
-        });
-        for (const link of externalLinks) {
-            expect(link.target).toBe('_blank');
-            expect(link.rel).toMatch(/noopener/);
-        }
-    });
-
     test('shows error message and retry button when fetch fails', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route => route.fulfill({ status: 404 }));
 

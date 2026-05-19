@@ -80,8 +80,9 @@
         // Looks for the first <ul> under an <h2> matching "Meeting Materials" (case-insensitive)
         // and prepends tree connector spans to each <li>. Convention defined in docs/content-contract.md.
         function renderFileTree(ul, prefix) {
-            [...ul.children].forEach((li, i, arr) => {
-                if (li.querySelector(':scope > .tree-connector')) return;
+            const items = Array.from(ul.children);
+            for (const [i, li] of items.entries()) {
+                if (li.querySelector(':scope > .tree-connector')) continue;
                 // If the first child is an anchor that points to a folder (href ends with '/'), make it inert
                 const firstAnchor = li.querySelector(':scope > a');
                 if (firstAnchor) {
@@ -93,7 +94,7 @@
                         li.replaceChild(span, firstAnchor);
                     }
                 }
-                const isLast = i === arr.length - 1;
+                const isLast = i === items.length - 1;
                 const connector = isLast ? '└── ' : '├── ';
                 const childPrefix = prefix + (isLast ? '    ' : '│   ');
                 const pre = document.createElement('span');
@@ -103,7 +104,7 @@
                 const nested = li.querySelector(':scope > ul');
                 if (nested) renderFileTree(nested, childPrefix);
                 li.classList.add(nested ? 'tree-folder' : 'tree-file');
-            });
+            }
         }
 
         function updateReaderTheme(meetingId) {

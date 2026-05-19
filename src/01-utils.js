@@ -40,14 +40,9 @@
         }
 
 
+        const _HTML_ESCAPE = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
         function escapeHTML(value) {
-            return String(value).replace(/[&<>"']/g, c => ({
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;'
-            }[c]));
+            return String(value).replace(/[&<>"']/g, c => _HTML_ESCAPE[c]);
         }
 
         function formatDuration(seconds) {
@@ -73,6 +68,8 @@
         }
 
         // Single path validator for both asset and repo paths — eliminates prior three-way drift.
+        const _ASSET_ROOTS = new Set(['meetings', 'assets']);
+        const _REPO_ROOTS = new Set(['meetings', 'docs', 'templates']);
         function isSafePath(p, kind) {
             if (!p || typeof p !== 'string') return false;
             if (p.length === 0 || p.length > CONFIG.PATH_MAX_LENGTH) return false;
@@ -83,7 +80,7 @@
             const segments = p.split('/');
             if (segments.some(s => s === '' || s === '.')) return false;
             if (kind === 'asset' || kind === 'any') {
-                const isAsset = new Set(['meetings', 'assets']).has(segments[0]) &&
+                const isAsset = _ASSET_ROOTS.has(segments[0]) &&
                     /\.(mp4|m4a|pptx|pdf|png|jpg|jpeg|gif|svg|webp)$/i.test(p);
                 if (kind === 'asset') return isAsset;
                 if (isAsset) return true;
@@ -91,7 +88,7 @@
             if (kind === 'repo' || kind === 'any') {
                 return !/[^\w.\-/]/.test(p) &&
                     p.endsWith('.md') &&
-                    new Set(['meetings', 'docs', 'templates']).has(segments[0]);
+                    _REPO_ROOTS.has(segments[0]);
             }
             return false;
         }
@@ -116,7 +113,7 @@
             const key = getVideoResumeKey(filePath);
             try {
                 if (currentTime > CONFIG.RESUME_MIN_SECONDS) {
-                    sessionStorage.setItem(key, String(currentTime));
+                    sessionStorage.setItem(key, `${currentTime}`);
                 } else {
                     sessionStorage.removeItem(key);
                 }
