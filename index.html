@@ -389,6 +389,15 @@
         }
         .podcast-disclosure[open] summary .podcast-chevron { transform: rotate(180deg); }
 
+        /* Layout shift prevention — reserve space before JS populates containers */
+        .card:has(#upcoming-materials-container) {
+            min-height: 120px;
+        }
+        #horizon-cards-container,
+        #archive-cards-container {
+            min-height: 80px;
+        }
+
         /* Card title — overflow protection */
         .card-title { min-width: 0; }
         .card-title h2, .card-title h3, .card-title span { overflow-wrap: break-word; word-break: break-word; }
