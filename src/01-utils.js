@@ -1,5 +1,11 @@
         function fetchMarkdown(path, { isReaderLoad = false } = {}) {
             if (!isSafeRepoPath(path)) return Promise.reject(new Error('Unsafe path: ' + path));
+            if (mdCache.has(path)) {
+                const val = mdCache.get(path);
+                mdCache.delete(path);
+                mdCache.set(path, val); // LRU move to end
+                return val;
+            }
             const controller = new AbortController();
             let timeoutId = null;
             if (isReaderLoad) {
@@ -7,16 +13,21 @@
                 activeReaderController = controller;
                 timeoutId = setTimeout(() => controller.abort(), 15000);
             }
-            return fetch(path, { signal: controller.signal })
+            if (mdCache.size >= CONFIG.CACHE_MAX) {
+                mdCache.delete(mdCache.keys().next().value);
+            }
+            const promise = fetch(path, { signal: controller.signal })
                 .then(response => {
                     if (timeoutId) clearTimeout(timeoutId);
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     return response.text();
-                })
-                .catch(err => {
-                    if (timeoutId) clearTimeout(timeoutId);
-                    throw err;
                 });
+            mdCache.set(path, promise);
+            promise.catch(() => {
+                if (timeoutId) clearTimeout(timeoutId);
+                if (mdCache.get(path) === promise) mdCache.delete(path);
+            });
+            return promise;
         }
 
 

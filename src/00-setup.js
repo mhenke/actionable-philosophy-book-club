@@ -3,6 +3,8 @@
         const reader    = document.getElementById('reader-view');
         const content   = document.getElementById('markdown-content');
         const readerStatus = document.getElementById('reader-status');
+        const mdCache   = new Map();  // Meeting markdown cache (Promises)
+
         // Meeting data manifest, loaded from docs/manifest.json at startup.
         let MEETINGS = [];
         let ASSET_COPY = {};
