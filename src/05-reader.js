@@ -158,27 +158,7 @@
             window.scrollTo(0, 0);
             readerStatus.textContent = 'Loading document...';
             content.setAttribute('aria-busy', 'true');
-            content.innerHTML = `
-                <div class="reader-skeleton" style="padding:2rem 0" aria-hidden="true">
-                    <div class="sk-block" style="height:2rem;max-width:60%"></div>
-                    <div class="sk-block" style="height:0.75rem;max-width:30%"></div>
-                    <div class="sk-lines">
-                        <div class="sk-block" style="height:0.75rem"></div>
-                        <div class="sk-block" style="height:0.75rem;max-width:85%"></div>
-                        <div class="sk-block" style="height:0.75rem;max-width:70%"></div>
-                    </div>
-                    <div class="sk-block" style="height:1.25rem;max-width:45%"></div>
-                    <div class="sk-lines">
-                        <div class="sk-block" style="height:0.75rem"></div>
-                        <div class="sk-block" style="height:0.75rem;max-width:90%"></div>
-                        <div class="sk-block" style="height:0.75rem;max-width:60%"></div>
-                    </div>
-                    <div class="sk-lines" style="padding-left:1rem">
-                        <div class="sk-block" style="height:0.75rem;max-width:55%"></div>
-                        <div class="sk-block" style="height:0.75rem;max-width:65%"></div>
-                        <div class="sk-block" style="height:0.75rem;max-width:50%"></div>
-                    </div>
-                </div>`;
+            content.innerHTML = '<div class="py-12 text-center text-sm uppercase tracking-widest text-muted animate-pulse">Loading session notes&hellip;</div>';
 
             try {
                 const text = await fetchMarkdownCached(path, { isReaderLoad: true });

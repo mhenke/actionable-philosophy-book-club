@@ -131,35 +131,6 @@
             horizonContainer.innerHTML = '';
             horizonContainer.appendChild(fragment);
         }
-        function renderDashboardSkeleton() {
-            const header = document.getElementById('upcoming-card-header');
-            const materials = document.getElementById('upcoming-materials-container');
-            const quote = document.getElementById('upcoming-key-takeaway');
-            const cta = document.getElementById('upcoming-cta');
-            const podcasts = document.getElementById('upcoming-podcasts');
-            const archive = document.getElementById('archive-cards-container');
-            if (header) header.innerHTML = `
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem">
-                    <div>
-                        <div class="sk-block" style="height:0.7rem;max-width:140px;margin-bottom:0.5rem"></div>
-                        <div class="sk-block" style="height:1.75rem;max-width:280px"></div>
-                    </div>
-                </div>`;
-            if (materials) materials.innerHTML = `
-                <div class="sk-block" style="height:48px"></div>
-                <div class="sk-block" style="height:48px;margin-top:0.5rem"></div>`;
-            if (quote) quote.innerHTML = `
-                <div style="border:1px solid var(--border-low);background:var(--wash-1);padding:1.25rem">
-                    <div class="sk-block" style="height:0.6rem;max-width:100px;margin-bottom:0.5rem"></div>
-                    <div class="sk-block" style="height:1rem;max-width:90%"></div>
-                </div>`;
-            if (cta) cta.innerHTML = `<div class="sk-block" style="height:52px;width:100%"></div>`;
-            if (podcasts) podcasts.innerHTML = `<div class="sk-block" style="height:44px"></div>`;
-            if (archive) archive.innerHTML = `
-                <div class="sk-block" style="height:160px;border-radius:4px"></div>
-                <div class="sk-block" style="height:160px;border-radius:4px;margin-top:1.25rem"></div>`;
-        }
-
         function showDashboard() {
             document.title = 'Actionable Philosophy Book Club Dashboard';
             const readerDocLabel = document.getElementById('reader-doc-label');

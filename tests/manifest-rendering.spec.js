@@ -2,35 +2,6 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__TEST__ = true; }); });
 
-test.describe('Dashboard skeleton', () => {
-
-    async function withDelayedManifest(page, fn) {
-        await page.addInitScript(() => {
-            window.__TEST__ = true;
-            window.__TEST_DELAY_MANIFEST = new Promise(resolve => { window.__releaseManifest = resolve; });
-        });
-        await page.goto('/');
-        await fn();
-        await page.evaluate(() => window.__releaseManifest());
-        await page.waitForFunction(() => window.__manifestLoaded === true);
-    }
-
-    test('skeleton appears in upcoming card while manifest loads', async ({ page }) => {
-        await withDelayedManifest(page, async () => {
-            await expect(page.locator('#upcoming-materials-container .sk-block').first()).toBeVisible();
-        });
-        await expect(page.locator('#upcoming-materials-container .sk-block')).toHaveCount(0);
-    });
-
-    test('skeleton appears in archive while manifest loads', async ({ page }) => {
-        await withDelayedManifest(page, async () => {
-            await expect(page.locator('#archive-cards-container .sk-block').first()).toBeVisible();
-        });
-        await expect(page.locator('#archive-cards-container .sk-block')).toHaveCount(0);
-    });
-
-});
-
 test.describe('Manifest Rendering', () => {
 
     test('draft meetings render in horizon, not archive', async ({ page }) => {

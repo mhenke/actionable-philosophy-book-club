@@ -103,8 +103,6 @@
             if (initialHash.startsWith('#p=')) {
                 dashboard.classList.add('hidden-view');
                 reader.classList.remove('hidden-view');
-            } else {
-                renderDashboardSkeleton();
             }
             if (typeof marked !== 'undefined') {
                 marked.use({ gfm: true, breaks: true });
