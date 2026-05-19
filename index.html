@@ -389,6 +389,13 @@
         }
         .podcast-disclosure[open] summary .podcast-chevron { transform: rotate(180deg); }
 
+        /* Reader content images without explicit dimensions get a placeholder to prevent layout shift */
+        #markdown-content img:not([width]) {
+            aspect-ratio: 16 / 9;
+            background: var(--wash-2);
+            border-radius: 4px;
+        }
+
         /* Layout shift prevention — reserve space before JS populates containers */
         .card:has(#upcoming-materials-container) {
             min-height: 120px;

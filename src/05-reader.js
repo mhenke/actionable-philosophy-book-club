@@ -143,8 +143,6 @@
             const isDashboard = view === 'dashboard';
             dashboard.classList.toggle('hidden-view', !isDashboard);
             reader.classList.toggle('hidden-view', isDashboard);
-            const footer = document.getElementById('site-footer');
-            if (footer) footer.classList.toggle('hidden', !isDashboard);
         }
 
         async function loadPage(path, anchorId) {
