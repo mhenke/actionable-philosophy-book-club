@@ -65,20 +65,14 @@ test.describe('Asset behaviour — what users actually do', () => {
 
     test('asset copy falls back to defaults at render time for missing registry types', async ({ page }) => {
         const manifestPath = new URL('../docs/manifest.json', import.meta.url);
+        const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+        manifest.assetCopy.alternate = {
+            label: 'Route Alternate Label',
+            title: 'Route Alternate Title'
+        };
+        delete manifest.assetCopy['deep-dive'];
 
-        await page.route('**/docs/manifest.json', async route => {
-            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-            manifest.assetCopy.alternate = {
-                label: 'Route Alternate Label',
-                title: 'Route Alternate Title'
-            };
-            delete manifest.assetCopy['deep-dive'];
-            await route.fulfill({
-                status: 200,
-                contentType: 'application/json',
-                body: JSON.stringify(manifest)
-            });
-        });
+        await page.addInitScript({ content: `window.__MANIFEST_DATA = ${JSON.stringify(manifest)};` });
 
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);

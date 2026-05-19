@@ -33,6 +33,19 @@
         }
 
         async function loadManifest() {
+            // Use inlined MANIFEST_DATA when built (production), fall back to fetch for dev
+            // window.__MANIFEST_DATA allows test overrides via addInitScript
+            const inlineData = window.__MANIFEST_DATA || (typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : null);
+            if (inlineData) {
+                const data = inlineData;
+                if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
+                const assetCopy = loadAssetCopyRegistry(data.assetCopy);
+                MEETINGS = data.meetings;
+                ASSET_COPY = assetCopy;
+                window.MEETINGS = MEETINGS;
+                window.ASSET_COPY = ASSET_COPY;
+                return;
+            }
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 8000);
             try {

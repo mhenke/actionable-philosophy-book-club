@@ -1,6 +1,10 @@
 # Dependencies
 node_modules/
 
+# Built JS artifacts (generated via npm run build:js)
+dist/app.js
+src/_manifest.js
+
 # Test artifacts
 playwright-report/
 test-results/
