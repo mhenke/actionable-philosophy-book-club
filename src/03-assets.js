@@ -102,14 +102,16 @@
             const safe = (resources || []).filter(r => isSafeAssetPath(r.file));
             if (safe.length === 0) return '';
             return `<div class="resource-strip">${safe.map(res => {
-                const webpSrc = escapeHTML(res.file.replace(/\.(png|jpg|jpeg)$/i, '.webp'));
+                const file = escapeHTML(res.file);
+                const label = escapeHTML(res.label);
+                const isWebp = /\.webp$/i.test(res.file);
+                const img = isWebp
+                    ? `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="${label}" loading="lazy" width="120" height="80"></picture>`
+                    : `<img src="${file}" alt="${label}" loading="lazy" width="120" height="80">`;
                 return `
-                        <a href="${escapeHTML(res.file)}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
-                            <picture>
-                                <source srcset="${webpSrc}" type="image/webp">
-                                <img src="${escapeHTML(res.file)}" alt="${escapeHTML(res.label)}" loading="lazy" width="120" height="80">
-                            </picture>
-                            <span>${escapeHTML(res.label)}</span>
+                        <a href="${file}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
+                            ${img}
+                            <span>${label}</span>
                         </a>`;
             }).join('')}</div>`;
         }
