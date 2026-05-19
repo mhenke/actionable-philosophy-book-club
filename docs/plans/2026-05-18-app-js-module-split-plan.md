@@ -48,7 +48,7 @@ let MEETINGS = [];
 let ASSET_COPY = {};
 
 const DEFAULT_ASSET_COPY = Object.freeze({
-    alternate: { label: 'Alternate Video Primer', title: 'A recap recording of the material' },
+    alternate: { label: 'Alternate', title: 'A different take on the session topic' },
     'deep-dive': { label: 'Deep Dive', title: 'An exploration of the session topic' },
     critique: { label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
     debate: { label: 'Debate', title: 'A structured debate between two design perspectives' },
