@@ -45,7 +45,7 @@
                 const ctaLink = ctaContainer.querySelector('[data-prefetch-path]');
                 if (ctaLink) ctaLink.addEventListener('pointerenter', () => {
                     if (isSafeRepoPath(meeting.readmeUrl)) prefetchMarkdown(meeting.readmeUrl);
-                });
+                }, { once: true });
             }
 
             if (podcastContainer) {
@@ -59,7 +59,7 @@
             const done = MEETINGS.filter(m => m.status === 'done');
 
             const fragment = document.createDocumentFragment();
-            done.forEach(meeting => {
+            for (const meeting of done) {
                 const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
                 const podcastSection = buildPodcastDisclosure(podcastRows, podcastSummary);
 
@@ -89,7 +89,7 @@
                         if (path) prefetchMarkdown(path);
                     }, { once: true });
                 }
-            });
+            }
 
             archiveContainer.innerHTML = '';
             archiveContainer.appendChild(fragment);
@@ -109,7 +109,7 @@
             if (horizonSection) horizonSection.classList.remove('hidden-view');
 
             const fragment = document.createDocumentFragment();
-            drafts.forEach(meeting => {
+            for (const meeting of drafts) {
                 const card = document.createElement('div');
                 card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
                 card.style.borderTopColor = 'var(--border-low)';
@@ -126,11 +126,40 @@
                 `;
 
                 fragment.appendChild(card);
-            });
+            }
 
             horizonContainer.innerHTML = '';
             horizonContainer.appendChild(fragment);
         }
+        function renderDashboardSkeleton() {
+            const header = document.getElementById('upcoming-card-header');
+            const materials = document.getElementById('upcoming-materials-container');
+            const quote = document.getElementById('upcoming-key-takeaway');
+            const cta = document.getElementById('upcoming-cta');
+            const podcasts = document.getElementById('upcoming-podcasts');
+            const archive = document.getElementById('archive-cards-container');
+            if (header) header.innerHTML = `
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem">
+                    <div>
+                        <div class="sk-block" style="height:0.7rem;max-width:140px;margin-bottom:0.5rem"></div>
+                        <div class="sk-block" style="height:1.75rem;max-width:280px"></div>
+                    </div>
+                </div>`;
+            if (materials) materials.innerHTML = `
+                <div class="sk-block" style="height:48px"></div>
+                <div class="sk-block" style="height:48px;margin-top:0.5rem"></div>`;
+            if (quote) quote.innerHTML = `
+                <div style="border:1px solid var(--border-low);background:var(--wash-1);padding:1.25rem">
+                    <div class="sk-block" style="height:0.6rem;max-width:100px;margin-bottom:0.5rem"></div>
+                    <div class="sk-block" style="height:1rem;max-width:90%"></div>
+                </div>`;
+            if (cta) cta.innerHTML = `<div class="sk-block" style="height:52px;width:100%"></div>`;
+            if (podcasts) podcasts.innerHTML = `<div class="sk-block" style="height:44px"></div>`;
+            if (archive) archive.innerHTML = `
+                <div class="sk-block" style="height:160px;border-radius:4px"></div>
+                <div class="sk-block" style="height:160px;border-radius:4px;margin-top:1.25rem"></div>`;
+        }
+
         function showDashboard() {
             document.title = 'Actionable Philosophy Book Club Dashboard';
             const readerDocLabel = document.getElementById('reader-doc-label');
@@ -223,19 +252,22 @@
             const cancelListener = (e) => { e.preventDefault(); onClose(); };
             overlay.addEventListener('cancel', cancelListener);
 
-            const hashChangeListener = () => onClose();
+            const hashChangeListener = onClose;
             window.addEventListener('hashchange', hashChangeListener);
+
+            const closeBtn = document.getElementById('vp-close');
+            const overlayClickHandler = (e) => { if (e.target === overlay) onClose(); };
+            closeBtn.addEventListener('click', onClose);
+            overlay.addEventListener('click', overlayClickHandler);
 
             videoPlayerCleanup = () => {
                 clearInterval(vpInterval);
                 overlay.removeEventListener('cancel', cancelListener);
                 window.removeEventListener('hashchange', hashChangeListener);
+                closeBtn.removeEventListener('click', onClose);
+                overlay.removeEventListener('click', overlayClickHandler);
                 videoPlayerCleanup = null;
             };
-
-            const closeBtn = document.getElementById('vp-close');
-            closeBtn.onclick = onClose;
-            overlay.onclick = (e) => { if (e.target === overlay) onClose(); };
 
             video.addEventListener('error', () => {
                 onClose();

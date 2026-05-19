@@ -394,6 +394,19 @@
             border-radius: 4px;
         }
 
+        /* Skeleton loading state */
+        .sk-block {
+            background: var(--wash-2);
+            border-radius: 3px;
+            animation: sk-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes sk-pulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.4; }
+        }
+        .reader-skeleton > * + * { margin-top: 1.5rem; }
+        .reader-skeleton .sk-lines > * + * { margin-top: 0.5rem; }
+
         /* Layout shift prevention — reserve space before JS populates containers */
         .card:has(#upcoming-materials-container) {
             min-height: 120px;

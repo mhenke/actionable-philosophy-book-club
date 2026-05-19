@@ -123,11 +123,8 @@
 
         function buildPodcastSummary(podcasts) {
             const safe = (podcasts || []).filter(p => isSafeAssetPath(p.file));
-            let videoCount = 0, podcastCount = 0;
-            for (let i = 0; i < safe.length; i++) {
-                if (safe[i].type === 'alternate') videoCount++;
-                else podcastCount++;
-            }
+            const videoCount = safe.filter(p => p.type === 'alternate').length;
+            const podcastCount = safe.length - videoCount;
             const parts = [];
             if (videoCount > 0) parts.push(`${videoCount} Video${videoCount > 1 ? 's' : ''}`);
             if (podcastCount > 0) parts.push(`${podcastCount} Podcast${podcastCount > 1 ? 's' : ''}`);

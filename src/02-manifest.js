@@ -38,6 +38,7 @@
             // window.__MANIFEST_DATA allows test overrides via addInitScript
             const inlineData = window.__MANIFEST_DATA || (typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : null);
             if (inlineData) {
+                if (window.__TEST_DELAY_MANIFEST) await window.__TEST_DELAY_MANIFEST;
                 const data = inlineData;
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
                 const assetCopy = loadAssetCopyRegistry(data.assetCopy);

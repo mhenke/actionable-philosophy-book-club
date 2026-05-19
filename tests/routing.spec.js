@@ -139,4 +139,17 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#reader-view')).toBeVisible();
     });
 
+    test('reader skeleton appears while markdown loads', async ({ page }) => {
+        let releaseMarkdown;
+        await page.route('**/meetings/meeting-01/README.md', async route => {
+            await new Promise(resolve => { releaseMarkdown = resolve; });
+            await route.fulfill({ body: '# Test\n\nContent.' });
+        });
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await expect(page.locator('#markdown-content .reader-skeleton')).toBeVisible();
+        releaseMarkdown();
+        await page.waitForSelector('#markdown-content h1');
+        await expect(page.locator('#markdown-content .reader-skeleton')).toHaveCount(0);
+    });
+
 });

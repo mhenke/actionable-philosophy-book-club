@@ -15,9 +15,10 @@
                     banner.classList.add('hidden-view');
                     localStorage.setItem(LS + 'onboarding_dismissed', '1');
                 }
+                const anchorId = lastHashIndex > 0 ? fullPath.substring(lastHashIndex + 1) : null;
                 const meeting = MEETINGS.find(m => m.readmeUrl === path);
                 updateReaderTheme(meeting ? meeting.id : null);
-                loadPage(path, null);
+                loadPage(path, anchorId);
             } else {
                 showDashboard();
             }
@@ -102,6 +103,8 @@
             if (initialHash.startsWith('#p=')) {
                 dashboard.classList.add('hidden-view');
                 reader.classList.remove('hidden-view');
+            } else {
+                renderDashboardSkeleton();
             }
             if (typeof marked !== 'undefined') {
                 marked.use({ gfm: true, breaks: true });
