@@ -3,7 +3,7 @@ Date: 2026-05-18
 
 Overview
 
-Goal: Make it visually and semantically clear which video is the canonical (primary) recording and which are alternate cuts, improving discoverability and accessibility without large layout changes.
+Goal: Make it visually and semantically clear which video is the canonical (primary) recording and which are Alternate Video Primers, improving discoverability and accessibility without large layout changes.
 
 Decision
 

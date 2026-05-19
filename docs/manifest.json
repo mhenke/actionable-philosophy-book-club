@@ -1,12 +1,12 @@
 {
   "assetCopy": {
     "alternate": {
-      "label": "Alternate Cut",
-      "title": "A companion recording of the session"
+      "label": "Alternate Video Primer",
+      "title": "A recap recording of the material"
     },
     "deep-dive": {
       "label": "Deep Dive",
-      "title": "A solo exploration of the session topic"
+      "title": "An exploration of the session topic"
     },
     "critique": {
       "label": "Critique",

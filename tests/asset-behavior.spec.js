@@ -82,7 +82,7 @@ test.describe('Asset behaviour — what users actually do', () => {
         await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Label');
         await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Title');
         await expect(page.locator('#upcoming-podcasts')).toContainText('Deep Dive');
-        await expect(page.locator('#upcoming-podcasts')).toContainText('A solo exploration of the session topic');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('An exploration of the session topic');
 
         const loadedCopy = await page.evaluate(() => window.ASSET_COPY);
         expect(loadedCopy.alternate.label).toBe('Route Alternate Label');
