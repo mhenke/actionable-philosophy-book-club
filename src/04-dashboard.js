@@ -93,6 +93,8 @@
 
             archiveContainer.innerHTML = '';
             archiveContainer.appendChild(fragment);
+            const archiveSection = archiveContainer.closest('section');
+            if (archiveSection) archiveSection.classList.remove('hidden-view');
         }
 
         function renderHorizonCards() {

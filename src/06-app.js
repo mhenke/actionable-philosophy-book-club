@@ -120,6 +120,8 @@
                 renderUpcomingMaterials();
                 renderArchiveCards();
                 renderHorizonCards();
+                const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
+                if (kbSection) kbSection.classList.remove('hidden-view');
             } catch (err) {
                 console.error('Dashboard render failed:', err?.message || err);
                 showManifestError();

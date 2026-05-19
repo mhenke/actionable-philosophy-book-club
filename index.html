@@ -398,10 +398,6 @@
         .card:has(#upcoming-materials-container) {
             min-height: 120px;
         }
-        #horizon-cards-container,
-        #archive-cards-container {
-            min-height: 80px;
-        }
 
         /* Card title — overflow protection */
         .card-title { min-width: 0; }
@@ -604,7 +600,7 @@
             </section>
 
             <!-- The Horizon -->
-            <section aria-labelledby="section-horizon" class="mt-20">
+            <section aria-labelledby="section-horizon" class="mt-20 hidden-view">
                 <h2 id="section-horizon" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-4 flex items-center gap-4">
                     Coming Up
                     <span class="spectrum-rule"></span>
@@ -615,7 +611,7 @@
             </section>
 
             <!-- Archive -->
-            <section aria-labelledby="section-archive" class="mt-20">
+            <section aria-labelledby="section-archive" class="mt-20 hidden-view">
                 <h2 id="section-archive" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-4 flex items-center gap-4">
                     Past
                     <span class="spectrum-rule"></span>
@@ -627,7 +623,7 @@
             </section>
 
             <!-- Knowledge Base -->
-            <section aria-labelledby="section-kb" class="mt-20 sm:-order-3">
+            <section aria-labelledby="section-kb" class="mt-20 hidden-view">
                 <h2 id="section-kb" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-4 flex items-center gap-4">
                     Knowledge Base
                     <span class="spectrum-rule"></span>
