@@ -57,3 +57,5 @@ We pause the book to pressure-test Ousterhout's abstract principles against 50 y
 ## Path 3: The 'Civil War' Retrospective
 
 We look back at Chapters 1–8 through a meta-analysis lens, debating the practical friction between Ousterhout's "Strategic Deep Modules" and Uncle Bob's "Clean Code" rules.
+
+**Reference:** [APoSD vs Clean Code — John Ousterhout](https://github.com/johnousterhout/aposd-vs-clean-code)
