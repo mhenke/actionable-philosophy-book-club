@@ -89,7 +89,7 @@
                 }
                 const isLast = i === items.length - 1;
                 const connector = isLast ? '└── ' : '├── ';
-                const childPrefix = prefix + '│   ';
+                const childPrefix = prefix + (isLast ? '    ' : '│   ');
                 const pre = document.createElement('span');
                 pre.className = 'tree-connector';
                 pre.textContent = prefix + connector;
