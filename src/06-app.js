@@ -91,8 +91,8 @@
         // Init onboarding banner
         initOnboardingBanner();
 
-        // Wait for CDN libs before enabling the reader
-        document.addEventListener('DOMContentLoaded', async () => {
+        // Init — runs immediately (script is at end of body, DOM ready)
+        (async () => {
             if (window.__TEST__ === true) window.__manifestLoaded = false;
             if (typeof marked !== 'undefined') {
                 marked.use({ gfm: true, breaks: true });
@@ -136,5 +136,4 @@
                     card.style.willChange = '';
                 });
             });
-
-        });
+        })();
