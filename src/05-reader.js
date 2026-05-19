@@ -170,14 +170,7 @@
 
                 });
 
-                // Cut to invisible, swap content, then fade in — avoids mid-transition content swap flash
-                content.style.transition = 'none';
-                content.style.opacity = '0';
                 content.innerHTML = sanitized;
-                requestAnimationFrame(() => requestAnimationFrame(() => {
-                    content.style.transition = 'opacity 200ms ease';
-                    content.style.opacity = '1';
-                }));
 
                 content.querySelectorAll('img').forEach(img => {
                     if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
