@@ -2,7 +2,7 @@
         const PODCAST_CONFIG = {
             'alternate': { icon: '🎬', color: 'var(--spectrum-2)' },
             'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)' },
-            'critique':  { icon: '🔍', color: 'var(--spectrum-1)' },
+            'critique':  { icon: '🔍', color: 'var(--spectrum-2)' },
             'debate':    { icon: '⚔️', color: 'var(--spectrum-2)' },
         };
 

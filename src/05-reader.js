@@ -75,11 +75,12 @@
             const items = Array.from(ul.children);
             for (const [i, li] of items.entries()) {
                 if (li.querySelector(':scope > .tree-connector')) continue;
-                // If the first child is an anchor that points to a folder (href ends with '/'), make it inert
+                // Replace folder anchors with spans — either href still ends with '/' (raw markdown)
+                // or href was already stripped by rewriteContentLinks (aria-disabled set)
                 const firstAnchor = li.querySelector(':scope > a');
                 if (firstAnchor) {
                     const href = firstAnchor.getAttribute('href') || '';
-                    if (href.endsWith('/')) {
+                    if (href.endsWith('/') || !href) {
                         const span = document.createElement('span');
                         span.className = firstAnchor.className || '';
                         span.innerHTML = firstAnchor.innerHTML;
