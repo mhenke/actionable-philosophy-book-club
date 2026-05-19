@@ -99,7 +99,17 @@
             }
 
             try {
-                await loadManifest();
+                // Use inline MANIFEST_DATA synchronously (no async gap) when available
+                const inlineData = window.__MANIFEST_DATA || (typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : null);
+                if (inlineData) {
+                    if (!inlineData.meetings || !Array.isArray(inlineData.meetings)) throw new Error('Invalid manifest structure');
+                    MEETINGS = inlineData.meetings;
+                    ASSET_COPY = loadAssetCopyRegistry(inlineData.assetCopy);
+                    window.MEETINGS = MEETINGS;
+                    window.ASSET_COPY = ASSET_COPY;
+                } else {
+                    await loadManifest();
+                }
             } catch (err) {
                 console.error('Manifest load failed:', err?.message || err);
                 showManifestError();
