@@ -20,7 +20,7 @@ We pause the book to pressure-test Ousterhout's abstract principles against 50 y
 
 **Piece:** "On the Criteria to Be Used in Decomposing Systems into Modules" — David Parnas (1972)
 
-**Link:** [Download Parnas (1972) PDF via TU Eindhoven](https://www.win.tue.nl/~wstomv/edu/2ip30/references/criteria_for_modularization.pdf)
+**Link:** [Download Parnas (1972) PDF via TU Eindhoven](https://wstomv.win.tue.nl/edu/2ip30/references/criteria_for_modularization.pdf)
 
 **Assignment:** Read pages 1–6.
 
@@ -32,9 +32,9 @@ We pause the book to pressure-test Ousterhout's abstract principles against 50 y
 
 **Piece:** "An Empirical Study on the Developers' Perception of Software Coupling" — G. Bavota, B. Dit, R. Oliveto, et al. (ICSE 2013)
 
-**Link:** [Download Bavota et al. (2013) PDF via College of William & Mary](https://www.cs.wm.edu/~bdit/Papers/icse2013.pdf)
+**Link:** [Download Bavota et al. (2013) PDF via College of William & Mary](https://www.cs.wm.edu/~denys/pubs/ICSE'13-CouplingStudy-CAMERA.pdf)
 
-**Assignment:** Read Sections I (Introduction), III (Study Design), and V (Discussion & Threats to Validity) — approximately 10 pages total.
+**Assignment:** Read Sections I (Introduction), III (Empirical Study Definition and Design), and V (Threats to Validity) — approximately 5 pages. The full paper is 10 pages if you want the complete picture.
 
 **Focus:** Look specifically at the divergence between automated code metrics and real developer intuition. This serves as the data anchor for evaluating whether pulling complexity down actually decreases cognitive load.
 
@@ -44,13 +44,11 @@ We pause the book to pressure-test Ousterhout's abstract principles against 50 y
 
 **Piece:** "Clean Code Is Slow, but You Need It Anyway…" (Industry Response Matrix)
 
-**Link:** [Read the Industry Analysis on Better Programming](https://betterprogramming.pub/clean-code-is-slow-but-you-need-it-anyway-b8b4d4b2d55f)
+**Link:** [Read the Industry Analysis on Better Programming](https://medium.com/better-programming/clean-code-is-slow-but-you-still-need-it-anyway-ffcac6973c93) (direct — Medium account may be required) or [read via archive.ph](https://archive.ph/newest/https://medium.com/better-programming/clean-code-is-slow-but-you-still-need-it-anyway-ffcac6973c93) (no account needed)
 
 **Assignment:** Read the entire editorial — approximately 12 pages equivalent.
 
 **Focus:** Focus on the performance benchmarks showing how layers of deep, multi-tier abstractions can break hardware execution pipeline boundaries. It outlines exactly when hiding complexity causes runtime degradation.
-
-**Optional visual reference:** [Clean Code Performance Analysis](https://lemire.me/blog/2024/03/03/performance-of-the-clean-code-book/) — raw benchmark metrics and assembly-level breakdowns of the physical execution costs of deeply nested code boundaries on modern CPU architectures.
 
 ---
 
