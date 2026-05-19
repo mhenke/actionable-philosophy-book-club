@@ -2,63 +2,71 @@
         function getCurrentMeetingIndex() {
             const hash = window.location.hash;
             if (!hash.startsWith('#p=')) return -1;
-            const path = decodeURIComponent(hash.slice(3));
+            const full = decodeURIComponent(hash.slice(3));
+            const i = full.lastIndexOf('#');
+            const path = i > 0 ? full.slice(0, i) : full;
             return MEETINGS.findIndex(m => m.readmeUrl === path);
         }
 
         // ── rewriteContentLinks — link post-processing, extracted from loadPage ─
         function rewriteContentLinks(container, docPath) {
             const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
-            container.querySelectorAll('a').forEach(link => {
-                const href = link.getAttribute('href');
-                if (!href || /^https?:/i.test(href)) return;
-                const base = new URL(docPath, window.location.href);
-                const resolved = new URL(href, base);
-                const repoPath = resolved.pathname.startsWith(siteRoot)
-                    ? resolved.pathname.slice(siteRoot.length)
-                    : resolved.pathname.slice(1);
+            for (const link of container.querySelectorAll('a')) {
+                try {
+                    const href = link.getAttribute('href');
+                    if (!href || /^https?:/i.test(href)) continue;
+                    if (href.startsWith('#')) continue; // preserve in-document anchors
+                    const base = new URL(docPath, window.location.href);
+                    const resolved = new URL(href, base);
+                    const repoPath = resolved.pathname.startsWith(siteRoot)
+                        ? resolved.pathname.slice(siteRoot.length)
+                        : resolved.pathname.slice(1);
 
-                // Do not make folder links clickable. Disable hrefs that end with '/' so folders remain structural.
-                if (href.endsWith('/')) {
-                    link.removeAttribute('href');
-                    link.setAttribute('aria-disabled', 'true');
-                    link.setAttribute('title', 'Folder — not a navigable file');
-                    return;
-                }
-
-                if (href.endsWith('.md')) {
-                    if (!isSafeRepoPath(repoPath)) {
+                    // Do not make folder links clickable.
+                    if (href.endsWith('/')) {
                         link.removeAttribute('href');
                         link.setAttribute('aria-disabled', 'true');
-                        link.setAttribute('title', 'Link target is outside allowed directories');
-                        return;
+                        link.setAttribute('title', 'Folder — not a navigable file');
+                        continue;
                     }
-                    link.setAttribute('href', '#p=' + repoPath);
-                } else if (!href.endsWith('/')) {
-                    if (isSafeAssetPath(repoPath)) {
-                        if (/\.pptx?$/i.test(repoPath)) {
-                            link.setAttribute('href', buildPPTXViewerURL(repoPath));
-                            link.setAttribute('target', '_blank');
-                            link.setAttribute('rel', 'noopener noreferrer');
-                        } else if (/\.(png|jpe?g|gif|svg|webp)$/i.test(repoPath)) {
-                            link.setAttribute('href', repoPath);
-                            link.setAttribute('target', '_blank');
-                            link.setAttribute('rel', 'noopener noreferrer');
-                        } else if (/\.mp4$/i.test(repoPath)) {
-                            link.setAttribute('href', repoPath);
-                            link.addEventListener('click', (e) => {
-                                e.preventDefault();
-                                openVideoPlayer(repoPath, link.textContent.trim() || repoPath);
-                            });
-                        } else {
-                            link.setAttribute('href', repoPath);
+
+                    if (href.endsWith('.md')) {
+                        if (!isSafeRepoPath(repoPath)) {
+                            link.removeAttribute('href');
+                            link.setAttribute('aria-disabled', 'true');
+                            link.setAttribute('title', 'Link target is outside allowed directories');
+                            continue;
                         }
+                        link.setAttribute('href', '#p=' + repoPath);
                     } else {
-                        link.removeAttribute('href');
-                        link.setAttribute('aria-disabled', 'true');
+                        if (isSafeAssetPath(repoPath)) {
+                            if (/\.pptx?$/i.test(repoPath)) {
+                                link.setAttribute('href', buildPPTXViewerURL(repoPath));
+                                link.setAttribute('target', '_blank');
+                                link.setAttribute('rel', 'noopener noreferrer');
+                            } else if (/\.(png|jpe?g|gif|webp)$/i.test(repoPath)) {
+                                // SVGs excluded: inline script in SVG can run when opened as top-level doc
+                                link.setAttribute('href', repoPath);
+                                link.setAttribute('target', '_blank');
+                                link.setAttribute('rel', 'noopener noreferrer');
+                            } else if (/\.mp4$/i.test(repoPath)) {
+                                link.setAttribute('href', repoPath);
+                                link.addEventListener('click', (e) => {
+                                    e.preventDefault();
+                                    openVideoPlayer(repoPath, link.textContent.trim() || repoPath);
+                                });
+                            } else {
+                                link.setAttribute('href', repoPath);
+                            }
+                        } else {
+                            link.removeAttribute('href');
+                            link.setAttribute('aria-disabled', 'true');
+                        }
                     }
+                } catch (e) {
+                    console.debug('rewriteContentLinks: skipped malformed link', e?.message);
                 }
-            });
+            }
         }
 
         // ── applyMeetingMaterialsTree — file tree post-processing, from loadPage ─
@@ -126,15 +134,12 @@
             DOMPurify.addHook('afterSanitizeAttributes', node => {
                 if (node.tagName !== 'A') return;
                 const savedHref = node.getAttribute('data-dp-href');
-                let href = node.getAttribute('href') || savedHref || '';
+                const href = node.getAttribute('href') || savedHref || '';
                 node.removeAttribute('data-dp-href');
                 if (savedHref && !node.getAttribute('href')) node.setAttribute('href', savedHref);
                 if (/^https?:/i.test(href)) {
                     node.setAttribute('target', '_blank');
                     node.setAttribute('rel', 'noopener noreferrer');
-                }
-                if (href && !/^(https?:|#)/.test(href) && !isSafePath(href, 'any')) {
-                    node.removeAttribute('href');
                 }
             });
             window.__domPurifyHooksInstalled = true;
@@ -146,7 +151,11 @@
             reader.classList.toggle('hidden-view', isDashboard);
         }
 
+        let _loadPageEpoch = 0;
+
         async function loadPage(path, anchorId) {
+            const myEpoch = ++_loadPageEpoch;
+
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
                 const contentEl = document.getElementById('markdown-content');
                 if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and try reloading the page.</p>';
@@ -162,19 +171,19 @@
 
             try {
                 const text = await fetchMarkdownCached(path, { isReaderLoad: true });
+                if (myEpoch !== _loadPageEpoch) return; // newer load started
                 ensureDOMPurifyHooks();
                 const sanitized = DOMPurify.sanitize(marked.parse(text), {
                     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
                     FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput', 'onmouseover', 'onmouseenter', 'onfocus', 'onkeydown', 'onkeyup'],
-
                 });
 
                 content.innerHTML = sanitized;
 
-                content.querySelectorAll('img').forEach(img => {
+                for (const img of content.querySelectorAll('img')) {
                     if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
                     if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
-                });
+                }
 
                 rewriteContentLinks(content, path);
 
@@ -187,7 +196,6 @@
                 }
 
                 applyMeetingMaterialsTree(content);
-                // Scroll to anchor if present and valid
                 if (anchorId) {
                     requestAnimationFrame(() => {
                         const el = document.getElementById(anchorId);
@@ -196,8 +204,8 @@
                 }
                 readerStatus.textContent = 'Document loaded.';
             } catch (err) {
+                if (myEpoch !== _loadPageEpoch) return; // newer load started
                 console.warn('loadPage failed:', err?.message || err);
-                history.replaceState(null, '', window.location.pathname + window.location.search);
                 content.innerHTML = `
                     <div class="py-12 text-center">
                         <p class="text-sm uppercase tracking-widest text-muted mb-4">Document unavailable.</p>
@@ -212,6 +220,6 @@
                 if (returnBtn) returnBtn.addEventListener('click', showDashboard);
                 readerStatus.textContent = 'Document unavailable.';
             } finally {
-                content.setAttribute('aria-busy', 'false');
+                if (myEpoch === _loadPageEpoch) content.setAttribute('aria-busy', 'false');
             }
         }

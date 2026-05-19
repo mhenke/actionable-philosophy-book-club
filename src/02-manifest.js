@@ -43,8 +43,7 @@
                 const assetCopy = loadAssetCopyRegistry(data.assetCopy);
                 MEETINGS = data.meetings;
                 ASSET_COPY = assetCopy;
-                window.MEETINGS = MEETINGS;
-                window.ASSET_COPY = ASSET_COPY;
+                if (window.__TEST__ === true) { window.MEETINGS = MEETINGS; window.ASSET_COPY = ASSET_COPY; }
                 return;
             }
             const controller = new AbortController();
@@ -57,8 +56,7 @@
                 const assetCopy = loadAssetCopyRegistry(data.assetCopy);
                 MEETINGS = data.meetings;
                 ASSET_COPY = assetCopy;
-                window.MEETINGS = MEETINGS;
-                window.ASSET_COPY = ASSET_COPY;
+                if (window.__TEST__ === true) { window.MEETINGS = MEETINGS; window.ASSET_COPY = ASSET_COPY; }
             } finally {
                 clearTimeout(timeoutId);
             }

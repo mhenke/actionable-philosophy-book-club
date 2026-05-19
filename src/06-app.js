@@ -1,7 +1,9 @@
         function handleRoute() {
             const hash = window.location.hash;
             if (hash.startsWith('#p=')) {
-                const fullPath = decodeURIComponent(hash.slice(3));
+                let fullPath;
+                try { fullPath = decodeURIComponent(hash.slice(3)); }
+                catch (e) { showDashboard(); return; }
                 // Split on last # to separate path from anchor (if any)
                 const lastHashIndex = fullPath.lastIndexOf('#');
                 const path = lastHashIndex > 0 ? fullPath.substring(0, lastHashIndex) : fullPath;
@@ -35,7 +37,6 @@
             window.renderUpcomingMaterials = renderUpcomingMaterials;
             window.renderArchiveCards = renderArchiveCards;
             window.renderHorizonCards = renderHorizonCards;
-            window.MEETINGS = MEETINGS;
             window.showToast = showToast;
             window.formatDuration = formatDuration;
             window.formatFileSize = formatFileSize;
@@ -122,20 +123,12 @@
                 renderHorizonCards();
                 const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
                 if (kbSection) kbSection.classList.remove('hidden-view');
+                const footer = document.getElementById('site-footer');
+                if (footer) footer.classList.remove('hidden-view');
             } catch (err) {
                 console.error('Dashboard render failed:', err?.message || err);
                 showManifestError();
             }
 
             handleRoute();
-
-            // Apply will-change dynamically on card hover for performance
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('pointerenter', () => {
-                    card.style.willChange = 'transform';
-                });
-                card.addEventListener('pointerleave', () => {
-                    card.style.willChange = '';
-                });
-            });
         })();

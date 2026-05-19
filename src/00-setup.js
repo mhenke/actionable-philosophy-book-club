@@ -17,7 +17,7 @@
         });
 
         const LS = 'apbc:';
-        const CONFIG = {
+        const CONFIG = Object.freeze({
             CACHE_MAX: 20,
             RESUME_MIN_SECONDS: 5,
             PROGRESS_SAVE_MS: 3000,
@@ -25,7 +25,7 @@
             TOAST_FADE_MS: 300,
             STATUS_RESET_MS: 1000,
             PATH_MAX_LENGTH: 256,
-        };
+        });
         let activeReaderController = null;
         const RAW_CONTENT_BASE = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
         let videoPlayerCleanup = null;

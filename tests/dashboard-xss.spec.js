@@ -4,13 +4,13 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__
 
 async function rerenderUpcoming(page) {
     await page.evaluate(() => {
-        if (typeof renderUpcomingMaterials === 'function') renderUpcomingMaterials();
+        if (typeof window.renderUpcomingMaterials === 'function') window.renderUpcomingMaterials();
     });
 }
 
 async function rerenderArchive(page) {
     await page.evaluate(() => {
-        if (typeof renderArchiveCards === 'function') renderArchiveCards();
+        if (typeof window.renderArchiveCards === 'function') window.renderArchiveCards();
     });
 }
 

@@ -134,6 +134,11 @@
             horizonContainer.appendChild(fragment);
         }
         function showDashboard() {
+            if (videoPlayerCleanup) {
+                videoPlayerCleanup();
+                const vp = document.getElementById('video-player-overlay');
+                if (vp && vp.open) vp.close();
+            }
             document.title = 'Actionable Philosophy Book Club Dashboard';
             const readerDocLabel = document.getElementById('reader-doc-label');
             if (readerDocLabel) readerDocLabel.textContent = 'Session Notes';
@@ -233,26 +238,29 @@
             closeBtn.addEventListener('click', onClose);
             overlay.addEventListener('click', overlayClickHandler);
 
+            const errorHandler = () => {
+                onClose();
+                showToast('This file is not available yet. Materials appear closer to the meeting date.');
+            };
+            video.addEventListener('error', errorHandler, { once: true });
+
             videoPlayerCleanup = () => {
                 clearInterval(vpInterval);
                 overlay.removeEventListener('cancel', cancelListener);
                 window.removeEventListener('hashchange', hashChangeListener);
                 closeBtn.removeEventListener('click', onClose);
                 overlay.removeEventListener('click', overlayClickHandler);
+                video.removeEventListener('error', errorHandler);
                 videoPlayerCleanup = null;
             };
-
-            video.addEventListener('error', () => {
-                onClose();
-                showToast('This file is not available yet. Materials appear closer to the meeting date.');
-            }, { once: true });
 
             overlay.showModal();
         }
 
         // ── Asset click delegation (dashboard) ──
         function setupAssetClickDelegation(container) {
-            if (!container) return;
+            if (!container || container.__assetDelegationInstalled) return;
+            container.__assetDelegationInstalled = true;
             container.addEventListener('click', (e) => {
                 const link = e.target.closest('.asset-link');
                 if (!link) return;

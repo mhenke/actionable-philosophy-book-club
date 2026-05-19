@@ -15,7 +15,6 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="light">
-    <link rel="preload" href="dist/tailwind.css" as="style" fetchpriority="high">
     <link rel="stylesheet" href="dist/tailwind.css">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <style>
@@ -113,7 +112,6 @@
         .card {
             background: var(--white);
             border: 1px solid var(--border-low);
-            will-change: transform;
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -683,7 +681,7 @@
         </main>
     </div>
 
-    <footer id="site-footer" class="py-8 text-center border-t-2" style="border-color: var(--spectrum-2);">
+    <footer id="site-footer" class="py-8 text-center border-t-2 hidden-view" style="border-color: var(--spectrum-2);">
         <p class="text-[0.6875rem] font-semibold text-muted">Actionable Philosophy Book Club &bull; 2026</p>
     </footer>
 
