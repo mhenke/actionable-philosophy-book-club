@@ -1,4 +1,4 @@
-# Why This Book, Now (Inbox / Meeting 99)
+# Why This Book, Now (Drafts / Meeting 99)
 
 This book club is intentionally framed around **tension** rather than consensus.
 
