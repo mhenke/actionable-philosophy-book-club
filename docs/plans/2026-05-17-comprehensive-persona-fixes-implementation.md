@@ -50,7 +50,7 @@
 
 **Step 1: Extract current MEETINGS array from index.html**
 
-Open `index.html:360-500` and copy the entire MEETINGS array. Verify it contains all meetings: meeting-00 through meeting-99.
+Edit `docs/manifest.json` and add the new entry at the top of the `meetings` array (newest first). Verify the manifest contains entries for all numbered meeting directories and explicitly excludes the staging folder `meetings/meeting-99-new` from the manifest and CI checks.
 
 **Step 2: Transform MEETINGS array to JSON**
 

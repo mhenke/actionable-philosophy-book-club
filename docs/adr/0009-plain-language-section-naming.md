@@ -31,3 +31,4 @@ Aesthetic distinctiveness lives in the *treatment* (uppercase, tracking, spectru
 - **Positive:** Sections share a consistent naming register (no "The" prefix on some but not others).
 - **Negative:** Members who internalized "The Archive" and "The Horizon" as labels experience a small transition.
 - **Convention:** Future section names should prefer plain, time-oriented or function-oriented nouns over evocative metaphors.
+- **Status:** Documentation updated — docs/design-principles.md and CONTRIBUTING.md now use the **"Drafts"** label for the staging folder (`meetings/meeting-99-new/`).
