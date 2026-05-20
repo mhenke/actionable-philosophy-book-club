@@ -52,6 +52,16 @@ We pause the book to pressure-test Ousterhout's abstract principles against 50 y
 
 ---
 
+### Further Reading (Optional)
+
+**Piece:** "Avoid Exception Throwing in Performance-Sensitive Code" — Daniel Lemire (2022)
+
+**Link:** [Read on Daniel Lemire's blog](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/)
+
+**Focus:** Benchmarks showing exceptions used as control flow run ~10,000× slower than normal branching — a concrete data point on how design choices at the language level produce the same runtime penalty as architectural layering.
+
+---
+
 ## Path 3: The 'Civil War' Retrospective
 
 We look back at Chapters 1–8 through a meta-analysis lens, debating the practical friction between Ousterhout's "Strategic Deep Modules" and Uncle Bob's "Clean Code" rules.
