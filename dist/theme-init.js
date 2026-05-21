@@ -1,0 +1,1 @@
+!function(){try{const t=localStorage.getItem("apbc:theme");"dark"===t?document.documentElement.classList.add("dark-theme"):"light"===t&&document.documentElement.classList.add("light-theme")}catch(t){}}();

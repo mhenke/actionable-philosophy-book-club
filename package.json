@@ -4,7 +4,7 @@
   "description": "Static SPA for philosophy book club meetings",
   "type": "module",
   "scripts": {
-    "build:vendor": "cp node_modules/marked/marked.min.js node_modules/dompurify/dist/purify.min.js dist/vendor/",
+    "build:vendor": "terser node_modules/marked/lib/marked.umd.js --compress --mangle -o dist/vendor/marked.min.js && cp node_modules/dompurify/dist/purify.min.js dist/vendor/",
     "build:js": "node scripts/inline-manifest.cjs && terser src/_manifest.js src/00-setup.js src/01-utils.js src/02-manifest.js src/03-assets.js src/04-dashboard.js src/05-reader.js src/06-app.js --compress --mangle --comments false -o dist/app.js && terser src/theme-init.js --compress --mangle -o dist/theme-init.js",
     "build:css": "tailwindcss -i src/input.css -o dist/tailwind.css --minify",
     "build": "npm run build:css && npm run build:vendor && npm run build:js",
