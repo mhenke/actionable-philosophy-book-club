@@ -14,9 +14,10 @@
     <link rel="canonical" href="https://mhenke.github.io/actionable-philosophy-book-club/">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="dist/tailwind.css">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <script src="dist/theme-init.js"></script>
     <style>
         :root {
             --surface:      #F7F7F7;
@@ -24,6 +25,7 @@
             --text-primary: #222222;
             --text-muted:   #545454;
             --white:        #FAFBFC;
+            --card-bg:      var(--white);
             --spectrum-1:   #1A3A5C;
             --spectrum-2:   #2B6CB0;
             --spectrum-3:   #4BA3C7;
@@ -110,7 +112,7 @@
             box-shadow: 0 4px 20px -4px var(--shadow-sticky);
         }
         .card {
-            background: var(--white);
+            background: var(--card-bg);
             border: 1px solid var(--border-low);
             transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                         border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
@@ -280,12 +282,36 @@
         }
         .materials-panel li { padding: 0; border: none; color: var(--text-primary); margin-bottom: 0; }
         .materials-panel ul { list-style-type: none !important; padding: 0 !important; margin: 0; }
-        .tree-connector { color: var(--text-muted); user-select: none; white-space: pre; letter-spacing: 0; }
-        .materials-panel a { color: var(--spectrum-2); font-weight: 400; text-decoration: none; font-family: inherit; }
+        .tree-connector {
+            color: var(--text-muted);
+            user-select: none;
+            white-space: pre;
+            letter-spacing: 0;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+        }
+        .materials-panel a {
+            color: var(--spectrum-2);
+            font-weight: 400;
+            text-decoration: none;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 4px 0;
+        }
         .materials-panel a:hover  { color: var(--spectrum-1); text-decoration: underline; }
         .materials-panel a:active { opacity: 0.6; }
         .materials-panel .tree-folder > a { font-weight: 600; color: var(--text-primary); }
         .materials-panel .tree-folder > a:hover { color: var(--text-primary); text-decoration: none; }
+        .materials-panel .tree-folder > span {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
 
         /* Meeting Notes links and Knowledge Base text links */
         .meeting-notes-link { transition: color 0.15s, opacity 0.1s; }
@@ -543,12 +569,136 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .card, .btn, a { transition: none !important; }
+            body, .banner-bar, .card, .btn, a, .prose, .prose p, .prose li, .prose h1, .prose h2, .prose h3, .prose strong, .prose blockquote, .materials-panel, footer, .theme-toggle-btn { transition: none !important; }
             .card:hover { transform: none; }
             .btn-primary:hover, .btn-primary:active { transform: none; }
             .asset-link:active, .asset-dl:active { transform: none; opacity: 1; }
             .animate-pulse { animation: none !important; }
             .podcast-disclosure summary, .podcast-disclosure summary .podcast-chevron, .btn-ghost { transition: none !important; }
+        }
+
+        /* Theme transitions */
+        body,
+        .banner-bar,
+        .card,
+        .prose,
+        .prose p,
+        .prose li,
+        .prose h1,
+        .prose h2,
+        .prose h3,
+        .prose strong,
+        .prose blockquote,
+        .materials-panel,
+        footer,
+        .theme-toggle-btn {
+            transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                        box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Toggle button custom styles */
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: var(--white);
+            padding: 0;
+        }
+        .theme-toggle-btn:hover {
+            background-color: rgba(250, 251, 252, 0.1);
+        }
+        .theme-toggle-btn:focus-visible {
+            outline: 2px solid var(--white);
+            outline-offset: 2px;
+        }
+
+        /* Sun and Moon icon visibility based on active theme */
+        .theme-toggle-btn .sun-icon { display: none; }
+        .theme-toggle-btn .moon-icon { display: block; }
+
+        :root.dark-theme .theme-toggle-btn .sun-icon { display: block; }
+        :root.dark-theme .theme-toggle-btn .moon-icon { display: none; }
+
+        :root.light-theme .theme-toggle-btn .sun-icon { display: none; }
+        :root.light-theme .theme-toggle-btn .moon-icon { display: block; }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not(.light-theme) .theme-toggle-btn .sun-icon { display: block; }
+            :root:not(.light-theme) .theme-toggle-btn .moon-icon { display: none; }
+        }
+
+        /* Manual Dark Theme override variables */
+        :root.dark-theme {
+            --surface:      #121212;
+            --banner:       #1C1C1E;
+            --text-primary: #EEEEEE;
+            --text-muted:   #A0A0A0;
+            --card-bg:      #1C1C1E;
+            --border-low:   rgba(255, 255, 255, 0.08);
+            --prose-code-bg: rgba(255, 255, 255, 0.1);
+            --materials-panel-bg: rgba(255, 255, 255, 0.05);
+            --shadow-sticky: rgba(0, 0, 0, 0.5);
+            --shadow-card-hover: rgba(0, 0, 0, 0.6);
+            
+            /* Keep spectrum colors legible */
+            --spectrum-1:   #88B2E0;
+            --spectrum-2:   #63A4E2;
+            
+            /* Adjust washes for dark mode */
+            --wash-1: rgba(136, 178, 224, 0.08);
+            --wash-2: rgba(99, 164, 226, 0.08);
+            --wash-3: rgba(75, 163, 199, 0.08);
+            --wash-4: rgba(72, 189, 184, 0.08);
+            --wash-5: rgba(114, 201, 168, 0.08);
+            
+            --wash-2-border: rgba(99, 164, 226, 0.2);
+            --wash-3-border: rgba(75, 163, 199, 0.2);
+            --wash-2-strong-border: rgba(99, 164, 226, 0.3);
+        }
+        :root.dark-theme .prose h1 {
+            color: var(--text-primary);
+        }
+
+        /* System preferences dark mode variables */
+        @media (prefers-color-scheme: dark) {
+            :root:not(.light-theme) {
+                --surface:      #121212;
+                --banner:       #1C1C1E;
+                --text-primary: #EEEEEE;
+                --text-muted:   #A0A0A0;
+                --card-bg:      #1C1C1E;
+                --border-low:   rgba(255, 255, 255, 0.08);
+                --prose-code-bg: rgba(255, 255, 255, 0.1);
+                --materials-panel-bg: rgba(255, 255, 255, 0.05);
+                --shadow-sticky: rgba(0, 0, 0, 0.5);
+                --shadow-card-hover: rgba(0, 0, 0, 0.6);
+                
+                /* Keep spectrum colors legible */
+                --spectrum-1:   #88B2E0;
+                --spectrum-2:   #63A4E2;
+                
+                /* Adjust washes for dark mode */
+                --wash-1: rgba(136, 178, 224, 0.08);
+                --wash-2: rgba(99, 164, 226, 0.08);
+                --wash-3: rgba(75, 163, 199, 0.08);
+                --wash-4: rgba(72, 189, 184, 0.08);
+                --wash-5: rgba(114, 201, 168, 0.08);
+                
+                --wash-2-border: rgba(99, 164, 226, 0.2);
+                --wash-3-border: rgba(75, 163, 199, 0.2);
+                --wash-2-strong-border: rgba(99, 164, 226, 0.3);
+            }
+            :root:not(.light-theme) .prose h1 {
+                color: var(--text-primary);
+            }
         }
     </style>
 </head>
@@ -564,7 +714,17 @@
             <div class="banner-bar">
                 <div class="banner-inner">
                     <p class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</p>
-                    <span class="text-[0.6875rem] swiss-light">John Ousterhout</span>
+                    <div class="flex items-center gap-4">
+                        <span class="text-[0.6875rem] swiss-light">John Ousterhout</span>
+                        <button id="theme-toggle-dashboard" class="theme-toggle-btn" aria-label="Toggle theme">
+                            <svg class="sun-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                            </svg>
+                            <svg class="moon-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="spectrum-bar"></div>
@@ -660,12 +820,22 @@
         <header class="sticky top-0 z-50" role="banner">
             <nav class="banner-bar" aria-label="Reader navigation">
                 <div class="banner-inner">
-                    <a href="#" id="back-to-dashboard" class="text-sm md:text-base swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]">
+                    <button id="back-to-dashboard" type="button" class="text-sm md:text-base swiss-caps flex items-center hover:text-spectrum-6 transition-colors min-h-[44px]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 mr-2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>
                         Dashboard
-                    </a>
+                    </button>
 
-                    <span id="reader-doc-label" class="text-[0.6875rem] swiss-light">Session Notes</span>
+                    <div class="flex items-center gap-4">
+                        <span id="reader-doc-label" class="text-[0.6875rem] swiss-light">Session Notes</span>
+                        <button id="theme-toggle-reader" class="theme-toggle-btn" aria-label="Toggle theme">
+                            <svg class="sun-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                            </svg>
+                            <svg class="moon-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </nav>
             <div class="spectrum-bar"></div>
@@ -701,8 +871,8 @@
         </div>
     </dialog>
 
-    <script src="dist/vendor/marked.min.js"></script>
-    <script src="dist/vendor/purify.min.js"></script>
-    <script src="dist/app.js?v=20260518"></script>
+    <script defer src="dist/vendor/marked.min.js"></script>
+    <script defer src="dist/vendor/purify.min.js"></script>
+    <script defer src="dist/app.js?v=20260518"></script>
 </body>
 </html>

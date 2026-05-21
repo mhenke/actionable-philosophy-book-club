@@ -180,9 +180,32 @@
             // preserve and restore focus for accessibility
             const lastFocusBeforeVideo = document.activeElement;
 
+            // Clear existing track elements
+            const existingTracks = video.querySelectorAll('track');
+            existingTracks.forEach(t => t.remove());
+
             title.textContent = label || filePath;
             video.src = filePath;
             video.load();
+
+            // Auto-detect matching .vtt caption track
+            const dotIndex = filePath.lastIndexOf('.');
+            if (dotIndex !== -1) {
+                const vttPath = filePath.substring(0, dotIndex) + '.vtt';
+                fetch(vttPath, { method: 'HEAD' })
+                    .then(res => {
+                        if (res.ok) {
+                            const track = document.createElement('track');
+                            track.kind = 'captions';
+                            track.label = 'English';
+                            track.srclang = 'en';
+                            track.src = vttPath;
+                            track.default = true;
+                            video.appendChild(track);
+                        }
+                    })
+                    .catch(() => {});
+            }
 
             const savedTime = getSavedVideoResumeTime(filePath);
 
