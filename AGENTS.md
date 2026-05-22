@@ -53,7 +53,7 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 
 - `## Meeting Materials` heading in README.md triggers file tree rendering (case-insensitive).
 - Meeting directories must have a matching entry in the `MEETINGS` manifest or CI fails.
-- Meeting IDs: `meeting-00`, `meeting-01`, etc. The `meeting-99-new/` directory is the Drafts staging folder — excluded from the MEETINGS manifest (see CONTRIBUTING.md and docs/adr/0009-plain-language-section-naming.md).
+- Meeting IDs: `meeting-00`, `meeting-01`, etc. The `drafts/` directory is the Drafts staging folder: excluded from the MEETINGS manifest (see CONTRIBUTING.md and docs/adr/0009-plain-language-section-naming.md).
 - `docs/content-contract.md` defines the full manifest schema.
 
 ## Testing

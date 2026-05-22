@@ -17,7 +17,7 @@
             const videoAssetId = `asset-${escapeHTML(meeting.id)}-video-${videoSlug}`;
             return `
                     <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" data-canonical="true" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} — ${escapeHTML(meeting.session)}">
+                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                                 ${escapeHTML(meeting.video.label)}
@@ -25,7 +25,7 @@
                             ${metaLine}
                         </a>
                         <a href="${escapeHTML(meeting.video.file)}" download
-                           aria-label="Download ${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} — ${escapeHTML(meeting.session)}"
+                           aria-label="Download ${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})"
                            class="asset-dl">${DL_ICON}</a>
                     </div>`;
         }
@@ -53,7 +53,7 @@
                             ${metaLine}
                         </a>
                         <a href="${escapeHTML(meeting.slides.file)}" download
-                           aria-label="Download slides — ${escapeHTML(meeting.session)}"
+                           aria-label="Download slides (${escapeHTML(meeting.session)})"
                            class="asset-dl">${DL_ICON}</a>
                     </div>`;
         }
@@ -106,8 +106,8 @@
                 const label = escapeHTML(res.label);
                 const isWebp = /\.webp$/i.test(res.file);
                 const img = isWebp
-                    ? `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="${label}" loading="lazy" width="120" height="80"></picture>`
-                    : `<img src="${file}" alt="${label}" loading="lazy" width="120" height="80">`;
+                    ? `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="" loading="lazy" width="120" height="80"></picture>`
+                    : `<img src="${file}" alt="" loading="lazy" width="120" height="80">`;
                 return `
                         <a href="${file}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
                             ${img}

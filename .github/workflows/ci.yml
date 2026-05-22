@@ -35,7 +35,6 @@ jobs:
           ERRORS=0
           for dir in meetings/meeting-*/; do
             id=$(basename "$dir")
-            [[ "$id" == "meeting-99-new" ]] && continue
             if ! grep -qE "\"id\": \"${id}\"|id: '${id}'" index.html dist/app.js docs/manifest.json 2>/dev/null; then
               echo "UNREGISTERED: $dir exists but '${id}' has no entry in the MEETINGS manifest"
               echo "Add a MEETINGS entry in docs/manifest.json or remove the directory."
@@ -56,7 +55,7 @@ jobs:
           MAX_KB=512
           ERRORS=0
           while IFS= read -r -d '' file; do
-            [[ "$file" == meetings/meeting-99-new/* ]] && continue
+            [[ "$file" == meetings/drafts/* ]] && continue
             SIZE_KB=$(du -k "$file" | cut -f1)
             if [ "$SIZE_KB" -gt "$MAX_KB" ]; then
               echo "OVERSIZED: $file (${SIZE_KB} KB, limit ${MAX_KB} KB)"

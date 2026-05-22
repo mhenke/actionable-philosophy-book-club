@@ -16,7 +16,7 @@
                     if (href.endsWith('/')) {
                         link.removeAttribute('href');
                         link.setAttribute('aria-disabled', 'true');
-                        link.setAttribute('title', 'Folder — not a navigable file');
+                        link.setAttribute('title', 'Folder (not a navigable file)');
                         continue;
                     }
 
@@ -126,7 +126,7 @@
 
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
                 const contentEl = document.getElementById('markdown-content');
-                if (contentEl) contentEl.innerHTML = '<p>Reader unavailable — required libraries could not be loaded. Check your connection and try reloading the page.</p>';
+                if (contentEl) contentEl.innerHTML = '<p>Reader unavailable: required libraries could not be loaded. Check your connection and try reloading the page.</p>';
                 setView('reader');
                 return;
             }
@@ -157,7 +157,7 @@
 
                 const h1 = content.querySelector('h1');
                 if (h1) {
-                    document.title = `${h1.textContent.trim()} — Actionable Philosophy Book Club`;
+                    document.title = `${h1.textContent.trim()} | Actionable Philosophy Book Club`;
                     content.setAttribute('aria-label', h1.textContent.trim());
                     const readerDocLabel = document.getElementById('reader-doc-label');
                     if (readerDocLabel) readerDocLabel.textContent = h1.textContent.trim();

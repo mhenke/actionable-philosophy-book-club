@@ -12,7 +12,8 @@ test.describe('isSafeRepoPath — valid paths', () => {
         'docs/glossary.md',
         'docs/design-principles.md',
         'templates/prompts/README.md',
-        'meetings/meeting-99-new/README.md',
+        'meetings/drafts/README.md',
+        'docs/why-book-now.md',
         'meetings/meeting-01/design_principles.md',
         'templates/discussion.md',
     ];

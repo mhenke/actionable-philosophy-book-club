@@ -96,11 +96,11 @@ Replace `PATH_TO_FILE` with the relative path from the repo root, e.g.:
 meetings/meeting-NN/slides/NN-slide-title.pptx
 ```
 
-This URL is set automatically from the `slides.file` field in the manifest — you do not need to edit it manually in multiple places.
+This URL is set automatically from the `slides.file` field in the manifest: you do not need to edit it manually in multiple places.
 
-### The Drafts staging folder (`meetings/meeting-99-new/`)
+### The Drafts staging folder (`meetings/drafts/`)
 
-`meeting-99-new` is a staging area for materials that are being prepared before a meeting has a confirmed number. It does not appear in the `MEETINGS` manifest and its content is not shown on the dashboard. See docs/adr/0009-plain-language-section-naming.md for background on the terminology change.
+`meetings/drafts` is a staging area for materials that are being prepared before a meeting has a confirmed number. It does not appear in the `MEETINGS` manifest and its content is not shown on the dashboard. See docs/adr/0009-plain-language-section-naming.md for background on the terminology change.
 
 Use it for drafts, imported assets, or in-progress meeting materials that have not been assigned a numbered meeting folder yet.
 

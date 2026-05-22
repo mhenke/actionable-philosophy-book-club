@@ -24,6 +24,7 @@ module.exports = {
       colors: {
         banner:       'var(--banner)',
         surface:      'var(--surface)',
+        primary:      'var(--text-primary)',
         muted:        'var(--text-muted)',
         'spectrum-1': 'var(--spectrum-1)',
         'spectrum-2': 'var(--spectrum-2)',

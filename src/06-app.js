@@ -37,6 +37,26 @@
             showDashboard();
         });
 
+        const skipLink = document.querySelector('a[href="#main-content"]');
+        if (skipLink) {
+            skipLink.addEventListener('click', e => {
+                e.preventDefault();
+                const isReaderActive = reader && !reader.classList.contains('hidden-view');
+                if (isReaderActive) {
+                    if (content) {
+                        content.focus();
+                        content.scrollIntoView({ behavior: 'smooth' });
+                    }
+                } else {
+                    const mainContent = document.getElementById('main-content');
+                    if (mainContent) {
+                        mainContent.focus();
+                        mainContent.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        }
+
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') {
                 const vp = document.getElementById('video-player-overlay');

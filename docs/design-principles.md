@@ -21,5 +21,5 @@ Our approach to documentation, collaboration, and repository management.
 
 ### 4. Transparency and Async Collaboration
 - Document every meeting.
-- Use the Drafts staging folder (`meetings/meeting-99-new`) for emerging ideas. This folder is a staging area and is excluded from the MEETINGS manifest and CI checks; see CONTRIBUTING.md and docs/adr/0009 for details.
+- Use the Drafts staging folder (`meetings/drafts`) for emerging ideas. This folder is a staging area and is excluded from the MEETINGS manifest and CI checks; see CONTRIBUTING.md and docs/adr/0009 for details.
 - Ensure all assets are discoverable via READMEs and TOCs.

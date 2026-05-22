@@ -71,7 +71,7 @@ echo "Inferred: $CATEGORY → $SUBDIR/"
 # Resolve meeting directory
 if [ -z "$MEETING" ]; then
     # Try to infer: list meeting dirs, pick the only one if unambiguous
-    mapfile -t MEETING_DIRS < <(find meetings -maxdepth 1 -type d -name 'meeting-[0-9]*' ! -name 'meeting-99*' 2>/dev/null | sort)
+    mapfile -t MEETING_DIRS < <(find meetings -maxdepth 1 -type d -name 'meeting-[0-9]*' 2>/dev/null | sort)
     if [ "${#MEETING_DIRS[@]}" -eq 1 ]; then
         MEETING=$(basename "${MEETING_DIRS[0]}" | sed 's/meeting-//')
         echo "Inferred meeting: $MEETING (only meeting directory found)"
