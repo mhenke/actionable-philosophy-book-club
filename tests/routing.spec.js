@@ -124,4 +124,36 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#reader-view')).toBeVisible();
     });
 
+    test('renders compact file tree for Meeting Materials list', async ({ page }) => {
+        const markdown = [
+            '# Document Title',
+            '',
+            '## Meeting Materials',
+            '- [folder/](folder/)',
+            '  - [file1.md](file1.md)',
+            '  - [file2.md](file2.md)'
+        ].join('\n');
+
+        await page.route('**/meetings/meeting-01/README.md', route =>
+            route.fulfill({ body: markdown })
+        );
+
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForSelector('.materials-panel');
+
+        const panel = page.locator('.materials-panel');
+        await expect(panel).toBeVisible();
+
+        const connectors = page.locator('.tree-connector');
+        await expect(connectors.first()).toBeVisible();
+
+        // Verify that tree connectors and file tree link elements are compact (under 30px height)
+        const height = await connectors.first().evaluate(el => el.getBoundingClientRect().height);
+        expect(height).toBeLessThan(30);
+
+        const link = page.locator('.materials-panel a').first();
+        const linkHeight = await link.evaluate(el => el.getBoundingClientRect().height);
+        expect(linkHeight).toBeLessThan(30);
+    });
+
 });

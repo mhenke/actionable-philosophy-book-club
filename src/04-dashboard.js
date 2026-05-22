@@ -37,7 +37,7 @@
                 quoteContainer.innerHTML = meeting.keyTakeaway
                     ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
                            <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
-                           <p class="text-lg leading-relaxed italic text-banner">${escapeHTML(meeting.keyTakeaway)}</p>
+                           <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
                        </div>`
                     : '';
             }

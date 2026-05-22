@@ -90,4 +90,29 @@ test.describe('Manual Theme Toggle', () => {
         const toastText = await toast.textContent();
         expect(toastText).toMatch(/theme enabled/i);
     });
+
+    test('should ensure key takeaway text has high contrast in both themes', async ({ page }) => {
+        await page.goto('/');
+
+        // Force light theme
+        await page.evaluate(() => {
+            document.documentElement.classList.remove('dark-theme');
+            document.documentElement.classList.add('light-theme');
+        });
+        
+        const takeaway = page.locator('#upcoming-key-takeaway p.italic');
+        await expect(takeaway).toBeVisible();
+
+        let color = await takeaway.evaluate((el) => window.getComputedStyle(el).color);
+        expect(color).toBe('rgb(34, 34, 34)'); // #222222
+
+        // Toggle to dark theme
+        const toggleBtn = page.locator('#theme-toggle-dashboard');
+        await toggleBtn.click();
+        const isDark = await page.evaluate(() => document.documentElement.classList.contains('dark-theme'));
+        expect(isDark).toBe(true);
+
+        color = await takeaway.evaluate((el) => window.getComputedStyle(el).color);
+        expect(color).toBe('rgb(238, 238, 238)'); // #EEEEEE
+    });
 });
