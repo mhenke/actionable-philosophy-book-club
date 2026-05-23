@@ -32,7 +32,7 @@ function buildVideoRow(meeting) {
     const session = escapeHTML(meeting.session);
     return `
                     <div class="asset-row" data-testid="${id}-canonical" data-canonical="true" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.video.file ?? '')}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''} (${session})">
+                        <a href="${escapeHTML(meeting.video.file ?? '')}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''}${videoSize ? ', ' + videoSize : ''} (${session})">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                                 <span class="asset-link-text">${escapeHTML(meeting.video.label ?? '')}</span>
@@ -40,7 +40,7 @@ function buildVideoRow(meeting) {
                             ${metaLine}
                         </a>
                         <a href="${escapeHTML(meeting.video.file ?? '')}" download
-                           aria-label="Download ${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''} (${session})"
+                           aria-label="Download ${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''}${videoSize ? ', ' + videoSize : ''} (${session})"
                            class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
 }

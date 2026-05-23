@@ -39,7 +39,7 @@ function _scrollToElement(el) {
     // a sticky header. scrollIntoView has inconsistent offset behavior
     // across browsers when a sticky header overlaps content, so compute
     // the target manually.
-    const header = document.querySelector('header.sticky') || document.querySelector('header');
+    const header = document.querySelector('#reader-view header.sticky') || document.querySelector('header.sticky') || document.querySelector('header');
     const headerHeight = header ? header.getBoundingClientRect().height : 0;
     const targetTop = window.scrollY + el.getBoundingClientRect().top - headerHeight - 8; // 8px breathing room
     window.scrollTo({ top: Math.max(0, Math.round(targetTop)), behavior: 'smooth' });

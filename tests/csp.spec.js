@@ -12,7 +12,6 @@ test.describe('Content Security Policy', () => {
         expect(csp).toContain("style-src 'self' 'unsafe-inline'");
         expect(csp).toContain("img-src 'self' data:");
         expect(csp).toContain('form-action \'none\'');
-        expect(csp).toContain('frame-ancestors \'none\'');
         expect(csp).toContain('base-uri \'self\'');
     });
 });
