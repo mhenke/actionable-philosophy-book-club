@@ -15,7 +15,7 @@
             if (!container) return;
 
             const upcomingSection = container.closest('section');
-            const meeting = MEETINGS.find(m => m.status === 'upcoming');
+            const meeting = meetingRepository.getUpcoming()[0] || null;
             if (!meeting) {
                 container.innerHTML = '';
                 if (headerContainer) headerContainer.innerHTML = '';
@@ -72,7 +72,7 @@
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
             if (!archiveContainer) return;
-            const done = MEETINGS.filter(m => m.status === 'done');
+            const done = meetingRepository.getDone();
 
             const fragment = document.createDocumentFragment();
             for (const meeting of done) {
@@ -109,7 +109,7 @@
         function renderHorizonCards() {
             const horizonContainer = document.getElementById('horizon-cards-container');
             if (!horizonContainer) return;
-            const drafts = MEETINGS.filter(m => m.status === 'draft');
+            const drafts = meetingRepository.getDraft();
             const horizonSection = horizonContainer.closest('section');
 
             if (drafts.length === 0) {

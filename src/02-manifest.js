@@ -44,7 +44,7 @@
                 const data = inlineData;
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
                 const assetCopy = loadAssetCopyRegistry(data.assetCopy);
-                MEETINGS = data.meetings;
+                meetingRepository.setAll(data.meetings);
                 ASSET_COPY = assetCopy;
                 return;
             }
@@ -56,7 +56,7 @@
                 const data = await response.json();
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
                 const assetCopy = loadAssetCopyRegistry(data.assetCopy);
-                MEETINGS = data.meetings;
+                meetingRepository.setAll(data.meetings);
                 ASSET_COPY = assetCopy;
             } finally {
                 clearTimeout(timeoutId);

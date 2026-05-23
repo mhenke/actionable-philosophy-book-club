@@ -27,3 +27,5 @@ const CONFIG = Object.freeze({
     PATH_MAX_LENGTH: 256,
 });
 
+// APOSD Principle 3 (Information Hiding): All MEETINGS access goes through repository
+const meetingRepository = new MeetingRepository();
