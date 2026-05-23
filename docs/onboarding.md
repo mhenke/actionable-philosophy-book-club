@@ -27,7 +27,7 @@ Each session follows the same flow:
 - Share a direct link to any media asset by clicking it — the URL updates for easy sharing.
 - Use the copy-link button in the reader header to share specific session notes.
 - Press Esc from the reader view to return to the dashboard.
-- <a href="#" class="restore-onboarding-action hover:text-spectrum-2 transition-colors cursor-pointer inline font-semibold uppercase tracking-wider text-[0.6875rem]" aria-controls="onboarding-banner">Onboarding</a> — The onboarding banner appears on first visit. Restore it from the Dashboard using the 'Restore onboarding banner' link in the Knowledge Base (same card style as Glossary).
+- <a href="#" class="restore-onboarding-action" aria-controls="onboarding-banner">Restore onboarding banner</a> — The onboarding banner appears on first visit. Restore it from the Dashboard using the 'Restore onboarding banner' link in the Knowledge Base (same card style as Glossary).
 
 
 ## Questions?
