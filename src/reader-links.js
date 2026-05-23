@@ -4,7 +4,6 @@ function _disableLink(link, title) {
     if (title) link.setAttribute('title', title);
 }
 
-/** Rewrites relative links in rendered markdown: .md → #p= routes, assets → direct hrefs, PPTX → viewer URL. */
 function rewriteContentLinks(container, docPath) {
     const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
     for (const link of container.querySelectorAll('a')) {
@@ -25,7 +24,7 @@ function rewriteContentLinks(container, docPath) {
             }
 
             if (href.endsWith('.md')) {
-                if (!isSafeRepoPath(repoPath)) {
+                if (!isSafePath(repoPath, DOMAIN.REPO)) {
                     _disableLink(link, 'Link target is outside allowed directories');
                     continue;
                 }
@@ -33,7 +32,7 @@ function rewriteContentLinks(container, docPath) {
                 continue;
             }
 
-            if (!isSafeAssetPath(repoPath)) {
+            if (!isSafePath(repoPath, DOMAIN.ASSET)) {
                 _disableLink(link, '');
                 continue;
             }

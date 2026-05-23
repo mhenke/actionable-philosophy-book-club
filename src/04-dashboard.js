@@ -1,32 +1,24 @@
-        /**
-         * Renders the next upcoming meeting card: header, asset rows, key takeaway,
-         * CTA button linking to meeting notes, and podcast disclosure. Clears the
-         * container if no upcoming meeting exists. Assumes MEETINGS is populated.
-         * Side effects: removes `hidden-view` from the upcoming section, writes
-         * innerHTML to multiple DOM containers, and reveals static dashboard UI
-         * (Knowledge Base section, site footer) on first render.
-         */
-        function renderUpcomingMaterials() {
-            const container = document.getElementById('upcoming-materials-container');
-            const podcastContainer = document.getElementById('upcoming-podcasts');
-            const headerContainer = document.getElementById('upcoming-card-header');
-            const quoteContainer = document.getElementById('upcoming-key-takeaway');
-            const ctaContainer = document.getElementById('upcoming-cta');
-            if (!container) return;
+function renderUpcomingMaterials() {
+    const container = document.getElementById('upcoming-materials-container');
+    const podcastContainer = document.getElementById('upcoming-podcasts');
+    const headerContainer = document.getElementById('upcoming-card-header');
+    const quoteContainer = document.getElementById('upcoming-key-takeaway');
+    const ctaContainer = document.getElementById('upcoming-cta');
+    if (!container) return;
 
-            const upcomingSection = container.closest('section');
-            const meeting = meetingRepository.getUpcoming()[0] || null;
-            if (!meeting) {
-                container.innerHTML = '';
-                if (headerContainer) headerContainer.innerHTML = '';
-                if (quoteContainer) quoteContainer.innerHTML = '';
-                if (ctaContainer) ctaContainer.innerHTML = '';
-                return;
-            }
-            if (upcomingSection) upcomingSection.classList.remove('hidden-view');
+    const upcomingSection = container.closest('section');
+    const meeting = MEETINGS.find(m => m.status === 'upcoming');
+    if (!meeting) {
+        container.innerHTML = '';
+        if (headerContainer) headerContainer.innerHTML = '';
+        if (quoteContainer) quoteContainer.innerHTML = '';
+        if (ctaContainer) ctaContainer.innerHTML = '';
+        return;
+    }
+    if (upcomingSection) upcomingSection.classList.remove('hidden-view');
 
-            if (headerContainer) {
-                headerContainer.innerHTML = `
+    if (headerContainer) {
+        headerContainer.innerHTML = `
                     <div class="flex justify-between items-start gap-4">
                         <div class="card-title">
                             <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
@@ -34,56 +26,50 @@
                         </div>
                         <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest px-2 py-1" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2);">Upcoming</span>
                     </div>`;
-            }
+    }
 
-            const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
-            container.innerHTML = (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip)
-                ? `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`
-                : primaryRows.join('') + resourceStrip;
+    const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
+    container.innerHTML = (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip)
+        ? `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`
+        : primaryRows.join('') + resourceStrip;
 
-            if (quoteContainer) {
-                quoteContainer.innerHTML = meeting.keyTakeaway
-                    ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
-                           <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
-                           <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
-                       </div>`
-                    : '';
-            }
+    if (quoteContainer) {
+        quoteContainer.innerHTML = meeting.keyTakeaway
+            ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
+                               <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
+                               <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
+                           </div>`
+            : '';
+    }
 
-            if (ctaContainer && meeting.readmeUrl) {
-                ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
-            }
+    if (ctaContainer && meeting.readmeUrl) {
+        ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
+    }
 
-            if (podcastContainer) {
-                podcastContainer.innerHTML = buildPodcastDisclosure(podcastRows, podcastSummary);
-            }
-            const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
-            if (kbSection) kbSection.classList.remove('hidden-view');
-            const footer = document.getElementById('site-footer');
-            if (footer) footer.classList.remove('hidden-view');
-        }
+    if (podcastContainer) {
+        podcastContainer.innerHTML = buildPodcastDisclosure(podcastRows, podcastSummary);
+    }
+    const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
+    if (kbSection) kbSection.classList.remove('hidden-view');
+    const footer = document.getElementById('site-footer');
+    if (footer) footer.classList.remove('hidden-view');
+}
 
-        /**
-         * Renders archive cards for all meetings with status `done`. Each card
-         * includes asset rows (with placeholders), resource strip, meeting notes
-         * link, and podcast disclosure. Appends via DocumentFragment to avoid
-         * layout thrash. Assumes MEETINGS is populated.
-         */
-        function renderArchiveCards() {
-            const archiveContainer = document.getElementById('archive-cards-container');
-            if (!archiveContainer) return;
-            const done = meetingRepository.getDone();
+function renderArchiveCards() {
+    const archiveContainer = document.getElementById('archive-cards-container');
+    if (!archiveContainer) return;
+    const done = MEETINGS.filter(m => m.status === 'done');
 
-            const fragment = document.createDocumentFragment();
-            for (const meeting of done) {
-                const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
-                const podcastSection = buildPodcastDisclosure(podcastRows, podcastSummary);
+    const fragment = document.createDocumentFragment();
+    for (const meeting of done) {
+        const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
+        const podcastSection = buildPodcastDisclosure(podcastRows, podcastSummary);
 
-                const card = document.createElement('div');
-                card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
-                card.style.borderTopColor = 'var(--spectrum-3)';
+        const card = document.createElement('div');
+        card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
+        card.style.borderTopColor = 'var(--spectrum-3)';
 
-                card.innerHTML = `
+        card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div class="card-title">
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
@@ -97,35 +83,35 @@
                     ${podcastSection}
                 `;
 
-                fragment.appendChild(card);
-            }
+        fragment.appendChild(card);
+    }
 
-            archiveContainer.innerHTML = '';
-            archiveContainer.appendChild(fragment);
-            const archiveSection = archiveContainer.closest('section');
-            if (archiveSection) archiveSection.classList.remove('hidden-view');
-        }
+    archiveContainer.innerHTML = '';
+    archiveContainer.appendChild(fragment);
+    const archiveSection = archiveContainer.closest('section');
+    if (archiveSection) archiveSection.classList.remove('hidden-view');
+}
 
-        function renderHorizonCards() {
-            const horizonContainer = document.getElementById('horizon-cards-container');
-            if (!horizonContainer) return;
-            const drafts = meetingRepository.getDraft();
-            const horizonSection = horizonContainer.closest('section');
+function renderHorizonCards() {
+    const horizonContainer = document.getElementById('horizon-cards-container');
+    if (!horizonContainer) return;
+    const drafts = MEETINGS.filter(m => m.status === 'draft');
+    const horizonSection = horizonContainer.closest('section');
 
-            if (drafts.length === 0) {
-                horizonContainer.innerHTML = '';
-                if (horizonSection) horizonSection.classList.add('hidden-view');
-                return;
-            }
-            if (horizonSection) horizonSection.classList.remove('hidden-view');
+    if (drafts.length === 0) {
+        horizonContainer.innerHTML = '';
+        if (horizonSection) horizonSection.classList.add('hidden-view');
+        return;
+    }
+    if (horizonSection) horizonSection.classList.remove('hidden-view');
 
-            const fragment = document.createDocumentFragment();
-            for (const meeting of drafts) {
-                const card = document.createElement('div');
-                card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
-                card.style.borderTopColor = 'var(--border-low)';
+    const fragment = document.createDocumentFragment();
+    for (const meeting of drafts) {
+        const card = document.createElement('div');
+        card.className = 'card p-6 md:p-8 border-t-2 flex flex-col';
+        card.style.borderTopColor = 'var(--border-low)';
 
-                card.innerHTML = `
+        card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div class="card-title">
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
@@ -136,52 +122,36 @@
                     <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>
                 `;
 
-                fragment.appendChild(card);
-            }
+        fragment.appendChild(card);
+    }
 
-            horizonContainer.innerHTML = '';
-            horizonContainer.appendChild(fragment);
-        }
-        /**
-         * Unhides the Knowledge Base section and site footer. Safe to call
-         * multiple times — classList.remove is idempotent.
-         */
+    horizonContainer.innerHTML = '';
+    horizonContainer.appendChild(fragment);
+}
 
-        function setupManifestRetryUI() {
-            const upcomingHeader = document.getElementById('upcoming-card-header');
-            const upcomingMaterials = document.getElementById('upcoming-materials-container');
-            const upcomingCta = document.getElementById('upcoming-cta');
-            const archiveContainer = document.getElementById('archive-cards-container');
-            const horizonContainer = document.getElementById('horizon-cards-container');
-            if (upcomingHeader) upcomingHeader.innerHTML = `
-                <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted mb-3">Couldn't load sessions</p>
-                <button id="manifest-retry-btn" class="text-sm uppercase tracking-widest underline" style="color:var(--spectrum-2)">Tap to retry</button>`;
-            if (upcomingMaterials) upcomingMaterials.innerHTML = '';
-            if (upcomingCta) upcomingCta.innerHTML = '';
-            if (archiveContainer) archiveContainer.innerHTML = '';
-            if (horizonContainer) {
-                horizonContainer.innerHTML = '';
-                const horizonSection = horizonContainer.closest('section');
-                if (horizonSection) horizonSection.classList.add('hidden-view');
-            }
-            const retryBtn = document.getElementById('manifest-retry-btn');
-            if (retryBtn) {
-                retryBtn.addEventListener('click', async () => {
-                    retryBtn.textContent = 'Retrying...';
-                    retryBtn.disabled = true;
-                    try {
-                        await loadManifest();
-                        if (upcomingHeader) upcomingHeader.innerHTML = '';
-                        renderUpcomingMaterials();
-                        renderArchiveCards();
-                        renderHorizonCards();
-                    } catch (err) {
-                        console.warn('Manifest retry failed:', err?.message || err);
-                        retryBtn.textContent = 'Tap to retry';
-                        retryBtn.disabled = false;
-                    }
-                });
-            }
-        }
-
-
+function setupManifestRetryUI() {
+    const upcomingHeader = document.getElementById('upcoming-card-header');
+    const upcomingMaterials = document.getElementById('upcoming-materials-container');
+    const upcomingCta = document.getElementById('upcoming-cta');
+    const archiveContainer = document.getElementById('archive-cards-container');
+    const horizonContainer = document.getElementById('horizon-cards-container');
+    if (upcomingHeader) showRetryUI(upcomingHeader, {
+        message: "Couldn't load sessions",
+        retryLabel: 'Tap to retry',
+        onRetry: async () => {
+            await loadManifest();
+            if (upcomingHeader) upcomingHeader.innerHTML = '';
+            renderUpcomingMaterials();
+            renderArchiveCards();
+            renderHorizonCards();
+        },
+    });
+    if (upcomingMaterials) upcomingMaterials.innerHTML = '';
+    if (upcomingCta) upcomingCta.innerHTML = '';
+    if (archiveContainer) archiveContainer.innerHTML = '';
+    if (horizonContainer) {
+        horizonContainer.innerHTML = '';
+        const horizonSection = horizonContainer.closest('section');
+        if (horizonSection) horizonSection.classList.add('hidden-view');
+    }
+}

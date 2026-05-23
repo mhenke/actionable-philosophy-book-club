@@ -17,18 +17,21 @@ class MeetingRepository {
   }
 
   /**
-   * Load meetings from manifest data. Validates before storing.
+   * Load meetings from manifest data. Wraps each in Meeting class for validation.
+   * 
+   * APOSD Principle 7 (Define Errors Out of Existence):
+   * Throws on schema errors at load time, not render time.
+   * This prevents invalid meetings from existing in memory.
    * 
    * @param {Array} plainMeetings - Plain meeting objects from manifest.json
-   * @throws {Error} If meetings is not an array
+   * @throws {Error} If meetings is not an array or any meeting fails validation
    */
   setAll(plainMeetings) {
     if (!Array.isArray(plainMeetings)) {
       throw new Error('Meetings must be an array');
     }
-    // TODO: Will wrap in Meeting class validation in next task
-    // For now, minimal validation ensures array structure
-    this.meetings = plainMeetings;
+    // Wrap each in Meeting class (validates on construction)
+    this.meetings = plainMeetings.map(m => new Meeting(m));
   }
 
   /**

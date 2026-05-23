@@ -1,33 +1,30 @@
-        /**
-         * Parses window.location.hash for `#p=path/to/file.md` routes. Validates
-         * the path with isSafeRepoPath, extracts an optional trailing #anchor,
-         * and dispatches to loadPage or navigateToDashboard on failure/invalid hash.
-         */
-        function handleRoute() {
-            const hash = window.location.hash;
-            if (hash.startsWith('#p=')) {
-                let fullPath;
-                try { fullPath = decodeURIComponent(hash.slice(3)); }
-                catch (e) { navigateToDashboard(); return; }
-                const lastHashIndex = fullPath.lastIndexOf('#');
-                const path = lastHashIndex > 0 ? fullPath.substring(0, lastHashIndex) : fullPath;
-                if (!isSafeRepoPath(path)) {
-                    showToast('Invalid document path');
-                    navigateToDashboard();
-                    return;
-                }
-                const anchorId = lastHashIndex > 0 ? fullPath.substring(lastHashIndex + 1) : null;
-                loadPage(path, anchorId).catch(err => {
-                    console.error('loadPage failed:', err?.message || err);
-                    showToast('Document unavailable');
-                    navigateToDashboard();
-                });
-            } else {
-                navigateToDashboard();
-            }
-        }
+const _routeHandlers = {};
 
-        /** Registers hashchange listener for client-side routing. Called once from app init. */
-        function initRouting() {
-            window.addEventListener('hashchange', handleRoute);
+function registerRoute(name, handler) {
+    _routeHandlers[name] = handler;
+}
+
+function handleRoute() {
+    const hash = window.location.hash;
+    if (hash.startsWith('#p=')) {
+        let fullPath;
+        try { fullPath = decodeURIComponent(hash.slice(3)); }
+        catch (e) { _routeHandlers.default?.(); return; }
+        const lastHashIndex = fullPath.lastIndexOf('#');
+        const path = lastHashIndex > 0 ? fullPath.substring(0, lastHashIndex) : fullPath;
+        if (!isSafePath(path, DOMAIN.REPO)) {
+            showToast('Invalid document path');
+            _routeHandlers.default?.();
+            return;
         }
+        const anchorId = lastHashIndex > 0 ? fullPath.substring(lastHashIndex + 1) : null;
+        const handler = _routeHandlers.reader || _routeHandlers.default;
+        handler(path, anchorId);
+    } else {
+        _routeHandlers.default?.();
+    }
+}
+
+function initRouting() {
+    window.addEventListener('hashchange', handleRoute);
+}

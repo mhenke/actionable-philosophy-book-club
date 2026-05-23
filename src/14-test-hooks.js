@@ -1,14 +1,14 @@
-        if (window.__TEST__ === true) {
-            window.isSafeRepoPath = isSafeRepoPath;
-            window.isSafeAssetPath = isSafeAssetPath;
-            window.isSafePath = isSafePath;
-            window.renderUpcomingMaterials = renderUpcomingMaterials;
-            window.renderArchiveCards = renderArchiveCards;
-            window.renderHorizonCards = renderHorizonCards;
-            window.saveVideoResumePosition = saveVideoResumePosition;
-            window.formatDuration = formatDuration;
-            window.formatFileSize = formatFileSize;
-            window.meetingRepository = meetingRepository;
-            window.MEETINGS = meetingRepository.getAll();
-            window.ASSET_COPY = ASSET_COPY;
-        }
+if (window.__TEST__ === true) {
+    window.isSafeRepoPath = function(p) { return isSafePath(p, DOMAIN.REPO); };
+    window.isSafeAssetPath = function(p) { return isSafePath(p, DOMAIN.ASSET); };
+    window.isSafePath = isSafePath;
+    window.DOMAIN = DOMAIN;
+    window.renderUpcomingMaterials = renderUpcomingMaterials;
+    window.renderArchiveCards = renderArchiveCards;
+    window.renderHorizonCards = renderHorizonCards;
+    window.saveVideoResumePosition = saveVideoResumePosition;
+    window.formatDuration = formatDuration;
+    window.formatFileSize = formatFileSize;
+    window.MEETINGS = MEETINGS;
+    window.ASSET_COPY = ASSET_COPY;
+}

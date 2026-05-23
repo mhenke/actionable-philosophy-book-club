@@ -1,6 +1,5 @@
 const _ALLOWED_EXTERNAL_HOSTS = /^https?:\/\/(mhenke\.github\.io|view\.officeapps\.live\.com|github\.com)\//i;
 
-/** One-shot DOMPurify hook registration: strips external links outside allowlist, adds rel=noopener. */
 function ensureDOMPurifyHooks() {
     if (!guard(ensureDOMPurifyHooks)) return;
     DOMPurify.addHook('afterSanitizeAttributes', node => {

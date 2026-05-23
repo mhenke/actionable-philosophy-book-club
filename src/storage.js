@@ -1,9 +1,15 @@
+const STORAGE_KEY_PREFIX = 'apbc:';
+const RESUME_MIN_SECONDS = 5;
+const PROGRESS_SAVE_MS = 3000;
 let _onSessionStorageError = null;
 let _sessionStorageWarned = false;
 
-/** Registers a callback for sessionStorage write failures (shown as toast). */
 function setSessionStorageErrorHandler(handler) {
     _onSessionStorageError = handler;
+}
+
+function buildStorageKey(suffix) {
+    return STORAGE_KEY_PREFIX + suffix;
 }
 
 function _sessionStorageSaveError() {
@@ -14,12 +20,10 @@ function _sessionStorageSaveError() {
     }
 }
 
-/** Returns the sessionStorage key for a video file's resume position. */
 function getVideoResumeKey(filePath) {
-    return STORAGE_KEY_PREFIX + 'vs:' + filePath;
+    return buildStorageKey('vs:' + filePath);
 }
 
-/** Reads saved resume time from sessionStorage. Returns 0 on failure. */
 function getSavedVideoResumeTime(filePath) {
     try {
         const saved = sessionStorage.getItem(getVideoResumeKey(filePath));
@@ -30,11 +34,10 @@ function getSavedVideoResumeTime(filePath) {
     }
 }
 
-/** Writes resume position to sessionStorage. Removes key if below RESUME_MIN_SECONDS. */
 function saveVideoResumePosition(filePath, currentTime) {
     const key = getVideoResumeKey(filePath);
     try {
-        if (currentTime > CONFIG.RESUME_MIN_SECONDS) {
+        if (currentTime > RESUME_MIN_SECONDS) {
             sessionStorage.setItem(key, `${currentTime}`);
         } else {
             sessionStorage.removeItem(key);
@@ -45,7 +48,6 @@ function saveVideoResumePosition(filePath, currentTime) {
     }
 }
 
-/** Removes the resume position key for a video file. */
 function clearVideoResumePosition(filePath) {
     try {
         sessionStorage.removeItem(getVideoResumeKey(filePath));
