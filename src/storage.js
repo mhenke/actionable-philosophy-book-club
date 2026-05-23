@@ -7,7 +7,7 @@
  *
  * Side-effects: uses localStorage/sessionStorage and may call provided error handler.
  */
-const STORAGE_KEY_PREFIX = window.__STORAGE_PREFIX;
+const STORAGE_KEY_PREFIX = window.__STORAGE_PREFIX || 'apbc:';
 const RESUME_MIN_SECONDS = 5;
 const PROGRESS_SAVE_MS = 3000;
 let _onSessionStorageError = null;
