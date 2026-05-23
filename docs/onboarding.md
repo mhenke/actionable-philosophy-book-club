@@ -29,6 +29,8 @@ Each session follows the same flow:
 - Press Esc from the reader view to return to the dashboard.
 - **Onboarding banner** — The onboarding banner appears on first visit. Restore it from the Dashboard using the 'Restore onboarding banner' button in the Knowledge Base (same card style as Glossary).
 
+<p><button class="restore-onboarding-action btn-ghost" type="button" aria-controls="onboarding-banner">Restore onboarding banner</button></p>
+
 ## Questions?
 
 Reach out in the book-club chat or check the [Glossary](glossary.md) for domain terms.
