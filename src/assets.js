@@ -129,8 +129,8 @@ function buildResourceStrip(resources) {
         const label = escapeHTML(res.label);
         const isImage = classifyAssetPath(res.file) === 'image';
         const img = isImage
-            ? `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="" loading="lazy" width="120" height="80"></picture>`
-            : `<img src="${file}" alt="" loading="lazy" width="120" height="80">`;
+            ? `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="${label}" loading="lazy" width="120" height="80"></picture>`
+            : `<img src="${file}" alt="${label}" loading="lazy" width="120" height="80">`;
         return `<a href="${file}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
                             ${img}
                             <span>${label}</span>
