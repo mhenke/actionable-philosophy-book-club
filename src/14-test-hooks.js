@@ -8,6 +8,7 @@
             window.saveVideoResumePosition = saveVideoResumePosition;
             window.formatDuration = formatDuration;
             window.formatFileSize = formatFileSize;
+            window.Meeting = Meeting;
             window.MEETINGS = getMeetings();
             window.ASSET_COPY = getCopyData();
         }

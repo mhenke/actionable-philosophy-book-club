@@ -127,6 +127,17 @@
             });
         }
 
+        function _scrollToElement(el) {
+            const rect = el.getBoundingClientRect();
+            const offset = 96;
+            window.scrollTo({
+                top: window.scrollY + rect.top - offset,
+                behavior: 'smooth'
+            });
+            el.setAttribute('tabindex', '-1');
+            el.focus({ preventScroll: true });
+        }
+
         let _activeReaderController = null;
         let _loadPageGeneration = 0;
 
@@ -229,11 +240,7 @@
                                 e.preventDefault();
                                 const targetId = anchor.getAttribute('href').substring(1);
                                 const targetEl = document.getElementById(targetId);
-                                if (targetEl) {
-                                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                    targetEl.setAttribute('tabindex', '-1');
-                                    targetEl.focus({ preventScroll: true });
-                                }
+                                if (targetEl) _scrollToElement(targetEl);
                             });
                         });
                         h1.parentNode.insertBefore(tocDiv.firstChild, h1.nextSibling);
@@ -244,7 +251,7 @@
                 if (anchorId) {
                     requestAnimationFrame(() => {
                         const el = document.getElementById(anchorId);
-                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (el) _scrollToElement(el);
                     });
                 }
                 readerStatus.textContent = 'Document loaded.';
