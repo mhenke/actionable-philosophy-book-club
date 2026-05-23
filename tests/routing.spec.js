@@ -79,8 +79,8 @@ test.describe('Routing & Navigation', () => {
         await page.waitForLoadState('networkidle');
 
         await expect(page.locator('#markdown-content')).toContainText('unavailable');
-        await expect(page.locator('#retry-load')).toBeVisible();
-        await expect(page.locator('#return-dashboard')).toBeVisible();
+        await expect(page.locator('.retry-btn')).toBeVisible();
+        await expect(page.locator('.back-btn')).toBeVisible();
     });
 
     test('retry-load button re-renders content after error', async ({ page }) => {
@@ -96,7 +96,7 @@ test.describe('Routing & Navigation', () => {
 
         await expect(page.locator('#markdown-content')).toContainText('unavailable');
 
-        await page.click('#retry-load');
+        await page.click('.retry-btn');
         await page.waitForSelector('#markdown-content h1');
 
         await expect(page.locator('#markdown-content h1')).toContainText('Retried');

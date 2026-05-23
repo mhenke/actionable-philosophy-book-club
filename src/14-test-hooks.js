@@ -1,4 +1,5 @@
 if (window.__TEST__ === true) {
+    window.Meeting = Meeting;
     window.isSafeRepoPath = function(p) { return isSafePath(p, DOMAIN.REPO); };
     window.isSafeAssetPath = function(p) { return isSafePath(p, DOMAIN.ASSET); };
     window.isSafePath = isSafePath;
