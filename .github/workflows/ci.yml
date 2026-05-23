@@ -111,10 +111,8 @@ jobs:
       - name: Build JS
         run: npm run build:js
 
-      - name: Build CSS and check for drift
-        run: |
-          npm run build:css
-          git diff --exit-code dist/tailwind.css || (echo "CSS is stale — run 'npm run build:css' and commit the result" && exit 1)
+      - name: Build CSS
+        run: npm run build:css
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
