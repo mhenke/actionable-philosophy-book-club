@@ -8,7 +8,8 @@
     "build:js": "node scripts/inline-manifest.cjs && terser src/setup.js src/data-meeting.js src/data-repository.js src/_manifest.js src/path.js src/format.js src/storage.js src/utils.js src/retry.js src/asset-copy.js src/manifest.js src/viewer.js src/assets.js src/dashboard.js src/reader-links.js src/reader-loader.js src/view.js src/toast.js src/video-player.js src/asset-delegation.js src/onboarding.js src/theme.js src/routing.js src/app.js src/test-hooks.js --compress --mangle --comments false -o dist/app.js && terser src/theme-init.js --compress --mangle -o dist/theme-init.js",
     "build:css": "tailwindcss -i src/input.css -o dist/tailwind.css --minify",
     "build": "npm run build:css && npm run build:vendor && npm run build:js",
-    "test": "playwright test && bash tests/check-links.sh",
+    "test": "npm run test:unit && playwright test && bash tests/check-links.sh",
+    "test:unit": "node --test tests/unit/*.test.js",
     "test:links": "bash tests/check-links.sh"
   },
   "devDependencies": {

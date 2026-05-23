@@ -74,11 +74,58 @@ function clearVideoResumePosition(filePath) {
     }
 }
 
+/** Reads saved theme preference from localStorage. */
+function getSavedTheme() {
+    try {
+        return localStorage.getItem(buildStorageKey('theme'));
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage read failed:', { err });
+        return null;
+    }
+}
+
+/** Saves theme preference to localStorage. */
+function saveTheme(theme) {
+    try {
+        localStorage.setItem(buildStorageKey('theme'), theme);
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage write failed:', { err });
+    }
+}
+
+/** Reads onboarding dismissed state from localStorage. */
+function getOnboardingDismissed() {
+    try {
+        return localStorage.getItem(buildStorageKey('onboarding_dismissed')) === '1';
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage read failed:', { err });
+        return false;
+    }
+}
+
+/** Saves onboarding dismissed state to localStorage. */
+function setOnboardingDismissed(dismissed) {
+    try {
+        const key = buildStorageKey('onboarding_dismissed');
+        if (dismissed) {
+            localStorage.setItem(key, '1');
+        } else {
+            localStorage.removeItem(key);
+        }
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage write/delete failed:', { err });
+    }
+}
+
 window.buildStorageKey = buildStorageKey;
 window.setSessionStorageErrorHandler = setSessionStorageErrorHandler;
 window.getSavedVideoResumeTime = getSavedVideoResumeTime;
 window.saveVideoResumePosition = saveVideoResumePosition;
 window.clearVideoResumePosition = clearVideoResumePosition;
+window.getSavedTheme = getSavedTheme;
+window.saveTheme = saveTheme;
+window.getOnboardingDismissed = getOnboardingDismissed;
+window.setOnboardingDismissed = setOnboardingDismissed;
 window.RESUME_MIN_SECONDS = RESUME_MIN_SECONDS;
 window.PROGRESS_SAVE_MS = PROGRESS_SAVE_MS;
 })();

@@ -74,5 +74,4 @@ window.setAssetCopyRegistry = setAssetCopyRegistry;
 window.loadAssetCopyRegistry = loadAssetCopyRegistry;
 window.getAssetCopyRegistry = getAssetCopyRegistry;
 window.getAssetCopy = getAssetCopy;
-window.DEFAULT_ASSET_COPY = DEFAULT_ASSET_COPY;
 })();

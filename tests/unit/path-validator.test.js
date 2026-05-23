@@ -1,11 +1,12 @@
-import { test, expect } from '@playwright/test';
+import test from 'node:test';
+import assert from 'node:assert';
+import { loadSource } from './test-helper.js';
 
-test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__TEST__ = true; }); });
+const { isSafePath, DOMAIN } = loadSource('src/path.js');
 
-// isSafeRepoPath is exposed on window via index.html for testing
-const check = (page, path) => page.evaluate(p => window.isSafeRepoPath(p), path);
+const check = (path) => isSafePath(path, DOMAIN.REPO);
 
-test.describe('isSafeRepoPath — valid paths', () => {
+test('isSafePath - valid paths', () => {
     const valid = [
         'meetings/meeting-01/README.md',
         'meetings/meeting-00/README.md',
@@ -17,16 +18,12 @@ test.describe('isSafeRepoPath — valid paths', () => {
         'meetings/meeting-01/design_principles.md',
         'templates/discussion.md',
     ];
-
     for (const path of valid) {
-        test(`accepts: ${path}`, async ({ page }) => {
-            await page.goto('/');
-            expect(await check(page, path)).toBe(true);
-        });
+        assert.strictEqual(check(path), true, `should accept: ${path}`);
     }
 });
 
-test.describe('isSafeRepoPath — rejected paths', () => {
+test('isSafePath - rejected paths', () => {
     const invalid = [
         ['//evil.com/x.md',                   'protocol-relative URL'],
         ['https://evil.com/x.md',             'https scheme'],
@@ -54,24 +51,10 @@ test.describe('isSafeRepoPath — rejected paths', () => {
     ];
 
     for (const [path, reason] of invalid) {
-        test(`rejects (${reason})`, async ({ page }) => {
-            await page.goto('/');
-            expect(await check(page, path)).toBe(false);
-        });
+        assert.strictEqual(check(path), false, `should reject ${reason}: ${path}`);
     }
 
-    test('rejects null', async ({ page }) => {
-        await page.goto('/');
-        expect(await page.evaluate(() => window.isSafeRepoPath(null))).toBe(false);
-    });
-
-    test('rejects undefined', async ({ page }) => {
-        await page.goto('/');
-        expect(await page.evaluate(() => window.isSafeRepoPath(undefined))).toBe(false);
-    });
-
-    test('rejects number', async ({ page }) => {
-        await page.goto('/');
-        expect(await page.evaluate(() => window.isSafeRepoPath(42))).toBe(false);
-    });
+    assert.strictEqual(isSafePath(null, DOMAIN.REPO), false, 'should reject null');
+    assert.strictEqual(isSafePath(undefined, DOMAIN.REPO), false, 'should reject undefined');
+    assert.strictEqual(isSafePath(42, DOMAIN.REPO), false, 'should reject number');
 });

@@ -124,23 +124,23 @@ function setupManifestRetryUI() {
     if (upcomingMaterialsContainer) upcomingMaterialsContainer.innerHTML = '';
     if (upcomingCta) upcomingCta.innerHTML = '';
     if (archiveCardsContainer) archiveCardsContainer.innerHTML = '';
-    if (horizonCardsContainer) {
-        horizonCardsContainer.innerHTML = '';
-        const horizonSection = horizonCardsContainer.closest('section');
-        if (horizonSection) horizonSection.classList.add('hidden-view');
+    if (draftCardsContainer) {
+        draftCardsContainer.innerHTML = '';
+        const draftSection = draftCardsContainer.closest('section');
+        if (draftSection) draftSection.classList.add('hidden-view');
     }
 }
 
-/** Renders draft/horizon meeting cards with placeholder content. */
-function renderHorizonCards() {
+/** Renders draft meeting cards with placeholder content. */
+function renderDraftCards() {
     const drafts = getMeetingRepository().getByStatus('draft');
     if (drafts.length === 0) {
-        if (horizonCardsContainer) horizonCardsContainer.innerHTML = '';
-        const section = horizonCardsContainer?.closest('section');
+        if (draftCardsContainer) draftCardsContainer.innerHTML = '';
+        const section = draftCardsContainer?.closest('section');
         if (section) section.classList.add('hidden-view');
         return;
     }
-    _renderCardList('horizon-cards-container', drafts, meeting => `
+    _renderCardList('draft-cards-container', drafts, meeting => `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div class="card-title">
                             ${_renderSessionMeta(meeting)}
@@ -154,6 +154,6 @@ function renderHorizonCards() {
 
 window.renderUpcomingMaterials = renderUpcomingMaterials;
 window.renderArchiveCards = renderArchiveCards;
-window.renderHorizonCards = renderHorizonCards;
+window.renderDraftCards = renderDraftCards;
 window.setupManifestRetryUI = setupManifestRetryUI;
 })();

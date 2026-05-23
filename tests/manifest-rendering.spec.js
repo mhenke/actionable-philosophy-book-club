@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__
 
 test.describe('Manifest Rendering', () => {
 
-    test('draft meetings render in horizon, not archive', async ({ page }) => {
+    test('draft meetings render in drafts section, not archive', async ({ page }) => {
         await page.goto('/');
         const expectedDone = await page.evaluate(() => window.MEETINGS.filter(m => m.status === 'done').length);
         await expect(page.locator('#archive-cards-container .card')).toHaveCount(expectedDone);

@@ -3,7 +3,7 @@
  *
  * Public API (exports via globals): dashboard, reader, markdownContent, readerStatus,
  * upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta,
- * upcomingPodcasts, archiveCardsContainer, horizonCardsContainer, siteFooter
+ * upcomingPodcasts, archiveCardsContainer, draftCardsContainer, siteFooter
  *
  * Side-effects: reads DOM at module load time; must run after DOM exists in page.
  */
@@ -19,7 +19,7 @@ const upcomingKeyTakeaway = document.getElementById('upcoming-key-takeaway');
 const upcomingCta = document.getElementById('upcoming-cta');
 const upcomingPodcasts = document.getElementById('upcoming-podcasts');
 const archiveCardsContainer = document.getElementById('archive-cards-container');
-const horizonCardsContainer = document.getElementById('horizon-cards-container');
+const draftCardsContainer = document.getElementById('draft-cards-container');
 const siteFooter = document.getElementById('site-footer');
 
 window.dashboard = dashboard;
@@ -32,6 +32,6 @@ window.upcomingKeyTakeaway = upcomingKeyTakeaway;
 window.upcomingCta = upcomingCta;
 window.upcomingPodcasts = upcomingPodcasts;
 window.archiveCardsContainer = archiveCardsContainer;
-window.horizonCardsContainer = horizonCardsContainer;
+window.draftCardsContainer = draftCardsContainer;
 window.siteFooter = siteFooter;
 })();

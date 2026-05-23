@@ -14,7 +14,7 @@ class Meeting {
     if (!manifestEntry?.title || typeof manifestEntry.title !== 'string') {
       throw new Error(`Meeting ${manifestEntry.id}: title is required and must be a string`);
     }
-    const validStatuses = ['done', 'upcoming', 'horizon', 'draft'];
+    const validStatuses = ['done', 'upcoming', 'draft'];
     if (!validStatuses.includes(manifestEntry?.status)) {
       throw new Error(`Meeting ${manifestEntry.id}: status must be one of [${validStatuses.join(', ')}], got '${manifestEntry.status}'`);
     }
@@ -42,7 +42,6 @@ class Meeting {
 
   isDone() { return this.status === 'done'; }
   isUpcoming() { return this.status === 'upcoming'; }
-  isHorizon() { return this.status === 'horizon'; }
   isDraft() { return this.status === 'draft'; }
 
 }

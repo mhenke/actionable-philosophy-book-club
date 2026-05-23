@@ -8,8 +8,7 @@ function isDarkTheme() {
 }
 
 function _persistThemePreference(isDark) {
-    try { localStorage.setItem(buildStorageKey('theme'), isDark ? 'dark' : 'light'); }
-    catch (e) { window.ErrorHandler?.warn('localStorage write failed:', { err: e }); }
+    saveTheme(isDark ? 'dark' : 'light');
 }
 
 /** Applies dark/light theme classes, persists to localStorage if user-initiated, syncs toggle labels, shows toast. */

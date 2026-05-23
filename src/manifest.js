@@ -8,25 +8,23 @@
  *
  * Side-effects: populates meetingRepo and ASSET_COPY via _processManifestData.
  */
-let loadManifest;
-var getMeetingRepository, _processManifestData;
-
 (function() {
+'use strict';
 let meetingRepo = null;
 
-getMeetingRepository = function() {
+function getMeetingRepository() {
     return meetingRepo;
-};
+}
 
-_processManifestData = function(manifestData) {
+function _processManifestData(manifestData) {
     if (!manifestData.meetings || !Array.isArray(manifestData.meetings)) throw new Error('Invalid manifest structure');
     meetingRepo = new MeetingRepository();
     meetingRepo.setAll(manifestData.meetings);
     setAssetCopyRegistry(loadAssetCopyRegistry(manifestData.assetCopy));
-};
+}
 
-loadManifest = async function() {
-    const inlineData = window.__MANIFEST_DATA || (typeof MANIFEST_DATA !== 'undefined' ? MANIFEST_DATA : null);
+async function loadManifest() {
+    const inlineData = window.__MANIFEST_DATA || (typeof window.MANIFEST_DATA !== 'undefined' ? window.MANIFEST_DATA : null);
     if (inlineData) {
         _processManifestData(inlineData);
         return;
@@ -41,5 +39,8 @@ loadManifest = async function() {
     } finally {
         clearTimeout(timeoutId);
     }
-};
+}
+
+window.getMeetingRepository = getMeetingRepository;
+window.loadManifest = loadManifest;
 })();

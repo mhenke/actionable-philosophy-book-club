@@ -91,9 +91,8 @@ function buildSlidesPlaceholder() {
 
 /** Builds a podcast asset row with label, type badge, metadata, caption, and download button. */
 function buildPodcastRow(pod, meeting) {
-    const defaultEntry = DEFAULT_ASSET_COPY[pod.type] || {};
-    const cfg = { icon: defaultEntry.icon || '🎙', color: defaultEntry.color || 'var(--spectrum-2)' };
     const copy = getAssetCopy(pod.type);
+    const cfg = { icon: copy.icon || '🎙', color: copy.color || 'var(--spectrum-2)' };
     const badgeLabel = copy.label || pod.type;
     const caption = copy.title || '';
     const podDuration = pod.duration ? formatDuration(pod.duration) : '';

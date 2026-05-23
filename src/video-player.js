@@ -54,7 +54,7 @@ function _tryLoadCaptionTrack(video, filePath) {
 function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, filePath, label) {
     resumeBar.style.display = 'none';
     const savedTime = getSavedVideoResumeTime(filePath);
-    if (savedTime <= RESUME_MIN_SECONDS) return;
+    if (savedTime <= RESUME_MIN_SECONDS) return null;
 
     const mins = Math.floor(savedTime / 60);
     const secs = Math.floor(savedTime % 60);
@@ -63,11 +63,27 @@ function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, file
     if (startBtn) startBtn.setAttribute('aria-label', 'Start ' + (label || filePath) + ' from the beginning');
     resumeBar.style.display = 'flex';
 
-    resumeBtn.addEventListener('click', () => { video.currentTime = savedTime; resumeBar.style.display = 'none'; video.play(); }, { once: true });
-    startBtn.addEventListener('click', () => { clearVideoResumePosition(filePath); resumeBar.style.display = 'none'; video.play(); }, { once: true });
+    const onResume = () => {
+        video.currentTime = savedTime;
+        resumeBar.style.display = 'none';
+        video.play();
+    };
+    const onStart = () => {
+        clearVideoResumePosition(filePath);
+        resumeBar.style.display = 'none';
+        video.play();
+    };
+
+    resumeBtn.addEventListener('click', onResume, { once: true });
+    startBtn.addEventListener('click', onStart, { once: true });
+
+    return () => {
+        resumeBtn.removeEventListener('click', onResume);
+        startBtn.removeEventListener('click', onStart);
+    };
 }
 
-function _wireVideoEvents(els, lastFocus, filePath) {
+function _wireVideoEvents(els, lastFocus, filePath, resumeCleanup) {
     const saveProgress = () => saveVideoResumePosition(filePath, els.video.currentTime);
     const vpInterval = setInterval(saveProgress, PROGRESS_SAVE_MS);
 
@@ -103,6 +119,9 @@ function _wireVideoEvents(els, lastFocus, filePath) {
         els.closeBtn.removeEventListener('click', onClose);
         els.overlay.removeEventListener('click', overlayClickHandler);
         els.video.removeEventListener('error', errorHandler);
+        if (resumeCleanup) {
+            try { resumeCleanup(); } catch(e) { /* ignore */ }
+        }
     };
 }
 
@@ -121,8 +140,8 @@ function openVideoPlayer(filePath, label) {
     els.video.load();
 
     _tryLoadCaptionTrack(els.video, filePath);
-    _setupResumeBar(els.resumeBar, els.resumeText, els.resumeBtn, els.startBtn, els.video, filePath, label);
-    _wireVideoEvents(els, lastFocusBeforeVideo, filePath);
+    const resumeCleanup = _setupResumeBar(els.resumeBar, els.resumeText, els.resumeBtn, els.startBtn, els.video, filePath, label);
+    _wireVideoEvents(els, lastFocusBeforeVideo, filePath, resumeCleanup);
 
     els.overlay.showModal();
 }

@@ -77,7 +77,7 @@ function showDashboardRenderError(err) {
     try {
         renderUpcomingMaterials();
         renderArchiveCards();
-        renderHorizonCards();
+        renderDraftCards();
     } catch (err) {
         console.error('Dashboard render failed:', err?.message || err);
         showDashboardRenderError(err);

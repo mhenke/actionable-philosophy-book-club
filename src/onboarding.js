@@ -11,7 +11,7 @@ function initOnboardingBanner() {
     const restoreBtn = document.getElementById('restore-onboarding');
     if (restoreBtn && callOnce(restoreBtn)) {
         restoreBtn.addEventListener('click', () => {
-            localStorage.removeItem(buildStorageKey('onboarding_dismissed'));
+            setOnboardingDismissed(false);
             if (mainContent && banner.parentNode !== mainContent) {
                 mainContent.insertBefore(banner, mainContent.firstChild);
             }
@@ -22,7 +22,7 @@ function initOnboardingBanner() {
         });
     }
 
-    if (localStorage.getItem(buildStorageKey('onboarding_dismissed'))) {
+    if (getOnboardingDismissed()) {
         banner.classList.add('hidden-view');
         return;
     }
@@ -35,7 +35,7 @@ function initOnboardingBanner() {
     if (callOnce(dismissBtn)) {
         dismissBtn.addEventListener('click', () => {
             banner.classList.add('hidden-view');
-            localStorage.setItem(buildStorageKey('onboarding_dismissed'), '1');
+            setOnboardingDismissed(true);
         });
     }
 }
