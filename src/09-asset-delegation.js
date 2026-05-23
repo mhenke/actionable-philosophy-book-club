@@ -1,3 +1,4 @@
+        /** Delegated click handler for asset links: opens video player for .mp4, navigates otherwise. One-shot per container. */
         function setupAssetClickDelegation(container) {
             if (!container || !guard(container)) return;
             container.addEventListener('click', (e) => {

@@ -15,7 +15,7 @@
             if (!container) return;
 
             const upcomingSection = container.closest('section');
-            const meeting = getMeetings().find(m => m.status === 'upcoming');
+            const meeting = MEETINGS.find(m => m.status === 'upcoming');
             if (!meeting) {
                 container.innerHTML = '';
                 if (headerContainer) headerContainer.innerHTML = '';
@@ -57,7 +57,10 @@
             if (podcastContainer) {
                 podcastContainer.innerHTML = buildPodcastDisclosure(podcastRows, podcastSummary);
             }
-            _showStaticDashboardUI();
+            const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
+            if (kbSection) kbSection.classList.remove('hidden-view');
+            const footer = document.getElementById('site-footer');
+            if (footer) footer.classList.remove('hidden-view');
         }
 
         /**
@@ -69,7 +72,7 @@
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
             if (!archiveContainer) return;
-            const done = getMeetings().filter(m => m.status === 'done');
+            const done = MEETINGS.filter(m => m.status === 'done');
 
             const fragment = document.createDocumentFragment();
             for (const meeting of done) {
@@ -106,7 +109,7 @@
         function renderHorizonCards() {
             const horizonContainer = document.getElementById('horizon-cards-container');
             if (!horizonContainer) return;
-            const drafts = getMeetings().filter(m => m.status === 'draft');
+            const drafts = MEETINGS.filter(m => m.status === 'draft');
             const horizonSection = horizonContainer.closest('section');
 
             if (drafts.length === 0) {
@@ -143,12 +146,7 @@
          * Unhides the Knowledge Base section and site footer. Safe to call
          * multiple times — classList.remove is idempotent.
          */
-        function _showStaticDashboardUI() {
-            const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
-            if (kbSection) kbSection.classList.remove('hidden-view');
-            const footer = document.getElementById('site-footer');
-            if (footer) footer.classList.remove('hidden-view');
-        }
+
         function setupManifestRetryUI() {
             const upcomingHeader = document.getElementById('upcoming-card-header');
             const upcomingMaterials = document.getElementById('upcoming-materials-container');

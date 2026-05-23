@@ -7,50 +7,54 @@
             showToast(msg);
         }
 
-        const backBtn = document.getElementById('back-to-dashboard');
-        if (backBtn) backBtn.addEventListener('click', e => {
-            e.preventDefault();
-            window.location.hash = '';
-            navigateToDashboard();
-        });
+        (async () => {
+            initTheme();
+            initRouting();
+            setSessionStorageErrorHandler(showToast);
 
-        const skipLink = document.querySelector('a[href="#main-content"]');
-        if (skipLink) {
-            skipLink.addEventListener('click', e => {
+            const backBtn = document.getElementById('back-to-dashboard');
+            if (backBtn) backBtn.addEventListener('click', e => {
                 e.preventDefault();
-                const isReaderActive = reader && !reader.classList.contains('hidden-view');
-                if (isReaderActive) {
-                    if (content) {
-                        content.focus();
-                        content.scrollIntoView({ behavior: 'smooth' });
+                window.location.hash = '';
+                navigateToDashboard();
+            });
+
+            const skipLink = document.querySelector('a[href="#main-content"]');
+            if (skipLink) {
+                skipLink.addEventListener('click', e => {
+                    e.preventDefault();
+                    const isReaderActive = reader && !reader.classList.contains('hidden-view');
+                    if (isReaderActive) {
+                        if (content) {
+                            content.focus();
+                            content.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    } else {
+                        const mainContent = document.getElementById('main-content');
+                        if (mainContent) {
+                            mainContent.focus();
+                            mainContent.scrollIntoView({ behavior: 'smooth' });
+                        }
                     }
-                } else {
-                    const mainContent = document.getElementById('main-content');
-                    if (mainContent) {
-                        mainContent.focus();
-                        mainContent.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') {
+                    const vp = document.getElementById('video-player-overlay');
+                    if (vp && vp.open) {
+                        const closeBtn = document.getElementById('vp-close');
+                        if (closeBtn) closeBtn.click();
                     }
                 }
             });
-        }
 
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                const vp = document.getElementById('video-player-overlay');
-                if (vp && vp.open) {
-                    const closeBtn = document.getElementById('vp-close');
-                    if (closeBtn) closeBtn.click();
-                }
-            }
-        });
+            setupAssetClickDelegation(document.getElementById('upcoming-materials-container'));
+            setupAssetClickDelegation(document.getElementById('archive-cards-container'));
+            setupAssetClickDelegation(document.getElementById('upcoming-podcasts'));
 
-        setupAssetClickDelegation(document.getElementById('upcoming-materials-container'));
-        setupAssetClickDelegation(document.getElementById('archive-cards-container'));
-        setupAssetClickDelegation(document.getElementById('upcoming-podcasts'));
+            initOnboardingBanner();
 
-        initOnboardingBanner();
-
-        (async () => {
             if (window.__TEST__) window.__manifestLoaded = false;
 
             const initialHash = window.location.hash;
@@ -81,5 +85,3 @@
 
             handleRoute();
         })();
-
-        setSessionStorageErrorHandler(showToast);

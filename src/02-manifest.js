@@ -1,3 +1,4 @@
+        /** Validates and sanitizes asset copy entries from manifest data. Warns on missing/extra keys. */
         function loadAssetCopyRegistry(assetCopy) {
             const registry = {};
             if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
@@ -25,14 +26,16 @@
             return registry;
         }
 
+        /** Merges user-configured asset copy over DEFAULT_ASSET_COPY for a given type key. */
         function getAssetCopy(type) {
-            const entry = getCopyData()[type];
+            const entry = ASSET_COPY[type];
             if (entry && typeof entry === 'object' && !Array.isArray(entry)) {
                 return { ...(DEFAULT_ASSET_COPY[type] || {}), ...entry };
             }
             return DEFAULT_ASSET_COPY[type] || {};
         }
 
+        /** Loads meeting manifest from inline MANIFEST_DATA (production) or fetches docs/manifest.json (dev). */
         async function loadManifest() {
             // Use inlined MANIFEST_DATA when built (production), fall back to fetch for dev
             // window.__MANIFEST_DATA allows test overrides via addInitScript
@@ -41,8 +44,8 @@
                 const data = inlineData;
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
                 const assetCopy = loadAssetCopyRegistry(data.assetCopy);
-                setMeetings(data.meetings);
-                setCopyData(assetCopy);
+                MEETINGS = data.meetings;
+                ASSET_COPY = assetCopy;
                 return;
             }
             const controller = new AbortController();
@@ -53,8 +56,8 @@
                 const data = await response.json();
                 if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
                 const assetCopy = loadAssetCopyRegistry(data.assetCopy);
-                setMeetings(data.meetings);
-                setCopyData(assetCopy);
+                MEETINGS = data.meetings;
+                ASSET_COPY = assetCopy;
             } finally {
                 clearTimeout(timeoutId);
             }

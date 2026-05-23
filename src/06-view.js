@@ -1,3 +1,4 @@
+        /** Toggles hidden-view class between dashboard and reader containers. Updates skip-link target. */
         function setView(view) {
             if (view !== 'dashboard') view = 'reader';
             const isDashboard = view === 'dashboard';
@@ -11,6 +12,7 @@
             }
         }
 
+        /** Closes video player, resets reader state, switches to dashboard view, announces to screen readers. */
         function navigateToDashboard() {
             closeVideoPlayer();
             document.title = 'Actionable Philosophy Book Club Dashboard';

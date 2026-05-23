@@ -1,3 +1,4 @@
+        /** Initializes dismissible welcome banner. Checks localStorage, wires dismiss + restore buttons. */
         function initOnboardingBanner() {
             const banner = document.getElementById('onboarding-banner');
             const dismissBtn = document.getElementById('onboarding-dismiss');

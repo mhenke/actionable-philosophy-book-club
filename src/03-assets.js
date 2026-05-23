@@ -10,6 +10,7 @@
             return 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
         })();
 
+        /** Constructs Office Online viewer URL for a PPTX file using RAW_CONTENT_BASE. */
         function buildPPTXViewerURL(path) {
             if (!isSafeAssetPath(path)) return '#';
             return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(RAW_CONTENT_BASE + path);

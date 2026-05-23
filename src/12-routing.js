@@ -27,4 +27,7 @@
             }
         }
 
-        window.addEventListener('hashchange', handleRoute);
+        /** Registers hashchange listener for client-side routing. Called once from app init. */
+        function initRouting() {
+            window.addEventListener('hashchange', handleRoute);
+        }

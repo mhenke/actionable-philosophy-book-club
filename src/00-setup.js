@@ -8,10 +8,6 @@ const mdCache = new Map();  // Meeting markdown cache (Promises)
 // Meeting data manifest, loaded from docs/manifest.json at startup.
 let MEETINGS = [];
 let ASSET_COPY = {};
-function getMeetings() { return MEETINGS; }
-function setMeetings(val) { MEETINGS = val; }
-function getCopyData() { return ASSET_COPY; }
-function setCopyData(val) { ASSET_COPY = val; }
 
 const DEFAULT_ASSET_COPY = Object.freeze({
     alternate: { label: 'Alternate', title: 'A different take on the session topic', icon: '🎬', color: 'var(--spectrum-2)' },

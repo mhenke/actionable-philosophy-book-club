@@ -1,4 +1,5 @@
         // ── Theme toggle logic (extracted from 06-app.js) ──
+        /** Returns true if dark-theme class is active, false for light-theme, falls back to prefers-color-scheme. */
         function isDarkTheme() {
             if (document.documentElement.classList.contains('dark-theme')) return true;
             if (document.documentElement.classList.contains('light-theme')) return false;
@@ -47,14 +48,12 @@
             }
         }
 
-        // Initialize theme UI states to match whatever resolved during FOUC prevention or media queries
-        setTheme(isDarkTheme(), false);
-
-        // Bind events to both theme toggle buttons
-        const themeToggles = document.querySelectorAll('.theme-toggle-btn');
-        themeToggles.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const currentDark = isDarkTheme();
-                setTheme(!currentDark, true);
+        /** Initializes theme UI: applies resolved theme, binds toggle button events. Called once from app init. */
+        function initTheme() {
+            setTheme(isDarkTheme(), false);
+            document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    setTheme(!isDarkTheme(), true);
+                });
             });
-        });
+        }

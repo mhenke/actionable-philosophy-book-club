@@ -1,3 +1,4 @@
+        /** Creates and shows a timed toast notification. Auto-removes after TOAST_DURATION_MS + fade. */
         function showToast(message) {
             const container = document.getElementById('toast-container');
             if (!container) return;

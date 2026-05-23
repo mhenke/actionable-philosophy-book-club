@@ -114,6 +114,7 @@
             overlay.showModal();
         }
 
+        /** Closes the video dialog overlay and runs cleanup. */
         function closeVideoPlayer() {
             if (_videoPlayerCleanup) {
                 _videoPlayerCleanup();
