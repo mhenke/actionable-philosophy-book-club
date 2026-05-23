@@ -6,7 +6,7 @@
  * - loadManifest()
  * - getMeetingRepository()
  *
- * Side-effects: populates meetingRepo and ASSET_COPY via _processManifestData.
+ * Side-effects: populates meetingRepo and ASSET_COPY via _initializeManifestState.
  */
 (function() {
 'use strict';
@@ -16,7 +16,7 @@ function getMeetingRepository() {
     return meetingRepo;
 }
 
-function _processManifestData(manifestData) {
+function _initializeManifestState(manifestData) {
     if (!manifestData.meetings || !Array.isArray(manifestData.meetings)) throw new Error('Invalid manifest structure');
     meetingRepo = new MeetingRepository();
     meetingRepo.setAll(manifestData.meetings);
@@ -26,7 +26,7 @@ function _processManifestData(manifestData) {
 async function loadManifest() {
     const inlineData = window.__MANIFEST_DATA || (typeof window.MANIFEST_DATA !== 'undefined' ? window.MANIFEST_DATA : null);
     if (inlineData) {
-        _processManifestData(inlineData);
+        _initializeManifestState(inlineData);
         return;
     }
     const controller = new AbortController();
@@ -34,8 +34,8 @@ async function loadManifest() {
     try {
         const response = await fetch('docs/manifest.json', { signal: controller.signal });
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        const data = await response.json();
-        _processManifestData(data);
+        const manifestData = await response.json();
+        _initializeManifestState(manifestData);
     } finally {
         clearTimeout(timeoutId);
     }

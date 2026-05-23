@@ -14,8 +14,8 @@
 'use strict';
 let ASSET_COPY = {};
 
-function setAssetCopyRegistry(data) {
-    ASSET_COPY = data;
+function setAssetCopyRegistry(registry) {
+    ASSET_COPY = registry;
 }
 
 const DEFAULT_ASSET_COPY = Object.freeze({
