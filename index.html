@@ -159,6 +159,8 @@
             color: var(--spectrum-2);
             min-height: 44px;
             transition: color 0.15s, opacity 0.1s, transform 0.1s;
+            flex: 1 1 0%;
+            min-width: 0;
         }
         .asset-link:hover  { color: var(--spectrum-1); }
         .asset-link:active { color: var(--spectrum-1); opacity: 0.6; transform: scale(0.98); }
@@ -172,6 +174,12 @@
             align-items: center;
             gap: 0.75rem;
             width: 100%;
+        }
+        .asset-link-text {
+            flex: 1 1 auto;
+            min-width: 0;
+            word-break: break-word;
+            overflow-wrap: anywhere;
         }
         .podcast-caption,
         .asset-meta {
@@ -280,8 +288,21 @@
             background: var(--materials-panel-bg);
             border: 1px solid var(--border-low);
         }
-        .materials-panel li { padding: 0; border: none; color: var(--text-primary); margin-bottom: 0; }
-        .materials-panel ul { list-style-type: none !important; padding: 0 !important; margin: 0; }
+        .materials-panel li {
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            padding: 0;
+            border: none;
+            color: var(--text-primary);
+            margin-bottom: 0;
+        }
+        .materials-panel ul {
+            width: 100%;
+            list-style-type: none !important;
+            padding: 0 !important;
+            margin: 0;
+        }
         .tree-connector {
             color: var(--spectrum-3);
             user-select: none;
@@ -289,14 +310,18 @@
             letter-spacing: 0;
             display: inline-flex;
             align-items: center;
+            flex-shrink: 0;
         }
         .materials-panel a {
             color: var(--spectrum-2);
             font-weight: 400;
             text-decoration: none;
             font-family: inherit;
-            display: inline-flex;
-            align-items: center;
+            display: block;
+            flex: 1 1 0%;
+            min-width: 0;
+            word-break: break-all;
+            overflow-wrap: anywhere;
             padding: 2px 0;
             position: relative;
         }
@@ -313,9 +338,12 @@
         .materials-panel a:active { opacity: 0.6; }
         .materials-panel .tree-folder > a { font-weight: 600; color: var(--text-primary); }
         .materials-panel .tree-folder > a:hover { color: var(--text-primary); text-decoration: none; }
-        .materials-panel .tree-folder > span {
-            display: inline-flex;
-            align-items: center;
+        .materials-panel .tree-folder > span:not(.tree-connector) {
+            display: block;
+            flex: 1 1 0%;
+            min-width: 0;
+            word-break: break-all;
+            overflow-wrap: anywhere;
             font-weight: 600;
             color: var(--text-primary);
             padding: 2px 0;

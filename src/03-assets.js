@@ -20,7 +20,7 @@
                         <a href="${escapeHTML(meeting.video.file)}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                                ${escapeHTML(meeting.video.label)}
+                                <span class="asset-link-text">${escapeHTML(meeting.video.label)}</span>
                             </span>
                             ${metaLine}
                         </a>
@@ -35,7 +35,7 @@
                     <div class="asset-row opacity-50">
                         <span class="asset-link cursor-default">
                             <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            Video Recording <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                            <span class="asset-link-text">Video Recording</span> <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
                         </span>
                     </div>`;
         }
@@ -48,7 +48,7 @@
                         <a href="${buildPPTXViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                                ${escapeHTML(meeting.slides.label)}
+                                <span class="asset-link-text">${escapeHTML(meeting.slides.label)}</span>
                             </span>
                             ${metaLine}
                         </a>
@@ -63,7 +63,7 @@
                     <div class="asset-row opacity-50">
                         <span class="asset-link cursor-default">
                             <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            Slides <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                            <span class="asset-link-text">Slides</span> <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
                         </span>
                     </div>`;
         }
@@ -86,7 +86,7 @@
                         <a href="${escapeHTML(pod.file)}" class="asset-link asset-link--stacked">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                                ${escapeHTML(pod.label)}
+                                <span class="asset-link-text">${escapeHTML(pod.label)}</span>
                                 <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(badgeLabel)}</span>
                             </span>
                             ${metaLine}
