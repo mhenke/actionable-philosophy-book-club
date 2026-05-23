@@ -1,42 +1,13 @@
 /**
  * Meeting: Immutable data class for meeting session metadata.
- * 
+ *
  * Validates schema at construction time (APOSD Principle 7: Define Errors Out of Existence).
  * Provides typed accessors to reduce information leakage across rendering functions.
- * 
- * APOSD Principle 3 (Information Hiding): Callers use methods like hasVideo(), isDone()
- * instead of accessing nested properties like meeting.video.file or meeting.status directly.
- * 
- * APOSD Principle 5 (Comments First): This comment defines the contract:
- * - A Meeting is created from a plain object (from manifest.json)
- * - Constructor validates: id, title, and status are required + valid
- * - Invalid data throws; valid meetings cannot fail at render time
- * - All assets (video, slides, podcasts, resources) are optional
+ * Callers should use getter methods (getVideoFile(), getSession(), etc.) instead of
+ * accessing raw properties directly.
  */
 class Meeting {
-  /**
-   * Construct a Meeting from a plain object.
-   * 
-   * Validates required fields and status value. Throws if invalid.
-   * This ensures only valid meetings can exist in the repository.
-   * 
-   * @param {Object} data - Plain meeting object from manifest.json
-   * @param {string} data.id - Unique ID (required). E.g., 'meeting-01'
-   * @param {string} data.title - Display title (required). E.g., 'Session 1: Design Philosophy'
-   * @param {string} data.status - Status (required, must be 'done'|'upcoming'|'horizon'|'draft')
-   * @param {string} [data.date] - ISO date string. Optional.
-   * @param {Object} [data.video] - Video metadata { file, label }. Optional.
-   * @param {Object} [data.slides] - Slides metadata { file }. Optional.
-   * @param {Array} [data.podcasts] - Array of podcast file paths. Optional.
-   * @param {Array} [data.resources] - Array of resource file paths. Optional.
-   * @param {string} [data.color] - Spectrum color token (e.g., 'spectrum-1'). Optional.
-   * @param {string} [data.wash] - Spectrum wash token (e.g., 'wash-1'). Optional.
-   * @param {number} [data.duration] - Duration in seconds. Optional.
-   * 
-   * @throws {Error} If id, title, or status are missing or invalid.
-   */
   constructor(data) {
-    // Validate required fields (APOSD Rule 7: Define errors out of existence)
     if (!data?.id || typeof data.id !== 'string') {
       throw new Error('Meeting: id is required and must be a string');
     }
@@ -48,7 +19,6 @@ class Meeting {
       throw new Error(`Meeting ${data.id}: status must be one of [${validStatuses.join(', ')}], got '${data.status}'`);
     }
 
-    // Store all manifest fields (immutable by convention)
     this.id = data.id;
     this.title = data.title;
     this.session = data.session || '';
@@ -65,113 +35,36 @@ class Meeting {
     this.keyTakeaway = data.keyTakeaway || '';
   }
 
-  /**
-   * Whether this meeting has a completed video recording.
-   * Returns true only if status is 'done' AND video.file exists.
-   * 
-   * Encapsulates the business logic: only finished meetings display videos.
-   * Callers don't repeat `m.status === 'done' && m.video.file` everywhere.
-   * 
-   * @returns {boolean}
-   */
   hasVideo() {
     return this.status === 'done' && !!(this.video && this.video.file);
   }
 
-  /**
-   * Whether this meeting has a completed status.
-   * @returns {boolean}
-   */
-  isDone() {
-    return this.status === 'done';
-  }
+  isDone() { return this.status === 'done'; }
+  isUpcoming() { return this.status === 'upcoming'; }
+  isHorizon() { return this.status === 'horizon'; }
+  isDraft() { return this.status === 'draft'; }
 
-  /**
-   * Whether this meeting is upcoming (not yet started).
-   * @returns {boolean}
-   */
-  isUpcoming() {
-    return this.status === 'upcoming';
-  }
+  getId() { return this.id; }
+  getTitle() { return this.title; }
+  getSession() { return this.session; }
+  getStatus() { return this.status; }
+  getDate() { return this.date; }
+  getReadmeUrl() { return this.readmeUrl; }
+  getKeyTakeaway() { return this.keyTakeaway; }
+  getColor() { return this.color; }
+  getWash() { return this.wash; }
+  getDuration() { return this.duration; }
+  getPodcasts() { return this.podcasts; }
+  getResources() { return this.resources; }
 
-  /**
-   * Whether this meeting is on the horizon (future, exploratory).
-   * @returns {boolean}
-   */
-  isHorizon() {
-    return this.status === 'horizon';
-  }
+  getVideoFile() { return (this.video && this.video.file) || ''; }
+  getVideoLabel() { return (this.video && this.video.label) || ''; }
+  getVideoDuration() { return (this.video && this.video.duration) || 0; }
+  getVideoFileSize() { return (this.video && this.video.fileSize) || 0; }
+  getSlidesFile() { return (this.slides && this.slides.file) || ''; }
+  getSlidesLabel() { return (this.slides && this.slides.label) || ''; }
+  getSlidesFileSize() { return (this.slides && this.slides.fileSize) || 0; }
 
-  /**
-   * Whether this meeting is in draft (staging, not yet public).
-   * @returns {boolean}
-   */
-  isDraft() {
-    return this.status === 'draft';
-  }
-
-  /**
-   * Video file path for this meeting, or empty string if none.
-   * @returns {string}
-   */
-  getVideoFile() {
-    return (this.video && this.video.file) || '';
-  }
-
-  /**
-   * Video display label, or empty string if none.
-   * @returns {string}
-   */
-  getVideoLabel() {
-    return (this.video && this.video.label) || '';
-  }
-
-  /**
-   * Video duration in seconds, or 0 if unknown.
-   * @returns {number}
-   */
-  getVideoDuration() {
-    return (this.video && this.video.duration) || 0;
-  }
-
-  /**
-   * Video file size in MB, or 0 if unknown.
-   * @returns {number}
-   */
-  getVideoFileSize() {
-    return (this.video && this.video.fileSize) || 0;
-  }
-
-  /**
-   * Slides file path for this meeting, or empty string if none.
-   * @returns {string}
-   */
-  getSlidesFile() {
-    return (this.slides && this.slides.file) || '';
-  }
-
-  /**
-   * Slides display label, or empty string if none.
-   * @returns {string}
-   */
-  getSlidesLabel() {
-    return (this.slides && this.slides.label) || '';
-  }
-
-  /**
-   * Slides file size in MB, or 0 if unknown.
-   * @returns {number}
-   */
-  getSlidesFileSize() {
-    return (this.slides && this.slides.fileSize) || 0;
-  }
-
-  /**
-   * Get all assets for this meeting.
-   * Consolidates access to video, slides, podcasts, resources.
-   * 
-   * @returns {Object} Object with keys: video, slides, podcasts, resources
-   */
   getAssets() {
     return {
       video: this.video,

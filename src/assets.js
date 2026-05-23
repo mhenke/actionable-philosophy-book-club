@@ -33,7 +33,9 @@ function buildPPTXViewerURL(path) {
     return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(_getRawContentBase() + path);
 }
 
-const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
+function _downloadIcon() {
+    return '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>';
+}
 
 function buildVideoRow(meeting) {
     const videoDuration = meeting.getVideoDuration() ? formatDuration(meeting.getVideoDuration()) : '';
@@ -41,10 +43,12 @@ function buildVideoRow(meeting) {
     const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
     const metaLine = videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '';
     const videoSlug = meeting.getVideoFile().split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
-    const videoAssetId = `asset-${escapeHTML(meeting.id)}-video-${videoSlug}`;
+    const id = escapeHTML(meeting.getId());
+    const videoAssetId = `asset-${id}-video-${videoSlug}`;
+    const session = escapeHTML(meeting.getSession());
     return `
-                    <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" data-canonical="true" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.getVideoFile())}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})">
+                    <div class="asset-row" data-testid="${id}-canonical" data-canonical="true" id="${videoAssetId}">
+                        <a href="${escapeHTML(meeting.getVideoFile())}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${session})">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
                                 <span class="asset-link-text">${escapeHTML(meeting.getVideoLabel())}</span>
@@ -52,8 +56,8 @@ function buildVideoRow(meeting) {
                             ${metaLine}
                         </a>
                         <a href="${escapeHTML(meeting.getVideoFile())}" download
-                           aria-label="Download ${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})"
-                           class="asset-dl">${DL_ICON}</a>
+                           aria-label="Download ${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${session})"
+                           class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
 }
 
@@ -85,8 +89,8 @@ function buildSlidesRow(meeting) {
                             ${metaLine}
                         ${viewerClose}
                         <a href="${escapeHTML(meeting.getSlidesFile())}" download
-                           aria-label="Download slides (${escapeHTML(meeting.session)})"
-                           class="asset-dl">${DL_ICON}</a>
+                           aria-label="Download slides (${escapeHTML(meeting.getSession())})"
+                           class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
 }
 
@@ -111,7 +115,7 @@ function buildPodcastRow(pod, meeting) {
     const podMeta = [podDuration, podSize].filter(Boolean).join(' · ');
     const metaLine = podMeta ? `<span class="asset-meta">${podMeta}</span>` : '';
     const podSlug = pod.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
-    const podAssetId = `asset-${escapeHTML(meeting.id)}-podcast-${podSlug}`;
+    const podAssetId = `asset-${escapeHTML(meeting.getId())}-podcast-${podSlug}`;
     const fileExt = pod.file.split('.').pop() || 'file';
     const downloadLabel = `Download ${escapeHTML(pod.label)}${podDuration ? ', ' + podDuration : ''} (${fileExt.toUpperCase()} audio)`;
     return `
@@ -127,7 +131,7 @@ function buildPodcastRow(pod, meeting) {
                         </a>
                         <a href="${escapeHTML(pod.file)}" download
                            aria-label="${downloadLabel}"
-                           class="asset-dl">${DL_ICON}</a>
+                           class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
 }
 
@@ -188,12 +192,13 @@ function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
         primaryRows.push(buildSlidesPlaceholder());
     }
 
-    const podcastRows = (meeting.podcasts || [])
+    const podcasts = meeting.getPodcasts();
+    const podcastRows = podcasts
         .filter(pod => isSafePath(pod.file, DOMAIN.ASSET))
         .map(pod => buildPodcastRow(pod, meeting));
 
-    const resourceStrip = buildResourceStrip(meeting.resources);
-    const podcastSummary = buildPodcastSummary(meeting.podcasts);
+    const resourceStrip = buildResourceStrip(meeting.getResources());
+    const podcastSummary = buildPodcastSummary(podcasts);
 
     return { primaryRows, podcastRows, resourceStrip, podcastSummary };
 }

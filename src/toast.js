@@ -37,11 +37,8 @@ function showToast(message) {
  */
 (function () {
     const ErrorHandler = {
-        warn(message, { err = null, userFacing = false } = {}) {
+        warn(message, err = null) {
             try { console.warn('ErrorHandler:', message, err); } catch (e) { /* best-effort */ }
-            if (userFacing && typeof showToast === 'function') {
-                try { showToast(String(message)); } catch (e) { /* ignore */ }
-            }
         },
         error(err, userMessage) {
             try { console.error('ErrorHandler:', err); } catch (e) { /* ignore */ }

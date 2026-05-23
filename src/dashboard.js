@@ -1,7 +1,3 @@
-/**
- * Renders the upcoming meeting card: header, asset rows, key takeaway, CTA, podcast disclosure.
- * Clears containers when no upcoming meeting exists.
- */
 function renderUpcomingMaterials() {
     const container = document.getElementById('upcoming-materials-container');
     const podcastContainer = document.getElementById('upcoming-podcasts');
@@ -25,8 +21,8 @@ function renderUpcomingMaterials() {
         headerContainer.innerHTML = `
                     <div class="flex justify-between items-start gap-4">
                         <div class="card-title">
-                            <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
-                            <h2 id="next-meeting-heading" class="text-2xl md:text-3xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h2>
+                            <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">${escapeHTML(meeting.getSession())} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.getDate())}</span></span>
+                            <h2 id="next-meeting-heading" class="text-2xl md:text-3xl font-bold tracking-tight">${escapeHTML(meeting.getTitle())}</h2>
                         </div>
                         <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest px-2 py-1 leading-none" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2);">Upcoming</span>
                     </div>`;
@@ -38,16 +34,16 @@ function renderUpcomingMaterials() {
         : primaryRows.join('') + resourceStrip;
 
     if (quoteContainer) {
-        quoteContainer.innerHTML = meeting.keyTakeaway
+        quoteContainer.innerHTML = meeting.getKeyTakeaway()
             ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
-                               <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
+                               <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.getKeyTakeaway())}</p>
                            </div>`
             : '';
     }
 
-    if (ctaContainer && meeting.readmeUrl) {
-        ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
+    if (ctaContainer && meeting.getReadmeUrl()) {
+        ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.getReadmeUrl())}" class="meeting-notes-link btn btn-primary w-full py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
     }
 
     if (podcastContainer) {
@@ -59,10 +55,6 @@ function renderUpcomingMaterials() {
     if (footer) footer.classList.remove('hidden-view');
 }
 
-/**
- * Renders archive cards for all completed meetings. Each card shows
- * primary assets, resource strip, podcast disclosure, and a Meeting Notes CTA.
- */
 function renderArchiveCards() {
     const archiveContainer = document.getElementById('archive-cards-container');
     if (!archiveContainer) return;
@@ -80,14 +72,14 @@ function renderArchiveCards() {
         card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div class="card-title">
-                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
-                            <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.getSession())} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.getDate())}</span></span>
+                            <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.getTitle())}</h3>
                         </div>
                         <span class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-widest px-2 py-1 leading-none" style="border:1px solid var(--text-muted);color:var(--text-muted)">Done</span>
                     </div>
                     ${primaryRows.join('')}
                     ${resourceStrip}
-                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost">Meeting Notes &rarr;</a>
+                    <a href="#p=${escapeHTML(meeting.getReadmeUrl())}" class="meeting-notes-link btn-ghost">Meeting Notes &rarr;</a>
                     ${podcastSection}
                 `;
 
@@ -100,10 +92,6 @@ function renderArchiveCards() {
     if (archiveSection) archiveSection.classList.remove('hidden-view');
 }
 
-/**
- * Renders horizon cards for draft/planned meetings.
- * Hides the horizon section entirely when no drafts exist.
- */
 function renderHorizonCards() {
     const horizonContainer = document.getElementById('horizon-cards-container');
     if (!horizonContainer) return;
@@ -126,7 +114,7 @@ function renderHorizonCards() {
         card.innerHTML = `
                     <div class="flex justify-between items-start mb-5 gap-4">
                         <div class="card-title">
-                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
+                            <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.getSession())} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.getDate())}</span></span>
                             <h3 class="text-xl font-bold tracking-tight text-muted">Coming Soon</h3>
                         </div>
                         <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-muted px-2 py-1 leading-none" style="border: 1px solid var(--text-muted)">Planned</span>
