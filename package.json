@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
+    "caniuse-lite": "^1.0.30001793",
     "dompurify": "^3.4.4",
     "marked": "^18.0.3",
     "tailwindcss": "3.4.17",
