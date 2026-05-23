@@ -1,4 +1,4 @@
-# Welcome to the Actionable Philosophy Book Club
+# Onboarding Guide for the Actionable Philosophy Book Club
 
 This site is your hub for every book-club session. Here's how it works.
 
