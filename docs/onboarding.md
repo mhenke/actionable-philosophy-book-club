@@ -27,7 +27,7 @@ Each session follows the same flow:
 - Share a direct link to any media asset by clicking it — the URL updates for easy sharing.
 - Use the copy-link button in the reader header to share specific session notes.
 - Press Esc from the reader view to return to the dashboard.
-- **Onboarding banner** — If you dismissed the onboarding banner on the dashboard, you can restore it anytime: <button class="restore-onboarding-action hover:text-spectrum-2 transition-colors cursor-pointer font-semibold uppercase tracking-wider text-xs text-spectrum-2 underline">Restore onboarding banner</button>
+- [Restore onboarding banner](#onboarding-banner) — If you dismissed the onboarding banner on the dashboard, you can restore it anytime.
 
 ## Questions?
 

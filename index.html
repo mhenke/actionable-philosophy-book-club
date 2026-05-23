@@ -787,7 +787,7 @@
             <div class="spectrum-bar"></div>
         </header>
 
-        <main id="main-content" tabindex="-1" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto pb-24">
+        <main id="main-content" role="main" tabindex="-1" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto pb-24">
             <!-- Onboarding banner — shown on first visit, dismissible -->
             <div id="onboarding-banner" class="hidden-view onboarding-banner mb-6">
                 <p>
@@ -845,7 +845,7 @@
                         Knowledge Base
                         <span class="spectrum-rule"></span>
                     </h2>
-                    <button id="restore-onboarding" class="hover:text-spectrum-2 transition-colors cursor-pointer font-semibold uppercase tracking-wider text-[0.6875rem]" style="background:none;border:none;padding:0;color:var(--text-muted);">Restore onboarding banner</button>
+                    <a id="restore-onboarding" role="button" href="#onboarding-banner" class="btn-ghost" aria-controls="onboarding-banner">Restore onboarding banner</a>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
                     <a href="#p=docs/onboarding.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-onboarding">
@@ -911,7 +911,7 @@
         </header>
 
         <div id="reader-status" role="status" class="sr-only"></div>
-        <main class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto pt-10 pb-24">
+        <main role="main" class="p-5 md:p-10 lg:px-16 max-w-6xl mx-auto pt-10 pb-24">
             <article id="markdown-content" tabindex="-1" class="prose" aria-label="Document content" aria-busy="false">
         </article>
         </main>
