@@ -10,6 +10,10 @@ if (window.__TEST__ === true) {
     window.saveVideoResumePosition = saveVideoResumePosition;
     window.formatDuration = formatDuration;
     window.formatFileSize = formatFileSize;
-    window.MEETINGS = MEETINGS;
-    window.ASSET_COPY = ASSET_COPY;
+    window.getMeetingRepository = getMeetingRepository;
+    window.getAssetCopy = getAssetCopy;
+    window.getAssetCopyRegistry = getAssetCopyRegistry;
+    Object.defineProperty(window, 'MEETINGS', {
+        get() { const repo = getMeetingRepository(); return repo ? repo.getAll() : []; }
+    });
 }

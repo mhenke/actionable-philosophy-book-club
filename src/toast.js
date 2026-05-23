@@ -1,6 +1,7 @@
 const TOAST_DURATION_MS = 4500;
 const TOAST_FADE_MS = 300;
 
+/** Shows a temporary notification toast. Auto-dismisses after TOAST_DURATION_MS with fade. */
 function showToast(message) {
     const container = document.getElementById('toast-container');
     if (!container) {

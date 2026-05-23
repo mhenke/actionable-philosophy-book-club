@@ -1,13 +1,13 @@
 /**
- * MeetingRepository: Single access point for MEETINGS global.
- * 
+ * MeetingRepository: Single access point for meeting data.
+ *
  * Encapsulates meeting data to enforce information hiding (APOSD Principle 3).
- * All read/write access to MEETINGS goes through this repository, preventing
- * direct mutation and allowing us to change the schema without touching callers.
- * 
+ * All read/write access goes through this repository, preventing direct mutation
+ * and allowing schema changes without touching callers.
+ *
  * APOSD Principle 2 (Deep Modules): Simple interface (getAll, getById, getDone),
- * powerful implementation (validation, mutation control, lazy initialization).
- * 
+ * powerful implementation (validation, mutation control).
+ *
  * APOSD Principle 7 (Define Errors Out of Existence): Validates schema at load
  * time, preventing invalid meetings from existing in memory.
  */

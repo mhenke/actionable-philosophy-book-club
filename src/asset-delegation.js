@@ -1,7 +1,8 @@
+/** Sets up delegated click handlers on [data-asset-container] elements. Routes .mp4 clicks to video player, others to navigation. */
 function setupAssetClickDelegation() {
     const containers = document.querySelectorAll('[data-asset-container]');
     containers.forEach(container => {
-        if (!guard(container)) return;
+        if (!callOnce(container)) return;
         container.addEventListener('click', (e) => {
             const link = e.target.closest('.asset-link');
             if (!link) return;

@@ -1,5 +1,13 @@
 const CACHE_MAX = 20;
+const mdCache = new Map();
 
+/**
+ * Fetches markdown with a 20-entry LRU cache. Caches promises, not just values.
+ * Automatically evicts on reject to avoid caching errors.
+ * @param {string} path - Validated repo path
+ * @param {AbortSignal} [signal] - Optional AbortController signal
+ * @returns {Promise<string>}
+ */
 function fetchMarkdown(path, signal) {
     if (!isSafePath(path, DOMAIN.REPO)) return Promise.reject(new Error('Unsafe path: ' + path));
     if (mdCache.has(path)) {
@@ -23,37 +31,11 @@ function fetchMarkdown(path, signal) {
     return promise;
 }
 
-const _guarded = new WeakMap();
-function guard(key) {
-    if (_guarded.has(key)) return false;
-    _guarded.set(key, true);
+const _called = new WeakMap();
+function callOnce(key) {
+    if (_called.has(key)) return false;
+    _called.set(key, true);
     return true;
 }
 
-function bindRetryButton(btn, handler, { retryText, retryDisabledText } = {}) {
-    btn.addEventListener('click', async () => {
-        btn.textContent = retryDisabledText || 'Retrying...';
-        btn.disabled = true;
-        try {
-            await handler();
-        } catch {
-            btn.textContent = retryText || 'Try again';
-            btn.disabled = false;
-        }
-    });
-}
 
-function showRetryUI(container, { message, retryLabel, onRetry, backLabel, onBack }) {
-    container.innerHTML = `
-                <div class="py-12 text-center">
-                    <p class="text-sm uppercase tracking-widest text-muted mb-4">${escapeHTML(message)}</p>
-                    <div class="flex gap-4 justify-center">
-                        ${onRetry ? `<button class="retry-btn text-sm uppercase tracking-widest text-spectrum-2 underline">${escapeHTML(retryLabel || 'Try again')}</button>` : ''}
-                        ${onBack ? `<button class="back-btn text-sm uppercase tracking-widest text-muted underline">${escapeHTML(backLabel || 'Return to Dashboard')}</button>` : ''}
-                    </div>
-                </div>`;
-    const retryBtn = container.querySelector('.retry-btn');
-    if (retryBtn && onRetry) bindRetryButton(retryBtn, onRetry);
-    const backBtn = container.querySelector('.back-btn');
-    if (backBtn && onBack) backBtn.addEventListener('click', onBack);
-}

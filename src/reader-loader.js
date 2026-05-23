@@ -1,6 +1,11 @@
 let _activeReaderController = null;
 let _loadPageGeneration = 0;
 
+/**
+ * Fetches, parses, sanitizes, and renders a markdown file into the reader view.
+ * Handles stale call detection via generation counter, abort of previous requests,
+ * link rewriting, table of contents generation, file tree rendering, and anchor scrolling.
+ */
 async function loadPage(path, anchorId) {
     const myGeneration = ++_loadPageGeneration;
 

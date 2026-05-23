@@ -4,6 +4,7 @@ function _disableLink(link, title) {
     if (title) link.setAttribute('title', title);
 }
 
+/** Rewrites <a> hrefs in rendered content: .md → #p=, .pptx → Office viewer, images → direct link. Disables unsafe paths. */
 function rewriteContentLinks(container, docPath) {
     const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
     for (const link of container.querySelectorAll('a')) {

@@ -1,3 +1,4 @@
+/** Shows a dashboard render error in the upcoming card header and as a toast. */
 function showDashboardRenderError(err) {
     const msg = err?.message ? 'Could not load dashboard data: ' + err.message : 'Could not load dashboard data';
     const upcomingHeader = document.getElementById('upcoming-card-header');
@@ -7,6 +8,7 @@ function showDashboardRenderError(err) {
     showToast(msg);
 }
 
+/** Application entry point: initializes theme, routing, event wiring, loads manifest, renders dashboard. */
 (async () => {
     initTheme();
     initRouting();

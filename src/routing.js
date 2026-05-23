@@ -1,9 +1,11 @@
 const _routeHandlers = {};
 
+/** Registers a named route handler (e.g., 'reader', 'default'). */
 function registerRoute(name, handler) {
     _routeHandlers[name] = handler;
 }
 
+/** Parses window.location.hash, validates path, dispatches to registered handler. */
 function handleRoute() {
     const hash = window.location.hash;
     if (hash.startsWith('#p=')) {

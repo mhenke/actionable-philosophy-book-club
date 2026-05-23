@@ -1,7 +1,15 @@
 const _ASSET_ROOTS = new Set(['meetings', 'assets']);
 const _REPO_ROOTS = new Set(['meetings', 'docs', 'templates']);
+/** Domain enum for isSafePath: restricts validation to repo paths, asset paths, or either. */
 const DOMAIN = Object.freeze({ REPO: 'repo', ASSET: 'asset', ANY: 'any' });
 const PATH_MAX_LENGTH = 256;
+/**
+ * Validates a path against security rules and domain constraints.
+ * Rejects protocol URLs, traversal, absolute paths, control chars, invalid extensions, and disallowed roots.
+ * @param {string} p - Relative path to validate
+ * @param {'repo'|'asset'|'any'} domain - Restricts validation scope
+ * @returns {boolean} True if path is safe
+ */
 function isSafePath(p, domain) {
     if (!p || typeof p !== 'string') return false;
     if (p.length === 0 || p.length > PATH_MAX_LENGTH) return false;

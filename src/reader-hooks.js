@@ -1,7 +1,8 @@
 const _ALLOWED_EXTERNAL_HOSTS = /^https?:\/\/(mhenke\.github\.io|view\.officeapps\.live\.com|github\.com)\//i;
 
+/** Installs DOMPurify afterSanitizeAttributes hook: strips external links outside the allowlist, adds target=_blank + rel=noopener for allowed ones. Runs once via callOnce. */
 function ensureDOMPurifyHooks() {
-    if (!guard(ensureDOMPurifyHooks)) return;
+    if (!callOnce(ensureDOMPurifyHooks)) return;
     DOMPurify.addHook('afterSanitizeAttributes', node => {
         if (node.tagName !== 'A') return;
         const href = node.getAttribute('href') || '';

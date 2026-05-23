@@ -1,3 +1,7 @@
+/**
+ * Renders the upcoming meeting card: header, asset rows, key takeaway, CTA, podcast disclosure.
+ * Clears containers when no upcoming meeting exists.
+ */
 function renderUpcomingMaterials() {
     const container = document.getElementById('upcoming-materials-container');
     const podcastContainer = document.getElementById('upcoming-podcasts');
@@ -7,7 +11,7 @@ function renderUpcomingMaterials() {
     if (!container) return;
 
     const upcomingSection = container.closest('section');
-    const meeting = MEETINGS.find(m => m.status === 'upcoming');
+    const meeting = getMeetingRepository().getUpcoming()[0];
     if (!meeting) {
         container.innerHTML = '';
         if (headerContainer) headerContainer.innerHTML = '';
@@ -55,10 +59,14 @@ function renderUpcomingMaterials() {
     if (footer) footer.classList.remove('hidden-view');
 }
 
+/**
+ * Renders archive cards for all completed meetings. Each card shows
+ * primary assets, resource strip, podcast disclosure, and a Meeting Notes CTA.
+ */
 function renderArchiveCards() {
     const archiveContainer = document.getElementById('archive-cards-container');
     if (!archiveContainer) return;
-    const done = MEETINGS.filter(m => m.status === 'done');
+    const done = getMeetingRepository().getDone();
 
     const fragment = document.createDocumentFragment();
     for (const meeting of done) {
@@ -92,10 +100,14 @@ function renderArchiveCards() {
     if (archiveSection) archiveSection.classList.remove('hidden-view');
 }
 
+/**
+ * Renders horizon cards for draft/planned meetings.
+ * Hides the horizon section entirely when no drafts exist.
+ */
 function renderHorizonCards() {
     const horizonContainer = document.getElementById('horizon-cards-container');
     if (!horizonContainer) return;
-    const drafts = MEETINGS.filter(m => m.status === 'draft');
+    const drafts = getMeetingRepository().getDraft();
     const horizonSection = horizonContainer.closest('section');
 
     if (drafts.length === 0) {

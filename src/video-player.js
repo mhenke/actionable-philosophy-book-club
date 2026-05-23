@@ -1,5 +1,6 @@
 let _videoPlayerCleanup = null;
 
+/** Opens the video overlay dialog, loads the video, checks for VTT captions, shows resume bar if position saved. */
 function openVideoPlayer(filePath, label) {
     if (_videoPlayerCleanup) {
         try { _videoPlayerCleanup(); } finally { _videoPlayerCleanup = null; }
@@ -102,6 +103,7 @@ function openVideoPlayer(filePath, label) {
     overlay.showModal();
 }
 
+/** Closes the video player dialog and cleans up event listeners. */
 function closeVideoPlayer() {
     if (_videoPlayerCleanup) {
         try { _videoPlayerCleanup(); } finally { _videoPlayerCleanup = null; }

@@ -35,13 +35,14 @@ function loadAssetCopyRegistry(assetCopy) {
     return registry;
 }
 
+/** Returns the raw asset copy registry (test exposure only). */
 function getAssetCopyRegistry() {
-    // Return the raw sanitized registry as loaded from the manifest, not the
-    // runtime-merged copy used for rendering. Tests expect to observe which
-    // entries were explicitly provided in the manifest (undefined for missing keys).
-    return RAW_ASSET_COPY;
+    return ASSET_COPY;
 }
 
+/**
+ * MeetingRepository: Single access point for meeting data.
+ */
 function getAssetCopy(type) {
     const entry = ASSET_COPY[type];
     if (entry && typeof entry === 'object' && !Array.isArray(entry)) {

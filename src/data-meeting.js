@@ -48,9 +48,10 @@ class Meeting {
       throw new Error(`Meeting ${data.id}: status must be one of [${validStatuses.join(', ')}], got '${data.status}'`);
     }
 
-    // Store data (immutable by convention)
+    // Store all manifest fields (immutable by convention)
     this.id = data.id;
     this.title = data.title;
+    this.session = data.session || '';
     this.status = data.status;
     this.date = data.date || '';
     this.video = data.video || {};
@@ -60,6 +61,8 @@ class Meeting {
     this.color = data.color || '';
     this.wash = data.wash || '';
     this.duration = data.duration || 0;
+    this.readmeUrl = data.readmeUrl || '';
+    this.keyTakeaway = data.keyTakeaway || '';
   }
 
   /**

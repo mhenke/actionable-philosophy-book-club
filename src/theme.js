@@ -1,9 +1,11 @@
+/** Returns true if the current theme is dark (checks classes, falls back to prefers-color-scheme). */
 function isDarkTheme() {
     if (document.documentElement.classList.contains('dark-theme')) return true;
     if (document.documentElement.classList.contains('light-theme')) return false;
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
+/** Applies dark/light theme classes, persists to localStorage if user-initiated, syncs toggle labels, shows toast. */
 function setTheme(isDark, userInitiated = false) {
     if (isDark) {
         document.documentElement.classList.add('dark-theme');
@@ -32,6 +34,7 @@ function setTheme(isDark, userInitiated = false) {
     }
 }
 
+/** Initializes theme from stored preference or system preference, binds toggle buttons. */
 function initTheme() {
     setTheme(isDarkTheme(), false);
     document.querySelectorAll('.theme-toggle-btn').forEach(btn => {

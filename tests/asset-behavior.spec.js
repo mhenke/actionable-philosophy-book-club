@@ -84,9 +84,9 @@ test.describe('Asset behaviour — what users actually do', () => {
         await expect(page.locator('#upcoming-podcasts')).toContainText('Deep Dive');
         await expect(page.locator('#upcoming-podcasts')).toContainText('An exploration of the session topic');
 
-        const loadedCopy = await page.evaluate(() => window.ASSET_COPY);
-        expect(loadedCopy.alternate.label).toBe('Route Alternate Label');
-        expect(loadedCopy['deep-dive']).toBeUndefined();
+        const loadedRegistry = await page.evaluate(() => window.getAssetCopyRegistry());
+        expect(loadedRegistry.alternate.label).toBe('Route Alternate Label');
+        expect(loadedRegistry['deep-dive']).toBeUndefined();
     });
 
     test('archive cards render with Meeting Notes links', async ({ page }) => {

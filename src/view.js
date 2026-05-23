@@ -1,5 +1,6 @@
 const STATUS_RESET_MS = 1000;
 
+/** Toggles visibility between dashboard and reader views. Updates skip-link target. */
 function setView(view) {
     if (view !== 'dashboard') view = 'reader';
     const isDashboard = view === 'dashboard';
@@ -12,6 +13,7 @@ function setView(view) {
     }
 }
 
+/** Closes video player, switches to dashboard view, resets reader content and focus. */
 function navigateToDashboard() {
     closeVideoPlayer();
     document.title = 'Actionable Philosophy Book Club Dashboard';

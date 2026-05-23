@@ -13,8 +13,13 @@ function _getRawContentBase() {
     return 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
 }
 
+/**
+ * Builds Office Online viewer URL for a PPTX file.
+ * @param {string} path - Relative asset path
+ * @returns {string|null} Viewer URL, or null if path is unsafe
+ */
 function buildPPTXViewerURL(path) {
-    if (!isSafePath(path, DOMAIN.ASSET)) return '#';
+    if (!isSafePath(path, DOMAIN.ASSET)) return null;
     return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(_getRawContentBase() + path);
 }
 
@@ -55,15 +60,20 @@ function buildVideoPlaceholder() {
 function buildSlidesRow(meeting) {
     const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
     const metaLine = slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '';
+    const viewerUrl = buildPPTXViewerURL(meeting.slides.file);
+    const viewerLink = viewerUrl
+        ? `<a href="${viewerUrl}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">`
+        : '<span class="asset-link asset-link--stacked">';
+    const viewerClose = viewerUrl ? '</a>' : '</span>';
     return `
                     <div class="asset-row">
-                        <a href="${buildPPTXViewerURL(meeting.slides.file)}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">
+                        ${viewerLink}
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
                                 <span class="asset-link-text">${escapeHTML(meeting.slides.label)}</span>
                             </span>
                             ${metaLine}
-                        </a>
+                        ${viewerClose}
                         <a href="${escapeHTML(meeting.slides.file)}" download
                            aria-label="Download slides (${escapeHTML(meeting.session)})"
                            class="asset-dl">${DL_ICON}</a>
@@ -145,6 +155,14 @@ function buildPodcastSummary(podcasts) {
     return summary ? `Additional Resources: ${summary}` : '';
 }
 
+/**
+ * Builds all asset rows for a meeting: primary (video + slides), podcast rows,
+ * resource strip, and podcast summary. The orchestrator for all asset builders.
+ * @param {object} meeting - Meeting instance or POJO with video/slides/podcasts/resources
+ * @param {object} [opts]
+ * @param {boolean} [opts.includePlaceholders] - Show "Coming Soon" placeholders for missing assets
+ * @returns {{ primaryRows: string[], podcastRows: string[], resourceStrip: string, podcastSummary: string }}
+ */
 function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
     const primaryRows = [];
 

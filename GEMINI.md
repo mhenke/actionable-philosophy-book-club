@@ -74,7 +74,7 @@ npm test
 ## Key Files
 - `index.html`: Main SPA shell (inline CSS in `<style>`, static sections like Knowledge Base).
 - `docs/manifest.json`: Canonical meeting data manifest (inlined into `dist/app.js` at build time).
-- `src/`: JS source modules (00-setup.js through 06-app.js) concatenated into `dist/app.js` via `npm run build:js`.
+- `src/`: JS source modules (setup.js through app.js) concatenated into `dist/app.js` via `npm run build:js`.
 - `PRODUCT.md` / `DESIGN.md`: High-level product and aesthetic goals.
 - `asset-compressor/`: Authoritative FFmpeg scripts for asset optimization.
 - `docs/adr/`: Architectural Decision Records (e.g., Office Online for PPTX viewing).
