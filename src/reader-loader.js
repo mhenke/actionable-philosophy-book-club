@@ -34,7 +34,15 @@ function ensureDOMPurifyHooks() {
 function _scrollToElement(el) {
     el.setAttribute('tabindex', '-1');
     el.focus({ preventScroll: true });
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Calculate and apply an explicit scroll position that accounts for
+    // a sticky header. scrollIntoView has inconsistent offset behavior
+    // across browsers when a sticky header overlaps content, so compute
+    // the target manually.
+    const header = document.querySelector('header.sticky') || document.querySelector('header');
+    const headerHeight = header ? header.getBoundingClientRect().height : 0;
+    const targetTop = window.scrollY + el.getBoundingClientRect().top - headerHeight - 8; // 8px breathing room
+    window.scrollTo({ top: Math.max(0, Math.round(targetTop)), behavior: 'smooth' });
 }
 
 function buildTableOfContents(h2Elements) {
