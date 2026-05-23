@@ -59,7 +59,8 @@ Use `rename_asset.sh` to rename a file to convention and move it into the correc
 |---|---|---|
 | `.mp4`, `.m4a` | recording | `meetings/NN-*/recordings/` |
 | `.pptx`, `.pdf` | slides | `meetings/NN-*/slides/` |
-| `.png`, `.jpg`, `.jpeg` | resource | `meetings/NN-*/resources/` |
+| `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`, `.webp` | resource | `meetings/NN-*/resources/` |
+
 
 **Usage:**
 
