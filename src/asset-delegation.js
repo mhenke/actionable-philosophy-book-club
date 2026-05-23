@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 /** Sets up delegated click handlers on [data-asset-container] elements. Routes .mp4 clicks to video player, others to navigation. */
 function setupAssetClickDelegation() {
     const containers = document.querySelectorAll('[data-asset-container]');
@@ -22,3 +24,6 @@ function setupAssetClickDelegation() {
         });
     });
 }
+
+window.setupAssetClickDelegation = setupAssetClickDelegation;
+})();

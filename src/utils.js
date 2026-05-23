@@ -6,6 +6,8 @@
  *
  * Side-effects: caches promises in an internal LRU map.
  */
+(function() {
+'use strict';
 const CACHE_MAX = 20;
 const mdCache = new Map();
 
@@ -47,4 +49,6 @@ function callOnce(key) {
     return true;
 }
 
-
+window.fetchMarkdown = fetchMarkdown;
+window.callOnce = callOnce;
+})();

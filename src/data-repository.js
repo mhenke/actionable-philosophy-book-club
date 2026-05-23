@@ -11,6 +11,9 @@
  * APOSD Principle 7 (Define Errors Out of Existence): Validates schema at load
  * time, preventing invalid meetings from existing in memory.
  */
+(function() {
+'use strict';
+
 class MeetingRepository {
   constructor() {
     this.meetings = [];
@@ -61,3 +64,6 @@ class MeetingRepository {
   }
 
 }
+
+window.MeetingRepository = MeetingRepository;
+})();

@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 class Meeting {
   /**
    * Validates and stores meeting manifest entry data.
@@ -43,3 +46,6 @@ class Meeting {
   isDraft() { return this.status === 'draft'; }
 
 }
+
+window.Meeting = Meeting;
+})();

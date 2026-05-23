@@ -6,6 +6,8 @@
  *
  * Side-effects: manipulates #video-player-overlay, #vp-video, #vp-title DOM nodes.
  */
+(function() {
+'use strict';
 let _videoPlayerCleanup = null;
 
 function _cleanupPreviousPlayer() {
@@ -65,6 +67,45 @@ function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, file
     startBtn.addEventListener('click', () => { clearVideoResumePosition(filePath); resumeBar.style.display = 'none'; video.play(); }, { once: true });
 }
 
+function _wireVideoEvents(els, lastFocus, filePath) {
+    const saveProgress = () => saveVideoResumePosition(filePath, els.video.currentTime);
+    const vpInterval = setInterval(saveProgress, PROGRESS_SAVE_MS);
+
+    const onClose = () => {
+        if (!els.overlay.open) return;
+        saveProgress();
+        els.video.pause();
+        els.video.removeAttribute('src');
+        els.video.load();
+        els.overlay.close();
+        if (lastFocus && typeof lastFocus.focus === 'function') {
+            try { lastFocus.focus(); } catch(e) { /* ignore */ }
+        }
+        if (_videoPlayerCleanup) {
+            try { _videoPlayerCleanup(); } finally { _videoPlayerCleanup = null; }
+        }
+    };
+
+    const cancelListener = (e) => { e.preventDefault(); onClose(); };
+    const overlayClickHandler = (e) => { if (e.target === els.overlay) onClose(); };
+    const errorHandler = () => { onClose(); showToast('This file is not available yet. Materials appear closer to the meeting date.'); };
+
+    els.overlay.addEventListener('cancel', cancelListener);
+    window.addEventListener('hashchange', onClose);
+    els.closeBtn.addEventListener('click', onClose);
+    els.overlay.addEventListener('click', overlayClickHandler);
+    els.video.addEventListener('error', errorHandler, { once: true });
+
+    _videoPlayerCleanup = () => {
+        clearInterval(vpInterval);
+        els.overlay.removeEventListener('cancel', cancelListener);
+        window.removeEventListener('hashchange', onClose);
+        els.closeBtn.removeEventListener('click', onClose);
+        els.overlay.removeEventListener('click', overlayClickHandler);
+        els.video.removeEventListener('error', errorHandler);
+    };
+}
+
 /** Opens the video overlay dialog, loads the video, checks for VTT captions, shows resume bar if position saved. */
 function openVideoPlayer(filePath, label) {
     _cleanupPreviousPlayer();
@@ -80,51 +121,8 @@ function openVideoPlayer(filePath, label) {
     els.video.load();
 
     _tryLoadCaptionTrack(els.video, filePath);
-
     _setupResumeBar(els.resumeBar, els.resumeText, els.resumeBtn, els.startBtn, els.video, filePath, label);
-
-    const saveProgress = () => saveVideoResumePosition(filePath, els.video.currentTime);
-    const vpInterval = setInterval(saveProgress, PROGRESS_SAVE_MS);
-
-    const onClose = () => {
-        if (!els.overlay.open) return;
-        saveProgress();
-        els.video.pause();
-        els.video.removeAttribute('src');
-        els.video.load();
-        els.overlay.close();
-        if (lastFocusBeforeVideo && typeof lastFocusBeforeVideo.focus === 'function') {
-            try { lastFocusBeforeVideo.focus(); } catch(e) { /* ignore */ }
-        }
-        if (_videoPlayerCleanup) {
-            try { _videoPlayerCleanup(); } finally { _videoPlayerCleanup = null; }
-        }
-    };
-
-    const cancelListener = (e) => { e.preventDefault(); onClose(); };
-    els.overlay.addEventListener('cancel', cancelListener);
-
-    const hashChangeListener = onClose;
-    window.addEventListener('hashchange', hashChangeListener);
-
-    const overlayClickHandler = (e) => { if (e.target === els.overlay) onClose(); };
-    els.closeBtn.addEventListener('click', onClose);
-    els.overlay.addEventListener('click', overlayClickHandler);
-
-    const errorHandler = () => {
-        onClose();
-        showToast('This file is not available yet. Materials appear closer to the meeting date.');
-    };
-    els.video.addEventListener('error', errorHandler, { once: true });
-
-    _videoPlayerCleanup = () => {
-        clearInterval(vpInterval);
-        els.overlay.removeEventListener('cancel', cancelListener);
-        window.removeEventListener('hashchange', hashChangeListener);
-        els.closeBtn.removeEventListener('click', onClose);
-        els.overlay.removeEventListener('click', overlayClickHandler);
-        els.video.removeEventListener('error', errorHandler);
-    };
+    _wireVideoEvents(els, lastFocusBeforeVideo, filePath);
 
     els.overlay.showModal();
 }
@@ -137,3 +135,7 @@ function closeVideoPlayer() {
         overlay.close();
     }
 }
+
+window.openVideoPlayer = openVideoPlayer;
+window.closeVideoPlayer = closeVideoPlayer;
+})();

@@ -7,6 +7,8 @@
  *
  * Side-effects: none (pure validation).
  */
+(function() {
+'use strict';
 const _ASSET_ROOTS = new Set(['meetings', 'assets']);
 const _REPO_ROOTS = new Set(['meetings', 'docs', 'templates']);
 /** Domain enum for isSafePath: restricts validation to repo paths or asset paths. */
@@ -39,3 +41,7 @@ function isSafePath(p, domain) {
     }
     return false;
 }
+
+window.isSafePath = isSafePath;
+window.DOMAIN = DOMAIN;
+})();

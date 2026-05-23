@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 /** Returns true if the current theme is dark (checks classes, falls back to prefers-color-scheme). */
 function isDarkTheme() {
     if (document.documentElement.classList.contains('dark-theme')) return true;
@@ -41,3 +43,6 @@ function initTheme() {
         });
     });
 }
+
+window.initTheme = initTheme;
+})();

@@ -7,6 +7,8 @@
  *
  * Side-effects: reads window.location via viewer.js.
  */
+(function() {
+'use strict';
 
 /** Extracts a URL-safe slug from a file path: filename → lowercased, sanitized, extension stripped. */
 function _toAssetSlug(filePath) {
@@ -43,15 +45,20 @@ function buildVideoRow(meeting) {
                     </div>`;
 }
 
-/** Renders a disabled placeholder row when video is not yet available and placeholders are enabled. */
-function buildVideoPlaceholder() {
+/** Renders a disabled placeholder row for a missing asset type (video/slides). Shared by both placeholder functions. */
+function _buildPlaceholder(emoji, label) {
     return `
                     <div class="asset-row opacity-50">
                         <span class="asset-link cursor-default">
-                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                            <span class="asset-link-text">Video Recording</span> <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
+                            <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${emoji}</span>
+                            <span class="asset-link-text">${label}</span> <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
                         </span>
                     </div>`;
+}
+
+/** Renders a disabled placeholder row when video is not yet available and placeholders are enabled. */
+function buildVideoPlaceholder() {
+    return _buildPlaceholder('🎬', 'Video Recording');
 }
 
 /** Builds the slides asset row with Office Online viewer link, file size, and download button. */
@@ -59,19 +66,18 @@ function buildSlidesRow(meeting) {
     const slidesSize = meeting.slides.fileSize ?? 0 ? formatFileSize(meeting.slides.fileSize ?? 0) : '';
     const metaLine = slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '';
     const viewerUrl = buildPPTXViewerURL(meeting.slides.file ?? '');
-    const viewerLink = viewerUrl
-        ? `<a href="${viewerUrl}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">`
-        : '<span class="asset-link asset-link--stacked">';
-    const viewerClose = viewerUrl ? '</a>' : '</span>';
-    return `
-                    <div class="asset-row">
-                        ${viewerLink}
+    const inner = `
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
                                 <span class="asset-link-text">${escapeHTML(meeting.slides.label ?? '')}</span>
                             </span>
-                            ${metaLine}
-                        ${viewerClose}
+                            ${metaLine}`;
+    const wrapper = viewerUrl
+        ? `<a href="${viewerUrl}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">${inner}</a>`
+        : `<span class="asset-link asset-link--stacked">${inner}</span>`;
+    return `
+                    <div class="asset-row">
+                        ${wrapper}
                         <a href="${escapeHTML(meeting.slides.file ?? '')}" download
                            aria-label="Download slides (${escapeHTML(meeting.session)})"
                            class="asset-dl">${_downloadIcon()}</a>
@@ -80,13 +86,7 @@ function buildSlidesRow(meeting) {
 
 /** Renders a disabled placeholder row when slides are not yet available and placeholders are enabled. */
 function buildSlidesPlaceholder() {
-    return `
-                    <div class="asset-row opacity-50">
-                        <span class="asset-link cursor-default">
-                            <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                            <span class="asset-link-text">Slides</span> <span class="text-[11px] uppercase tracking-wider ml-auto">Coming Soon</span>
-                        </span>
-                    </div>`;
+    return _buildPlaceholder('📊', 'Slides');
 }
 
 /** Builds a podcast asset row with label, type badge, metadata, caption, and download button. */
@@ -190,3 +190,9 @@ function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
 
     return { primaryRows, podcastRows, resourceStrip, podcastSummary };
 }
+
+window.buildAssetRows = buildAssetRows;
+window.buildVideoPlaceholder = buildVideoPlaceholder;
+window.buildSlidesPlaceholder = buildSlidesPlaceholder;
+window.buildPodcastDisclosure = buildPodcastDisclosure;
+})();

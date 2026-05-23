@@ -10,6 +10,8 @@
  *
  * Side-effects: populates ASSET_COPY used by asset renderers.
  */
+(function() {
+'use strict';
 let ASSET_COPY = {};
 
 function setAssetCopyRegistry(data) {
@@ -67,3 +69,10 @@ function getAssetCopy(type) {
     }
     return DEFAULT_ASSET_COPY[type] || {};
 }
+
+window.setAssetCopyRegistry = setAssetCopyRegistry;
+window.loadAssetCopyRegistry = loadAssetCopyRegistry;
+window.getAssetCopyRegistry = getAssetCopyRegistry;
+window.getAssetCopy = getAssetCopy;
+window.DEFAULT_ASSET_COPY = DEFAULT_ASSET_COPY;
+})();

@@ -7,6 +7,8 @@
  *
  * Side-effects: reads window.location.hash and calls handlers; performs path validation.
  */
+(function() {
+'use strict';
 const _routeHandlers = {};
 
 /** Registers a named route handler (e.g., 'reader', 'default'). */
@@ -40,3 +42,8 @@ function handleRoute() {
 function initRouting() {
     window.addEventListener('hashchange', handleRoute);
 }
+
+window.registerRoute = registerRoute;
+window.handleRoute = handleRoute;
+window.initRouting = initRouting;
+})();

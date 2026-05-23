@@ -7,6 +7,8 @@
  *
  * Side-effects: uses localStorage/sessionStorage and may call provided error handler.
  */
+(function() {
+'use strict';
 const STORAGE_KEY_PREFIX = window.__STORAGE_PREFIX || 'apbc:';
 const RESUME_MIN_SECONDS = 5;
 const PROGRESS_SAVE_MS = 3000;
@@ -71,3 +73,12 @@ function clearVideoResumePosition(filePath) {
         window.ErrorHandler?.warn('sessionStorage clear failed:', { err });
     }
 }
+
+window.buildStorageKey = buildStorageKey;
+window.setSessionStorageErrorHandler = setSessionStorageErrorHandler;
+window.getSavedVideoResumeTime = getSavedVideoResumeTime;
+window.saveVideoResumePosition = saveVideoResumePosition;
+window.clearVideoResumePosition = clearVideoResumePosition;
+window.RESUME_MIN_SECONDS = RESUME_MIN_SECONDS;
+window.PROGRESS_SAVE_MS = PROGRESS_SAVE_MS;
+})();

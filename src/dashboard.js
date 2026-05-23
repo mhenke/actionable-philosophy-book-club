@@ -1,3 +1,6 @@
+(function() {
+'use strict';
+
 /** Returns HTML for a meeting's session/date metadata line, used across all card types. Color defaults to var(--text-primary). */
 function _renderSessionMeta(meeting, color) {
     const c = color || 'var(--text-primary)';
@@ -6,26 +9,21 @@ function _renderSessionMeta(meeting, color) {
 
 /** Renders the upcoming meeting card: header, asset rows, key takeaway, CTA, and podcast disclosure. */
 function renderUpcomingMaterials() {
-    const container = document.getElementById('upcoming-materials-container');
-    const podcastContainer = document.getElementById('upcoming-podcasts');
-    const headerContainer = document.getElementById('upcoming-card-header');
-    const quoteContainer = document.getElementById('upcoming-key-takeaway');
-    const ctaContainer = document.getElementById('upcoming-cta');
-    if (!container) return;
+    if (!upcomingMaterialsContainer) return;
 
-    const upcomingSection = container.closest('section');
+    const upcomingSection = upcomingMaterialsContainer.closest('section');
     const meeting = getMeetingRepository().getByStatus('upcoming')[0];
     if (!meeting) {
-        container.innerHTML = '';
-        if (headerContainer) headerContainer.innerHTML = '';
-        if (quoteContainer) quoteContainer.innerHTML = '';
-        if (ctaContainer) ctaContainer.innerHTML = '';
+        upcomingMaterialsContainer.innerHTML = '';
+        if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
+        if (upcomingKeyTakeaway) upcomingKeyTakeaway.innerHTML = '';
+        if (upcomingCta) upcomingCta.innerHTML = '';
         return;
     }
     if (upcomingSection) upcomingSection.classList.remove('hidden-view');
 
-    if (headerContainer) {
-        headerContainer.innerHTML = `
+    if (upcomingCardHeader) {
+        upcomingCardHeader.innerHTML = `
                     <div class="flex justify-between items-start gap-4">
                         <div class="card-title">
                             ${_renderSessionMeta(meeting, 'var(--spectrum-2)')}
@@ -36,12 +34,12 @@ function renderUpcomingMaterials() {
     }
 
     const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
-    container.innerHTML = (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip)
+    upcomingMaterialsContainer.innerHTML = (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip)
         ? `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`
         : primaryRows.join('') + resourceStrip;
 
-    if (quoteContainer) {
-        quoteContainer.innerHTML = meeting.keyTakeaway
+    if (upcomingKeyTakeaway) {
+        upcomingKeyTakeaway.innerHTML = meeting.keyTakeaway
             ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
                                <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
@@ -49,17 +47,16 @@ function renderUpcomingMaterials() {
             : '';
     }
 
-    if (ctaContainer && meeting.readmeUrl) {
-        ctaContainer.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
+    if (upcomingCta && meeting.readmeUrl) {
+        upcomingCta.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
     }
 
-    if (podcastContainer) {
-        podcastContainer.innerHTML = buildPodcastDisclosure(podcastRows, podcastSummary);
+    if (upcomingPodcasts) {
+        upcomingPodcasts.innerHTML = buildPodcastDisclosure(podcastRows, podcastSummary);
     }
     const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
     if (kbSection) kbSection.classList.remove('hidden-view');
-    const footer = document.getElementById('site-footer');
-    if (footer) footer.classList.remove('hidden-view');
+    if (siteFooter) siteFooter.classList.remove('hidden-view');
 }
 
 function _renderCardList(containerId, meetings, cardRenderer) {
@@ -113,28 +110,23 @@ function renderArchiveCards() {
  * On retry, reloads the manifest and re-renders all dashboard sections.
  */
 function setupManifestRetryUI() {
-    const upcomingHeader = document.getElementById('upcoming-card-header');
-    const upcomingMaterials = document.getElementById('upcoming-materials-container');
-    const upcomingCta = document.getElementById('upcoming-cta');
-    const archiveContainer = document.getElementById('archive-cards-container');
-    const horizonContainer = document.getElementById('horizon-cards-container');
-    if (upcomingHeader) showRetryUI(upcomingHeader, {
+    if (upcomingCardHeader) showRetryUI(upcomingCardHeader, {
         message: "Couldn't load sessions",
         retryLabel: 'Tap to retry',
         onRetry: async () => {
             await loadManifest();
-            if (upcomingHeader) upcomingHeader.innerHTML = '';
+            if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
             renderUpcomingMaterials();
             renderArchiveCards();
             renderHorizonCards();
         },
     });
-    if (upcomingMaterials) upcomingMaterials.innerHTML = '';
+    if (upcomingMaterialsContainer) upcomingMaterialsContainer.innerHTML = '';
     if (upcomingCta) upcomingCta.innerHTML = '';
-    if (archiveContainer) archiveContainer.innerHTML = '';
-    if (horizonContainer) {
-        horizonContainer.innerHTML = '';
-        const horizonSection = horizonContainer.closest('section');
+    if (archiveCardsContainer) archiveCardsContainer.innerHTML = '';
+    if (horizonCardsContainer) {
+        horizonCardsContainer.innerHTML = '';
+        const horizonSection = horizonCardsContainer.closest('section');
         if (horizonSection) horizonSection.classList.add('hidden-view');
     }
 }
@@ -143,9 +135,8 @@ function setupManifestRetryUI() {
 function renderHorizonCards() {
     const drafts = getMeetingRepository().getByStatus('draft');
     if (drafts.length === 0) {
-        const container = document.getElementById('horizon-cards-container');
-        if (container) container.innerHTML = '';
-        const section = container?.closest('section');
+        if (horizonCardsContainer) horizonCardsContainer.innerHTML = '';
+        const section = horizonCardsContainer?.closest('section');
         if (section) section.classList.add('hidden-view');
         return;
     }
@@ -161,4 +152,8 @@ function renderHorizonCards() {
                 `);
 }
 
-
+window.renderUpcomingMaterials = renderUpcomingMaterials;
+window.renderArchiveCards = renderArchiveCards;
+window.renderHorizonCards = renderHorizonCards;
+window.setupManifestRetryUI = setupManifestRetryUI;
+})();

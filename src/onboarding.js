@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 /** Initializes the welcome banner with dismiss and restore buttons. Uses localStorage for persistence. */
 function initOnboardingBanner() {
     const banner = document.getElementById('onboarding-banner');
@@ -37,3 +39,6 @@ function initOnboardingBanner() {
         });
     }
 }
+
+window.initOnboardingBanner = initOnboardingBanner;
+})();

@@ -10,6 +10,8 @@
  *
  * Side-effects: reads window.location; may set raw content base URL.
  */
+(function() {
+'use strict';
 let _rawContentBase = null;
 
 function setRawContentBase(url) {
@@ -61,3 +63,9 @@ function getViewerDestination(path) {
     }
     return { url: path };
 }
+
+window.setRawContentBase = setRawContentBase;
+window.buildPPTXViewerURL = buildPPTXViewerURL;
+window.getViewerDestination = getViewerDestination;
+window.classifyAssetPath = classifyAssetPath;
+})();

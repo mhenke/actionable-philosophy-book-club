@@ -7,6 +7,8 @@
  *
  * Side-effects: may remove hrefs and set aria-disabled on unsafe links.
  */
+(function() {
+'use strict';
 function _disableLink(link, title) {
     link.removeAttribute('href');
     link.setAttribute('aria-disabled', 'true');
@@ -56,3 +58,6 @@ function rewriteContentLinks(container, docPath) {
         }
     }
 }
+
+window.rewriteContentLinks = rewriteContentLinks;
+})();

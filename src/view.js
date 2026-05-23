@@ -7,6 +7,8 @@
  *
  * Side-effects: mutates DOM elements: dashboard, reader, and skip-link href.
  */
+(function() {
+'use strict';
 const STATUS_RESET_MS = 1000;
 
 /** Sets the initial dashboard/reader visibility based on the hash, before the manifest loads. Prevents a flash of dashboard content when navigating to a reader page directly. */
@@ -47,3 +49,8 @@ function navigateToDashboard() {
         setTimeout(() => { if (readerStatus) readerStatus.textContent = ''; }, STATUS_RESET_MS);
     }
 }
+
+window.setView = setView;
+window.prepareInitialViewFromHash = prepareInitialViewFromHash;
+window.navigateToDashboard = navigateToDashboard;
+})();

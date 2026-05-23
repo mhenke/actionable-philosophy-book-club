@@ -9,6 +9,8 @@
  *
  * Side-effects: appends/removes elements under #toast-container; logs to console.
  */
+(function() {
+'use strict';
 
 const TOAST_DURATION_MS = 4500;
 const TOAST_FADE_MS = 300;
@@ -22,6 +24,7 @@ function showToast(message) {
     }
     const el = document.createElement('div');
     el.className = 'toast';
+    el.setAttribute('role', 'alert');
     el.textContent = message;
     container.appendChild(el);
     requestAnimationFrame(() => el.classList.add('toast--visible'));
@@ -50,4 +53,7 @@ function showToast(message) {
         },
     };
     window.ErrorHandler = ErrorHandler;
+})();
+
+window.showToast = showToast;
 })();

@@ -8,6 +8,8 @@
  *
  * Side-effects: none (pure helpers).
  */
+(function() {
+'use strict';
 const _HTML_ESCAPE = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 /** Escapes & < > " ' for safe HTML interpolation. */
 function escapeHTML(value) {
@@ -32,3 +34,8 @@ function formatFileSize(mb) {
     if (mb < 10) return `${mb.toFixed(1)} MB`;
     return `${Math.round(mb)} MB`;
 }
+
+window.escapeHTML = escapeHTML;
+window.formatDuration = formatDuration;
+window.formatFileSize = formatFileSize;
+})();

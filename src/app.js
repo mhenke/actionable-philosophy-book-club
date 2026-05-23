@@ -1,3 +1,5 @@
+(function() {
+'use strict';
 /** Shows a dashboard render error in the upcoming card header and as a toast. */
 function showDashboardRenderError(err) {
     const msg = err?.message ? 'Could not load dashboard data: ' + err.message : 'Could not load dashboard data';
@@ -82,4 +84,5 @@ function showDashboardRenderError(err) {
     }
 
     handleRoute();
+})();
 })();

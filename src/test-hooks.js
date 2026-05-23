@@ -4,6 +4,8 @@
  *
  * Side-effects: mutates window when enabled.
  */
+(function() {
+'use strict';
 if (window.__TEST__ === true) {
     window.Meeting = Meeting;
     window.isSafeRepoPath = function(p) { return isSafePath(p, DOMAIN.REPO); };
@@ -17,3 +19,4 @@ if (window.__TEST__ === true) {
         get() { const repo = getMeetingRepository(); return repo ? repo.getAll() : []; }
     });
 }
+})();

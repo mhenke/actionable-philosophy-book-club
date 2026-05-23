@@ -7,6 +7,8 @@
  *
  * Side-effects: mutates button text and disabled state during retry attempts.
  */
+(function() {
+'use strict';
 /**
  * Wires a click listener that runs an async handler, disables the button during the attempt,
  * and restores it on failure so the user can retry.
@@ -43,4 +45,6 @@ function showRetryUI(container, { message, retryLabel, onRetry, backLabel, onBac
     if (backBtn && onBack) backBtn.addEventListener('click', onBack);
 }
 
-
+window.bindRetryButton = bindRetryButton;
+window.showRetryUI = showRetryUI;
+})();
