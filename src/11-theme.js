@@ -21,7 +21,7 @@
                     try {
                         localStorage.setItem('apbc:theme', 'dark');
                     } catch (e) {
-                        // ignore storage errors
+                        console.debug('localStorage write failed:', e?.message);
                     }
                 }
             } else {
@@ -31,7 +31,7 @@
                     try {
                         localStorage.setItem('apbc:theme', 'light');
                     } catch (e) {
-                        // ignore storage errors
+                        console.debug('localStorage write failed:', e?.message);
                     }
                 }
             }

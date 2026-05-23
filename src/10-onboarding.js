@@ -1,4 +1,3 @@
-        // ── Onboarding banner ──
         function initOnboardingBanner() {
             const banner = document.getElementById('onboarding-banner');
             const dismissBtn = document.getElementById('onboarding-dismiss');

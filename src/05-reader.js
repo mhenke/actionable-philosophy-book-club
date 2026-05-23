@@ -1,51 +1,52 @@
-        // ── rewriteContentLinks — link post-processing, extracted from loadPage ─
+        function disableLink(link, title) {
+            link.removeAttribute('href');
+            link.setAttribute('aria-disabled', 'true');
+            if (title) link.setAttribute('title', title);
+        }
+
         function rewriteContentLinks(container, docPath) {
             const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
             for (const link of container.querySelectorAll('a')) {
                 try {
                     const href = link.getAttribute('href');
                     if (!href || /^https?:/i.test(href)) continue;
-                    if (href.startsWith('#')) continue; // preserve in-document anchors
+                    if (href.startsWith('#')) continue;
+
                     const base = new URL(docPath, window.location.href);
                     const resolved = new URL(href, base);
                     const repoPath = resolved.pathname.startsWith(siteRoot)
                         ? resolved.pathname.slice(siteRoot.length)
                         : resolved.pathname.slice(1);
 
-                    // Do not make folder links clickable.
                     if (href.endsWith('/')) {
-                        link.removeAttribute('href');
-                        link.setAttribute('aria-disabled', 'true');
-                        link.setAttribute('title', 'Folder (not a navigable file)');
+                        disableLink(link, 'Folder (not a navigable file)');
                         continue;
                     }
 
                     if (href.endsWith('.md')) {
                         if (!isSafeRepoPath(repoPath)) {
-                            link.removeAttribute('href');
-                            link.setAttribute('aria-disabled', 'true');
-                            link.setAttribute('title', 'Link target is outside allowed directories');
+                            disableLink(link, 'Link target is outside allowed directories');
                             continue;
                         }
                         link.setAttribute('href', '#p=' + repoPath);
+                        continue;
+                    }
+
+                    if (!isSafeAssetPath(repoPath)) {
+                        disableLink(link, '');
+                        continue;
+                    }
+
+                    if (/\.pptx?$/i.test(repoPath)) {
+                        link.setAttribute('href', buildPPTXViewerURL(repoPath));
+                        link.setAttribute('target', '_blank');
+                        link.setAttribute('rel', 'noopener noreferrer');
+                    } else if (/\.(png|jpe?g|gif|webp)$/i.test(repoPath)) {
+                        link.setAttribute('href', repoPath);
+                        link.setAttribute('target', '_blank');
+                        link.setAttribute('rel', 'noopener noreferrer');
                     } else {
-                        if (isSafeAssetPath(repoPath)) {
-                            if (/\.pptx?$/i.test(repoPath)) {
-                                link.setAttribute('href', buildPPTXViewerURL(repoPath));
-                                link.setAttribute('target', '_blank');
-                                link.setAttribute('rel', 'noopener noreferrer');
-                            } else if (/\.(png|jpe?g|gif|webp)$/i.test(repoPath)) {
-                                // SVGs excluded: inline script in SVG can run when opened as top-level doc
-                                link.setAttribute('href', repoPath);
-                                link.setAttribute('target', '_blank');
-                                link.setAttribute('rel', 'noopener noreferrer');
-                            } else {
-                                link.setAttribute('href', repoPath);
-                            }
-                        } else {
-                            link.removeAttribute('href');
-                            link.setAttribute('aria-disabled', 'true');
-                        }
+                        link.setAttribute('href', repoPath);
                     }
                 } catch (e) {
                     console.warn('rewriteContentLinks: skipped malformed link', e?.message);

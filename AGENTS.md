@@ -17,19 +17,20 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 
 - **`index.html`** — all HTML + CSS in `<style>` block. JS loaded from `dist/app.js`.
 - **`dist/app.js`** — inline script extracted for CSP compliance (`script-src 'self'`).
-- **`src/`** — JS source split into 12 numbered modules concatenated at build time:
+- **`src/`** — JS source split into 13 numbered modules concatenated at build time:
   - `00-setup.js` — DOM refs, constants, global let/const declarations
   - `01-utils.js` — pure utility functions (formatting, path validation, fetch cache, video resume)
   - `02-manifest.js` — manifest loading and asset copy registry
   - `03-assets.js` — asset row builders (video/slides/podcast/resource)
   - `04-dashboard.js` — dashboard rendering (upcoming, archive, horizon cards)
   - `05-reader.js` — reader rendering, view management, content link rewriting
-  - `06-app.js` — init, hash routing, key handlers, test exports, DOMContentLoaded
+  - `06-app.js` — init, event setup, test exports, DOMContentLoaded
   - `07-toast.js` — toast notification system
   - `08-video-player.js` — inline `<dialog>` video player with resume
   - `09-asset-delegation.js` — delegated asset link click handling
   - `10-onboarding.js` — dismissible welcome banner
   - `11-theme.js` — dark/light theme toggle, persistence, FOUC guard
+  - `12-routing.js` — hash router and route handler
 - **Hash router** — `#p=path/to/file.md` triggers `loadPage()` which fetches + renders markdown via marked + DOMPurify.
 - **MEETINGS manifest** — JS array in `dist/app.js` with all session data (title, date, video/slides/podcasts/resources, status, color, wash).
 - **Dashboard** — `renderUpcomingMaterials()` + `renderArchiveCards()` use shared `buildAssetRows()`.

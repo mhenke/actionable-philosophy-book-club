@@ -1,4 +1,3 @@
-        // ── Inline video player ──
         function openVideoPlayer(filePath, label) {
             if (videoPlayerCleanup) {
                 videoPlayerCleanup();

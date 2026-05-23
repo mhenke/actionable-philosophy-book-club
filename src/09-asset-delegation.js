@@ -1,4 +1,3 @@
-        // ── Asset click delegation (dashboard) ──
         function setupAssetClickDelegation(container) {
             if (!container || container.__assetDelegationInstalled) return;
             container.__assetDelegationInstalled = true;

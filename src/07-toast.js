@@ -1,4 +1,3 @@
-        // ── Toast system ──
         function showToast(message) {
             const container = document.getElementById('toast-container');
             if (!container) return;

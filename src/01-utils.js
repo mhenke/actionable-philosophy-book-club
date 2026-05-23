@@ -56,7 +56,7 @@
         // Single path validator for both asset and repo paths — eliminates prior three-way drift.
         const _ASSET_ROOTS = new Set(['meetings', 'assets']);
         const _REPO_ROOTS = new Set(['meetings', 'docs', 'templates']);
-        function isSafePath(p, kind) {
+        function isSafePath(p, domain) {
             if (!p || typeof p !== 'string') return false;
             if (p.length === 0 || p.length > CONFIG.PATH_MAX_LENGTH) return false;
             if (/^[a-z][a-z0-9+.-]*:/i.test(p)) return false;
@@ -65,13 +65,13 @@
             if (/[\\\x00-\x1f]/.test(p)) return false;
             const segments = p.split('/');
             if (segments.some(s => s === '' || s === '.')) return false;
-            if (kind === 'asset' || kind === 'any') {
+            if (domain === 'asset' || domain === 'any') {
                 const isAsset = _ASSET_ROOTS.has(segments[0]) &&
                     /\.(mp4|m4a|pptx|pdf|png|jpg|jpeg|gif|svg|webp)$/i.test(p);
-                if (kind === 'asset') return isAsset;
+                if (domain === 'asset') return isAsset;
                 if (isAsset) return true;
             }
-            if (kind === 'repo' || kind === 'any') {
+            if (domain === 'repo' || domain === 'any') {
                 return !/[^\w.\-/]/.test(p) &&
                     p.endsWith('.md') &&
                     _REPO_ROOTS.has(segments[0]);
