@@ -29,6 +29,12 @@ jobs:
       - name: Install ShellCheck
         run: sudo apt-get update && sudo apt-get install -y shellcheck
 
+      - name: Validate manifest JSON Schema
+        run: |
+          npm install -g ajv-cli@5.0.0 2>/dev/null || true
+          npx ajv validate -s docs/manifest.schema.json -d docs/manifest.json --strict=drop 2>&1 || \
+            (echo "Manifest schema validation failed — update docs/manifest.json to match docs/manifest.schema.json" && exit 1)
+
       - name: Check for unregistered meeting directories
         run: |
           set -euo pipefail
@@ -105,6 +111,11 @@ jobs:
       - name: Build JS
         run: npm run build:js
 
+      - name: Build CSS and check for drift
+        run: |
+          npm run build:css
+          git diff --exit-code dist/tailwind.css || (echo "CSS is stale — run 'npm run build:css' and commit the result" && exit 1)
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
@@ -159,6 +170,16 @@ jobs:
               echo "Got HTTP 200 on attempt $i"
               curl -sf "$URL" | grep -q "A Philosophy of Software Design" || \
                 (echo "Smoke test failed: expected content not found" && exit 1)
+              # Verify critical assets load (CSS + JS + vendor libs)
+              for asset in dist/tailwind.css dist/app.js dist/vendor/marked.min.js dist/vendor/purify.min.js dist/theme-init.js; do
+                ASSET_URL="${URL}${asset}"
+                ASSET_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$ASSET_URL" 2>/dev/null || echo "000")
+                if [ "$ASSET_STATUS" != "200" ]; then
+                  echo "Smoke test failed: $asset returned HTTP $ASSET_STATUS"
+                  exit 1
+                fi
+                echo "  ✓ $asset (HTTP $ASSET_STATUS)"
+              done
               echo "Smoke test passed"
               exit 0
             fi

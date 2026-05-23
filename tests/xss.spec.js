@@ -50,6 +50,23 @@ test.describe('XSS Prevention (DOMPurify)', () => {
         await expect(page.locator('#markdown-content')).toContainText('Document unavailable');
     });
 
+    test('external links outside allowlist are stripped by DOMPurify hook', async ({ page }) => {
+        await page.route('**/meetings/meeting-01/README.md', route =>
+            route.fulfill({ body: '# Test\n<a href="https://evil.com/phish">Click</a>\n<a href="https://mhenke.github.io/actionable-philosophy-book-club/">Safe</a>' })
+        );
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForSelector('#markdown-content h1');
+
+        const links = await page.locator('#markdown-content a').evaluateAll(as =>
+            as.map(a => ({ href: a.getAttribute('href'), text: a.textContent }))
+        );
+        const evil = links.find(l => l.text === 'Click');
+        expect(evil?.href).toBeNull();
+
+        const safe = links.find(l => l.text === 'Safe');
+        expect(safe?.href).toBe('https://mhenke.github.io/actionable-philosophy-book-club/');
+    });
+
     test('no script elements present in rendered content', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route =>
             route.fulfill({ body: '# Safe\n\nPlain paragraph.' })

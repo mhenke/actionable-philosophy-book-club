@@ -167,7 +167,6 @@ The manifest lives at **`docs/manifest.json`** and is the canonical source of tr
 - `title` — short session title
 - `status` — `'done'` | `'upcoming'` | `'draft'`
 - `color` — **only** `'spectrum-1'`, `'spectrum-2'`, or `'spectrum-3'` (other values silently break card styling)
-- `wash` — CSS variable name: `'--wash-1'` through `'--wash-5'`
 - `readmeUrl` — relative path e.g. `'meetings/meeting-01/README.md'`
 
 ### Optional fields
@@ -177,9 +176,9 @@ The manifest lives at **`docs/manifest.json`** and is the canonical source of tr
   ```
 
 ### Asset fields
-- `video` — `{ file, label, duration, fileSize }` or `null` for upcoming/no-recording
-- `slides` — `{ file, label, fileSize }` or `null`
-- `podcasts` — array of `{ type, label, file, duration, fileSize }` where `type` is one of:
+- `video` — `{ file, label, duration (seconds, integer), fileSize (megabytes, float) }` or `null` for upcoming/no-recording
+- `slides` — `{ file, label, fileSize (megabytes, float) }` or `null`
+- `podcasts` — array of `{ type, label, file, duration (seconds, integer), fileSize (megabytes, float) }` where `type` is one of:
   - `'deep-dive'` — 🔬 badge, steel blue
   - `'critique'` — 🔍 badge, navy
   - `'debate'` — ⚔️ badge, medium blue

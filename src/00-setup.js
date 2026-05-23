@@ -14,10 +14,10 @@ function getCopyData() { return ASSET_COPY; }
 function setCopyData(val) { ASSET_COPY = val; }
 
 const DEFAULT_ASSET_COPY = Object.freeze({
-    alternate: { label: 'Alternate', title: 'A different take on the session topic' },
-    'deep-dive': { label: 'Deep Dive', title: 'An exploration of the session topic' },
-    critique: { label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs' },
-    debate: { label: 'Debate', title: 'A structured debate between two design perspectives' },
+    alternate: { label: 'Alternate', title: 'A different take on the session topic', icon: '🎬', color: 'var(--spectrum-2)' },
+    'deep-dive': { label: 'Deep Dive', title: 'An exploration of the session topic', icon: '🔬', color: 'var(--spectrum-2)' },
+    critique: { label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs', icon: '🔍', color: 'var(--spectrum-2)' },
+    debate: { label: 'Debate', title: 'A structured debate between two design perspectives', icon: '⚔️', color: 'var(--spectrum-2)' },
 });
 
 const STORAGE_KEY_PREFIX = 'apbc:';

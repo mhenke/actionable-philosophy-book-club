@@ -18,7 +18,7 @@ We will remove all Jekyll-specific files and implement a **Single-Page Markdown 
 4.  **Technical Alignment:** This approach honors the "Single File index.html" constraint originally set for the project.
 
 ## Implementation Details
-- Use **Marked.js** (via CDN) for client-side Markdown to HTML conversion.
+- Use **Marked.js** (self-hosted via `dist/vendor/marked.min.js`) for client-side Markdown to HTML conversion.
 - Implement a simple hash-based router (`#p=path/to/file.md`) to handle navigation.
 - Dynamic `fetch()` calls will retrieve content from the repository.
 

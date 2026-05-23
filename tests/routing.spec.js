@@ -83,6 +83,26 @@ test.describe('Routing & Navigation', () => {
         await expect(page.locator('#return-dashboard')).toBeVisible();
     });
 
+    test('retry-load button re-renders content after error', async ({ page }) => {
+        let attempt = 0;
+        await page.route('**/meetings/meeting-01/README.md', route => {
+            attempt++;
+            if (attempt === 1) return route.fulfill({ status: 500, body: '' });
+            return route.fulfill({ body: '# Retried\n\nContent loaded.' });
+        });
+
+        await page.goto('/#p=meetings/meeting-01/README.md');
+        await page.waitForLoadState('networkidle');
+
+        await expect(page.locator('#markdown-content')).toContainText('unavailable');
+
+        await page.click('#retry-load');
+        await page.waitForSelector('#markdown-content h1');
+
+        await expect(page.locator('#markdown-content h1')).toContainText('Retried');
+        await expect(page.locator('#reader-status')).toHaveText('Document loaded.');
+    });
+
     test('reader status announces loaded state', async ({ page }) => {
         await page.route('**/meetings/meeting-01/README.md', route =>
             route.fulfill({ body: '# Loaded' })

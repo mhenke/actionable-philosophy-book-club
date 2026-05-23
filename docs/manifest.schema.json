@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Meeting Manifest",
+  "type": "object",
+  "required": ["meetings"],
+  "properties": {
+    "assetCopy": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-z-]+$": {
+          "type": "object",
+          "properties": {
+            "label": { "type": "string" },
+            "title": { "type": "string" }
+          },
+          "required": ["label", "title"]
+        }
+      }
+    },
+    "meetings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "session", "date", "title", "status", "color", "readmeUrl"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^meeting-\\d{2}$" },
+          "session": { "type": "string" },
+          "date": { "type": "string" },
+          "title": { "type": "string" },
+          "status": { "type": "string", "enum": ["done", "upcoming", "draft"] },
+          "color": { "type": "string", "pattern": "^spectrum-[1-6]$" },
+          "readmeUrl": { "type": "string" },
+          "keyTakeaway": { "type": "string" },
+          "video": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "required": ["file", "label"],
+                "properties": {
+                  "file": { "type": "string" },
+                  "label": { "type": "string" },
+                  "variant": { "type": "string" },
+                  "duration": { "type": "integer" },
+                  "fileSize": { "type": "number" }
+                }
+              }
+            ]
+          },
+          "slides": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "required": ["file", "label"],
+                "properties": {
+                  "file": { "type": "string" },
+                  "label": { "type": "string" },
+                  "variant": { "type": "string" },
+                  "fileSize": { "type": "number" }
+                }
+              }
+            ]
+          },
+          "podcasts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "label", "file"],
+              "properties": {
+                "type": { "type": "string", "enum": ["deep-dive", "critique", "debate", "alternate"] },
+                "label": { "type": "string" },
+                "file": { "type": "string" },
+                "duration": { "type": "integer" },
+                "fileSize": { "type": "number" }
+              }
+            }
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "file"],
+              "properties": {
+                "label": { "type": "string" },
+                "file": { "type": "string" },
+                "fileSize": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -28,7 +28,7 @@
         }
 
         function formatDuration(seconds) {
-            if (!Number.isFinite(seconds)) return '';
+            if (!Number.isFinite(seconds) || seconds < 0) return '';
             const totalSeconds = Math.round(seconds);
             const hours = Math.floor(totalSeconds / 3600);
             const mins = Math.floor((totalSeconds % 3600) / 60);
