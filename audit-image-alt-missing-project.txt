@@ -1,0 +1,1 @@
+docs/superpowers/specs/2026-05-17-loading-ux-design.md:44:- A `background` gradient that shows only while the image has not loaded (browser paints the `background` of an `<img>` until the pixel data arrives; the loaded image covers it completely).
