@@ -59,11 +59,7 @@ function showDashboardRenderError(err) {
 
     if (window.__TEST__) window.__manifestLoaded = false;
 
-    const initialHash = window.location.hash;
-    if (initialHash.startsWith('#p=')) {
-        dashboard.classList.add('hidden-view');
-        reader.classList.remove('hidden-view');
-    }
+    prepareInitialViewFromHash(window.location.hash);
     if (typeof marked !== 'undefined') {
         marked.use({ gfm: true, breaks: true });
     }

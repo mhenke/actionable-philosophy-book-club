@@ -3,10 +3,19 @@
  *
  * Public API:
  * - setView(view): 'dashboard'|'reader'
+ * - prepareInitialViewFromHash(hash): sets the initial view based on hash before manifest loads
  *
  * Side-effects: mutates DOM elements: dashboard, reader, and skip-link href.
  */
 const STATUS_RESET_MS = 1000;
+
+/** Sets the initial dashboard/reader visibility based on the hash, before the manifest loads. Prevents a flash of dashboard content when navigating to a reader page directly. */
+function prepareInitialViewFromHash(hash) {
+    if (hash.startsWith('#p=')) {
+        dashboard.classList.add('hidden-view');
+        reader.classList.remove('hidden-view');
+    }
+}
 
 /** Toggles visibility between dashboard and reader views. Updates skip-link target. */
 function setView(view) {

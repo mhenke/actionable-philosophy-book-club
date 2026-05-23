@@ -20,25 +20,25 @@ function _downloadIcon() {
 
 /** Builds the primary video asset row with metadata (duration, size, label) and download link. */
 function buildVideoRow(meeting) {
-    const videoDuration = meeting.getVideoDuration() ? formatDuration(meeting.getVideoDuration()) : '';
-    const videoSize = meeting.getVideoFileSize() ? formatFileSize(meeting.getVideoFileSize()) : '';
+    const videoDuration = meeting.video.duration ?? 0 ? formatDuration(meeting.video.duration ?? 0) : '';
+    const videoSize = meeting.video.fileSize ?? 0 ? formatFileSize(meeting.video.fileSize ?? 0) : '';
     const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
     const metaLine = videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '';
-    const videoSlug = _toAssetSlug(meeting.getVideoFile());
+    const videoSlug = _toAssetSlug(meeting.video.file ?? '');
     const id = escapeHTML(meeting.id);
     const videoAssetId = `asset-${id}-video-${videoSlug}`;
     const session = escapeHTML(meeting.session);
     return `
                     <div class="asset-row" data-testid="${id}-canonical" data-canonical="true" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.getVideoFile())}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${session})">
+                        <a href="${escapeHTML(meeting.video.file ?? '')}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''} (${session})">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                                <span class="asset-link-text">${escapeHTML(meeting.getVideoLabel())}</span>
+                                <span class="asset-link-text">${escapeHTML(meeting.video.label ?? '')}</span>
                             </span>
                             ${metaLine}
                         </a>
-                        <a href="${escapeHTML(meeting.getVideoFile())}" download
-                           aria-label="Download ${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${session})"
+                        <a href="${escapeHTML(meeting.video.file ?? '')}" download
+                           aria-label="Download ${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''} (${session})"
                            class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
 }
@@ -56,9 +56,9 @@ function buildVideoPlaceholder() {
 
 /** Builds the slides asset row with Office Online viewer link, file size, and download button. */
 function buildSlidesRow(meeting) {
-    const slidesSize = meeting.getSlidesFileSize() ? formatFileSize(meeting.getSlidesFileSize()) : '';
+    const slidesSize = meeting.slides.fileSize ?? 0 ? formatFileSize(meeting.slides.fileSize ?? 0) : '';
     const metaLine = slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '';
-    const viewerUrl = buildPPTXViewerURL(meeting.getSlidesFile());
+    const viewerUrl = buildPPTXViewerURL(meeting.slides.file ?? '');
     const viewerLink = viewerUrl
         ? `<a href="${viewerUrl}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">`
         : '<span class="asset-link asset-link--stacked">';
@@ -68,11 +68,11 @@ function buildSlidesRow(meeting) {
                         ${viewerLink}
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                                <span class="asset-link-text">${escapeHTML(meeting.getSlidesLabel())}</span>
+                                <span class="asset-link-text">${escapeHTML(meeting.slides.label ?? '')}</span>
                             </span>
                             ${metaLine}
                         ${viewerClose}
-                        <a href="${escapeHTML(meeting.getSlidesFile())}" download
+                        <a href="${escapeHTML(meeting.slides.file ?? '')}" download
                            aria-label="Download slides (${escapeHTML(meeting.session)})"
                            class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
@@ -168,13 +168,13 @@ function buildPodcastSummary(podcasts) {
 function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
     const primaryRows = [];
 
-    if (meeting.getVideoFile() && isSafePath(meeting.getVideoFile(), DOMAIN.ASSET)) {
+    if (meeting.video.file ?? '' && isSafePath(meeting.video.file ?? '', DOMAIN.ASSET)) {
         primaryRows.push(buildVideoRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(buildVideoPlaceholder());
     }
 
-    if (meeting.getSlidesFile() && isSafePath(meeting.getSlidesFile(), DOMAIN.ASSET)) {
+    if (meeting.slides.file ?? '' && isSafePath(meeting.slides.file ?? '', DOMAIN.ASSET)) {
         primaryRows.push(buildSlidesRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(buildSlidesPlaceholder());

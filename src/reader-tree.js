@@ -37,7 +37,7 @@ function _renderFileTree(ul, prefix) {
         }
         const isLast = i === items.length - 1;
         const connector = isLast ? '└── ' : '├── ';
-        const childPrefix = prefix + (isLast ? '\u00a0   ' : '\u2502   ');
+        const childPrefix = prefix + (isLast ? '     ' : '\u2502   ');
         const pre = document.createElement('span');
         pre.className = 'tree-connector';
         pre.textContent = prefix + connector;

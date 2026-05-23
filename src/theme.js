@@ -5,23 +5,21 @@ function isDarkTheme() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
+function _persistThemePreference(isDark) {
+    try { localStorage.setItem(buildStorageKey('theme'), isDark ? 'dark' : 'light'); }
+    catch (e) { window.ErrorHandler?.warn('localStorage write failed:', { err: e }); }
+}
+
 /** Applies dark/light theme classes, persists to localStorage if user-initiated, syncs toggle labels, shows toast. */
 function setTheme(isDark, userInitiated = false) {
     if (isDark) {
         document.documentElement.classList.add('dark-theme');
         document.documentElement.classList.remove('light-theme');
-        if (userInitiated) {
-            try { localStorage.setItem(buildStorageKey('theme'), 'dark'); }
-            catch (e) { window.ErrorHandler?.warn('localStorage write failed:', { err: e }); }
-        }
     } else {
         document.documentElement.classList.add('light-theme');
         document.documentElement.classList.remove('dark-theme');
-        if (userInitiated) {
-            try { localStorage.setItem(buildStorageKey('theme'), 'light'); }
-            catch (e) { window.ErrorHandler?.warn('localStorage write failed:', { err: e }); }
-        }
     }
+    if (userInitiated) _persistThemePreference(isDark);
 
     const label = isDark ? 'Switch to light theme' : 'Switch to dark theme';
     const toggles = document.querySelectorAll('.theme-toggle-btn');

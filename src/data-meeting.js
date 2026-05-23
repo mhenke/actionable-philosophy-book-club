@@ -42,11 +42,4 @@ class Meeting {
   isHorizon() { return this.status === 'horizon'; }
   isDraft() { return this.status === 'draft'; }
 
-  getVideoFile() { return (this.video && this.video.file) || ''; }
-  getVideoLabel() { return (this.video && this.video.label) || ''; }
-  getVideoDuration() { return (this.video && this.video.duration) || 0; }
-  getVideoFileSize() { return (this.video && this.video.fileSize) || 0; }
-  getSlidesFile() { return (this.slides && this.slides.file) || ''; }
-  getSlidesLabel() { return (this.slides && this.slides.label) || ''; }
-  getSlidesFileSize() { return (this.slides && this.slides.fileSize) || 0; }
 }

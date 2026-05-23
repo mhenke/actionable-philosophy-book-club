@@ -10,6 +10,7 @@
 const STORAGE_KEY_PREFIX = window.__STORAGE_PREFIX || 'apbc:';
 const RESUME_MIN_SECONDS = 5;
 const PROGRESS_SAVE_MS = 3000;
+const STORAGE_VIDEO_PREFIX = 'vs:';
 let _onSessionStorageError = null;
 let _sessionStorageWarned = false;
 
@@ -33,7 +34,7 @@ function _sessionStorageSaveError() {
 
 /** Builds the sessionStorage key for a video file's resume position. */
 function getVideoResumeKey(filePath) {
-    return buildStorageKey('vs:' + filePath);
+    return buildStorageKey(STORAGE_VIDEO_PREFIX + filePath);
 }
 
 /** Reads saved resume time from sessionStorage; returns 0 if none found. */

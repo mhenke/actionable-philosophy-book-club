@@ -8,7 +8,8 @@
  *
  * Side-effects: populates meetingRepo and ASSET_COPY via _processManifestData.
  */
-let getMeetingRepository, loadManifest, _processManifestData;
+let loadManifest;
+var getMeetingRepository, _processManifestData;
 
 (function() {
 let meetingRepo = null;

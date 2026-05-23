@@ -326,7 +326,7 @@
             width: 100%;
             list-style-type: none !important;
             padding: 0 !important;
-            margin: 0;
+            margin: 0 !important;
         }
         .tree-connector {
             color: var(--spectrum-3);
@@ -443,6 +443,13 @@
             transition: color 0.15s;
         }
         .btn-ghost:hover { color: var(--spectrum-1); }
+
+        /* Meeting Notes CTA: full-width on small, centered auto-width on large */
+        #upcoming-cta > a { width: 100%; }
+        @media (min-width: 640px) {
+            #upcoming-cta > a { width: auto; }
+            #upcoming-cta .btn { min-width: 220px; }
+        }
 
         /* Podcast progressive disclosure */
         .podcast-disclosure {
@@ -786,7 +793,7 @@
                 <div class="space-y-5">
                     <div id="upcoming-materials-container" data-asset-container></div>
                     <div id="upcoming-key-takeaway"></div>
-                    <div id="upcoming-cta"></div>
+                    <div id="upcoming-cta" class="flex justify-center"></div>
                     <div id="upcoming-podcasts" data-asset-container></div>
                 </div>
             </section>
