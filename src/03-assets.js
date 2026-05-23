@@ -1,10 +1,22 @@
+        // Inferred from hostname for PPTX viewer. Falls back to mhenke's repo
+        // for local preview — forks served locally will get broken PPTX links.
+        const RAW_CONTENT_BASE = (() => {
+            const hostParts = window.location.hostname.split('.');
+            if (hostParts.length >= 2 && hostParts[1] === 'github') {
+                const owner = hostParts[0];
+                const repo = window.location.pathname.replace(/^\/|\/+$/g, '').split('/')[0] || 'actionable-philosophy-book-club';
+                return `https://raw.githubusercontent.com/${owner}/${repo}/main/`;
+            }
+            return 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
+        })();
+
         function buildPPTXViewerURL(path) {
             if (!isSafeAssetPath(path)) return '#';
             return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(RAW_CONTENT_BASE + path);
         }
 
         // Shared rendering constants
-        const PODCAST_CONFIG = {
+        const ASSET_TYPE_CONFIG = {
             'alternate': { icon: '🎬', color: 'var(--spectrum-2)' },
             'deep-dive': { icon: '🔬', color: 'var(--spectrum-2)' },
             'critique':  { icon: '🔍', color: 'var(--spectrum-2)' },
@@ -74,7 +86,7 @@
         }
 
         function buildPodcastRow(pod, meeting) {
-            const cfg = PODCAST_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)' };
+            const cfg = ASSET_TYPE_CONFIG[pod.type] || { icon: '🎙', color: 'var(--spectrum-2)' };
             const copy = getAssetCopy(pod.type);
             const badgeLabel = copy.label || pod.type;
             const caption = copy.title || '';
@@ -139,6 +151,9 @@
 
         /**
          * @param {Object} meeting - Meeting manifest entry (see docs/content-contract.md for schema)
+         * @param {Object} [options]
+         * @param {boolean} [options.includePlaceholders=false] - Show "Coming Soon" placeholders
+         *   for missing video/slides. Used by archive cards (true) but not upcoming (false).
          */
         function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
             const primaryRows = [];

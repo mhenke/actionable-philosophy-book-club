@@ -6,10 +6,9 @@
             const mainContent = document.getElementById('main-content');
 
             const restoreBtn = document.getElementById('restore-onboarding');
-            if (restoreBtn && !restoreBtn.dataset.listenerInstalled) {
-                restoreBtn.dataset.listenerInstalled = 'true';
+            if (restoreBtn && guard(restoreBtn)) {
                 restoreBtn.addEventListener('click', () => {
-                    localStorage.removeItem(LS + 'onboarding_dismissed');
+                    localStorage.removeItem(STORAGE_KEY_PREFIX + 'onboarding_dismissed');
                     if (mainContent && banner.parentNode !== mainContent) {
                         mainContent.insertBefore(banner, mainContent.firstChild);
                     }
@@ -20,7 +19,7 @@
                 });
             }
 
-            if (localStorage.getItem(LS + 'onboarding_dismissed')) {
+            if (localStorage.getItem(STORAGE_KEY_PREFIX + 'onboarding_dismissed')) {
                 banner.classList.add('hidden-view');
                 return;
             }
@@ -30,11 +29,10 @@
             }
             banner.classList.remove('hidden-view');
 
-            if (!dismissBtn.dataset.listenerInstalled) {
-                dismissBtn.dataset.listenerInstalled = 'true';
+            if (guard(dismissBtn)) {
                 dismissBtn.addEventListener('click', () => {
                     banner.classList.add('hidden-view');
-                    localStorage.setItem(LS + 'onboarding_dismissed', '1');
+                    localStorage.setItem(STORAGE_KEY_PREFIX + 'onboarding_dismissed', '1');
                 });
             }
         }

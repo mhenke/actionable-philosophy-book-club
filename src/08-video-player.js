@@ -1,7 +1,18 @@
+        let _videoPlayerCleanup = null;
+
+        /**
+         * @param {string} filePath - Safe asset path to a .mp4 video file
+         * @param {string} label - Human-readable label for the title bar
+         *
+         * Opens a <dialog> with the video, optional VTT subtitles, and a
+         * resume bar if a previous position is saved. Saves progress on an
+         * interval and on close. Registers all event listeners; the cleanup
+         * closure (_videoPlayerCleanup) removes them on close.
+         */
         function openVideoPlayer(filePath, label) {
-            if (videoPlayerCleanup) {
-                videoPlayerCleanup();
-                videoPlayerCleanup = null;
+            if (_videoPlayerCleanup) {
+                _videoPlayerCleanup();
+                _videoPlayerCleanup = null;
             }
 
             const overlay = document.getElementById('video-player-overlay');
@@ -67,9 +78,9 @@
                 if (lastFocusBeforeVideo && typeof lastFocusBeforeVideo.focus === 'function') {
                     try { lastFocusBeforeVideo.focus(); } catch(e) { /* ignore */ }
                 }
-                if (videoPlayerCleanup) {
-                    videoPlayerCleanup();
-                    videoPlayerCleanup = null;
+                if (_videoPlayerCleanup) {
+                    _videoPlayerCleanup();
+                    _videoPlayerCleanup = null;
                 }
             };
 
@@ -90,15 +101,25 @@
             };
             video.addEventListener('error', errorHandler, { once: true });
 
-            videoPlayerCleanup = () => {
+            _videoPlayerCleanup = () => {
                 clearInterval(vpInterval);
                 overlay.removeEventListener('cancel', cancelListener);
                 window.removeEventListener('hashchange', hashChangeListener);
                 closeBtn.removeEventListener('click', onClose);
                 overlay.removeEventListener('click', overlayClickHandler);
                 video.removeEventListener('error', errorHandler);
-                videoPlayerCleanup = null;
+                _videoPlayerCleanup = null;
             };
 
             overlay.showModal();
+        }
+
+        function closeVideoPlayer() {
+            if (_videoPlayerCleanup) {
+                _videoPlayerCleanup();
+            }
+            const overlay = document.getElementById('video-player-overlay');
+            if (overlay && overlay.open) {
+                overlay.close();
+            }
         }

@@ -3,7 +3,8 @@
          * CTA button linking to meeting notes, and podcast disclosure. Clears the
          * container if no upcoming meeting exists. Assumes MEETINGS is populated.
          * Side effects: removes `hidden-view` from the upcoming section, writes
-         * innerHTML to multiple DOM containers.
+         * innerHTML to multiple DOM containers, and reveals static dashboard UI
+         * (Knowledge Base section, site footer) on first render.
          */
         function renderUpcomingMaterials() {
             const container = document.getElementById('upcoming-materials-container');
@@ -14,7 +15,7 @@
             if (!container) return;
 
             const upcomingSection = container.closest('section');
-            const meeting = MEETINGS.find(m => m.status === 'upcoming');
+            const meeting = getMeetings().find(m => m.status === 'upcoming');
             if (!meeting) {
                 container.innerHTML = '';
                 if (headerContainer) headerContainer.innerHTML = '';
@@ -56,6 +57,7 @@
             if (podcastContainer) {
                 podcastContainer.innerHTML = buildPodcastDisclosure(podcastRows, podcastSummary);
             }
+            _showStaticDashboardUI();
         }
 
         /**
@@ -67,7 +69,7 @@
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
             if (!archiveContainer) return;
-            const done = MEETINGS.filter(m => m.status === 'done');
+            const done = getMeetings().filter(m => m.status === 'done');
 
             const fragment = document.createDocumentFragment();
             for (const meeting of done) {
@@ -104,7 +106,7 @@
         function renderHorizonCards() {
             const horizonContainer = document.getElementById('horizon-cards-container');
             if (!horizonContainer) return;
-            const drafts = MEETINGS.filter(m => m.status === 'draft');
+            const drafts = getMeetings().filter(m => m.status === 'draft');
             const horizonSection = horizonContainer.closest('section');
 
             if (drafts.length === 0) {
@@ -138,29 +140,49 @@
             horizonContainer.appendChild(fragment);
         }
         /**
-         * Switches to dashboard view: cleans up video player if open, sets document
-         * title, clears reader status and content, scrolls to top, focuses main
-         * content for keyboard navigation, and announces "Dashboard" via aria-live
-         * region.
+         * Unhides the Knowledge Base section and site footer. Safe to call
+         * multiple times — classList.remove is idempotent.
          */
-        function showDashboard() {
-            if (videoPlayerCleanup) {
-                videoPlayerCleanup();
-                const vp = document.getElementById('video-player-overlay');
-                if (vp && vp.open) vp.close();
+        function _showStaticDashboardUI() {
+            const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
+            if (kbSection) kbSection.classList.remove('hidden-view');
+            const footer = document.getElementById('site-footer');
+            if (footer) footer.classList.remove('hidden-view');
+        }
+        function setupManifestRetryUI() {
+            const upcomingHeader = document.getElementById('upcoming-card-header');
+            const upcomingMaterials = document.getElementById('upcoming-materials-container');
+            const upcomingCta = document.getElementById('upcoming-cta');
+            const archiveContainer = document.getElementById('archive-cards-container');
+            const horizonContainer = document.getElementById('horizon-cards-container');
+            if (upcomingHeader) upcomingHeader.innerHTML = `
+                <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted mb-3">Couldn't load sessions</p>
+                <button id="manifest-retry-btn" class="text-sm uppercase tracking-widest underline" style="color:var(--spectrum-2)">Tap to retry</button>`;
+            if (upcomingMaterials) upcomingMaterials.innerHTML = '';
+            if (upcomingCta) upcomingCta.innerHTML = '';
+            if (archiveContainer) archiveContainer.innerHTML = '';
+            if (horizonContainer) {
+                horizonContainer.innerHTML = '';
+                const horizonSection = horizonContainer.closest('section');
+                if (horizonSection) horizonSection.classList.add('hidden-view');
             }
-            document.title = 'Actionable Philosophy Book Club Dashboard';
-            const readerDocLabel = document.getElementById('reader-doc-label');
-            if (readerDocLabel) readerDocLabel.textContent = 'Session Notes';
-            setView('dashboard');
-            readerStatus.textContent = '';
-            content.innerHTML = '';
-            window.scrollTo(0, 0);
-            const mainEl = document.getElementById('main-content');
-            if (mainEl) mainEl.focus({ preventScroll: true });
-            if (readerStatus) {
-                readerStatus.textContent = 'Dashboard';
-                setTimeout(() => { if (readerStatus) readerStatus.textContent = ''; }, CONFIG.STATUS_RESET_MS);
+            const retryBtn = document.getElementById('manifest-retry-btn');
+            if (retryBtn) {
+                retryBtn.addEventListener('click', async () => {
+                    retryBtn.textContent = 'Retrying...';
+                    retryBtn.disabled = true;
+                    try {
+                        await loadManifest();
+                        if (upcomingHeader) upcomingHeader.innerHTML = '';
+                        renderUpcomingMaterials();
+                        renderArchiveCards();
+                        renderHorizonCards();
+                    } catch (err) {
+                        console.warn('Manifest retry failed:', err?.message || err);
+                        retryBtn.textContent = 'Tap to retry';
+                        retryBtn.disabled = false;
+                    }
+                });
             }
         }
 

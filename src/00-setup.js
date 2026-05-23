@@ -8,6 +8,10 @@ const mdCache = new Map();  // Meeting markdown cache (Promises)
 // Meeting data manifest, loaded from docs/manifest.json at startup.
 let MEETINGS = [];
 let ASSET_COPY = {};
+function getMeetings() { return MEETINGS; }
+function setMeetings(val) { MEETINGS = val; }
+function getCopyData() { return ASSET_COPY; }
+function setCopyData(val) { ASSET_COPY = val; }
 
 const DEFAULT_ASSET_COPY = Object.freeze({
     alternate: { label: 'Alternate', title: 'A different take on the session topic' },
@@ -16,7 +20,7 @@ const DEFAULT_ASSET_COPY = Object.freeze({
     debate: { label: 'Debate', title: 'A structured debate between two design perspectives' },
 });
 
-const LS = 'apbc:';
+const STORAGE_KEY_PREFIX = 'apbc:';
 const CONFIG = Object.freeze({
     CACHE_MAX: 20,
     RESUME_MIN_SECONDS: 5,
@@ -26,14 +30,4 @@ const CONFIG = Object.freeze({
     STATUS_RESET_MS: 1000,
     PATH_MAX_LENGTH: 256,
 });
-let activeReaderController = null;
-const RAW_CONTENT_BASE = (() => {
-    const hostParts = window.location.hostname.split('.');
-    if (hostParts.length >= 2 && hostParts[1] === 'github') {
-        const owner = hostParts[0];
-        const repo = window.location.pathname.replace(/^\/|\/+$/g, '').split('/')[0] || 'actionable-philosophy-book-club';
-        return `https://raw.githubusercontent.com/${owner}/${repo}/main/`;
-    }
-    return 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
-})();
-let videoPlayerCleanup = null;
+

@@ -1,26 +1,17 @@
-        // Expose for tests
-
-        function showDashboardRenderError() {
+        function showDashboardRenderError(err) {
+            const msg = err?.message ? 'Could not load dashboard data: ' + err.message : 'Could not load dashboard data';
             const upcomingHeader = document.getElementById('upcoming-card-header');
             if (upcomingHeader) {
-                upcomingHeader.innerHTML = '<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Could not load dashboard data</p>';
+                upcomingHeader.innerHTML = '<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">' + escapeHTML(msg) + '</p>';
             }
-            if (typeof showToast === 'function') showToast('Could not load dashboard data');
-        }
-
-        if (window.__TEST__ === true) {
-            window.isSafeRepoPath = isSafeRepoPath;
-            window.renderUpcomingMaterials = renderUpcomingMaterials;
-            window.renderArchiveCards = renderArchiveCards;
-            window.renderHorizonCards = renderHorizonCards;
-            window.saveVideoResumePosition = saveVideoResumePosition;
+            showToast(msg);
         }
 
         const backBtn = document.getElementById('back-to-dashboard');
         if (backBtn) backBtn.addEventListener('click', e => {
             e.preventDefault();
             window.location.hash = '';
-            showDashboard();
+            navigateToDashboard();
         });
 
         const skipLink = document.querySelector('a[href="#main-content"]');
@@ -53,19 +44,15 @@
             }
         });
 
-        // Set up asset click delegation on dashboard containers
         setupAssetClickDelegation(document.getElementById('upcoming-materials-container'));
         setupAssetClickDelegation(document.getElementById('archive-cards-container'));
         setupAssetClickDelegation(document.getElementById('upcoming-podcasts'));
 
-        // Init onboarding banner
         initOnboardingBanner();
 
-        // Init — runs immediately (script is at end of body, DOM ready)
         (async () => {
-            if (window.__TEST__ === true) window.__manifestLoaded = false;
+            if (window.__TEST__) window.__manifestLoaded = false;
 
-            // Prevent dashboard flash on refresh with #p= reader route — hide dashboard early
             const initialHash = window.location.hash;
             if (initialHash.startsWith('#p=')) {
                 dashboard.classList.add('hidden-view');
@@ -82,19 +69,17 @@
                 setupManifestRetryUI();
                 return;
             }
-            if (window.__TEST__ === true) window.__manifestLoaded = true;
+            if (window.__TEST__) window.__manifestLoaded = true;
             try {
                 renderUpcomingMaterials();
                 renderArchiveCards();
                 renderHorizonCards();
-                const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
-                if (kbSection) kbSection.classList.remove('hidden-view');
-                const footer = document.getElementById('site-footer');
-                if (footer) footer.classList.remove('hidden-view');
             } catch (err) {
                 console.error('Dashboard render failed:', err?.message || err);
-                showDashboardRenderError();
+                showDashboardRenderError(err);
             }
 
             handleRoute();
         })();
+
+        setSessionStorageErrorHandler(showToast);

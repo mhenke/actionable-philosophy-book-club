@@ -1,30 +1,21 @@
-        function fetchMarkdown(path, { isReaderLoad = false } = {}) {
+        function fetchMarkdown(path, signal) {
             if (!isSafeRepoPath(path)) return Promise.reject(new Error('Unsafe path: ' + path));
             if (mdCache.has(path)) {
                 const val = mdCache.get(path);
                 mdCache.delete(path);
-                mdCache.set(path, val); // LRU move to end
+                mdCache.set(path, val);
                 return val;
-            }
-            const controller = new AbortController();
-            let timeoutId = null;
-            if (isReaderLoad) {
-                if (activeReaderController) activeReaderController.abort();
-                activeReaderController = controller;
-                timeoutId = setTimeout(() => controller.abort(), 15000);
             }
             if (mdCache.size >= CONFIG.CACHE_MAX) {
                 mdCache.delete(mdCache.keys().next().value);
             }
-            const promise = fetch(path, { signal: controller.signal })
+            const promise = fetch(path, { signal })
                 .then(response => {
-                    if (timeoutId) clearTimeout(timeoutId);
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     return response.text();
                 });
             mdCache.set(path, promise);
             promise.catch(() => {
-                if (timeoutId) clearTimeout(timeoutId);
                 if (mdCache.get(path) === promise) mdCache.delete(path);
             });
             return promise;
@@ -82,7 +73,7 @@
         function isSafeRepoPath(p) { return isSafePath(p, 'repo'); }
 
         function getVideoResumeKey(filePath) {
-            return LS + 'vs:' + filePath;
+            return STORAGE_KEY_PREFIX + 'vs:' + filePath;
         }
 
         function getSavedVideoResumeTime(filePath) {
@@ -95,11 +86,18 @@
             }
         }
 
+        let _onSessionStorageError = null;
+        function setSessionStorageErrorHandler(handler) {
+            _onSessionStorageError = handler;
+        }
+
         let _sessionStorageWarned = false;
-        function warnSessionStorage() {
+        function _sessionStorageSaveError() {
             if (_sessionStorageWarned) return;
             _sessionStorageWarned = true;
-            if (typeof showToast === 'function') showToast('Could not save video progress');
+            if (_onSessionStorageError) {
+                _onSessionStorageError('Could not save video progress');
+            }
         }
 
         function saveVideoResumePosition(filePath, currentTime) {
@@ -112,7 +110,7 @@
                 }
             } catch (err) {
                 console.warn('sessionStorage write failed:', err?.message);
-                warnSessionStorage();
+                _sessionStorageSaveError();
             }
         }
 
@@ -122,4 +120,11 @@
             } catch (err) {
                 console.warn('sessionStorage clear failed:', err?.message);
             }
+        }
+
+        const _guarded = new WeakMap();
+        function guard(key) {
+            if (_guarded.has(key)) return false;
+            _guarded.set(key, true);
+            return true;
         }

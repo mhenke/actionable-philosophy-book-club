@@ -1,6 +1,5 @@
         function setupAssetClickDelegation(container) {
-            if (!container || container.__assetDelegationInstalled) return;
-            container.__assetDelegationInstalled = true;
+            if (!container || !guard(container)) return;
             container.addEventListener('click', (e) => {
                 const link = e.target.closest('.asset-link');
                 if (!link) return;

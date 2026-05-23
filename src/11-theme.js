@@ -19,7 +19,7 @@
                 document.documentElement.classList.remove('light-theme');
                 if (userInitiated) {
                     try {
-                        localStorage.setItem('apbc:theme', 'dark');
+                        localStorage.setItem(STORAGE_KEY_PREFIX + 'theme', 'dark');
                     } catch (e) {
                         console.debug('localStorage write failed:', e?.message);
                     }
@@ -29,7 +29,7 @@
                 document.documentElement.classList.remove('dark-theme');
                 if (userInitiated) {
                     try {
-                        localStorage.setItem('apbc:theme', 'light');
+                        localStorage.setItem(STORAGE_KEY_PREFIX + 'theme', 'light');
                     } catch (e) {
                         console.debug('localStorage write failed:', e?.message);
                     }
@@ -42,7 +42,7 @@
                 btn.setAttribute('aria-label', label);
             });
 
-            if (userInitiated && typeof showToast === 'function') {
+            if (userInitiated) {
                 showToast(isDark ? 'Dark theme enabled' : 'Light theme enabled');
             }
         }
