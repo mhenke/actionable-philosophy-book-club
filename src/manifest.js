@@ -1,3 +1,13 @@
+let ASSET_COPY = {};
+let RAW_ASSET_COPY = {}; // preserves raw sanitized registry from manifest (used by tests)
+
+const DEFAULT_ASSET_COPY = Object.freeze({
+    alternate: { label: 'Alternate', title: 'A different take on the session topic', icon: '🎬', color: 'var(--spectrum-2)' },
+    'deep-dive': { label: 'Deep Dive', title: 'An exploration of the session topic', icon: '🔬', color: 'var(--spectrum-2)' },
+    critique: { label: 'Critique', title: 'A critical analysis of the key arguments and trade-offs', icon: '🔍', color: 'var(--spectrum-2)' },
+    debate: { label: 'Debate', title: 'A structured debate between two design perspectives', icon: '⚔️', color: 'var(--spectrum-2)' },
+});
+
 function loadAssetCopyRegistry(assetCopy) {
     const registry = {};
     if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
@@ -25,6 +35,13 @@ function loadAssetCopyRegistry(assetCopy) {
     return registry;
 }
 
+function getAssetCopyRegistry() {
+    // Return the raw sanitized registry as loaded from the manifest, not the
+    // runtime-merged copy used for rendering. Tests expect to observe which
+    // entries were explicitly provided in the manifest (undefined for missing keys).
+    return RAW_ASSET_COPY;
+}
+
 function getAssetCopy(type) {
     const entry = ASSET_COPY[type];
     if (entry && typeof entry === 'object' && !Array.isArray(entry)) {
@@ -33,11 +50,19 @@ function getAssetCopy(type) {
     return DEFAULT_ASSET_COPY[type] || {};
 }
 
+let meetingRepo = null;
+
+function getMeetingRepository() {
+    return meetingRepo;
+}
+
 function _processManifestData(data) {
     if (!data.meetings || !Array.isArray(data.meetings)) throw new Error('Invalid manifest structure');
     const assetCopy = loadAssetCopyRegistry(data.assetCopy);
-    MEETINGS = data.meetings;
+    meetingRepo = new MeetingRepository();
+    meetingRepo.setAll(data.meetings);
     ASSET_COPY = assetCopy;
+    RAW_ASSET_COPY = assetCopy;
 }
 
 async function loadManifest() {
