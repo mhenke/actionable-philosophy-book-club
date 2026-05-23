@@ -18,7 +18,7 @@ Product UI's failure mode isn't flatness, it's strangeness without purpose: over
 
 ## Color
 
-Product defaults to Restrained. A single surface can earn Committed (a dashboard where one category color carries a report, an onboarding flow with a drenched welcome screen), but Restrained is the floor.
+Product defaults to Restrained. A single surface can earn Committed (a dashboard where one category color carries a report, an onboarding flow with a drenched onboard screen), but Restrained is the floor.
 
 - State-rich semantic vocabulary: hover, focus, active, disabled, selected, loading, error, warning, success, info. Standardize these.
 - Accent color used for primary actions, current selection, and state indicators only, not decoration.
