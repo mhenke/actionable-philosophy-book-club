@@ -36,6 +36,7 @@ function handleRoute() {
     }
 }
 
+/** Binds hashchange listener to trigger route handling on navigation. */
 function initRouting() {
     window.addEventListener('hashchange', handleRoute);
 }

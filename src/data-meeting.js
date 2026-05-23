@@ -1,40 +1,38 @@
-/**
- * Meeting: Immutable data class for meeting session metadata.
- *
- * Validates schema at construction time (APOSD Principle 7: Define Errors Out of Existence).
- * Provides typed accessors to reduce information leakage across rendering functions.
- * Callers should use getter methods (getVideoFile(), getSession(), etc.) instead of
- * accessing raw properties directly.
- */
 class Meeting {
-  constructor(data) {
-    if (!data?.id || typeof data.id !== 'string') {
+  /**
+   * Validates and stores meeting manifest entry data.
+   * @param {object} manifestEntry - Raw meeting object from manifest
+   * @throws {Error} If id, title, or status are missing/invalid
+   */
+  constructor(manifestEntry) {
+    if (!manifestEntry?.id || typeof manifestEntry.id !== 'string') {
       throw new Error('Meeting: id is required and must be a string');
     }
-    if (!data?.title || typeof data.title !== 'string') {
-      throw new Error(`Meeting ${data.id}: title is required and must be a string`);
+    if (!manifestEntry?.title || typeof manifestEntry.title !== 'string') {
+      throw new Error(`Meeting ${manifestEntry.id}: title is required and must be a string`);
     }
     const validStatuses = ['done', 'upcoming', 'horizon', 'draft'];
-    if (!validStatuses.includes(data?.status)) {
-      throw new Error(`Meeting ${data.id}: status must be one of [${validStatuses.join(', ')}], got '${data.status}'`);
+    if (!validStatuses.includes(manifestEntry?.status)) {
+      throw new Error(`Meeting ${manifestEntry.id}: status must be one of [${validStatuses.join(', ')}], got '${manifestEntry.status}'`);
     }
 
-    this.id = data.id;
-    this.title = data.title;
-    this.session = data.session || '';
-    this.status = data.status;
-    this.date = data.date || '';
-    this.video = data.video || {};
-    this.slides = data.slides || {};
-    this.podcasts = Array.isArray(data.podcasts) ? data.podcasts : [];
-    this.resources = Array.isArray(data.resources) ? data.resources : [];
-    this.color = data.color || '';
-    this.wash = data.wash || '';
-    this.duration = data.duration || 0;
-    this.readmeUrl = data.readmeUrl || '';
-    this.keyTakeaway = data.keyTakeaway || '';
+    this.id = manifestEntry.id;
+    this.title = manifestEntry.title;
+    this.session = manifestEntry.session || '';
+    this.status = manifestEntry.status;
+    this.date = manifestEntry.date || '';
+    this.video = manifestEntry.video || {};
+    this.slides = manifestEntry.slides || {};
+    this.podcasts = Array.isArray(manifestEntry.podcasts) ? manifestEntry.podcasts : [];
+    this.resources = Array.isArray(manifestEntry.resources) ? manifestEntry.resources : [];
+    this.color = manifestEntry.color || '';
+    this.wash = manifestEntry.wash || '';
+    this.duration = manifestEntry.duration || 0;
+    this.readmeUrl = manifestEntry.readmeUrl || '';
+    this.keyTakeaway = manifestEntry.keyTakeaway || '';
   }
 
+  /** Returns true when the meeting has a video asset and status is done. */
   hasVideo() {
     return this.status === 'done' && !!(this.video && this.video.file);
   }
@@ -44,19 +42,6 @@ class Meeting {
   isHorizon() { return this.status === 'horizon'; }
   isDraft() { return this.status === 'draft'; }
 
-  getId() { return this.id; }
-  getTitle() { return this.title; }
-  getSession() { return this.session; }
-  getStatus() { return this.status; }
-  getDate() { return this.date; }
-  getReadmeUrl() { return this.readmeUrl; }
-  getKeyTakeaway() { return this.keyTakeaway; }
-  getColor() { return this.color; }
-  getWash() { return this.wash; }
-  getDuration() { return this.duration; }
-  getPodcasts() { return this.podcasts; }
-  getResources() { return this.resources; }
-
   getVideoFile() { return (this.video && this.video.file) || ''; }
   getVideoLabel() { return (this.video && this.video.label) || ''; }
   getVideoDuration() { return (this.video && this.video.duration) || 0; }
@@ -64,13 +49,4 @@ class Meeting {
   getSlidesFile() { return (this.slides && this.slides.file) || ''; }
   getSlidesLabel() { return (this.slides && this.slides.label) || ''; }
   getSlidesFileSize() { return (this.slides && this.slides.fileSize) || 0; }
-
-  getAssets() {
-    return {
-      video: this.video,
-      slides: this.slides,
-      podcasts: this.podcasts,
-      resources: this.resources
-    };
-  }
 }

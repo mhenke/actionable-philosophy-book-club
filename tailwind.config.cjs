@@ -2,6 +2,11 @@
 module.exports = {
   content: ['index.html', 'src/0*.js'],
   safelist: [
+    'justify-between',
+    'shrink-0',
+    'leading-none',
+    'py-1',
+    'inline-flex',
     'animate-pulse',
     'cursor-default',
     'gap-3',

@@ -21,19 +21,21 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
   - `setup.js` — DOM refs, constants, global let/const declarations
   - `data-meeting.js` — `Meeting` class with validation and typed accessors
   - `data-repository.js` — `MeetingRepository` as single access point for meeting data
+  - `_manifest.js` — inline manifest data constant
   - `path.js` — path validation (`isSafePath`, `isSafeAssetPath`, `isSafeRepoPath`)
   - `format.js` — HTML escaping, duration and file size formatting
   - `storage.js` — video resume position via sessionStorage
   - `utils.js` — markdown fetch cache, one-shot guard pattern
-  - `retry.js` — retry button binding and retry UI rendering
+  - `retry.js` — retry button binding and retry UI rendering (`bindRetryButton`, `showRetryUI`)
+  - `asset-copy.js` — asset copy registry (`getAssetCopy()`, `loadAssetCopyRegistry()`)
   - `manifest.js` — manifest loading and asset copy registry (`getMeetingRepository()`)
+  - `viewer.js` — viewer URL resolution and file-type→viewer routing (`getViewerDestination()`, `buildPPTXViewerURL()`, `classifyAssetPath()`)
   - `assets.js` — asset row builders (video/slides/podcast/resource)
-  - `dashboard.js` — dashboard rendering (upcoming, archive, horizon cards)
+  - `dashboard.js` — dashboard rendering (upcoming, archive, horizon cards), manifest retry UI
   - `reader-hooks.js` — DOMPurify hook setup for external link allowlist
   - `reader-links.js` — markdown content link rewriting
   - `reader-tree.js` — file tree rendering for Meeting Materials lists
   - `reader-toc.js` — table of contents generation from h2 elements
-  - `reader-error.js` — document unavailable error UI
   - `reader-loader.js` — main reader entry point (`loadPage()`)
   - `view.js` — dashboard/reader view switching
   - `toast.js` — toast notification system
@@ -43,6 +45,7 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
   - `theme.js` — dark/light theme toggle, persistence, FOUC guard
   - `routing.js` — hash router and route handler
   - `app.js` — application init (event setup, asset delegation, async startup)
+  - `test-hooks.js` — test harness function exposure
 - **Hash router** — `#p=path/to/file.md` triggers `loadPage()` which fetches + renders markdown via marked + DOMPurify.
 - **MEETINGS manifest** — JS array in `dist/app.js` with all session data (title, date, video/slides/podcasts/resources, status, color, wash).
 - **Dashboard** — `renderUpcomingMaterials()` + `renderArchiveCards()` use shared `buildAssetRows()`.
@@ -53,12 +56,12 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
 | Function | Location | Purpose |
 |---|---|---|
 | `buildAssetRows()` | `assets.js` | Shared renderer for video/slides/podcasts/resource rows |
+| `getViewerDestination()` | `viewer.js` | Centralized file-type→viewer routing (pptx→Office viewer, etc.) |
 | `fetchMarkdown()` | `utils.js` | Promise-based fetch cache with 20-entry LRU eviction + internal path validation + AbortController |
 | `ensureDOMPurifyHooks()` | `reader-hooks.js` | Adds `rel=noopener noreferrer` to external links, strips invalid hrefs |
-| `isSafeRepoPath()` | `path.js` | Validates `#p=` paths — allowlist: `meetings/`, `docs/`, `templates/` |
 | `isSafeAssetPath()` | `path.js` | Validates asset hrefs — only `meetings/` and `assets/` with known extensions |
 | `renderUpcomingMaterials()` | `dashboard.js` | Renders upcoming meeting card with materials, key takeaway, CTA |
-| `renderFileTree()` | `reader-tree.js` | Post-processes `## Meeting Materials` lists into styled file trees |
+| `_renderFileTree()` | `reader-tree.js` | Post-processes `## Meeting Materials` lists into styled file trees |
 
 ## Styling
 

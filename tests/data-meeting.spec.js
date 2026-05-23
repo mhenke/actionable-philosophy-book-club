@@ -89,7 +89,7 @@ test.describe('Meeting data class validation', () => {
     expect(result.isDraft).toBe(false);
   });
 
-  test('getAssets returns all four asset types', async ({ page }) => {
+  test('exposes all four asset types as properties', async ({ page }) => {
     await page.goto('/');
     const assets = await page.evaluate(() => {
       const m = new window.Meeting({
@@ -101,7 +101,7 @@ test.describe('Meeting data class validation', () => {
         podcasts: ['podcast.m4a'],
         resources: ['image.png']
       });
-      return m.getAssets();
+      return m;
     });
     expect(assets.video.file).toBe('video.mp4');
     expect(assets.slides.file).toBe('slides.pptx');

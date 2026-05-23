@@ -1,51 +1,33 @@
 /**
- * Asset helpers: build Office viewer URLs, resolve raw content base, and helper builders for asset rows.
+ * Asset builders: render video, slides, podcast, and resource rows from meeting data.
+ * Viewer URL resolution is delegated to viewer.js (APOSD Principle 3).
  *
  * Public API:
- * - setRawContentBase(url)
- * - _getRawContentBase()
- * - buildOfficeViewerUrl(path)
+ * - buildAssetRows(meeting, opts)
  *
- * Side-effects: reads window.location and may construct external viewer URLs.
+ * Side-effects: reads window.location via viewer.js.
  */
-let _rawContentBase = null;
-function setRawContentBase(url) {
-    _rawContentBase = url;
-}
-function _getRawContentBase() {
-    if (_rawContentBase) return _rawContentBase;
-    const hostParts = window.location.hostname.split('.');
-    if (hostParts.length >= 2 && hostParts[1] === 'github') {
-        const owner = hostParts[0];
-        const repo = window.location.pathname.replace(/^\/|\/+$/g, '').split('/')[0] || 'actionable-philosophy-book-club';
-        return `https://raw.githubusercontent.com/${owner}/${repo}/main/`;
-    }
-    return 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
+
+/** Extracts a URL-safe slug from a file path: filename → lowercased, sanitized, extension stripped. */
+function _toAssetSlug(filePath) {
+    return filePath.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
 }
 
-/**
- * Builds Office Online viewer URL for a PPTX file.
- * @param {string} path - Relative asset path
- * @returns {string|null} Viewer URL, or null if path is unsafe
- */
-function buildPPTXViewerURL(path) {
-    if (!isSafePath(path, DOMAIN.ASSET)) return null;
-    return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(_getRawContentBase() + path);
-}
-
+/** Returns an SVG download icon string used in asset row download buttons. */
 function _downloadIcon() {
     return '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>';
 }
 
+/** Builds the primary video asset row with metadata (duration, size, label) and download link. */
 function buildVideoRow(meeting) {
     const videoDuration = meeting.getVideoDuration() ? formatDuration(meeting.getVideoDuration()) : '';
     const videoSize = meeting.getVideoFileSize() ? formatFileSize(meeting.getVideoFileSize()) : '';
     const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
     const metaLine = videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '';
-    const videoSlug = meeting.getVideoFile().split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
-    const id = escapeHTML(meeting.getId());
+    const videoSlug = _toAssetSlug(meeting.getVideoFile());
+    const id = escapeHTML(meeting.id);
     const videoAssetId = `asset-${id}-video-${videoSlug}`;
-    const session = escapeHTML(meeting.getSession());
+    const session = escapeHTML(meeting.session);
     return `
                     <div class="asset-row" data-testid="${id}-canonical" data-canonical="true" id="${videoAssetId}">
                         <a href="${escapeHTML(meeting.getVideoFile())}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${session})">
@@ -61,6 +43,7 @@ function buildVideoRow(meeting) {
                     </div>`;
 }
 
+/** Renders a disabled placeholder row when video is not yet available and placeholders are enabled. */
 function buildVideoPlaceholder() {
     return `
                     <div class="asset-row opacity-50">
@@ -71,6 +54,7 @@ function buildVideoPlaceholder() {
                     </div>`;
 }
 
+/** Builds the slides asset row with Office Online viewer link, file size, and download button. */
 function buildSlidesRow(meeting) {
     const slidesSize = meeting.getSlidesFileSize() ? formatFileSize(meeting.getSlidesFileSize()) : '';
     const metaLine = slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '';
@@ -89,11 +73,12 @@ function buildSlidesRow(meeting) {
                             ${metaLine}
                         ${viewerClose}
                         <a href="${escapeHTML(meeting.getSlidesFile())}" download
-                           aria-label="Download slides (${escapeHTML(meeting.getSession())})"
+                           aria-label="Download slides (${escapeHTML(meeting.session)})"
                            class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
 }
 
+/** Renders a disabled placeholder row when slides are not yet available and placeholders are enabled. */
 function buildSlidesPlaceholder() {
     return `
                     <div class="asset-row opacity-50">
@@ -104,6 +89,7 @@ function buildSlidesPlaceholder() {
                     </div>`;
 }
 
+/** Builds a podcast asset row with label, type badge, metadata, caption, and download button. */
 function buildPodcastRow(pod, meeting) {
     const defaultEntry = DEFAULT_ASSET_COPY[pod.type] || {};
     const cfg = { icon: defaultEntry.icon || '🎙', color: defaultEntry.color || 'var(--spectrum-2)' };
@@ -114,8 +100,8 @@ function buildPodcastRow(pod, meeting) {
     const podSize = pod.fileSize ? formatFileSize(pod.fileSize) : '';
     const podMeta = [podDuration, podSize].filter(Boolean).join(' · ');
     const metaLine = podMeta ? `<span class="asset-meta">${podMeta}</span>` : '';
-    const podSlug = pod.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
-    const podAssetId = `asset-${escapeHTML(meeting.getId())}-podcast-${podSlug}`;
+    const podSlug = _toAssetSlug(pod.file);
+    const podAssetId = `asset-${escapeHTML(meeting.id)}-podcast-${podSlug}`;
     const fileExt = pod.file.split('.').pop() || 'file';
     const downloadLabel = `Download ${escapeHTML(pod.label)}${podDuration ? ', ' + podDuration : ''} (${fileExt.toUpperCase()} audio)`;
     return `
@@ -135,29 +121,31 @@ function buildPodcastRow(pod, meeting) {
                     </div>`;
 }
 
+/** Builds a horizontal strip of resource thumbnail links from safe resource entries. */
 function buildResourceStrip(resources) {
     const safe = (resources || []).filter(r => isSafePath(r.file, DOMAIN.ASSET));
     if (safe.length === 0) return '';
     return `<div class="resource-strip">${safe.map(res => {
         const file = escapeHTML(res.file);
         const label = escapeHTML(res.label);
-        const isWebp = /\.webp$/i.test(res.file);
-        const img = isWebp
+        const isImage = classifyAssetPath(res.file) === 'image';
+        const img = isImage
             ? `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="" loading="lazy" width="120" height="80"></picture>`
             : `<img src="${file}" alt="" loading="lazy" width="120" height="80">`;
-        return `
-                        <a href="${file}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
+        return `<a href="${file}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
                             ${img}
                             <span>${label}</span>
                         </a>`;
     }).join('')}</div>`;
 }
 
+/** Wraps podcast asset rows in a <details> disclosure element with a summary label. */
 function buildPodcastDisclosure(rows, summary) {
     if (rows.length === 0) return '';
     return `<details class="podcast-disclosure"><summary><span class="asset-link"><span class="icon-pill" style="background:var(--wash-3-border);" aria-hidden="true">📦</span>${escapeHTML(summary)}</span><svg class="podcast-chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="16" height="16" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></summary>${rows.join('')}</details>`;
 }
 
+/** Generates a summary string like "1 Video · 3 Podcasts" from the podcasts list for use in disclosure summary. */
 function buildPodcastSummary(podcasts) {
     const safe = (podcasts || []).filter(p => isSafePath(p.file, DOMAIN.ASSET));
     const videoCount = safe.filter(p => p.type === 'alternate').length;
@@ -192,12 +180,12 @@ function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
         primaryRows.push(buildSlidesPlaceholder());
     }
 
-    const podcasts = meeting.getPodcasts();
+    const podcasts = meeting.podcasts;
     const podcastRows = podcasts
         .filter(pod => isSafePath(pod.file, DOMAIN.ASSET))
         .map(pod => buildPodcastRow(pod, meeting));
 
-    const resourceStrip = buildResourceStrip(meeting.getResources());
+    const resourceStrip = buildResourceStrip(meeting.resources);
     const podcastSummary = buildPodcastSummary(podcasts);
 
     return { primaryRows, podcastRows, resourceStrip, podcastSummary };

@@ -67,6 +67,18 @@ function _finalizeReaderContent(sanitized, path, anchorId) {
     readerStatus.textContent = 'Document loaded.';
 }
 
+/** Shows retry/back UI when document load fails. */
+function _showReaderError(path, anchorId, { message = 'Document unavailable.' } = {}) {
+    showRetryUI(markdownContent, {
+        message: message,
+        retryLabel: 'Try again',
+        onRetry: () => loadPage(path, anchorId),
+        backLabel: 'Return to Dashboard',
+        onBack: navigateToDashboard,
+    });
+    readerStatus.textContent = message;
+}
+
 /**
  * Fetches, parses, sanitizes, and renders a markdown file into the reader view.
  * Manages concurrency via generation counter and AbortController, with a 15s timeout.

@@ -12,6 +12,10 @@
  */
 let ASSET_COPY = {};
 
+function setAssetCopyRegistry(data) {
+    ASSET_COPY = data;
+}
+
 const DEFAULT_ASSET_COPY = Object.freeze({
     alternate: { label: 'Alternate', title: 'A different take on the session topic', icon: '🎬', color: 'var(--spectrum-2)' },
     'deep-dive': { label: 'Deep Dive', title: 'An exploration of the session topic', icon: '🔬', color: 'var(--spectrum-2)' },
@@ -19,6 +23,7 @@ const DEFAULT_ASSET_COPY = Object.freeze({
     debate: { label: 'Debate', title: 'A structured debate between two design perspectives', icon: '⚔️', color: 'var(--spectrum-2)' },
 });
 
+/** Validates manifest asset copy entries against expected keys, returns a sanitized registry. Falls back to defaults for missing entries. */
 function loadAssetCopyRegistry(assetCopy) {
     const registry = {};
     if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
@@ -46,10 +51,15 @@ function loadAssetCopyRegistry(assetCopy) {
     return registry;
 }
 
+/** Returns the current asset copy registry (may be empty before manifest loads). */
 function getAssetCopyRegistry() {
     return ASSET_COPY;
 }
 
+/**
+ * Returns merged entry for a copy type: overrides defaults with manifest-provided values.
+ * Falls back to default entry if type is not found in registry.
+ */
 function getAssetCopy(type) {
     const entry = ASSET_COPY[type];
     if (entry && typeof entry === 'object' && !Array.isArray(entry)) {

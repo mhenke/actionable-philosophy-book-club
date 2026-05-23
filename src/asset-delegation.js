@@ -13,7 +13,7 @@ function setupAssetClickDelegation() {
             if (!href || !isSafePath(href, DOMAIN.ASSET)) return;
             e.preventDefault();
 
-            if (href.endsWith('.mp4')) {
+            if (classifyAssetPath(href) === 'video') {
                 const labelEl = link.querySelector('.asset-link-top') || link;
                 openVideoPlayer(href, (labelEl.textContent || '').trim() || href);
             } else {

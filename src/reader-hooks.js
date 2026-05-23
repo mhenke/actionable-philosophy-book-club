@@ -6,6 +6,7 @@
  *
  * Side-effects: mutates anchor attributes, may remove hrefs for disallowed hosts.
  */
+/** Only these external hosts may appear in markdown links: our GitHub Pages origin, the Office viewer, and GitHub.com for source references. */
 const _ALLOWED_EXTERNAL_HOSTS = /^https?:\/\/(mhenke\.github\.io|view\.officeapps\.live\.com|github\.com)\//i;
 
 /** Installs DOMPurify afterSanitizeAttributes hook: strips external links outside the allowlist, adds target=_blank + rel=noopener for allowed ones. Runs once via callOnce. */

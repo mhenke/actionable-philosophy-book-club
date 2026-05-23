@@ -5,7 +5,7 @@
  * All read/write access goes through this repository, preventing direct mutation
  * and allowing schema changes without touching callers.
  *
- * APOSD Principle 2 (Deep Modules): Simple interface (getAll, getById, getDone),
+ * APOSD Principle 2 (Deep Modules): Simple interface (getAll, getById, getByStatus),
  * powerful implementation (validation, mutation control).
  *
  * APOSD Principle 7 (Define Errors Out of Existence): Validates schema at load
@@ -39,7 +39,7 @@ class MeetingRepository {
    * @returns {Array} All meetings
    */
   getAll() {
-    return this.meetings;
+    return [...this.meetings];
   }
 
   /**
@@ -52,34 +52,12 @@ class MeetingRepository {
   }
 
   /**
-   * Get all completed meetings.
-   * @returns {Array} Meetings with status === 'done'
+   * Get meetings by status.
+   * @param {string} status - One of 'done', 'upcoming', 'horizon', 'draft'
+   * @returns {Array} Meetings matching the given status
    */
-  getDone() {
-    return this.meetings.filter(m => m && m.status === 'done');
+  getByStatus(status) {
+    return this.meetings.filter(m => m && m.status === status);
   }
 
-  /**
-   * Get all upcoming meetings.
-   * @returns {Array} Meetings with status === 'upcoming'
-   */
-  getUpcoming() {
-    return this.meetings.filter(m => m && m.status === 'upcoming');
-  }
-
-  /**
-   * Get all horizon meetings.
-   * @returns {Array} Meetings with status === 'horizon'
-   */
-  getHorizon() {
-    return this.meetings.filter(m => m && m.status === 'horizon');
-  }
-
-  /**
-   * Get all draft meetings.
-   * @returns {Array} Meetings with status === 'draft'
-   */
-  getDraft() {
-    return this.meetings.filter(m => m && m.status === 'draft');
-  }
 }

@@ -37,9 +37,11 @@ function showToast(message) {
  */
 (function () {
     const ErrorHandler = {
+        /** Logs a warning with optional error context. */
         warn(message, err = null) {
             try { console.warn('ErrorHandler:', message, err); } catch (e) { /* best-effort */ }
         },
+        /** Logs an error and optionally shows a user-facing toast. */
         error(err, userMessage) {
             try { console.error('ErrorHandler:', err); } catch (e) { /* ignore */ }
             if (userMessage && typeof showToast === 'function') {

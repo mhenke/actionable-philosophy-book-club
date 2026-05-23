@@ -7,16 +7,18 @@
  *
  * Side-effects: uses localStorage/sessionStorage and may call provided error handler.
  */
-const STORAGE_KEY_PREFIX = 'apbc:';
+const STORAGE_KEY_PREFIX = window.__STORAGE_PREFIX;
 const RESUME_MIN_SECONDS = 5;
 const PROGRESS_SAVE_MS = 3000;
 let _onSessionStorageError = null;
 let _sessionStorageWarned = false;
 
+/** Installs a handler called when sessionStorage operations fail. */
 function setSessionStorageErrorHandler(handler) {
     _onSessionStorageError = handler;
 }
 
+/** Returns a namespaced storage key by concatenating the shared prefix and suffix. */
 function buildStorageKey(suffix) {
     return STORAGE_KEY_PREFIX + suffix;
 }
@@ -29,10 +31,12 @@ function _sessionStorageSaveError() {
     }
 }
 
+/** Builds the sessionStorage key for a video file's resume position. */
 function getVideoResumeKey(filePath) {
     return buildStorageKey('vs:' + filePath);
 }
 
+/** Reads saved resume time from sessionStorage; returns 0 if none found. */
 function getSavedVideoResumeTime(filePath) {
     try {
         const saved = sessionStorage.getItem(getVideoResumeKey(filePath));
@@ -43,6 +47,7 @@ function getSavedVideoResumeTime(filePath) {
     }
 }
 
+/** Saves current video time to sessionStorage if above RESUME_MIN_SECONDS, otherwise clears the key. */
 function saveVideoResumePosition(filePath, currentTime) {
     const key = getVideoResumeKey(filePath);
     try {
@@ -57,6 +62,7 @@ function saveVideoResumePosition(filePath, currentTime) {
     }
 }
 
+/** Removes the resume position key for a video from sessionStorage. */
 function clearVideoResumePosition(filePath) {
     try {
         sessionStorage.removeItem(getVideoResumeKey(filePath));

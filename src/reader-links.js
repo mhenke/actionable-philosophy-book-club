@@ -13,7 +13,7 @@ function _disableLink(link, title) {
     if (title) link.setAttribute('title', title);
 }
 
-/** Rewrites <a> hrefs in rendered content: .md → #p=, .pptx → Office viewer, images → direct link. Disables unsafe paths. */
+/** Rewrites <a> hrefs in rendered content: .md → #p=, viewer files → viewer.js routing, unsafe paths disabled. */
 function rewriteContentLinks(container, docPath) {
     const siteRoot = window.location.pathname.replace(/[^/]*$/, '');
     for (const link of container.querySelectorAll('a')) {
@@ -47,17 +47,10 @@ function rewriteContentLinks(container, docPath) {
                 continue;
             }
 
-            if (/\.pptx?$/i.test(repoPath)) {
-                link.setAttribute('href', buildPPTXViewerURL(repoPath));
-                link.setAttribute('target', '_blank');
-                link.setAttribute('rel', 'noopener noreferrer');
-            } else if (/\.(png|jpe?g|gif|webp)$/i.test(repoPath)) {
-                link.setAttribute('href', repoPath);
-                link.setAttribute('target', '_blank');
-                link.setAttribute('rel', 'noopener noreferrer');
-            } else {
-                link.setAttribute('href', repoPath);
-            }
+            const dest = getViewerDestination(repoPath);
+            link.setAttribute('href', dest.url);
+            if (dest.target) link.setAttribute('target', dest.target);
+            if (dest.rel) link.setAttribute('rel', dest.rel);
         } catch (e) {
             window.ErrorHandler?.warn('rewriteContentLinks: skipped malformed link', { err: e });
         }

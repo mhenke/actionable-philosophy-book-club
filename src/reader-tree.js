@@ -13,7 +13,7 @@ function _applyMeetingMaterialsTree(container) {
         while (el && el.tagName !== 'H2') {
             if (el.tagName === 'UL') {
                 el.classList.add('materials-panel');
-                renderFileTree(el, '');
+                _renderFileTree(el, '');
             }
             el = el.nextElementSibling;
         }
@@ -21,7 +21,7 @@ function _applyMeetingMaterialsTree(container) {
 }
 
 /** Prepends tree connectors (├──/└──) to list items. Recursively processes nested ULs. */
-function renderFileTree(ul, prefix) {
+function _renderFileTree(ul, prefix) {
     const items = Array.from(ul.children);
     for (const [i, li] of items.entries()) {
         if (li.querySelector(':scope > .tree-connector')) continue;
@@ -43,7 +43,7 @@ function renderFileTree(ul, prefix) {
         pre.textContent = prefix + connector;
         li.insertBefore(pre, li.firstChild);
         const nested = li.querySelector(':scope > ul');
-        if (nested) renderFileTree(nested, childPrefix);
+        if (nested) _renderFileTree(nested, childPrefix);
         li.classList.add(nested ? 'tree-folder' : 'tree-file');
     }
 }

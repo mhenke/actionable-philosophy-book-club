@@ -5,7 +5,7 @@
  */
 (function() {
     try {
-        const theme = localStorage.getItem('apbc:theme');
+        const theme = localStorage.getItem(window.__STORAGE_PREFIX + 'theme');
         if (theme === 'dark') {
             document.documentElement.classList.add('dark-theme');
         } else if (theme === 'light') {

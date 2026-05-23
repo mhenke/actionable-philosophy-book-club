@@ -13,6 +13,7 @@ function _scrollToElement(el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+/** Returns HTML for a table of contents nav element from h2 elements. Returns null if fewer than 2 headings. Assigns section-* ids to headings that lack one. */
 function buildTableOfContents(h2Elements) {
     if (h2Elements.length < 2) return null;
     const tocItems = Array.from(h2Elements).map((h2, idx) => {

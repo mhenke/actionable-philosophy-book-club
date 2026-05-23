@@ -3,8 +3,13 @@
  *
  * Public API:
  * - bindRetryButton(btn, handler, options)
+ * - showRetryUI(container, opts)
  *
  * Side-effects: mutates button text and disabled state during retry attempts.
+ */
+/**
+ * Wires a click listener that runs an async handler, disables the button during the attempt,
+ * and restores it on failure so the user can retry.
  */
 function bindRetryButton(btn, handler, { retryText, retryDisabledText } = {}) {
     btn.addEventListener('click', async () => {
@@ -19,6 +24,10 @@ function bindRetryButton(btn, handler, { retryText, retryDisabledText } = {}) {
     });
 }
 
+/**
+ * Renders a centered retry panel with optional retry and back buttons.
+ * Wires click handlers via bindRetryButton for the retry case.
+ */
 function showRetryUI(container, { message, retryLabel, onRetry, backLabel, onBack }) {
     container.innerHTML = `
                 <div class="py-12 text-center">
@@ -34,34 +43,4 @@ function showRetryUI(container, { message, retryLabel, onRetry, backLabel, onBac
     if (backBtn && onBack) backBtn.addEventListener('click', onBack);
 }
 
-/**
- * Sets up retry UI across dashboard containers when manifest load fails.
- * Clears all dashboard containers and shows a retry prompt in the upcoming header.
- * On retry, reloads the manifest and re-renders all dashboard sections.
- */
-function setupManifestRetryUI() {
-    const upcomingHeader = document.getElementById('upcoming-card-header');
-    const upcomingMaterials = document.getElementById('upcoming-materials-container');
-    const upcomingCta = document.getElementById('upcoming-cta');
-    const archiveContainer = document.getElementById('archive-cards-container');
-    const horizonContainer = document.getElementById('horizon-cards-container');
-    if (upcomingHeader) showRetryUI(upcomingHeader, {
-        message: "Couldn't load sessions",
-        retryLabel: 'Tap to retry',
-        onRetry: async () => {
-            await loadManifest();
-            if (upcomingHeader) upcomingHeader.innerHTML = '';
-            renderUpcomingMaterials();
-            renderArchiveCards();
-            renderHorizonCards();
-        },
-    });
-    if (upcomingMaterials) upcomingMaterials.innerHTML = '';
-    if (upcomingCta) upcomingCta.innerHTML = '';
-    if (archiveContainer) archiveContainer.innerHTML = '';
-    if (horizonContainer) {
-        horizonContainer.innerHTML = '';
-        const horizonSection = horizonContainer.closest('section');
-        if (horizonSection) horizonSection.classList.add('hidden-view');
-    }
-}
+
