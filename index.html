@@ -89,6 +89,21 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
+            min-width: 0;
+        }
+        #reader-doc-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 140px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        @media (min-width: 480px) {
+            #reader-doc-label { max-width: 250px; }
+        }
+        @media (min-width: 640px) {
+            #reader-doc-label { max-width: none; }
         }
         @media (min-width: 768px) {
             .banner-inner { padding: 1.25rem 2.5rem; }
@@ -884,7 +899,7 @@
                         Dashboard
                     </button>
 
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4 min-w-0">
                         <span id="reader-doc-label" class="text-[0.6875rem] swiss-light">Session Notes</span>
                         <button id="theme-toggle-reader" class="theme-toggle-btn" aria-label="Toggle theme">
                             <svg class="sun-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
