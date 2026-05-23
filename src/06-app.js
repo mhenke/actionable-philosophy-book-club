@@ -8,6 +8,7 @@
                 const lastHashIndex = fullPath.lastIndexOf('#');
                 const path = lastHashIndex > 0 ? fullPath.substring(0, lastHashIndex) : fullPath;
                 if (!isSafeRepoPath(path)) {
+                    if (typeof showToast === 'function') showToast('Invalid document path');
                     showDashboard();
                     return;
                 }
@@ -146,7 +147,7 @@
                 await loadManifest();
             } catch (err) {
                 console.error('Manifest load failed:', err?.message || err);
-                showManifestError();
+                setupManifestRetryUI();
                 return;
             }
             if (window.__TEST__ === true) window.__manifestLoaded = true;
@@ -160,7 +161,6 @@
                 if (footer) footer.classList.remove('hidden-view');
             } catch (err) {
                 console.error('Dashboard render failed:', err?.message || err);
-                showManifestError();
             }
 
             handleRoute();

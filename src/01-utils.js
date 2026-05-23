@@ -53,11 +53,6 @@
             return `${Math.round(mb)} MB`;
         }
 
-        function buildPPTXViewerURL(path) {
-            if (!isSafeAssetPath(path)) return '#';
-            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(RAW_CONTENT_BASE + path);
-        }
-
         // Single path validator for both asset and repo paths — eliminates prior three-way drift.
         const _ASSET_ROOTS = new Set(['meetings', 'assets']);
         const _REPO_ROOTS = new Set(['meetings', 'docs', 'templates']);

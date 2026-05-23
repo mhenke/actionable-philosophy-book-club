@@ -1,3 +1,8 @@
+        function buildPPTXViewerURL(path) {
+            if (!isSafeAssetPath(path)) return '#';
+            return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(RAW_CONTENT_BASE + path);
+        }
+
         // Shared rendering constants
         const PODCAST_CONFIG = {
             'alternate': { icon: '🎬', color: 'var(--spectrum-2)' },
@@ -132,6 +137,14 @@
             return summary ? `Additional Resources: ${summary}` : '';
         }
 
+        /**
+         * @param {Object} meeting - Meeting manifest entry expected shape:
+         *   { id, session, title, status, color, wash, readmeUrl,
+         *     video?: { file, label, variant, duration, fileSize },
+         *     slides?: { file, label, variant, fileSize },
+         *     podcasts?: Array<{ type, label, file, variant?, duration?, fileSize? }>,
+         *     resources?: Array<{ label, file, fileSize? }> }
+         */
         function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
             const primaryRows = [];
 

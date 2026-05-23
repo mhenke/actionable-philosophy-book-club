@@ -160,22 +160,7 @@
                     document.title = `${h1.textContent.trim()} | Actionable Philosophy Book Club`;
                     content.setAttribute('aria-label', h1.textContent.trim());
                     const readerDocLabel = document.getElementById('reader-doc-label');
-                    if (readerDocLabel) {
-                        let labelText = h1.textContent.trim();
-                        const meeting = MEETINGS.find(m => {
-                            if (!m.readmeUrl) return false;
-                            const lastSlash = m.readmeUrl.lastIndexOf('/');
-                            if (lastSlash === -1) return false;
-                            const dir = m.readmeUrl.substring(0, lastSlash + 1);
-                            return path.startsWith(dir);
-                        });
-                        if (meeting) {
-                            labelText = meeting.session;
-                        } else if (labelText.length > 25) {
-                            labelText = labelText.slice(0, 22) + '...';
-                        }
-                        readerDocLabel.textContent = labelText;
-                    }
+                    if (readerDocLabel) readerDocLabel.textContent = h1.textContent.trim();
                 }
 
                 applyMeetingMaterialsTree(content);

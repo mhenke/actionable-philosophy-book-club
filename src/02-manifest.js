@@ -62,7 +62,7 @@
             }
         }
 
-        function showManifestError() {
+        function setupManifestRetryUI() {
             const upcomingHeader = document.getElementById('upcoming-card-header');
             const upcomingMaterials = document.getElementById('upcoming-materials-container');
             const upcomingCta = document.getElementById('upcoming-cta');

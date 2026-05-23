@@ -727,48 +727,6 @@
             color: var(--text-primary);
         }
 
-        /* System preferences dark mode variables */
-        @media (prefers-color-scheme: dark) {
-            :root:not(.light-theme) {
-                --surface:      #121212;
-                --banner:       #1C1C1E;
-                --text-primary: #EEEEEE;
-                --text-muted:   #B2B2B2;
-                --card-bg:      #1C1C1E;
-                --border-low:   rgba(255, 255, 255, 0.08);
-                --prose-code-bg: rgba(255, 255, 255, 0.1);
-                --materials-panel-bg: rgba(255, 255, 255, 0.05);
-                --shadow-sticky: rgba(0, 0, 0, 0.5);
-                --shadow-card-hover: rgba(99, 164, 226, 0.15);
-                
-                /* Keep spectrum colors legible */
-                --spectrum-1:   #88B2E0;
-                --spectrum-2:   #63A4E2;
-                
-                /* Adjust washes for dark mode */
-                --wash-1: rgba(136, 178, 224, 0.08);
-                --wash-2: rgba(99, 164, 226, 0.08);
-                --wash-3: rgba(75, 163, 199, 0.08);
-                --wash-4: rgba(72, 189, 184, 0.08);
-                --wash-5: rgba(114, 201, 168, 0.08);
-                
-                --wash-2-border: rgba(99, 164, 226, 0.2);
-                --wash-3-border: rgba(75, 163, 199, 0.2);
-                --wash-2-strong-border: rgba(99, 164, 226, 0.3);
-                
-                --wash-1-icon: rgba(136, 178, 224, 0.15);
-                --wash-2-icon: rgba(99, 164, 226, 0.15);
-                --wash-3-icon: rgba(75, 163, 199, 0.15);
-                --wash-4-icon: rgba(72, 189, 184, 0.15);
-                --wash-5-icon: rgba(114, 201, 168, 0.15);
-
-                --rule-start: rgba(75, 163, 199, 0.40);
-                --rule-end:   rgba(72, 189, 184, 0.10);
-            }
-            :root:not(.light-theme) .prose h1 {
-                color: var(--text-primary);
-            }
-        }
     </style>
 </head>
 <body>
