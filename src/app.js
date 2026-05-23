@@ -69,7 +69,7 @@ function showDashboardRenderError(err) {
     try {
         await loadManifest();
     } catch (err) {
-        console.error('Manifest load failed:', err?.message || err);
+        window.ErrorHandler?.warn('Manifest load failed:', { err });
         setupManifestRetryUI();
         return;
     }
@@ -79,7 +79,7 @@ function showDashboardRenderError(err) {
         renderArchiveCards();
         renderDraftCards();
     } catch (err) {
-        console.error('Dashboard render failed:', err?.message || err);
+        window.ErrorHandler?.warn('Dashboard render failed:', { err });
         showDashboardRenderError(err);
     }
 

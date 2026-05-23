@@ -19,7 +19,7 @@ const TOAST_FADE_MS = 300;
 function showToast(message) {
     const container = document.getElementById('toast-container');
     if (!container) {
-        console.warn('showToast: #toast-container not found');
+        window.ErrorHandler?.warn('showToast: #toast-container not found');
         return;
     }
     const el = document.createElement('div');
