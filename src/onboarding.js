@@ -8,14 +8,21 @@ function initOnboardingBanner() {
 
     const mainContent = document.getElementById('main-content');
 
-    const restoreBtn = document.getElementById('restore-onboarding');
-    if (restoreBtn && callOnce(restoreBtn)) {
-        restoreBtn.addEventListener('click', () => {
+    if (callOnce(document)) {
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('#restore-onboarding') || e.target.closest('.restore-onboarding-action');
+            if (!btn) return;
+            e.preventDefault();
+
+            const bannerEl = document.getElementById('onboarding-banner');
+            const mainContentEl = document.getElementById('main-content');
+            if (!bannerEl) return;
+
             setOnboardingDismissed(false);
-            if (mainContent && banner.parentNode !== mainContent) {
-                mainContent.insertBefore(banner, mainContent.firstChild);
+            if (mainContentEl && bannerEl.parentNode !== mainContentEl) {
+                mainContentEl.insertBefore(bannerEl, mainContentEl.firstChild);
             }
-            banner.classList.remove('hidden-view');
+            bannerEl.classList.remove('hidden-view');
             if (typeof showToast === 'function') {
                 showToast('Welcome banner restored');
             }
@@ -24,13 +31,12 @@ function initOnboardingBanner() {
 
     if (getOnboardingDismissed()) {
         banner.classList.add('hidden-view');
-        return;
+    } else {
+        if (mainContent && banner.parentNode !== mainContent) {
+            mainContent.insertBefore(banner, mainContent.firstChild);
+        }
+        banner.classList.remove('hidden-view');
     }
-
-    if (mainContent && banner.parentNode !== mainContent) {
-        mainContent.insertBefore(banner, mainContent.firstChild);
-    }
-    banner.classList.remove('hidden-view');
 
     if (callOnce(dismissBtn)) {
         dismissBtn.addEventListener('click', () => {
