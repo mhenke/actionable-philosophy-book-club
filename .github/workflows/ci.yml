@@ -32,7 +32,7 @@ jobs:
       - name: Validate manifest JSON Schema
         run: |
           npm install -g ajv-cli@5.0.0 2>/dev/null || true
-          npx ajv validate -s docs/manifest.schema.json -d docs/manifest.json --strict=drop 2>&1 || \
+          npx ajv validate -s docs/manifest.schema.json -d docs/manifest.json --strict false 2>&1 || \
             (echo "Manifest schema validation failed — update docs/manifest.json to match docs/manifest.schema.json" && exit 1)
 
       - name: Check for unregistered meeting directories
