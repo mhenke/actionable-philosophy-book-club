@@ -48,7 +48,7 @@
                         }
                     }
                 } catch (e) {
-                    console.debug('rewriteContentLinks: skipped malformed link', e?.message);
+                    console.warn('rewriteContentLinks: skipped malformed link', e?.message);
                 }
             }
         }
@@ -125,10 +125,18 @@
             }
         }
 
-        let _loadPageEpoch = 0;
+        let _loadPageGeneration = 0;
 
+        /**
+         * @param {string} path - Safe repo path to a markdown file
+         * @param {string|null} [anchorId] - Optional heading anchor to scroll into view after render
+         *
+         * Fetches markdown, parses with marked, sanitizes with DOMPurify, then renders into
+         * the reader view. Handles link rewriting, TOC generation, file tree rendering, and
+         * stale-response cancellation via generation counter. On failure, shows a retry UI.
+         */
         async function loadPage(path, anchorId) {
-            const myEpoch = ++_loadPageEpoch;
+            const myGeneration = ++_loadPageGeneration;
 
             if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
                 const contentEl = document.getElementById('markdown-content');
@@ -145,7 +153,7 @@
 
             try {
                 const text = await fetchMarkdown(path, { isReaderLoad: true });
-                if (myEpoch !== _loadPageEpoch) return; // newer load started
+                if (myGeneration !== _loadPageGeneration) return; // newer load started
                 ensureDOMPurifyHooks();
                 const sanitized = DOMPurify.sanitize(marked.parse(text), {
                     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
@@ -218,7 +226,7 @@
                 }
                 readerStatus.textContent = 'Document loaded.';
             } catch (err) {
-                if (myEpoch !== _loadPageEpoch) return; // newer load started
+                if (myGeneration !== _loadPageGeneration) return; // newer load started
                 console.warn('loadPage failed:', err?.message || err);
                 content.innerHTML = `
                     <div class="py-12 text-center">
@@ -234,6 +242,6 @@
                 if (returnBtn) returnBtn.addEventListener('click', showDashboard);
                 readerStatus.textContent = 'Document unavailable.';
             } finally {
-                if (myEpoch === _loadPageEpoch) content.setAttribute('aria-busy', 'false');
+                if (myGeneration === _loadPageGeneration) content.setAttribute('aria-busy', 'false');
             }
         }

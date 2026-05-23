@@ -1,3 +1,10 @@
+        /**
+         * Renders the next upcoming meeting card: header, asset rows, key takeaway,
+         * CTA button linking to meeting notes, and podcast disclosure. Clears the
+         * container if no upcoming meeting exists. Assumes MEETINGS is populated.
+         * Side effects: removes `hidden-view` from the upcoming section, writes
+         * innerHTML to multiple DOM containers.
+         */
         function renderUpcomingMaterials() {
             const container = document.getElementById('upcoming-materials-container');
             const podcastContainer = document.getElementById('upcoming-podcasts');
@@ -51,6 +58,12 @@
             }
         }
 
+        /**
+         * Renders archive cards for all meetings with status `done`. Each card
+         * includes asset rows (with placeholders), resource strip, meeting notes
+         * link, and podcast disclosure. Appends via DocumentFragment to avoid
+         * layout thrash. Assumes MEETINGS is populated.
+         */
         function renderArchiveCards() {
             const archiveContainer = document.getElementById('archive-cards-container');
             if (!archiveContainer) return;
@@ -124,6 +137,12 @@
             horizonContainer.innerHTML = '';
             horizonContainer.appendChild(fragment);
         }
+        /**
+         * Switches to dashboard view: cleans up video player if open, sets document
+         * title, clears reader status and content, scrolls to top, focuses main
+         * content for keyboard navigation, and announces "Dashboard" via aria-live
+         * region.
+         */
         function showDashboard() {
             if (videoPlayerCleanup) {
                 videoPlayerCleanup();

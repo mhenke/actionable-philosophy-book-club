@@ -138,12 +138,7 @@
         }
 
         /**
-         * @param {Object} meeting - Meeting manifest entry expected shape:
-         *   { id, session, title, status, color, wash, readmeUrl,
-         *     video?: { file, label, variant, duration, fileSize },
-         *     slides?: { file, label, variant, fileSize },
-         *     podcasts?: Array<{ type, label, file, variant?, duration?, fileSize? }>,
-         *     resources?: Array<{ label, file, fileSize? }> }
+         * @param {Object} meeting - Meeting manifest entry (see docs/content-contract.md for schema)
          */
         function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
             const primaryRows = [];

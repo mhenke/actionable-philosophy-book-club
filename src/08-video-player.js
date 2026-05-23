@@ -38,7 +38,7 @@
                             video.appendChild(track);
                         }
                     })
-                    .catch(() => {});
+                    .catch(err => console.warn('VTT caption check failed:', err?.message));
             }
 
             const savedTime = getSavedVideoResumeTime(filePath);

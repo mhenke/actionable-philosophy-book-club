@@ -90,21 +90,8 @@
                 const saved = sessionStorage.getItem(getVideoResumeKey(filePath));
                 return saved ? parseFloat(saved) : 0;
             } catch (err) {
-                console.debug('sessionStorage read failed:', err?.message);
+                console.warn('sessionStorage read failed:', err?.message);
                 return 0;
-            }
-        }
-
-        function saveVideoResumePosition(filePath, currentTime) {
-            const key = getVideoResumeKey(filePath);
-            try {
-                if (currentTime > CONFIG.RESUME_MIN_SECONDS) {
-                    sessionStorage.setItem(key, `${currentTime}`);
-                } else {
-                    sessionStorage.removeItem(key);
-                }
-            } catch (err) {
-                console.debug('sessionStorage write failed:', err?.message);
             }
         }
 
