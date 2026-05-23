@@ -108,10 +108,31 @@
             }
         }
 
+        let _sessionStorageWarned = false;
+        function warnSessionStorage() {
+            if (_sessionStorageWarned) return;
+            _sessionStorageWarned = true;
+            if (typeof showToast === 'function') showToast('Could not save video progress');
+        }
+
+        function saveVideoResumePosition(filePath, currentTime) {
+            const key = getVideoResumeKey(filePath);
+            try {
+                if (currentTime > CONFIG.RESUME_MIN_SECONDS) {
+                    sessionStorage.setItem(key, `${currentTime}`);
+                } else {
+                    sessionStorage.removeItem(key);
+                }
+            } catch (err) {
+                console.warn('sessionStorage write failed:', err?.message);
+                warnSessionStorage();
+            }
+        }
+
         function clearVideoResumePosition(filePath) {
             try {
                 sessionStorage.removeItem(getVideoResumeKey(filePath));
             } catch (err) {
-                console.debug('sessionStorage clear failed:', err?.message);
+                console.warn('sessionStorage clear failed:', err?.message);
             }
         }

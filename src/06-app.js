@@ -21,6 +21,14 @@
 
         // Expose for tests
 
+        function showRenderError() {
+            const upcomingHeader = document.getElementById('upcoming-card-header');
+            if (upcomingHeader) {
+                upcomingHeader.innerHTML = '<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Could not load dashboard data</p>';
+            }
+            if (typeof showToast === 'function') showToast('Could not load dashboard data');
+        }
+
         if (window.__TEST__ === true) {
             window.isSafeRepoPath = isSafeRepoPath;
             window.renderUpcomingMaterials = renderUpcomingMaterials;
@@ -161,6 +169,7 @@
                 if (footer) footer.classList.remove('hidden-view');
             } catch (err) {
                 console.error('Dashboard render failed:', err?.message || err);
+                showRenderError();
             }
 
             handleRoute();

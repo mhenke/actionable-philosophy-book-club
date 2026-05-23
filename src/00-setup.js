@@ -27,5 +27,13 @@ const CONFIG = Object.freeze({
     PATH_MAX_LENGTH: 256,
 });
 let activeReaderController = null;
-const RAW_CONTENT_BASE = 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
+const RAW_CONTENT_BASE = (() => {
+    const hostParts = window.location.hostname.split('.');
+    if (hostParts.length >= 2 && hostParts[1] === 'github') {
+        const owner = hostParts[0];
+        const repo = window.location.pathname.replace(/^\/|\/+$/g, '').split('/')[0] || 'actionable-philosophy-book-club';
+        return `https://raw.githubusercontent.com/${owner}/${repo}/main/`;
+    }
+    return 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
+})();
 let videoPlayerCleanup = null;
