@@ -1,12 +1,16 @@
+/**
+ * Reader Table-of-Contents helpers: build and navigate a TOC from h2 headings.
+ *
+ * Public API:
+ * - buildTableOfContents(h2Elements)
+ * - _scrollToElement(el)
+ *
+ * Side-effects: scrolls and focuses elements when navigating.
+ */
 function _scrollToElement(el) {
-    const rect = el.getBoundingClientRect();
-    const offset = 96;
-    window.scrollTo({
-        top: window.scrollY + rect.top - offset,
-        behavior: 'smooth'
-    });
     el.setAttribute('tabindex', '-1');
     el.focus({ preventScroll: true });
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function buildTableOfContents(h2Elements) {

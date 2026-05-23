@@ -1,3 +1,12 @@
+/**
+ * Path validation utilities: ensures repo and asset paths are safe against traversal and protocol abuse.
+ *
+ * Public API:
+ * - isSafePath(p, domain)
+ * - DOMAIN enum
+ *
+ * Side-effects: none (pure validation).
+ */
 const _ASSET_ROOTS = new Set(['meetings', 'assets']);
 const _REPO_ROOTS = new Set(['meetings', 'docs', 'templates']);
 /** Domain enum for isSafePath: restricts validation to repo paths, asset paths, or either. */

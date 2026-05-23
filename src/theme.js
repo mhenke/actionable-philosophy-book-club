@@ -12,14 +12,14 @@ function setTheme(isDark, userInitiated = false) {
         document.documentElement.classList.remove('light-theme');
         if (userInitiated) {
             try { localStorage.setItem(buildStorageKey('theme'), 'dark'); }
-            catch (e) { console.warn('localStorage write failed:', e?.message); }
+            catch (e) { window.ErrorHandler?.warn('localStorage write failed:', { err: e }); }
         }
     } else {
         document.documentElement.classList.add('light-theme');
         document.documentElement.classList.remove('dark-theme');
         if (userInitiated) {
             try { localStorage.setItem(buildStorageKey('theme'), 'light'); }
-            catch (e) { console.warn('localStorage write failed:', e?.message); }
+            catch (e) { window.ErrorHandler?.warn('localStorage write failed:', { err: e }); }
         }
     }
 

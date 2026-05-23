@@ -111,6 +111,62 @@ class Meeting {
   }
 
   /**
+   * Video file path for this meeting, or empty string if none.
+   * @returns {string}
+   */
+  getVideoFile() {
+    return (this.video && this.video.file) || '';
+  }
+
+  /**
+   * Video display label, or empty string if none.
+   * @returns {string}
+   */
+  getVideoLabel() {
+    return (this.video && this.video.label) || '';
+  }
+
+  /**
+   * Video duration in seconds, or 0 if unknown.
+   * @returns {number}
+   */
+  getVideoDuration() {
+    return (this.video && this.video.duration) || 0;
+  }
+
+  /**
+   * Video file size in MB, or 0 if unknown.
+   * @returns {number}
+   */
+  getVideoFileSize() {
+    return (this.video && this.video.fileSize) || 0;
+  }
+
+  /**
+   * Slides file path for this meeting, or empty string if none.
+   * @returns {string}
+   */
+  getSlidesFile() {
+    return (this.slides && this.slides.file) || '';
+  }
+
+  /**
+   * Slides display label, or empty string if none.
+   * @returns {string}
+   */
+  getSlidesLabel() {
+    return (this.slides && this.slides.label) || '';
+  }
+
+  /**
+   * Slides file size in MB, or 0 if unknown.
+   * @returns {number}
+   */
+  getSlidesFileSize() {
+    return (this.slides && this.slides.fileSize) || 0;
+  }
+
+  /**
    * Get all assets for this meeting.
    * Consolidates access to video, slides, podcasts, resources.
    * 

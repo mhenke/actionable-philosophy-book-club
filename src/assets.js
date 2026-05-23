@@ -1,3 +1,13 @@
+/**
+ * Asset helpers: build Office viewer URLs, resolve raw content base, and helper builders for asset rows.
+ *
+ * Public API:
+ * - setRawContentBase(url)
+ * - _getRawContentBase()
+ * - buildOfficeViewerUrl(path)
+ *
+ * Side-effects: reads window.location and may construct external viewer URLs.
+ */
 let _rawContentBase = null;
 function setRawContentBase(url) {
     _rawContentBase = url;
@@ -26,23 +36,23 @@ function buildPPTXViewerURL(path) {
 const DL_ICON = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>`;
 
 function buildVideoRow(meeting) {
-    const videoDuration = meeting.video.duration ? formatDuration(meeting.video.duration) : '';
-    const videoSize = meeting.video.fileSize ? formatFileSize(meeting.video.fileSize) : '';
+    const videoDuration = meeting.getVideoDuration() ? formatDuration(meeting.getVideoDuration()) : '';
+    const videoSize = meeting.getVideoFileSize() ? formatFileSize(meeting.getVideoFileSize()) : '';
     const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
     const metaLine = videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '';
-    const videoSlug = meeting.video.file.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+    const videoSlug = meeting.getVideoFile().split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
     const videoAssetId = `asset-${escapeHTML(meeting.id)}-video-${videoSlug}`;
     return `
                     <div class="asset-row" data-testid="${escapeHTML(meeting.id)}-canonical" data-canonical="true" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.video.file)}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})">
+                        <a href="${escapeHTML(meeting.getVideoFile())}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})">
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                                <span class="asset-link-text">${escapeHTML(meeting.video.label)}</span>
+                                <span class="asset-link-text">${escapeHTML(meeting.getVideoLabel())}</span>
                             </span>
                             ${metaLine}
                         </a>
-                        <a href="${escapeHTML(meeting.video.file)}" download
-                           aria-label="Download ${escapeHTML(meeting.video.label)}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})"
+                        <a href="${escapeHTML(meeting.getVideoFile())}" download
+                           aria-label="Download ${escapeHTML(meeting.getVideoLabel())}${videoDuration ? ', ' + videoDuration : ''} (${escapeHTML(meeting.session)})"
                            class="asset-dl">${DL_ICON}</a>
                     </div>`;
 }
@@ -58,9 +68,9 @@ function buildVideoPlaceholder() {
 }
 
 function buildSlidesRow(meeting) {
-    const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
+    const slidesSize = meeting.getSlidesFileSize() ? formatFileSize(meeting.getSlidesFileSize()) : '';
     const metaLine = slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '';
-    const viewerUrl = buildPPTXViewerURL(meeting.slides.file);
+    const viewerUrl = buildPPTXViewerURL(meeting.getSlidesFile());
     const viewerLink = viewerUrl
         ? `<a href="${viewerUrl}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">`
         : '<span class="asset-link asset-link--stacked">';
@@ -70,11 +80,11 @@ function buildSlidesRow(meeting) {
                         ${viewerLink}
                             <span class="asset-link-top">
                                 <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                                <span class="asset-link-text">${escapeHTML(meeting.slides.label)}</span>
+                                <span class="asset-link-text">${escapeHTML(meeting.getSlidesLabel())}</span>
                             </span>
                             ${metaLine}
                         ${viewerClose}
-                        <a href="${escapeHTML(meeting.slides.file)}" download
+                        <a href="${escapeHTML(meeting.getSlidesFile())}" download
                            aria-label="Download slides (${escapeHTML(meeting.session)})"
                            class="asset-dl">${DL_ICON}</a>
                     </div>`;
@@ -166,13 +176,13 @@ function buildPodcastSummary(podcasts) {
 function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
     const primaryRows = [];
 
-    if (meeting.video && isSafePath(meeting.video.file, DOMAIN.ASSET)) {
+    if (meeting.getVideoFile() && isSafePath(meeting.getVideoFile(), DOMAIN.ASSET)) {
         primaryRows.push(buildVideoRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(buildVideoPlaceholder());
     }
 
-    if (meeting.slides && isSafePath(meeting.slides.file, DOMAIN.ASSET)) {
+    if (meeting.getSlidesFile() && isSafePath(meeting.getSlidesFile(), DOMAIN.ASSET)) {
         primaryRows.push(buildSlidesRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(buildSlidesPlaceholder());

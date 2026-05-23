@@ -1,3 +1,12 @@
+/**
+ * Hash router: parses window.location.hash and dispatches to registered route handlers.
+ *
+ * Public API:
+ * - registerRoute(name, handler)
+ * - handleRoute()
+ *
+ * Side-effects: reads window.location.hash and calls handlers; performs path validation.
+ */
 const _routeHandlers = {};
 
 /** Registers a named route handler (e.g., 'reader', 'default'). */

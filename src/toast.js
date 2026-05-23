@@ -1,3 +1,15 @@
+/**
+ * Toast and error notification system: shows temporary toast notifications
+ * and provides centralized warning/error reporting.
+ *
+ * Public API:
+ * - showToast(message)
+ * - window.ErrorHandler.warn(message, ...)
+ * - window.ErrorHandler.error(err, userMessage)
+ *
+ * Side-effects: appends/removes elements under #toast-container; logs to console.
+ */
+
 const TOAST_DURATION_MS = 4500;
 const TOAST_FADE_MS = 300;
 
@@ -18,3 +30,25 @@ function showToast(message) {
         setTimeout(() => el.remove(), TOAST_FADE_MS);
     }, TOAST_DURATION_MS);
 }
+
+/**
+ * ErrorHandler: centralizes warning and error reporting.
+ * Callers should use window.ErrorHandler?.warn(...) to stay resilient to load order.
+ */
+(function () {
+    const ErrorHandler = {
+        warn(message, { err = null, userFacing = false } = {}) {
+            try { console.warn('ErrorHandler:', message, err); } catch (e) { /* best-effort */ }
+            if (userFacing && typeof showToast === 'function') {
+                try { showToast(String(message)); } catch (e) { /* ignore */ }
+            }
+        },
+        error(err, userMessage) {
+            try { console.error('ErrorHandler:', err); } catch (e) { /* ignore */ }
+            if (userMessage && typeof showToast === 'function') {
+                try { showToast(String(userMessage)); } catch (e) { /* ignore */ }
+            }
+        },
+    };
+    window.ErrorHandler = ErrorHandler;
+})();

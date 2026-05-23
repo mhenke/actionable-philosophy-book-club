@@ -1,3 +1,11 @@
+/**
+ * Post-processes rendered markdown to turn "## Meeting Materials" lists into a styled file tree.
+ *
+ * Public API:
+ * - _applyMeetingMaterialsTree(container): finds Meeting Materials ULs and converts them to file tree panels
+ *
+ * Side-effects: mutates DOM under the provided container.
+ */
 function _applyMeetingMaterialsTree(container) {
     container.querySelectorAll('h2').forEach(h2 => {
         if (!/meeting materials/i.test(h2.textContent)) return;

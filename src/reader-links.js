@@ -1,3 +1,12 @@
+/**
+ * Content link rewriter: rewrites and disables links in rendered markdown to maintain safe navigation.
+ *
+ * Public API:
+ * - rewriteContentLinks(container, docPath)
+ * - _disableLink(link, title)
+ *
+ * Side-effects: may remove hrefs and set aria-disabled on unsafe links.
+ */
 function _disableLink(link, title) {
     link.removeAttribute('href');
     link.setAttribute('aria-disabled', 'true');
@@ -50,7 +59,7 @@ function rewriteContentLinks(container, docPath) {
                 link.setAttribute('href', repoPath);
             }
         } catch (e) {
-            console.warn('rewriteContentLinks: skipped malformed link', e?.message);
+            window.ErrorHandler?.warn('rewriteContentLinks: skipped malformed link', { err: e });
         }
     }
 }

@@ -28,7 +28,7 @@ function renderUpcomingMaterials() {
                             <span class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 block mb-1">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
                             <h2 id="next-meeting-heading" class="text-2xl md:text-3xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h2>
                         </div>
-                        <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest px-2 py-1" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2);">Upcoming</span>
+                        <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest px-2 py-1 leading-none" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2);">Upcoming</span>
                     </div>`;
     }
 
@@ -83,7 +83,7 @@ function renderArchiveCards() {
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
                             <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
                         </div>
-                        <span class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-widest px-2 py-1" style="border:1px solid var(--text-muted);color:var(--text-muted)">Done</span>
+                        <span class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-widest px-2 py-1 leading-none" style="border:1px solid var(--text-muted);color:var(--text-muted)">Done</span>
                     </div>
                     ${primaryRows.join('')}
                     ${resourceStrip}
@@ -129,7 +129,7 @@ function renderHorizonCards() {
                             <span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:var(--text-primary)">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>
                             <h3 class="text-xl font-bold tracking-tight text-muted">Coming Soon</h3>
                         </div>
-                        <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-muted px-2 py-1" style="border: 1px solid var(--text-muted)">Planned</span>
+                        <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-muted px-2 py-1 leading-none" style="border: 1px solid var(--text-muted)">Planned</span>
                     </div>
                     <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>
                 `;
@@ -141,29 +141,4 @@ function renderHorizonCards() {
     horizonContainer.appendChild(fragment);
 }
 
-function setupManifestRetryUI() {
-    const upcomingHeader = document.getElementById('upcoming-card-header');
-    const upcomingMaterials = document.getElementById('upcoming-materials-container');
-    const upcomingCta = document.getElementById('upcoming-cta');
-    const archiveContainer = document.getElementById('archive-cards-container');
-    const horizonContainer = document.getElementById('horizon-cards-container');
-    if (upcomingHeader) showRetryUI(upcomingHeader, {
-        message: "Couldn't load sessions",
-        retryLabel: 'Tap to retry',
-        onRetry: async () => {
-            await loadManifest();
-            if (upcomingHeader) upcomingHeader.innerHTML = '';
-            renderUpcomingMaterials();
-            renderArchiveCards();
-            renderHorizonCards();
-        },
-    });
-    if (upcomingMaterials) upcomingMaterials.innerHTML = '';
-    if (upcomingCta) upcomingCta.innerHTML = '';
-    if (archiveContainer) archiveContainer.innerHTML = '';
-    if (horizonContainer) {
-        horizonContainer.innerHTML = '';
-        const horizonSection = horizonContainer.closest('section');
-        if (horizonSection) horizonSection.classList.add('hidden-view');
-    }
-}
+

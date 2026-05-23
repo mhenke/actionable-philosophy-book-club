@@ -1,3 +1,12 @@
+/**
+ * Storage helpers: build keys, persist resume positions and onboarding state.
+ *
+ * Public API:
+ * - buildStorageKey(suffix): returns namespaced storage key
+ * - setSessionStorageErrorHandler(handler): installs handler for storage errors
+ *
+ * Side-effects: uses localStorage/sessionStorage and may call provided error handler.
+ */
 const STORAGE_KEY_PREFIX = 'apbc:';
 const RESUME_MIN_SECONDS = 5;
 const PROGRESS_SAVE_MS = 3000;
@@ -29,7 +38,7 @@ function getSavedVideoResumeTime(filePath) {
         const saved = sessionStorage.getItem(getVideoResumeKey(filePath));
         return saved ? parseFloat(saved) : 0;
     } catch (err) {
-        console.warn('sessionStorage read failed:', err?.message);
+        window.ErrorHandler?.warn('sessionStorage read failed:', { err });
         return 0;
     }
 }
@@ -43,7 +52,7 @@ function saveVideoResumePosition(filePath, currentTime) {
             sessionStorage.removeItem(key);
         }
     } catch (err) {
-        console.warn('sessionStorage write failed:', err?.message);
+        window.ErrorHandler?.warn('sessionStorage write failed:', { err });
         _sessionStorageSaveError();
     }
 }
@@ -52,6 +61,6 @@ function clearVideoResumePosition(filePath) {
     try {
         sessionStorage.removeItem(getVideoResumeKey(filePath));
     } catch (err) {
-        console.warn('sessionStorage clear failed:', err?.message);
+        window.ErrorHandler?.warn('sessionStorage clear failed:', { err });
     }
 }

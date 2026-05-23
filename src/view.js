@@ -1,3 +1,11 @@
+/**
+ * View toggling helpers: switch between dashboard and reader views and update skip-link targets.
+ *
+ * Public API:
+ * - setView(view): 'dashboard'|'reader'
+ *
+ * Side-effects: mutates DOM elements: dashboard, reader, and skip-link href.
+ */
 const STATUS_RESET_MS = 1000;
 
 /** Toggles visibility between dashboard and reader views. Updates skip-link target. */

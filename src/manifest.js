@@ -1,5 +1,13 @@
+/**
+ * Manifest loader and asset copy registry.
+ *
+ * Public API:
+ * - loadAssetCopyRegistry(assetCopy)
+ * - getAssetCopyRegistry()/getAssetCopy()
+ *
+ * Side-effects: populates ASSET_COPY used by asset renderers.
+ */
 let ASSET_COPY = {};
-let RAW_ASSET_COPY = {}; // preserves raw sanitized registry from manifest (used by tests)
 
 const DEFAULT_ASSET_COPY = Object.freeze({
     alternate: { label: 'Alternate', title: 'A different take on the session topic', icon: '🎬', color: 'var(--spectrum-2)' },
@@ -11,7 +19,7 @@ const DEFAULT_ASSET_COPY = Object.freeze({
 function loadAssetCopyRegistry(assetCopy) {
     const registry = {};
     if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
-        console.warn('Invalid manifest asset copy registry: expected an object. Falling back to defaults.');
+        window.ErrorHandler?.warn('Invalid manifest asset copy registry: expected an object. Falling back to defaults.');
         return registry;
     }
     const expectedKeys = Object.keys(DEFAULT_ASSET_COPY);
@@ -19,7 +27,7 @@ function loadAssetCopyRegistry(assetCopy) {
     const missing = expectedKeys.filter(key => !(key in assetCopy));
     const extra = Object.keys(assetCopy).filter(key => !expectedSet.has(key));
     if (missing.length || extra.length) {
-        console.warn(`Invalid manifest asset copy registry: ${[
+        window.ErrorHandler?.warn(`Invalid manifest asset copy registry: ${[
             missing.length ? `missing ${missing.join(', ')}` : '',
             extra.length ? `unexpected ${extra.join(', ')}` : ''
         ].filter(Boolean).join('; ')}. Using defaults at render time for missing entries.`);
@@ -63,7 +71,6 @@ function _processManifestData(data) {
     meetingRepo = new MeetingRepository();
     meetingRepo.setAll(data.meetings);
     ASSET_COPY = assetCopy;
-    RAW_ASSET_COPY = assetCopy;
 }
 
 async function loadManifest() {

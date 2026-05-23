@@ -1,3 +1,11 @@
+/**
+ * Reader hooks: installs DOMPurify hooks to sanitize links and attributes after markdown is sanitized.
+ *
+ * Public API:
+ * - ensureDOMPurifyHooks(): installs afterSanitizeAttributes hook
+ *
+ * Side-effects: mutates anchor attributes, may remove hrefs for disallowed hosts.
+ */
 const _ALLOWED_EXTERNAL_HOSTS = /^https?:\/\/(mhenke\.github\.io|view\.officeapps\.live\.com|github\.com)\//i;
 
 /** Installs DOMPurify afterSanitizeAttributes hook: strips external links outside the allowlist, adds target=_blank + rel=noopener for allowed ones. Runs once via callOnce. */

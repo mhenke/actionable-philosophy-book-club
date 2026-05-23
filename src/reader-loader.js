@@ -1,3 +1,12 @@
+/**
+ * Reader loader: fetches, parses, sanitizes, and renders markdown into the reader view.
+ * Handles aborting stale requests, link rewriting, file-tree rendering, and anchor scrolling.
+ *
+ * Public API:
+ * - loadPage(path, anchorId): async; renders a markdown document into #markdown-content
+ *
+ * Side-effects: uses marked and DOMPurify, mutates reader DOM and readerStatus.
+ */
 let _activeReaderController = null;
 let _loadPageGeneration = 0;
 
@@ -64,7 +73,7 @@ async function loadPage(path, anchorId) {
                         if (targetEl) _scrollToElement(targetEl);
                     });
                 });
-                h1.parentNode.insertBefore(tocDiv.firstChild, h1.nextSibling);
+                h1.parentNode.insertBefore(tocDiv.firstElementChild, h1.nextSibling);
             }
         }
 
@@ -78,7 +87,7 @@ async function loadPage(path, anchorId) {
         readerStatus.textContent = 'Document loaded.';
     } catch (err) {
         if (myGeneration !== _loadPageGeneration) return;
-        console.warn('loadPage failed:', err?.message || err);
+        window.ErrorHandler?.warn('loadPage failed:', { err });
         _showReaderError(path, anchorId);
     } finally {
         clearTimeout(timeoutId);

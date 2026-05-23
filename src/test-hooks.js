@@ -1,3 +1,11 @@
+/**
+ * Test hooks: exposes internal functions and constructors to the test harness when window.__TEST__ is true.
+ *
+ * Public behavior (when __TEST__): attaches helpers to window for Playwright tests
+ * - getMeetingRepository, getAssetCopyRegistry, MEETINGS (getter), etc.
+ *
+ * Side-effects: mutates window when enabled.
+ */
 if (window.__TEST__ === true) {
     window.Meeting = Meeting;
     window.isSafeRepoPath = function(p) { return isSafePath(p, DOMAIN.REPO); };

@@ -1,3 +1,8 @@
+/**
+ * Theme initializer: applies saved theme classes on load (dark/light) based on localStorage or prefers-color-scheme.
+ *
+ * Side-effects: modifies document.documentElement classes early during page load.
+ */
 (function() {
     try {
         const theme = localStorage.getItem('apbc:theme');

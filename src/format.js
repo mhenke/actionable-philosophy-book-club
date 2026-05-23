@@ -1,3 +1,13 @@
+/**
+ * Formatting utilities: HTML escaping, duration and filesize formatters.
+ *
+ * Public API:
+ * - escapeHTML(value)
+ * - formatDuration(seconds)
+ * - formatFileSize(mb)
+ *
+ * Side-effects: none (pure helpers).
+ */
 const _HTML_ESCAPE = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 /** Escapes & < > " ' for safe HTML interpolation. */
 function escapeHTML(value) {

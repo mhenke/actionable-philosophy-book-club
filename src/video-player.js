@@ -1,3 +1,11 @@
+/**
+ * Video player overlay dialog: opens video overlay, loads video, checks captions, and manages resume.
+ *
+ * Public API:
+ * - openVideoPlayer(filePath, label): opens overlay and initializes playback
+ *
+ * Side-effects: manipulates #video-player-overlay, #vp-video, #vp-title DOM nodes.
+ */
 let _videoPlayerCleanup = null;
 
 /** Opens the video overlay dialog, loads the video, checks for VTT captions, shows resume bar if position saved. */
@@ -39,7 +47,7 @@ function openVideoPlayer(filePath, label) {
                     video.appendChild(track);
                 }
             })
-            .catch(err => console.warn('VTT caption check failed:', err?.message));
+            .catch(err => window.ErrorHandler?.warn('VTT caption check failed:', { err }));
     }
 
     const savedTime = getSavedVideoResumeTime(filePath);

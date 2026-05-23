@@ -1,3 +1,11 @@
+/**
+ * Utilities: LRU markdown fetch cache, formatting helpers, and path validation helpers.
+ *
+ * Public API (selected):
+ * - fetchMarkdown(path, signal): cached fetch for markdown documents
+ *
+ * Side-effects: caches promises in an internal LRU map.
+ */
 const CACHE_MAX = 20;
 const mdCache = new Map();
 
@@ -31,6 +39,7 @@ function fetchMarkdown(path, signal) {
     return promise;
 }
 
+/** One-shot guard keyed by function reference identity. Returns true only the first time a given key is passed. */
 const _called = new WeakMap();
 function callOnce(key) {
     if (_called.has(key)) return false;
