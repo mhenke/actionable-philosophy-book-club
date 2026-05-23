@@ -1,6 +1,6 @@
 (function() {
 'use strict';
-/** Initializes the welcome banner with dismiss and restore buttons. Uses localStorage for persistence. */
+/** Initializes the onboarding banner with dismiss and restore buttons. Uses localStorage for persistence. */
 function initOnboardingBanner() {
     const banner = document.getElementById('onboarding-banner');
     const dismissBtn = document.getElementById('onboarding-dismiss');
@@ -24,7 +24,7 @@ function initOnboardingBanner() {
             }
             bannerEl.classList.remove('hidden-view');
             if (typeof showToast === 'function') {
-                showToast('Welcome banner restored');
+                showToast('Onboarding banner restored');
             }
         });
     }

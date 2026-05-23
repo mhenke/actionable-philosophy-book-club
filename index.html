@@ -525,18 +525,22 @@
 
         /* Onboarding banner */
         .onboarding-banner {
-            background: var(--wash-3);
-            border: 1px solid var(--wash-3-border);
-            padding: 0.75rem 1rem;
+            background: var(--wash-2);
+            border: 1px solid var(--wash-2-strong-border);
+            padding: 1rem 1.25rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 0.75rem;
+            gap: 1rem;
         }
         .onboarding-banner p {
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             color: var(--text-primary);
             margin: 0;
+            line-height: 1.5;
+        }
+        .onboarding-banner strong {
+            font-weight: 700;
         }
         .onboarding-banner a {
             color: var(--spectrum-2);
@@ -544,10 +548,11 @@
             text-decoration: underline;
             text-underline-offset: 2px;
         }
-        .onboarding-banner .close-btn {
+        .onboarding-banner-close {
             cursor: pointer;
             background: none;
-            border: none;
+            border: 1px solid var(--wash-2-border);
+            border-radius: 6px;
             color: var(--text-muted);
             min-width: 44px;
             min-height: 44px;
@@ -555,9 +560,16 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            transition: color 0.15s;
+            transition: color 0.15s, border-color 0.15s;
         }
-        .onboarding-banner .close-btn:hover { color: var(--text-primary); }
+        .onboarding-banner-close svg {
+            width: 1rem;
+            height: 1rem;
+        }
+        .onboarding-banner-close:hover {
+            color: var(--text-primary);
+            border-color: var(--text-muted);
+        }
 
         /* Inline video player */
         #video-player-overlay {
@@ -783,7 +795,11 @@
                     Watch primers, download slides, and explore discussion audio for each session.
                     Start with the <a href="#p=docs/onboarding.md">Onboarding guide</a> in the Knowledge Base below.
                 </p>
-                <button class="close-btn" id="onboarding-dismiss" aria-label="Dismiss welcome banner">&times;</button>
+                <button class="onboarding-banner-close" id="onboarding-dismiss" aria-label="Dismiss onboarding banner">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
 
             <h1 class="sr-only">Actionable Philosophy Book Club</h1>
@@ -829,7 +845,7 @@
                         Knowledge Base
                         <span class="spectrum-rule"></span>
                     </h2>
-                    <button id="restore-onboarding" class="hover:text-spectrum-2 transition-colors cursor-pointer font-semibold uppercase tracking-wider text-[0.6875rem]" style="background:none;border:none;padding:0;color:var(--text-muted);">Reset Welcome Banner</button>
+                    <button id="restore-onboarding" class="hover:text-spectrum-2 transition-colors cursor-pointer font-semibold uppercase tracking-wider text-[0.6875rem]" style="background:none;border:none;padding:0;color:var(--text-muted);">Restore onboarding banner</button>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
                     <a href="#p=docs/onboarding.md" class="card p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-onboarding">

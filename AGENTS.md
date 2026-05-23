@@ -41,7 +41,7 @@ python3 -m http.server 8000   # local preview (required: fetch() won't work with
   - `toast.js` — toast notification system
   - `video-player.js` — inline `<dialog>` video player with resume
   - `asset-delegation.js` — delegated asset link click handling
-  - `onboarding.js` — dismissible welcome banner
+  - `onboarding.js` — dismissible onboarding banner
   - `theme.js` — dark/light theme toggle, persistence, FOUC guard
   - `routing.js` — hash router and route handler
   - `app.js` — application init (event setup, asset delegation, async startup)

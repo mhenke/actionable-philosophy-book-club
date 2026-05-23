@@ -46,12 +46,12 @@ body {
 
 #### [MODIFY] [index.html](file:///home/mhenke/Projects/actionable-philosophy-book-club/index.html)
 
-Add a "Reset Welcome Banner" button to the site footer, styled as a subtle, out-of-the-way link using existing design system tokens.
+Add a "Restore onboarding banner" button to the site footer, styled as a subtle, out-of-the-way link using existing design system tokens.
 
 ```html
 <p class="text-[0.6875rem] font-semibold text-muted">
     Actionable Philosophy Book Club &bull; 2026 &bull; 
-    <button id="restore-onboarding" class="hover:text-spectrum-2 transition-colors cursor-pointer inline font-semibold uppercase tracking-wider text-[0.6875rem] ml-1" style="background:none;border:none;padding:0;color:var(--text-muted);">Reset Welcome Banner</button>
+    <button id="restore-onboarding" class="hover:text-spectrum-2 transition-colors cursor-pointer inline font-semibold uppercase tracking-wider text-[0.6875rem] ml-1" style="background:none;border:none;padding:0;color:var(--text-muted);">Restore onboarding banner</button>
 </p>
 ```
 
@@ -83,5 +83,5 @@ When a document is loaded:
 ### Manual Verification
 1. Open local preview on mobile and desktop viewports.
 2. Verify clicking the skip link in reader view focuses on `#markdown-content` correctly.
-3. Dismiss the onboarding banner and click the footer "Reset Welcome Banner" button. Verify the banner is restored at the top of the dashboard and a toast confirms it.
+3. Dismiss the onboarding banner and click the footer "Restore onboarding banner" button. Verify the banner is restored at the top of the dashboard and a toast confirms it.
 4. Open Meeting 02 and confirm that a Table of Contents is generated at the top of the reader page. Verify that clicking a link smoothly scrolls down to the target section.

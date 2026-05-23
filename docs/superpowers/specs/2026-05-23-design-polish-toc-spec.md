@@ -31,7 +31,7 @@ Update the system font stack to use highly legible, premium system sans-serif fo
 ## 3. Onboarding Banner Toggle Restore
 
 ### Requirement
-Allow users who have previously dismissed the onboarding welcome banner to restore it dynamically.
+Allow users who have previously dismissed the onboarding banner to restore it dynamically.
 
 ### Specification
 - In `index.html` (Footer):
@@ -43,7 +43,7 @@ Allow users who have previously dismissed the onboarding welcome banner to resto
     - Remove the local storage key `onboarding_dismissed`.
     - Check if the banner element is inside `#main-content`, and insert it at the top of `#main-content` if not.
     - Reveal the banner.
-    - Call `showToast('Welcome banner restored')` for immediate, polite feedback.
+    - Call `showToast('Onboarding banner restored')` for immediate, polite feedback.
 
 ---
 
