@@ -57,7 +57,7 @@
             --overlay-backdrop: rgba(0, 0, 0, 0.85);
         }
         body {
-            font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'Noto Sans', 'Liberation Sans', Arial, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--surface);
             color: var(--text-primary);
             line-height: 1.5;
@@ -881,7 +881,10 @@
     </div>
 
     <footer id="site-footer" class="py-8 text-center border-t-2 hidden-view" style="border-color: var(--spectrum-2);">
-        <p class="text-[0.6875rem] font-semibold text-muted">Actionable Philosophy Book Club &bull; 2026</p>
+        <p class="text-[0.6875rem] font-semibold text-muted">
+            Actionable Philosophy Book Club &bull; 2026 &bull; 
+            <button id="restore-onboarding" class="hover:text-spectrum-2 transition-colors cursor-pointer inline font-semibold uppercase tracking-wider text-[0.6875rem] ml-1" style="background:none;border:none;padding:0;color:var(--text-muted);">Reset Welcome Banner</button>
+        </p>
     </footer>
 
     <!-- Toast container -->

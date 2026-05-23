@@ -117,6 +117,12 @@
             const isDashboard = view === 'dashboard';
             dashboard.classList.toggle('hidden-view', !isDashboard);
             reader.classList.toggle('hidden-view', isDashboard);
+
+            // Update skip link target dynamically to prevent focus trap
+            const skipLink = document.querySelector('a[href^="#"]');
+            if (skipLink) {
+                skipLink.setAttribute('href', isDashboard ? '#main-content' : '#markdown-content');
+            }
         }
 
         let _loadPageEpoch = 0;
@@ -155,12 +161,52 @@
 
                 rewriteContentLinks(content, path);
 
+                const h2Elements = content.querySelectorAll('h2');
                 const h1 = content.querySelector('h1');
                 if (h1) {
                     document.title = `${h1.textContent.trim()} | Actionable Philosophy Book Club`;
                     content.setAttribute('aria-label', h1.textContent.trim());
                     const readerDocLabel = document.getElementById('reader-doc-label');
                     if (readerDocLabel) readerDocLabel.textContent = h1.textContent.trim();
+
+                    // Dynamically build a Table of Contents if there are 2 or more H2s
+                    if (h2Elements.length >= 2) {
+                        const tocItems = Array.from(h2Elements).map((h2, idx) => {
+                            if (!h2.id) {
+                                h2.id = h2.textContent.trim().toLowerCase()
+                                    .replace(/[^a-z0-9_-]+/g, '-')
+                                    .replace(/^-+|-+$/g, '') || `section-${idx}`;
+                            }
+                            return `<li><a href="#${h2.id}" class="text-spectrum-2 hover:underline flex items-center gap-2" style="font-size:0.8125rem; font-weight:400;"><span style="opacity:0.6;font-size:0.75rem;">↳</span> ${h2.textContent.trim()}</a></li>`;
+                        }).join('');
+
+                        const tocHtml = `
+                            <nav class="toc-container mb-8 p-5 rounded border-l-2" style="background: var(--materials-panel-bg); border-color: var(--spectrum-3);" aria-label="Table of contents">
+                                <p class="text-[0.6875rem] font-bold uppercase tracking-[0.2em] mb-3" style="color: var(--text-muted); margin-top:0;">Contents</p>
+                                <ul class="space-y-2" style="margin: 0; padding: 0; list-style-type: none;">
+                                    ${tocItems}
+                                </ul>
+                            </nav>`;
+
+                        const tocDiv = document.createElement('div');
+                        tocDiv.innerHTML = tocHtml.trim();
+
+                        // Add smooth-scrolling click listeners to TOC anchors to avoid breaking hash routing
+                        tocDiv.querySelectorAll('a').forEach(anchor => {
+                            anchor.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                const targetId = anchor.getAttribute('href').substring(1);
+                                const targetEl = document.getElementById(targetId);
+                                if (targetEl) {
+                                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    targetEl.setAttribute('tabindex', '-1');
+                                    targetEl.focus({ preventScroll: true });
+                                }
+                            });
+                        });
+
+                        h1.parentNode.insertBefore(tocDiv.firstChild, h1.nextSibling);
+                    }
                 }
 
                 applyMeetingMaterialsTree(content);
