@@ -32,16 +32,5 @@ const archiveCardsContainer = document.getElementById('archive-cards-container')
 const draftCardsContainer = document.getElementById('draft-cards-container');
 const siteFooter = document.getElementById('site-footer');
 
-window.dashboard = dashboard;
-window.reader = reader;
-window.markdownContent = markdownContent;
-window.readerStatus = readerStatus;
-window.upcomingCardHeader = upcomingCardHeader;
-window.upcomingMaterialsContainer = upcomingMaterialsContainer;
-window.upcomingKeyTakeaway = upcomingKeyTakeaway;
-window.upcomingCta = upcomingCta;
-window.upcomingPodcasts = upcomingPodcasts;
-window.archiveCardsContainer = archiveCardsContainer;
-window.draftCardsContainer = draftCardsContainer;
-window.siteFooter = siteFooter;
+window.DOM = { dashboard, reader, markdownContent, readerStatus, upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingPodcasts, archiveCardsContainer, draftCardsContainer, siteFooter };
 })();

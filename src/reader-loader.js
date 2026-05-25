@@ -8,6 +8,7 @@
  */
 (function() {
 'use strict';
+const { markdownContent, readerStatus } = window.DOM;
 let _activeReaderController = null;
 let _loadPageGeneration = 0;
 

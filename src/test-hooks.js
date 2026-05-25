@@ -16,7 +16,7 @@ if (window.__TEST__ === true) {
     window.formatFileSize = window.formatFileSize;
     window.getAssetCopyRegistry = window.getAssetCopyRegistry;
     Object.defineProperty(window, 'MEETINGS', {
-        get() { const repo = window.getMeetingRepository(); return repo ? repo.getAll() : []; }
+        get() { const repo = window.getMeetingRepository(); return repo ? repo.find() : []; }
     });
 }
 })();

@@ -1,5 +1,6 @@
 (function() {
 'use strict';
+const { upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingPodcasts, archiveCardsContainer, draftCardsContainer, siteFooter } = window.DOM;
 
 /** Returns HTML for a meeting's session/date metadata line, used across all card types. Color defaults to var(--text-primary). */
 function _renderSessionMeta(meeting, color) {
@@ -12,7 +13,7 @@ function renderUpcomingMaterials() {
     if (!upcomingMaterialsContainer) return;
 
     const upcomingSection = upcomingMaterialsContainer.closest('section');
-    const meeting = getMeetingRepository().getByStatus('upcoming')[0];
+    const meeting = getMeetingRepository().find({ status: 'upcoming' })[0];
     if (!meeting) {
         upcomingMaterialsContainer.innerHTML = '';
         if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
@@ -84,7 +85,7 @@ function _renderCardList(containerId, meetings, cardRenderer) {
 
 /** Renders archive cards for completed meetings with assets, notes link, and podcast disclosure. */
 function renderArchiveCards() {
-    const done = getMeetingRepository().getByStatus('done');
+    const done = getMeetingRepository().find({ status: 'done' });
     _renderCardList('archive-cards-container', done, meeting => {
         const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
         const podcastSection = buildPodcastDisclosure(podcastRows, podcastSummary);
@@ -133,7 +134,7 @@ function setupManifestRetryUI() {
 
 /** Renders draft meeting cards with placeholder content. */
 function renderDraftCards() {
-    const drafts = getMeetingRepository().getByStatus('draft');
+    const drafts = getMeetingRepository().find({ status: 'draft' });
     if (drafts.length === 0) {
         if (draftCardsContainer) draftCardsContainer.innerHTML = '';
         const section = draftCardsContainer?.closest('section');

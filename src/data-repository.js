@@ -5,8 +5,8 @@
  * All read/write access goes through this repository, preventing direct mutation
  * and allowing schema changes without touching callers.
  *
- * APOSD Principle 2 (Deep Modules): Simple interface (getAll, getById, getByStatus),
- * powerful implementation (validation, mutation control).
+ * APOSD Principle 2 (Deep Modules): Simple interface (find(criteria)),
+ * powerful implementation (compound queries, validation, mutation control).
  *
  * APOSD Principle 7 (Define Errors Out of Existence): Validates schema at load
  * time, preventing invalid meetings from existing in memory.
@@ -38,29 +38,19 @@ class MeetingRepository {
   }
 
   /**
-   * Get all meetings, ordered as stored.
-   * @returns {Array} All meetings
+   * Find meetings by optional criteria. Returns all meetings when called with no arguments.
+   * Filtering by id returns a single meeting or null; filtering by status returns an array.
+   *
+   * Deepens the module: one method replaces three, compound queries are trivial to add.
+   *
+   * @param {object} [criteria] - Optional filter: { id, status }
+   * @returns {Array|object|null}
    */
-  getAll() {
+  find(criteria) {
+    if (!criteria) return [...this.meetings];
+    if (criteria.id) return this.meetings.find(m => m && m.id === criteria.id) || null;
+    if (criteria.status) return this.meetings.filter(m => m && m.status === criteria.status);
     return [...this.meetings];
-  }
-
-  /**
-   * Find meeting by ID.
-   * @param {string} id - Meeting ID (e.g., 'meeting-01')
-   * @returns {Object|null} Meeting object or null if not found
-   */
-  getMeetingById(id) {
-    return this.meetings.find(m => m && m.id === id) || null;
-  }
-
-  /**
-   * Get meetings by status.
-   * @param {string} status - One of 'done', 'upcoming', 'draft'
-   * @returns {Array} Meetings matching the given status
-   */
-  getByStatus(status) {
-    return this.meetings.filter(m => m && m.status === status);
   }
 
 }

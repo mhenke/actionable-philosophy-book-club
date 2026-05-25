@@ -9,6 +9,7 @@
  */
 (function() {
 'use strict';
+const { dashboard, reader, readerStatus, markdownContent } = window.DOM;
 const STATUS_RESET_MS = 1000;
 
 /** Sets the initial dashboard/reader visibility based on the hash, before the manifest loads. Prevents a flash of dashboard content when navigating to a reader page directly. */
