@@ -1,5 +1,25 @@
 (function() {
 'use strict';
+
+/** Reads saved theme preference from localStorage. */
+function getSavedTheme() {
+    try {
+        return localStorage.getItem(buildStorageKey('theme'));
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage read failed:', { err });
+        return null;
+    }
+}
+
+/** Saves theme preference to localStorage. */
+function saveTheme(theme) {
+    try {
+        localStorage.setItem(buildStorageKey('theme'), theme);
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage write failed:', { err });
+    }
+}
+
 /** Returns true if the current theme is dark (checks classes, falls back to prefers-color-scheme). */
 function isDarkTheme() {
     if (document.documentElement.classList.contains('dark-theme')) return true;
@@ -44,4 +64,6 @@ function initTheme() {
 }
 
 window.initTheme = initTheme;
+window.getSavedTheme = getSavedTheme;
+window.saveTheme = saveTheme;
 })();

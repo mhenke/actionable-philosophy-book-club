@@ -1,5 +1,30 @@
 (function() {
 'use strict';
+
+/** Reads onboarding dismissed state from localStorage. */
+function getOnboardingDismissed() {
+    try {
+        return localStorage.getItem(buildStorageKey('onboarding_dismissed')) === '1';
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage read failed:', { err });
+        return false;
+    }
+}
+
+/** Saves onboarding dismissed state to localStorage. */
+function setOnboardingDismissed(dismissed) {
+    try {
+        const key = buildStorageKey('onboarding_dismissed');
+        if (dismissed) {
+            localStorage.setItem(key, '1');
+        } else {
+            localStorage.removeItem(key);
+        }
+    } catch (err) {
+        window.ErrorHandler?.warn('localStorage write/delete failed:', { err });
+    }
+}
+
 /** Initializes the onboarding banner with dismiss and restore buttons. Uses localStorage for persistence. */
 function initOnboardingBanner() {
     const banner = document.getElementById('onboarding-banner');

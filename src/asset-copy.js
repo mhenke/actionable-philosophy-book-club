@@ -14,6 +14,7 @@
 'use strict';
 let ASSET_COPY = {};
 
+/** @param {object} registry - Asset copy registry object from manifest data */
 function setAssetCopyRegistry(registry) {
     ASSET_COPY = registry;
 }

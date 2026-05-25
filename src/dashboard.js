@@ -118,7 +118,7 @@ function setupManifestRetryUI() {
             if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
             renderUpcomingMaterials();
             renderArchiveCards();
-            renderHorizonCards();
+            renderDraftCards();
         },
     });
     if (upcomingMaterialsContainer) upcomingMaterialsContainer.innerHTML = '';

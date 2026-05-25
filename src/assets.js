@@ -191,7 +191,5 @@ function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
 }
 
 window.buildAssetRows = buildAssetRows;
-window.buildVideoPlaceholder = buildVideoPlaceholder;
-window.buildSlidesPlaceholder = buildSlidesPlaceholder;
 window.buildPodcastDisclosure = buildPodcastDisclosure;
 })();

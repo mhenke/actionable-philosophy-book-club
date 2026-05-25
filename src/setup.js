@@ -1,6 +1,16 @@
 /**
  * Setup: grab essential DOM references and export commonly used elements.
  *
+ * All 13 IDs must exist in index.html — they are static elements baked into the
+ * HTML template. If an ID is missing the ref will be null, and consumers should
+ * guard with optional chaining or if-checks.
+ *
+ * Consumers by reference:
+ *   dashboard, reader       → view.js, app.js
+ *   markdownContent          → reader-loader.js, app.js
+ *   readerStatus              → reader-loader.js
+ *   upcoming* / archive* / draft* / siteFooter  → dashboard.js
+ *
  * Public API (exports via globals): dashboard, reader, markdownContent, readerStatus,
  * upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta,
  * upcomingPodcasts, archiveCardsContainer, draftCardsContainer, siteFooter

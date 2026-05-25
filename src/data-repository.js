@@ -56,7 +56,7 @@ class MeetingRepository {
 
   /**
    * Get meetings by status.
-   * @param {string} status - One of 'done', 'upcoming', 'horizon', 'draft'
+   * @param {string} status - One of 'done', 'upcoming', 'draft'
    * @returns {Array} Meetings matching the given status
    */
   getByStatus(status) {

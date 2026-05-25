@@ -7,16 +7,16 @@
 (function() {
 'use strict';
 if (window.__TEST__ === true) {
-    window.Meeting = Meeting;
-    window.isSafeRepoPath = function(p) { return isSafePath(p, DOMAIN.REPO); };
-    window.renderUpcomingMaterials = renderUpcomingMaterials;
-    window.renderArchiveCards = renderArchiveCards;
-    window.saveVideoResumePosition = saveVideoResumePosition;
-    window.formatDuration = formatDuration;
-    window.formatFileSize = formatFileSize;
-    window.getAssetCopyRegistry = getAssetCopyRegistry;
+    window.Meeting = window.Meeting;
+    window.isSafeRepoPath = function(p) { return window.isSafePath(p, window.DOMAIN.REPO); };
+    window.renderUpcomingMaterials = window.renderUpcomingMaterials;
+    window.renderArchiveCards = window.renderArchiveCards;
+    window.saveVideoResumePosition = window.saveVideoResumePosition;
+    window.formatDuration = window.formatDuration;
+    window.formatFileSize = window.formatFileSize;
+    window.getAssetCopyRegistry = window.getAssetCopyRegistry;
     Object.defineProperty(window, 'MEETINGS', {
-        get() { const repo = getMeetingRepository(); return repo ? repo.getAll() : []; }
+        get() { const repo = window.getMeetingRepository(); return repo ? repo.getAll() : []; }
     });
 }
 })();

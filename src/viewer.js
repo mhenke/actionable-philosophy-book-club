@@ -2,6 +2,10 @@
  * Viewer routing: resolves file paths to viewer destinations (URL, target, rel).
  * Consolidates all file-type→viewer mapping in one place (APOSD Principle 3).
  *
+ * The raw content base detects GitHub Pages hostnames (e.g., mhenke.github.io)
+ * to build raw.githubusercontent.com URLs for the Office Online viewer.
+ * If deployed outside GitHub Pages, use setRawContentBase() to override.
+ *
  * Public API:
  * - setRawContentBase(url)
  * - buildPPTXViewerURL(path)

@@ -40,8 +40,11 @@ class Meeting {
     return this.status === 'done' && !!(this.video && this.video.file);
   }
 
+  /** @returns {boolean} True when meeting status is 'done'. */
   isDone() { return this.status === 'done'; }
+  /** @returns {boolean} True when meeting status is 'upcoming'. */
   isUpcoming() { return this.status === 'upcoming'; }
+  /** @returns {boolean} True when meeting status is 'draft'. */
   isDraft() { return this.status === 'draft'; }
 
 }

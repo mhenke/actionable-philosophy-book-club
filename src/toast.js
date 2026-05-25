@@ -34,26 +34,19 @@ function showToast(message) {
     }, TOAST_DURATION_MS);
 }
 
-/**
- * ErrorHandler: centralizes warning and error reporting.
- * Callers should use window.ErrorHandler?.warn(...) to stay resilient to load order.
- */
-(function () {
-    const ErrorHandler = {
-        /** Logs a warning with optional error context. */
-        warn(message, err = null) {
-            try { console.warn('ErrorHandler:', message, err); } catch (e) { /* best-effort */ }
-        },
-        /** Logs an error and optionally shows a user-facing toast. */
-        error(err, userMessage) {
-            try { console.error('ErrorHandler:', err); } catch (e) { /* ignore */ }
-            if (userMessage && typeof showToast === 'function') {
-                try { showToast(String(userMessage)); } catch (e) { /* ignore */ }
-            }
-        },
-    };
-    window.ErrorHandler = ErrorHandler;
-})();
+window.ErrorHandler = {
+    /** Logs a non-fatal warning. @param {string} message - Warning description */
+    warn(message, err = null) {
+        try { console.warn('ErrorHandler:', message, err); } catch (e) { /* best-effort */ }
+    },
+    /** Logs an error and optionally shows a toast. @param {Error} err - The error object */
+    error(err, userMessage) {
+        try { console.error('ErrorHandler:', err); } catch (e) { /* ignore */ }
+        if (userMessage && typeof showToast === 'function') {
+            try { showToast(String(userMessage)); } catch (e) { /* ignore */ }
+        }
+    },
+};
 
 window.showToast = showToast;
 })();
