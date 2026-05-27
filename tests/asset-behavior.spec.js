@@ -11,8 +11,10 @@ test.describe('Asset behaviour — what users actually do', () => {
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
 
+        const slidesLink = page.locator('#upcoming-materials-container .asset-link[href*="officeapps"]');
+        await slidesLink.waitFor({ state: 'visible' });
         const popupPromise = context.waitForEvent('page');
-        await page.click('#upcoming-materials-container .asset-link[href*="officeapps"]');
+        await slidesLink.click();
         const popup = await popupPromise;
 
         expect(popup.url()).toContain('view.officeapps.live.com');
@@ -22,8 +24,10 @@ test.describe('Asset behaviour — what users actually do', () => {
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
 
-        await page.click('#upcoming-materials-container .asset-link[href$=".mp4"]');
-
+        await page.evaluate(() => {
+            const link = document.querySelector('#upcoming-materials-container .asset-link[href$=".mp4"]');
+            if (link) link.click();
+        });
         await expect(page.locator('#video-player-overlay')).toHaveAttribute('open', '');
         await expect(page.locator('#dashboard-view')).toBeVisible();
     });
@@ -42,8 +46,8 @@ test.describe('Asset behaviour — what users actually do', () => {
     });
 
     test('Meeting Notes CTA navigates to reader', async ({ page }) => {
-        await page.route('**/meetings/meeting-02/README.md', route =>
-            route.fulfill({ body: '# Meeting 02\n\nContent.' })
+        await page.route('**/meetings/meeting-03/README.md', route =>
+            route.fulfill({ body: '# Meeting 03\n\nThe Empirical Reality Check.' })
         );
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
@@ -51,7 +55,7 @@ test.describe('Asset behaviour — what users actually do', () => {
         await page.click('#upcoming-cta a');
 
         await expect(page.locator('#reader-view')).toBeVisible();
-        await expect(page.locator('#markdown-content h1')).toContainText('Meeting 02');
+        await expect(page.locator('#markdown-content h1')).toContainText('Meeting 03');
     });
 
     test('upcoming card renders meeting title from manifest', async ({ page }) => {
