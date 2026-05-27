@@ -23,7 +23,7 @@
       "session": "Meeting 02",
       "date": "27 May 2026",
       "title": "Complexity Engineering",
-      "status": "upcoming",
+      "status": "done",
       "color": "spectrum-2",
       "wash": "--wash-2",
       "readmeUrl": "meetings/meeting-02/README.md",
@@ -173,15 +173,48 @@
       "id": "meeting-03",
       "session": "Meeting 03",
       "date": "10 Jun 2026",
-      "title": "TBD",
-      "status": "draft",
+      "title": "The Empirical Reality Check",
+      "status": "upcoming",
       "color": "spectrum-1",
       "wash": "--wash-1",
       "readmeUrl": "meetings/meeting-03/README.md",
-      "video": null,
-      "slides": null,
-      "podcasts": [],
-      "resources": []
+      "video": {
+        "file": "meetings/meeting-03/recordings/03-empirical-reality-check.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 245,
+        "fileSize": 28
+      },
+      "slides": {
+        "file": "meetings/meeting-03/slides/03-empirical-reality-check.pptx",
+        "label": "Slides",
+        "variant": "canonical",
+        "fileSize": 22
+      },
+      "podcasts": [
+        {
+          "type": "deep-dive",
+          "label": "API Usability: What the Data Says",
+          "file": "meetings/meeting-03/recordings/03-api-usability-empirical-study-deep-dive.m4a",
+          "duration": 945,
+          "fileSize": 15
+        },
+        {
+          "type": "critique",
+          "label": "The Real Cost of Abstraction Layers",
+          "file": "meetings/meeting-03/recordings/03-abstraction-tax-critique.m4a",
+          "duration": 1080,
+          "fileSize": 17
+        }
+      ],
+      "resources": [
+        {
+          "label": "Evaluation Matrix",
+          "file": "meetings/meeting-03/resources/03-evaluation-matrix.png",
+          "fileSize": 0.3
+        }
+      ],
+      "keyTakeaway": "Abstraction layers are a bet \u2014 the question is whether they compress complexity or merely relocate it where the linters can't see."
     },
     {
       "id": "meeting-04",

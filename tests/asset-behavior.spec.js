@@ -70,9 +70,9 @@ test.describe('Asset behaviour — what users actually do', () => {
     test('asset copy falls back to defaults at render time for missing registry types', async ({ page }) => {
         const manifestPath = new URL('../docs/manifest.json', import.meta.url);
         const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
-        manifest.assetCopy.alternate = {
-            label: 'Route Alternate Label',
-            title: 'Route Alternate Title'
+        manifest.assetCopy.critique = {
+            label: 'Route Critique Label',
+            title: 'Route Critique Title'
         };
         delete manifest.assetCopy['deep-dive'];
 
@@ -83,13 +83,13 @@ test.describe('Asset behaviour — what users actually do', () => {
 
         await page.locator('#upcoming-podcasts details').evaluate(el => { el.open = true; });
 
-        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Label');
-        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Alternate Title');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Critique Label');
+        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Critique Title');
         await expect(page.locator('#upcoming-podcasts')).toContainText('Deep Dive');
         await expect(page.locator('#upcoming-podcasts')).toContainText('An exploration of the session topic');
 
         const loadedRegistry = await page.evaluate(() => window.getAssetCopyRegistry());
-        expect(loadedRegistry.alternate.label).toBe('Route Alternate Label');
+        expect(loadedRegistry.critique.label).toBe('Route Critique Label');
         expect(loadedRegistry['deep-dive']).toBeUndefined();
     });
 
