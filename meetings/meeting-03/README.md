@@ -8,8 +8,8 @@ Does abstraction compress complexity, or merely relocate it? This session pauses
 **Total Core Reading Load:** ~32 pages (plus ~4 pages optional empirical).
 
 ## Agenda (60 Minutes)
-1. **Refresher (5 min):** Quick recap of deep vs. shallow modules from Meeting 02. Refer to [02-essential-questions](../meeting-02/02-essential-questions.md).
-2. **Discussion (35 min):** Work through the Path 2 readings using the Multi-Dimensional Evaluation Matrix. [Reading Bundle Below](#-the-lean-reading-bundle)
+1. **Refresher (5 min):** Quick recap of deep vs. shallow modules from Meeting 02. Refer to 02-essential-questions.
+2. **Discussion (35 min):** Work through the Path 2 readings using the Multi-Dimensional Evaluation Matrix. Reading Bundle Below
 3. **Code Review Anchors (10 min):** Walk through the production code patterns.
 4. **Wrap-up (10 min):** Synthesize conclusions and decide next session.
 
