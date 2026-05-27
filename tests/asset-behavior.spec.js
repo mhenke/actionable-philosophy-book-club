@@ -24,11 +24,15 @@ test.describe('Asset behaviour — what users actually do', () => {
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
 
-        await page.evaluate(() => {
+        const clicked = await page.evaluate(() => {
             const link = document.querySelector('#upcoming-materials-container .asset-link[href$=".mp4"]');
-            if (link) link.click();
+            if (!link) return { error: 'link not found' };
+            const href = link.getAttribute('href');
+            link.click();
+            const dialog = document.getElementById('video-player-overlay');
+            return { href, dialogOpen: !!dialog?.open };
         });
-        await expect(page.locator('#video-player-overlay')).toHaveAttribute('open', '');
+        expect(clicked.dialogOpen).toBe(true);
         await expect(page.locator('#dashboard-view')).toBeVisible();
     });
 
