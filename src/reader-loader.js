@@ -12,7 +12,7 @@ const { markdownContent, readerStatus } = window.DOM;
 let _activeReaderController = null;
 let _loadPageGeneration = 0;
 
-const _ALLOWED_EXTERNAL_HOSTS = /^https?:\/\/(mhenke\.github\.io|view\.officeapps\.live\.com|github\.com)\//i;
+const _ALLOWED_EXTERNAL_HOSTS = /^https?:\/\/(mhenke\.github\.io|view\.officeapps\.live\.com|github\.com|dl\.acm\.org|www\.cs\.colostate\.edu|doi\.org|bugcounting\.net|dmtopolog\.com|stripe\.com|arxiv\.org|pinzger\.github\.io|www\.inf\.usi\.ch|lemire\.me|docs\.oracle\.com|dev\.to)\//i;
 
 function ensureDOMPurifyHooks() {
     if (!callOnce(ensureDOMPurifyHooks)) return;
