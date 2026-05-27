@@ -17,14 +17,12 @@ Does abstraction compress complexity, or merely relocate it? This session pauses
 
 ### 2.1 — Modern API Design & Information Hiding
 
-- **2.1a | The Classical Foundation:** Parnas, *[On the Criteria To Be Used in Decomposing Systems into Modules](https://dl.acm.org/doi/10.1145/361598.361623)* (1972)
+- **2.1a | The Classical Foundation:** Parnas, *[On the Criteria To Be Used in Decomposing Systems into Modules](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf)* (1972)
   - Full paper, **6 pages** (Communications of the ACM 15(12):1053–1058)
-  - [Open-access mirror (PDF)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf)
   - Direct engagement with the source material Ousterhout builds on. Understanding Parnas's definition of a module's "secret" is essential to identifying why modern shallow layers fail.
 
-- **2.1b | Modern API Design at Scale:** Piccioni, Furia & Meyer, *[An Empirical Study of API Usability](https://doi.org/10.1109/ESEM.2013.14)* (ACM/IEEE ESEM 2013)
+- **2.1b | Modern API Design at Scale:** Piccioni, Furia & Meyer, *[An Empirical Study of API Usability](https://bugcounting.net/pubs/esem13.pdf)* (ACM/IEEE ESEM 2013)
   - Sections I–II and IV, **~10 pages** (proceedings pp. 5–14)
-  - [Open-access PDF](https://bugcounting.net/pubs/esem13.pdf)
   - Proves empirically that interface complexity and poor type discovery directly correlate with developer error rates.
 
 - **2.1c | Complexity in Modern Ecosystems:**
@@ -39,15 +37,13 @@ Does abstraction compress complexity, or merely relocate it? This session pauses
   - Core technical breakdown of Stripe's date-based API versioning and gatekeeper pattern, ~5 pages combined
   - Stripe maintains an incredibly deep abstraction layer using a dynamic pipeline of data transformers — a masterclass in Information Hiding and Change Isolation at scale.
 
-- **2.1e | Macro-Modularity Reality:** Lercher et al., *[Microservice API Evolution in Practice: A Study on Strategies and Challenges](https://doi.org/10.1016/j.jss.2024.112110)* (Journal of Systems and Software, 2024)
+- **2.1e | Macro-Modularity Reality:** Lercher et al., *[Microservice API Evolution in Practice: A Study on Strategies and Challenges](https://pinzger.github.io/papers/Lercher2024-apis.pdf)* (Journal of Systems and Software, 2024)
   - Excerpts detailing cross-service contract ripple effects, ~4 pages (Optional)
-  - [Open-access arXiv preprint](https://arxiv.org/abs/2311.08175) | [Author's PDF](https://pinzger.github.io/papers/Lercher2024-apis.pdf)
 
 ### 2.2 — Empirical Validation: Cognitive Load vs. Lint Rules
 
-- Bavota et al., *[An Empirical Study on the Developers' Perception of Software Coupling](https://doi.org/10.1109/ICSE.2013.6606617)* (ICSE 2013)
+- Bavota et al., *[An Empirical Study on the Developers' Perception of Software Coupling](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf)* (ICSE 2013)
   - Sections I, III, and V, **~10 pages**
-  - [Open-access PDF](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf)
   - Data contrasting what static analysis tools flag as "bad coupling" versus what actually increases cognitive load.
 
 ### 2.3 — Runtime & Abstraction Tax: The Cost of the Layer
