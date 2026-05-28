@@ -6,7 +6,7 @@
 
 Abstractions compress complexity, not eliminate it. This meeting pressure-tests John Ousterhout's design theories against empirical data, hardware costs, and organizational reality. Every reading and exercise earns its place: no academic filler, no uncontextualized code.
 
-**Total reading:** ~34 pages core, plus three 2-minute supplement reference cards in this directory.
+**Total reading:** ~41 pages core, plus three 2-minute supplement reference cards in this directory.
 
 ## Agenda (60 Minutes)
 
@@ -23,7 +23,9 @@ Abstractions compress complexity, not eliminate it. This meeting pressure-tests 
 
 **Piccioni, Furia & Meyer, *An Empirical Study of API Usability* (2013).** [Sections I, II, IV, ~6 pages.](https://bugcounting.net/pubs/esem13.pdf) Historical data and experimental setup trimmed; action core preserved. API error rates are a measured function of interface complexity and poor type discovery. Read this alongside the **API Friction Checklist** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
 
-**Stripe Engineering.** *[APIs as infrastructure: future-proofing Stripe with versioning](https://stripe.com/blog/api-versioning)* (2017) and *[Stripe's payments APIs: The first 10 years](https://stripe.com/blog/payment-api-design)* (2020). [~5 pages combined.] Information Hiding at organizational scale: date-based API versioning through a dynamic pipeline of data transformers. Read this alongside the **Closed-Laptop Pattern** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
+**Stripe Engineering.** *[APIs as infrastructure: future-proofing Stripe with versioning](https://stripe.com/blog/api-versioning)* (2017, ~6pp). Full read. Date-based rolling versions, version change modules as encapsulated transformations, and the Principles of Change. Information Hiding at scale.
+
+**Stripe Engineering.** *[Stripe's payments APIs: The first 10 years](https://stripe.com/blog/payment-api-design)* (2020, ~12pp). Read: condensed history (card-first abstractions collapsing under global payment methods), the Lynx conference room section (source material for the Closed-Laptop Pattern), and "Keep it simple, Stripe" (`error_on_requires_action` packaging as API surface design). Skip payment method taxonomy tables and launch logistics. Read alongside the **Closed-Laptop Pattern** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
 
 ### 2. Empirical Validation: Cognitive Load vs. Lint Rules
 
@@ -33,9 +35,7 @@ Before reading, skim the **Temple Analogy** and **Vocabulary Audit** in [03-supp
 
 ### 3. Runtime & Abstraction Tax
 
-**Lemire, *Avoid exception throwing in performance-sensitive code* (2022).** [~3 pages.](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) When a thrown exception crosses module boundaries, the $10,000\times$ performance drop is the physical manifestation of encapsulation breaking. Read with the **Boundary Leak Penalty** callout in [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md).
-
-**Java NIO Core: Buffered Streams, Channels, Byte Buffers.** [~6 pages.](https://docs.oracle.com/javase/tutorial/essential/io/buffers.html) The triumph and collapse of abstraction. BufferedStreams successfully hide hardware complexity until performance demands expose the illusion. Read with the **Useful Fiction of the Stream Abstraction** case study in [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md).
+**Lemire, *Avoid exception throwing in performance-sensitive code* (2022).** [~3 pages.](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) When a thrown exception crosses module boundaries, the $10,000\times$ performance drop is the physical manifestation of encapsulation breaking. Read with [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md).
 
 ## Production Code Anchors
 
@@ -54,7 +54,7 @@ Before reading, skim the **Temple Analogy** and **Vocabulary Audit** in [03-supp
 | **Organizational** | Do our module boundaries enable autonomous teams or force step-locked deployments? |
 
 ## Action Items
-- [ ] Read the Lean Reading Bundle (~32 pp core)
+- [ ] Read the Lean Reading Bundle (~41 pp core)
 - [ ] Review the three supplement reference cards
 - [ ] Run the Vocabulary Audit on one of your own codebases
 - [ ] Review the code anchors for the code-review segment
