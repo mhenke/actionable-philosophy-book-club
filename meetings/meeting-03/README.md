@@ -6,7 +6,7 @@
 
 Abstractions compress complexity, not eliminate it. This meeting pressure-tests John Ousterhout's design theories against empirical data, hardware costs, and organizational reality. Every reading and exercise earns its place: no academic filler, no uncontextualized code.
 
-**Total reading:** ~41 pages core, plus three 2-minute supplement reference cards in this directory.
+**Total reading:** ~42 pages core, plus three 2-minute supplement reference cards in this directory.
 
 ## Agenda (60 Minutes)
 
@@ -19,9 +19,9 @@ Abstractions compress complexity, not eliminate it. This meeting pressure-tests 
 
 ### 1. Modern API Design & Information Hiding
 
-**Parnas, *On the Criteria To Be Used in Decomposing Systems into Modules* (1972).** [9 pages.](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) Classical foundation. A module's "secret" is the boundary between maintainable and unmaintainable systems. Without this, nothing else holds. Ousterhout's deep modules trace directly to this paper.
+**Parnas, *On the Criteria To Be Used in Decomposing Systems into Modules* (1972).** [6 pages.](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) Classical foundation. A module's "secret" is the boundary between maintainable and unmaintainable systems. Without this, nothing else holds. Ousterhout's deep modules trace directly to this paper.
 
-**Piccioni, Furia & Meyer, *An Empirical Study of API Usability* (2013).** [Sections I, II, IV, ~6 pages.](https://bugcounting.net/pubs/esem13.pdf) Historical data and experimental setup trimmed; action core preserved. API error rates are a measured function of interface complexity and poor type discovery. Read this alongside the **API Friction Checklist** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
+**Piccioni, Furia & Meyer, *An Empirical Study of API Usability* (2013).** [Sections I, II, IV, ~10 pages.](https://bugcounting.net/pubs/esem13.pdf) Historical data and experimental setup trimmed; action core preserved. API error rates are a measured function of interface complexity and poor type discovery. Read this alongside the **API Friction Checklist** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
 
 **Stripe Engineering.** *[APIs as infrastructure: future-proofing Stripe with versioning](https://stripe.com/blog/api-versioning)* (2017, ~6pp). Full read. Date-based rolling versions, version change modules as encapsulated transformations, and the Principles of Change. Information Hiding at scale.
 
@@ -54,7 +54,7 @@ Before reading, skim the **Temple Analogy** and **Vocabulary Audit** in [03-supp
 | **Organizational** | Do our module boundaries enable autonomous teams or force step-locked deployments? |
 
 ## Action Items
-- [ ] Read the Lean Reading Bundle (~41 pp core)
+- [ ] Read the Lean Reading Bundle (~42 pp core)
 - [ ] Review the three supplement reference cards
 - [ ] Run the Vocabulary Audit on one of your own codebases
 - [ ] Review the code anchors for the code-review segment
