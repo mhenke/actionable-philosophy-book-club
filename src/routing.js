@@ -9,7 +9,7 @@
  */
 (function() {
 'use strict';
-const _routeHandlers = {};
+const _routeHandlers = { default: null };
 
 /** Registers a named route handler (e.g., 'reader', 'default'). Silently ignores invalid handlers. */
 function registerRoute(name, handler) {

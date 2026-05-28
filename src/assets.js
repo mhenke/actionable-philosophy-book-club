@@ -10,14 +10,39 @@
 (function() {
 'use strict';
 
+const _DOWNLOAD_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>';
+
 /** Extracts a URL-safe slug from a file path: filename → lowercased, sanitized, extension stripped. */
 function _toAssetSlug(filePath) {
     return filePath.split('/').pop().replace(/\.\w+$/, '').toLowerCase().replace(/[^a-z0-9_-]/g, '-');
 }
 
-/** Returns an SVG download icon string used in asset row download buttons. */
-function _downloadIcon() {
-    return '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>';
+function _buildAssetRow(config) {
+    const rowAttrs = config.id ? ` id="${config.id}"` : '';
+    const testidAttr = config.testid ? ` data-testid="${config.testid}"` : '';
+    const canonicalAttr = config.canonical ? ' data-canonical="true"' : '';
+
+    const iconPart = `<span class="icon-pill" style="background: ${config.iconBg};" aria-hidden="true">${config.icon}</span>`;
+
+    let labelPart = `<span class="asset-link-text">${config.label}</span>`;
+    if (config.badge) {
+        labelPart += ` <span class="podcast-badge" style="color:${config.badge.color}">${escapeHTML(config.badge.text)}</span>`;
+    }
+
+    const metaPart = config.meta ? `<span class="asset-meta">${config.meta}</span>` : '';
+    const captionPart = config.caption ? `<span class="podcast-caption">${escapeHTML(config.caption)}</span>` : '';
+
+    const innerContent = `<span class="asset-link-top">${iconPart}${labelPart}</span>${metaPart}${captionPart}`;
+
+    const linkContent = config.href
+        ? `<a href="${escapeHTML(config.href)}" class="asset-link asset-link--stacked"${config.ariaLabel ? ` aria-label="${config.ariaLabel}"` : ''}${config.hrefTarget ? ` target="${config.hrefTarget}"` : ''}${config.hrefRel ? ` rel="${config.hrefRel}"` : ''}>${innerContent}</a>`
+        : `<span class="asset-link asset-link--stacked">${innerContent}</span>`;
+
+    const dlContent = config.downloadHref
+        ? `<a href="${escapeHTML(config.downloadHref)}" download aria-label="${config.downloadLabel}" class="asset-dl">${_DOWNLOAD_ICON_SVG}</a>`
+        : '';
+
+    return `<div class="asset-row"${rowAttrs}${testidAttr}${canonicalAttr}>${linkContent}${dlContent}</div>`;
 }
 
 /** Builds the primary video asset row with metadata (duration, size, label) and download link. */
@@ -25,27 +50,28 @@ function buildVideoRow(meeting) {
     const videoDuration = meeting.video.duration ? formatDuration(meeting.video.duration) : '';
     const videoSize = meeting.video.fileSize ? formatFileSize(meeting.video.fileSize) : '';
     const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
-    const metaLine = videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '';
     const videoSlug = _toAssetSlug(meeting.video.file ?? '');
     const id = escapeHTML(meeting.id);
-    const videoAssetId = `asset-${id}-video-${videoSlug}`;
     const session = escapeHTML(meeting.session);
-    return `
-                    <div class="asset-row" data-testid="${id}-canonical" data-canonical="true" id="${videoAssetId}">
-                        <a href="${escapeHTML(meeting.video.file ?? '')}" class="asset-link asset-link--stacked" aria-label="${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''}${videoSize ? ', ' + videoSize : ''} (${session})">
-                            <span class="asset-link-top">
-                                <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">🎬</span>
-                                <span class="asset-link-text">${escapeHTML(meeting.video.label ?? '')}</span>
-                            </span>
-                            ${metaLine}
-                        </a>
-                        <a href="${escapeHTML(meeting.video.file ?? '')}" download
-                           aria-label="Download ${escapeHTML(meeting.video.label ?? '')}${videoDuration ? ', ' + videoDuration : ''}${videoSize ? ', ' + videoSize : ''} (${session})"
-                           class="asset-dl">${_downloadIcon()}</a>
-                    </div>`;
+    const label = escapeHTML(meeting.video.label ?? '');
+    const file = escapeHTML(meeting.video.file ?? '');
+    const metaSuffix = [videoDuration, videoSize].filter(Boolean).map(s => ', ' + s).join('');
+    return _buildAssetRow({
+        id: `asset-${id}-video-${videoSlug}`,
+        testid: `${id}-canonical`,
+        canonical: true,
+        icon: '\uD83C\uDFAC',
+        iconBg: 'var(--wash-3-border)',
+        label: label,
+        href: file,
+        ariaLabel: `${label}${metaSuffix} (${session})`,
+        downloadHref: file,
+        downloadLabel: `Download ${label}${metaSuffix} (${session})`,
+        meta: videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '',
+    });
 }
 
-/** Renders a disabled placeholder row for a missing asset type (video/slides). Shared by both placeholder functions. */
+/** Renders a disabled placeholder row for a missing asset type (video/slides). */
 function _buildPlaceholder(emoji, label) {
     return `
                     <div class="asset-row opacity-50">
@@ -59,55 +85,47 @@ function _buildPlaceholder(emoji, label) {
 /** Builds the slides asset row with Office Online viewer link, file size, and download button. */
 function buildSlidesRow(meeting) {
     const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
-    const metaLine = slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '';
+    const file = escapeHTML(meeting.slides.file ?? '');
+    const label = escapeHTML(meeting.slides.label ?? '');
     const viewerUrl = buildPPTXViewerURL(meeting.slides.file ?? '');
-    const inner = `
-                            <span class="asset-link-top">
-                                <span class="icon-pill" style="background: var(--wash-2-border);" aria-hidden="true">📊</span>
-                                <span class="asset-link-text">${escapeHTML(meeting.slides.label ?? '')}</span>
-                            </span>
-                            ${metaLine}`;
-    const wrapper = viewerUrl
-        ? `<a href="${viewerUrl}" target="_blank" rel="${window.REL_EXTERNAL}" class="asset-link asset-link--stacked">${inner}</a>`
-        : `<span class="asset-link asset-link--stacked">${inner}</span>`;
-    return `
-                    <div class="asset-row">
-                        ${wrapper}
-                        <a href="${escapeHTML(meeting.slides.file ?? '')}" download
-                           aria-label="Download slides (${escapeHTML(meeting.session)})"
-                           class="asset-dl">${_downloadIcon()}</a>
-                    </div>`;
+    return _buildAssetRow({
+        icon: '\uD83D\uDCCA',
+        iconBg: 'var(--wash-2-border)',
+        label: label,
+        href: viewerUrl || '',
+        hrefTarget: viewerUrl ? '_blank' : '',
+        hrefRel: viewerUrl ? window.REL_EXTERNAL : '',
+        downloadHref: file,
+        downloadLabel: `Download slides (${escapeHTML(meeting.session)})`,
+        meta: slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '',
+    });
 }
 
 /** Builds a podcast asset row with label, type badge, metadata, caption, and download button. */
 function buildPodcastRow(pod, meeting) {
     const copy = getAssetCopy(pod.type);
-    const cfg = { icon: copy.icon || '🎙', color: copy.color || 'var(--spectrum-2)' };
+    const cfg = { icon: copy.icon || '\uD83C\uDF99', color: copy.color || 'var(--spectrum-2)' };
     const badgeLabel = copy.label || pod.type;
     const caption = copy.title || '';
     const podDuration = pod.duration ? formatDuration(pod.duration) : '';
     const podSize = pod.fileSize ? formatFileSize(pod.fileSize) : '';
-    const podMeta = [podDuration, podSize].filter(Boolean).join(' · ');
-    const metaLine = podMeta ? `<span class="asset-meta">${podMeta}</span>` : '';
+    const podMeta = [podDuration, podSize].filter(Boolean).join(' \u00B7 ');
     const podSlug = _toAssetSlug(pod.file);
-    const podAssetId = `asset-${escapeHTML(meeting.id)}-podcast-${podSlug}`;
     const fileExt = pod.file.split('.').pop() || 'file';
-    const downloadLabel = `Download ${escapeHTML(pod.label)}${podDuration ? ', ' + podDuration : ''} (${fileExt.toUpperCase()} audio)`;
-    return `
-                    <div class="asset-row" id="${podAssetId}">
-                        <a href="${escapeHTML(pod.file)}" class="asset-link asset-link--stacked">
-                            <span class="asset-link-top">
-                                <span class="icon-pill" style="background: var(--wash-3-border);" aria-hidden="true">${cfg.icon}</span>
-                                <span class="asset-link-text">${escapeHTML(pod.label)}</span>
-                                <span class="podcast-badge" style="color:${cfg.color}">${escapeHTML(badgeLabel)}</span>
-                            </span>
-                            ${metaLine}
-                            <span class="podcast-caption">${escapeHTML(caption)}</span>
-                        </a>
-                        <a href="${escapeHTML(pod.file)}" download
-                           aria-label="${downloadLabel}"
-                           class="asset-dl">${_downloadIcon()}</a>
-                    </div>`;
+    const file = escapeHTML(pod.file);
+    const label = escapeHTML(pod.label);
+    return _buildAssetRow({
+        id: `asset-${escapeHTML(meeting.id)}-podcast-${podSlug}`,
+        icon: cfg.icon,
+        iconBg: 'var(--wash-3-border)',
+        label: label,
+        href: file,
+        downloadHref: file,
+        downloadLabel: `Download ${label}${podDuration ? ', ' + podDuration : ''} (${fileExt.toUpperCase()} audio)`,
+        meta: podMeta ? `<span class="asset-meta">${podMeta}</span>` : '',
+        badge: { text: badgeLabel, color: cfg.color },
+        caption: caption,
+    });
 }
 
 /** Builds a horizontal strip of resource thumbnail links from safe resource entries. */

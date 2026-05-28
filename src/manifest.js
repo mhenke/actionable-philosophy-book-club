@@ -17,11 +17,6 @@ function findMeetings(criteria) {
     return meetingRepo ? meetingRepo.find(criteria) : [];
 }
 
-/** @deprecated Use findMeetings(criteria) instead. */
-function getMeetingRepository() {
-    return meetingRepo;
-}
-
 function _initializeManifestState(manifestData) {
     if (!manifestData.meetings || !Array.isArray(manifestData.meetings)) throw new Error('Invalid manifest structure');
     meetingRepo = new MeetingRepository();

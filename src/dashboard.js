@@ -8,6 +8,24 @@ function _renderSessionMeta(meeting, color) {
     return `<span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:${c}">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>`;
 }
 
+function _renderCardBadge(text, { borderColor = 'var(--text-muted)', color = 'var(--text-muted)', className = 'font-semibold' } = {}) {
+    return `<span class="shrink-0 text-[0.6875rem] ${className} uppercase tracking-widest leading-none" style="border:1px solid ${borderColor};color:${color}; padding: 3px 8px; display: inline-flex; align-items: center;">${escapeHTML(text)}</span>`;
+}
+
+function _renderCardHeader(meeting, opts = {}) {
+    const tag = opts.tag || 'h3';
+    const titleId = opts.titleId ? ` id="${opts.titleId}"` : '';
+    const titleClass = opts.titleClass || 'text-xl font-bold tracking-tight';
+    const extraClass = opts.extraClass || 'mb-5';
+    return `<div class="flex justify-between items-start${extraClass ? ' ' + extraClass : ''} gap-4">
+                        <div class="card-title">
+                            ${_renderSessionMeta(meeting, opts.metaColor)}
+                            <${tag}${titleId} class="${titleClass}">${escapeHTML(meeting.title)}</${tag}>
+                        </div>
+                        ${_renderCardBadge(opts.badgeText || '', opts.badgeStyle || {})}
+                    </div>`;
+}
+
 /** Renders the upcoming meeting card: header, asset rows, key takeaway, CTA, and podcast disclosure. */
 function renderUpcomingMaterials() {
     if (!upcomingMaterialsContainer) return;
@@ -24,14 +42,15 @@ function renderUpcomingMaterials() {
     if (upcomingSection) upcomingSection.classList.remove('hidden-view');
 
     if (upcomingCardHeader) {
-        upcomingCardHeader.innerHTML = `
-                    <div class="flex justify-between items-start gap-4">
-                        <div class="card-title">
-                            ${_renderSessionMeta(meeting, 'var(--spectrum-2)')}
-                            <h2 id="next-meeting-heading" class="text-2xl md:text-3xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h2>
-                        </div>
-                        <span class="shrink-0 text-[11px] font-bold uppercase tracking-widest leading-none" style="border: 1px solid var(--spectrum-2); color: var(--spectrum-2); padding: 3px 8px; display: inline-flex; align-items: center;">Upcoming</span>
-                    </div>`;
+        upcomingCardHeader.innerHTML = _renderCardHeader(meeting, {
+            tag: 'h2',
+            titleId: 'next-meeting-heading',
+            titleClass: 'text-2xl md:text-3xl font-bold tracking-tight',
+            metaColor: 'var(--spectrum-2)',
+            badgeText: 'Upcoming',
+            extraClass: '',
+            badgeStyle: { borderColor: 'var(--spectrum-2)', color: 'var(--spectrum-2)', className: 'font-bold' },
+        });
     }
 
     const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
@@ -90,13 +109,7 @@ function renderArchiveCards() {
         const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
         const podcastSection = buildPodcastDisclosure(podcastRows, podcastSummary);
         return `
-                    <div class="flex justify-between items-start mb-5 gap-4">
-                        <div class="card-title">
-                            ${_renderSessionMeta(meeting)}
-                            <h3 class="text-xl font-bold tracking-tight">${escapeHTML(meeting.title)}</h3>
-                        </div>
-                        <span class="shrink-0 text-[0.6875rem] font-semibold uppercase tracking-widest leading-none" style="border:1px solid var(--text-muted);color:var(--text-muted); padding: 3px 8px; display: inline-flex; align-items: center;">Done</span>
-                    </div>
+                    ${_renderCardHeader(meeting, { badgeText: 'Done', badgeStyle: { borderColor: 'var(--text-muted)', color: 'var(--text-muted)', className: 'font-semibold' } })}
                     ${primaryRows.join('')}
                     ${resourceStrip}
                     <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost">Meeting Notes &rarr;</a>
@@ -142,13 +155,7 @@ function renderDraftCards() {
         return;
     }
     _renderCardList('draft-cards-container', drafts, meeting => `
-                    <div class="flex justify-between items-start mb-5 gap-4">
-                        <div class="card-title">
-                            ${_renderSessionMeta(meeting)}
-                            <h3 class="text-xl font-bold tracking-tight text-muted">Coming Soon</h3>
-                        </div>
-                        <span class="shrink-0 text-[0.6875rem] font-bold uppercase tracking-widest text-muted leading-none" style="border: 1px solid var(--text-muted); padding: 3px 8px; display: inline-flex; align-items: center;">Planned</span>
-                    </div>
+                    ${_renderCardHeader(meeting, { titleClass: 'text-xl font-bold tracking-tight text-muted', badgeText: 'Planned', badgeStyle: { borderColor: 'var(--text-muted)', color: 'var(--text-muted)', className: 'font-bold' } })}
                     <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>
                 `);
 }
