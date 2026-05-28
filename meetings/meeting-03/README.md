@@ -6,7 +6,7 @@
 
 Abstractions compress complexity, not eliminate it. This meeting pressure-tests John Ousterhout's design theories against empirical data, hardware costs, and organizational reality. Every reading and exercise earns its place: no academic filler, no uncontextualized code.
 
-**Total reading:** ~43 pages core (~47 with optional Lercher), plus three 2-minute supplement reference cards in this directory.
+**Total reading:** ~34 pages core, plus three 2-minute supplement reference cards in this directory.
 
 ## Agenda (60 Minutes)
 
@@ -23,11 +23,7 @@ Abstractions compress complexity, not eliminate it. This meeting pressure-tests 
 
 **Piccioni, Furia & Meyer, *An Empirical Study of API Usability* (2013).** [Sections I, II, IV, ~6 pages.](https://bugcounting.net/pubs/esem13.pdf) Historical data and experimental setup trimmed; action core preserved. API error rates are a measured function of interface complexity and poor type discovery. Read this alongside the **API Friction Checklist** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
 
-**Topolog, *Complexity part 4: Abstractions* (2025) & Barroso, *Abstraction: Designing Systems That Don't Collapse Under Complexity* (2026).** [~9 pages combined.](https://dmtopolog.com/complexity-4-abstraction) Synthesized with Lercher's cross-service ripple effects below. Deep vs. shallow module analysis across UI components, SDKs, and cloud dependencies. Barroso follows with dependency inversion and volatility isolation.
-
 **Stripe Engineering.** *[APIs as infrastructure: future-proofing Stripe with versioning](https://stripe.com/blog/api-versioning)* (2017) and *[Stripe's payments APIs: The first 10 years](https://stripe.com/blog/payment-api-design)* (2020). [~5 pages combined.] Information Hiding at organizational scale: date-based API versioning through a dynamic pipeline of data transformers. Read this alongside the **Closed-Laptop Pattern** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
-
-**Lercher et al., *Microservice API Evolution in Practice* (2024).** [~4 pages, optional.](https://pinzger.github.io/papers/Lercher2024-apis.pdf) Cross-service contract ripple effects. What happens when Information Hiding fails across team boundaries.
 
 ### 2. Empirical Validation: Cognitive Load vs. Lint Rules
 
