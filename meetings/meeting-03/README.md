@@ -2,61 +2,63 @@
 
 **Date:** June 10, 2026
 
-## High-Level Summary
-Does abstraction compress complexity, or merely relocate it? This session pauses the textbook to test John Ousterhout's design theories against modern engineering data, historical foundations, measurable JVM behaviors, and hardware realities. Every page in this bundle has been fiercely optimized to earn its spot.
+## Why This Meeting Exists
 
-**Total Core Reading Load:** ~32 pages (plus ~4 pages optional empirical).
+Abstractions compress complexity, not eliminate it. This meeting pressure-tests John Ousterhout's design theories against empirical data, hardware costs, and organizational reality. Every reading and exercise earns its place: no academic filler, no uncontextualized code.
+
+**Total reading:** ~43 pages core (~47 with optional Lercher), plus three 2-minute supplement reference cards in this directory.
 
 ## Agenda (60 Minutes)
+
 1. **Refresher (5 min):** Quick recap of deep vs. shallow modules from Meeting 02. Refer to 02-essential-questions.
-2. **Discussion (35 min):** Work through the Path 2 readings using the Multi-Dimensional Evaluation Matrix. Reading Bundle Below
-3. **Code Review Anchors (10 min):** Walk through the production code patterns.
-4. **Wrap-up (10 min):** Synthesize conclusions and decide next session.
+2. **Discussion (35 min):** Work through the readings below using the Multi-Dimensional Evaluation Matrix.
+3. **Supplement & Exercise (10 min):** Walk through the API Friction Checklist and the Vocabulary Audit from the supplement cards.
+4. **Wrap-up (10 min):** Synthesize conclusions, decide next session.
 
 ## The Lean Reading Bundle
 
-### Modern API Design & Information Hiding
+### 1. Modern API Design & Information Hiding
 
-**The Classical Foundation.** Parnas, *[On the Criteria To Be Used in Decomposing Systems into Modules](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf)*, Communications of the ACM 15(12):1053-1058, 1972. 6 pages. The source material Ousterhout builds on: Parnas's definition of a module's "secret" is essential to understanding why modern shallow abstractions fail.
+**Parnas, *On the Criteria To Be Used in Decomposing Systems into Modules* (1972).** [9 pages.](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) Classical foundation. A module's "secret" is the boundary between maintainable and unmaintainable systems. Without this, nothing else holds. Ousterhout's deep modules trace directly to this paper.
 
-**API Usability Evidence.** Piccioni, Furia & Meyer, *[An Empirical Study of API Usability](https://bugcounting.net/pubs/esem13.pdf)*, ACM/IEEE ESEM, 2013. Sections I-II and IV, ~10 pages. Evidence that interface complexity and poor type discovery directly correlate with developer error rates.
+**Piccioni, Furia & Meyer, *An Empirical Study of API Usability* (2013).** [Sections I, II, IV, ~6 pages.](https://bugcounting.net/pubs/esem13.pdf) Historical data and experimental setup trimmed; action core preserved. API error rates are a measured function of interface complexity and poor type discovery. Read this alongside the **API Friction Checklist** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
 
-**Complexity in Modern Ecosystems.** Two perspectives on abstraction quality. Topolog (Ivanov), *[Complexity part 4. Abstractions.](https://dmtopolog.com/complexity-4-abstraction)* (2025, ~5 pages). Deep vs. shallow module analysis across UI components, SDKs, and cloud dependencies. Barroso, *[Abstraction: Designing Systems That Don't Collapse Under Complexity](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29)* (DEV, Feb 2026, ~5 pages). An OOP-focused follow-up on dependency inversion and volatility isolation.
+**Topolog, *Complexity part 4: Abstractions* (2025) & Barroso, *Abstraction: Designing Systems That Don't Collapse Under Complexity* (2026).** [~9 pages combined.](https://dmtopolog.com/complexity-4-abstraction) Synthesized with Lercher's cross-service ripple effects below. Deep vs. shallow module analysis across UI components, SDKs, and cloud dependencies. Barroso follows with dependency inversion and volatility isolation.
 
-**Real-World Practice.** Stripe Engineering. *[APIs as infrastructure: future-proofing Stripe with versioning](https://stripe.com/blog/api-versioning)* (2017) and *[Stripe's payments APIs: The first 10 years](https://stripe.com/blog/payment-api-design)* (2020). ~5 pages combined. A masterclass in Information Hiding and Change Isolation at scale: date-based API versioning through a dynamic pipeline of data transformers.
+**Stripe Engineering.** *[APIs as infrastructure: future-proofing Stripe with versioning](https://stripe.com/blog/api-versioning)* (2017) and *[Stripe's payments APIs: The first 10 years](https://stripe.com/blog/payment-api-design)* (2020). [~5 pages combined.] Information Hiding at organizational scale: date-based API versioning through a dynamic pipeline of data transformers. Read this alongside the **Closed-Laptop Pattern** in [03-supplement-1-api-design.md](03-supplement-1-api-design.md).
 
-**Macro-Modularity Reality.** Lercher et al., *[Microservice API Evolution in Practice](https://pinzger.github.io/papers/Lercher2024-apis.pdf)*, Journal of Systems and Software, 2024. ~4 pages, optional. Cross-service contract ripple effects in practice.
+**Lercher et al., *Microservice API Evolution in Practice* (2024).** [~4 pages, optional.](https://pinzger.github.io/papers/Lercher2024-apis.pdf) Cross-service contract ripple effects. What happens when Information Hiding fails across team boundaries.
 
-### Empirical Validation: Cognitive Load vs. Lint Rules
+### 2. Empirical Validation: Cognitive Load vs. Lint Rules
 
-Bavota et al., *[An Empirical Study on the Developers' Perception of Software Coupling](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf)*, ICSE, 2013. Sections I, III, and V, ~10 pages. Data contrasting what static analysis flags as "bad coupling" versus what actually increases cognitive load.
+**Bavota et al., *An Empirical Study on the Developers' Perception of Software Coupling* (ICSE 2013).** [Sections I, III, V, ~5 pages.](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) Parametric formulas, clustering metrics, and effect sizes pruned. Raw data only: semantic coupling governs mental models more than structural links. Structural coupling (what code calls what) matters less than semantic coupling (what developers name things). Shared vocabulary across supposedly decoupled modules is the hidden coupling that breaks systems.
 
-### Runtime & Abstraction Tax: The Cost of the Layer
+Before reading, skim the **Temple Analogy** and **Vocabulary Audit** in [03-supplement-2-empirical.md](03-supplement-2-empirical.md).
 
-**Exception Overhead.** Lemire, *[Avoid exception throwing in performance-sensitive code](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/)*, 2022. ~3 pages. A benchmark-driven look at how a cleanly abstracted syntactic choice imposes massive operational penalty.
+### 3. Runtime & Abstraction Tax
 
-**Java NIO as Case Study.** *Java NIO Core Documentation*: [Buffered Streams](https://docs.oracle.com/javase/tutorial/essential/io/buffers.html), [Channels](https://docs.oracle.com/javase/tutorial/essential/io/channels.html), and [Byte Buffers](https://docs.oracle.com/javase/tutorial/essential/io/bytestreams.html), Oracle Tutorial. ~6 pages. The triumph of deep modularity and the moment abstraction layers collapse under hardware constraints.
+**Lemire, *Avoid exception throwing in performance-sensitive code* (2022).** [~3 pages.](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) When a thrown exception crosses module boundaries, the $10,000\times$ performance drop is the physical manifestation of encapsulation breaking. Read with the **Boundary Leak Penalty** callout in [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md).
 
-## 💻 Production Code Anchors
+**Java NIO Core: Buffered Streams, Channels, Byte Buffers.** [~6 pages.](https://docs.oracle.com/javase/tutorial/essential/io/buffers.html) The triumph and collapse of abstraction. BufferedStreams successfully hide hardware complexity until performance demands expose the illusion. Read with the **Useful Fiction of the Stream Abstraction** case study in [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md).
 
-Review these patterns alongside your reading to prepare for the code-review segment:
+## Production Code Anchors
 
-[03-code-anchors.md](03-code-anchors.md) — five code anchors covering the Deep Module Triumph, Shallow Enterprise Pass-Through, I/O Performance Tradeoff, Exception-as-Control-Flow, and the Third-Party Volatility Boundary.
+[03-code-anchors.md](03-code-anchors.md): five code patterns covering the Deep Module Triumph, Shallow Enterprise Pass-Through, I/O Performance Tradeoff, Exception-as-Control-Flow, and Third-Party Volatility Boundary.
 
-## 📊 Evaluation Matrix
-
-Every reading and code anchor will be passed through this diagnostic framework:
+## Evaluation Matrix
 
 | Dimension | Core Tension |
 |---|---|
-| **Cognitive** | Does this design lower developer mental overhead, or just hide the mess where linters can't see it? |
-| **Changeability** | If an internal detail or external dependency changes, does the modification ripple across packages? |
+| **Cognitive** | Does this design lower mental overhead, or hide the mess where linters cannot see it? |
+| **Changeability** | If an internal detail changes, does the modification ripple across packages? |
+| **Semantic** | Do two decoupled modules share dense domain vocabulary without a schema contract? |
 | **Runtime** | What is the exact cost in heap allocations, indirect lookups, and cache misses? |
-| **Observability** | Does this interface make the application harder to profile, trace, or debug in production? |
+| **Observability** | Does this interface make the application harder to profile, trace, or debug? |
 | **AI-Generation** | Is this boundary easier or harder for an LLM to reason about safely? |
 | **Organizational** | Do our module boundaries enable autonomous teams or force step-locked deployments? |
 
 ## Action Items
-- [ ] Read the Path 2 bundle (~32 pp core)
+- [ ] Read the Lean Reading Bundle (~32 pp core)
+- [ ] Review the three supplement reference cards
+- [ ] Run the Vocabulary Audit on one of your own codebases
 - [ ] Review the code anchors for the code-review segment
-
