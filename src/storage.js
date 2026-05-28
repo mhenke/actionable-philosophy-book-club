@@ -18,8 +18,9 @@ const STORAGE_VIDEO_PREFIX = 'vs:';
 let _onSessionStorageError = null;
 let _sessionStorageWarned = false;
 
-/** Installs a handler called when sessionStorage operations fail. */
+/** Installs a handler called when sessionStorage operations fail. Silently ignores non-function handlers. */
 function setSessionStorageErrorHandler(handler) {
+    if (typeof handler !== 'function') return;
     _onSessionStorageError = handler;
 }
 

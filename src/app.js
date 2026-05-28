@@ -60,7 +60,7 @@ function showDashboardRenderError(err) {
 
     initOnboardingBanner();
 
-    if (window.__TEST__) window.__manifestLoaded = false;
+    window.__signalManifestLoaded?.(false);
 
     prepareInitialViewFromHash(window.location.hash);
     if (typeof marked !== 'undefined') {
@@ -74,7 +74,7 @@ function showDashboardRenderError(err) {
         setupManifestRetryUI();
         return;
     }
-    if (window.__TEST__) window.__manifestLoaded = true;
+    window.__signalManifestLoaded?.(true);
     try {
         renderUpcomingMaterials();
         renderArchiveCards();

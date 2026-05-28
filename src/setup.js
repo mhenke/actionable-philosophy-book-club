@@ -5,6 +5,12 @@
  * HTML template. If an ID is missing the ref will be null, and consumers should
  * guard with optional chaining or if-checks.
  *
+ * Architectural note: DOM references are captured at module load time rather than
+ * queried on demand. This is a deliberate tradeoff for a no-framework SPA — it
+ * centralizes DOM coupling in one module so that HTML structure changes only
+ * require updates here, not scattered getElementById calls across 26 files.
+ * The cost is temporal coupling: this module must run after DOM is ready.
+ *
  * Consumers by reference:
  *   dashboard, reader       → view.js, app.js
  *   markdownContent          → reader-loader.js, app.js

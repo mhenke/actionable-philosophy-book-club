@@ -8,13 +8,7 @@
  */
 (function() {
 'use strict';
-let _videoPlayerCleanup = null;
-
-function _cleanupPreviousPlayer() {
-    if (_videoPlayerCleanup) {
-        try { _videoPlayerCleanup(); } finally { _videoPlayerCleanup = null; }
-    }
-}
+let _activePlayerController = null;
 
 function _getVideoPlayerElements() {
     return {
@@ -51,10 +45,10 @@ function _tryLoadCaptionTrack(video, filePath) {
         .catch(err => window.ErrorHandler?.warn('VTT caption check failed:', { err }));
 }
 
-function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, filePath, label) {
+function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, filePath, label, signal) {
     resumeBar.style.display = 'none';
     const savedTime = getSavedVideoResumeTime(filePath);
-    if (savedTime <= RESUME_MIN_SECONDS) return null;
+    if (savedTime <= RESUME_MIN_SECONDS) return;
 
     const mins = Math.floor(savedTime / 60);
     const secs = Math.floor(savedTime % 60);
@@ -74,18 +68,14 @@ function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, file
         video.play();
     };
 
-    resumeBtn.addEventListener('click', onResume, { once: true });
-    startBtn.addEventListener('click', onStart, { once: true });
-
-    return () => {
-        resumeBtn.removeEventListener('click', onResume);
-        startBtn.removeEventListener('click', onStart);
-    };
+    resumeBtn.addEventListener('click', onResume, { once: true, signal });
+    startBtn.addEventListener('click', onStart, { once: true, signal });
 }
 
-function _wireVideoEvents(els, lastFocus, filePath, resumeCleanup) {
+function _wireVideoEvents(els, lastFocus, filePath, signal) {
     const saveProgress = () => saveVideoResumePosition(filePath, els.video.currentTime);
     const vpInterval = setInterval(saveProgress, PROGRESS_SAVE_MS);
+    signal.addEventListener('abort', () => clearInterval(vpInterval), { once: true });
 
     const onClose = () => {
         if (!els.overlay.open) return;
@@ -97,42 +87,27 @@ function _wireVideoEvents(els, lastFocus, filePath, resumeCleanup) {
         if (lastFocus && typeof lastFocus.focus === 'function') {
             try { lastFocus.focus(); } catch(e) { /* ignore */ }
         }
-        if (_videoPlayerCleanup) {
-            try { _videoPlayerCleanup(); } finally { _videoPlayerCleanup = null; }
-        }
     };
 
-    const cancelListener = (e) => { e.preventDefault(); onClose(); };
-    const overlayClickHandler = (e) => { if (e.target === els.overlay) onClose(); };
-    const errorHandler = () => { onClose(); showToast('This file is not available yet. Materials appear closer to the meeting date.'); };
-
-    els.overlay.addEventListener('cancel', cancelListener);
-    window.addEventListener('hashchange', onClose);
-    els.closeBtn.addEventListener('click', onClose);
-    els.overlay.addEventListener('click', overlayClickHandler);
-    els.video.addEventListener('error', errorHandler, { once: true });
-
-    _videoPlayerCleanup = () => {
-        clearInterval(vpInterval);
-        els.overlay.removeEventListener('cancel', cancelListener);
-        window.removeEventListener('hashchange', onClose);
-        els.closeBtn.removeEventListener('click', onClose);
-        els.overlay.removeEventListener('click', overlayClickHandler);
-        els.video.removeEventListener('error', errorHandler);
-        if (resumeCleanup) {
-            try { resumeCleanup(); } catch(e) { /* ignore */ }
-        }
-    };
+    els.overlay.addEventListener('cancel', (e) => { e.preventDefault(); onClose(); }, { signal });
+    window.addEventListener('hashchange', onClose, { signal });
+    els.closeBtn.addEventListener('click', onClose, { signal });
+    els.overlay.addEventListener('click', (e) => { if (e.target === els.overlay) onClose(); }, { signal });
+    els.video.addEventListener('error', () => { onClose(); showToast('This file is not available yet. Materials appear closer to the meeting date.'); }, { once: true, signal });
 }
 
 /** Opens the video overlay dialog, loads the video, checks for VTT captions, shows resume bar if position saved. */
 function openVideoPlayer(filePath, label) {
-    _cleanupPreviousPlayer();
+    if (_activePlayerController) {
+        _activePlayerController.abort();
+    }
 
     const els = _getVideoPlayerElements();
     if (!els.overlay || !els.video) return;
 
     const lastFocusBeforeVideo = document.activeElement;
+    const controller = new AbortController();
+    _activePlayerController = controller;
 
     _clearExistingTracks(els.video);
     els.title.textContent = label || filePath;
@@ -140,15 +115,18 @@ function openVideoPlayer(filePath, label) {
     els.video.load();
 
     _tryLoadCaptionTrack(els.video, filePath);
-    const resumeCleanup = _setupResumeBar(els.resumeBar, els.resumeText, els.resumeBtn, els.startBtn, els.video, filePath, label);
-    _wireVideoEvents(els, lastFocusBeforeVideo, filePath, resumeCleanup);
+    _setupResumeBar(els.resumeBar, els.resumeText, els.resumeBtn, els.startBtn, els.video, filePath, label, controller.signal);
+    _wireVideoEvents(els, lastFocusBeforeVideo, filePath, controller.signal);
 
     els.overlay.showModal();
 }
 
 /** Closes the video player dialog and cleans up event listeners. */
 function closeVideoPlayer() {
-    _cleanupPreviousPlayer();
+    if (_activePlayerController) {
+        _activePlayerController.abort();
+        _activePlayerController = null;
+    }
     const overlay = document.getElementById('video-player-overlay');
     if (overlay && overlay.open) {
         overlay.close();

@@ -4,20 +4,14 @@
  * at load time; falls back to defaults when entries are missing.
  *
  * Public API:
- * - loadAssetCopyRegistry(assetCopy)
- * - getAssetCopyRegistry()
- * - getAssetCopy(type)
+ * - loadAssetCopyRegistry(assetCopy) — validates and installs the registry
+ * - getAssetCopy(type) — returns merged entry for a copy type
  *
  * Side-effects: populates ASSET_COPY used by asset renderers.
  */
 (function() {
 'use strict';
 let ASSET_COPY = {};
-
-/** @param {object} registry - Asset copy registry object from manifest data */
-function setAssetCopyRegistry(registry) {
-    ASSET_COPY = registry;
-}
 
 const DEFAULT_ASSET_COPY = Object.freeze({
     alternate: { label: 'Alternate', title: 'A different take on the session topic', icon: '🎬', color: 'var(--spectrum-2)' },
@@ -26,12 +20,13 @@ const DEFAULT_ASSET_COPY = Object.freeze({
     debate: { label: 'Debate', title: 'A structured debate between two design perspectives', icon: '⚔️', color: 'var(--spectrum-2)' },
 });
 
-/** Validates manifest asset copy entries against expected keys, returns a sanitized registry. Falls back to defaults for missing entries. */
+/** Validates manifest asset copy entries against expected keys, installs the sanitized registry internally. Falls back to defaults for missing entries. */
 function loadAssetCopyRegistry(assetCopy) {
     const registry = {};
     if (!assetCopy || typeof assetCopy !== 'object' || Array.isArray(assetCopy)) {
         window.ErrorHandler?.warn('Invalid manifest asset copy registry: expected an object. Falling back to defaults.');
-        return registry;
+        ASSET_COPY = registry;
+        return;
     }
     const expectedKeys = Object.keys(DEFAULT_ASSET_COPY);
     const expectedSet = new Set(expectedKeys);
@@ -49,14 +44,11 @@ function loadAssetCopyRegistry(assetCopy) {
         const sanitized = {};
         if (typeof entry.label === 'string' && entry.label.trim()) sanitized.label = entry.label;
         if (typeof entry.title === 'string' && entry.title.trim()) sanitized.title = entry.title;
+        if (typeof entry.icon === 'string' && entry.icon.trim()) sanitized.icon = entry.icon;
+        if (typeof entry.color === 'string' && entry.color.trim()) sanitized.color = entry.color;
         if (Object.keys(sanitized).length > 0) registry[key] = sanitized;
     }
-    return registry;
-}
-
-/** Returns the current asset copy registry (may be empty before manifest loads). */
-function getAssetCopyRegistry() {
-    return ASSET_COPY;
+    ASSET_COPY = registry;
 }
 
 /**
@@ -71,8 +63,8 @@ function getAssetCopy(type) {
     return DEFAULT_ASSET_COPY[type] || {};
 }
 
-window.setAssetCopyRegistry = setAssetCopyRegistry;
 window.loadAssetCopyRegistry = loadAssetCopyRegistry;
-window.getAssetCopyRegistry = getAssetCopyRegistry;
 window.getAssetCopy = getAssetCopy;
+// Test-only: exposes internal registry state for verification. Not part of public API.
+if (window.__TEST__) window.getAssetCopyRegistry = () => ASSET_COPY;
 })();

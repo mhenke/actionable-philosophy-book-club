@@ -1,10 +1,11 @@
 /**
- * Utilities: LRU markdown fetch cache, formatting helpers, and path validation helpers.
+ * Markdown fetch cache: LRU cache for markdown document fetches, plus one-shot guard utility.
  *
- * Public API (selected):
+ * Public API:
  * - fetchMarkdown(path, signal): cached fetch for markdown documents
+ * - callOnce(key): one-shot guard keyed by function reference identity
  *
- * Side-effects: caches promises in an internal LRU map.
+ * Side-effects: caches promises in an internal LRU map; uses WeakMap for guard state.
  */
 (function() {
 'use strict';

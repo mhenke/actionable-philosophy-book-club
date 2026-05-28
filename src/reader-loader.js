@@ -12,7 +12,11 @@ const { markdownContent, readerStatus } = window.DOM;
 let _activeReaderController = null;
 let _loadPageGeneration = 0;
 
-const _ALLOWED_EXTERNAL_HOSTS = /^https?:\/\/(mhenke\.github\.io|view\.officeapps\.live\.com|github\.com|dl\.acm\.org|www\.cs\.colostate\.edu|doi\.org|bugcounting\.net|dmtopolog\.com|stripe\.com|arxiv\.org|pinzger\.github\.io|www\.inf\.usi\.ch|lemire\.me|docs\.oracle\.com|dev\.to)\//i;
+const _ALLOWED_EXTERNAL_HOSTS = (function() {
+    const officeHost = window.OFFICE_VIEWER_ORIGIN ? new URL(window.OFFICE_VIEWER_ORIGIN).hostname : 'view.officeapps.live.com';
+    const otherHosts = 'mhenke\\.github\\.io|github\\.com|dl\\.acm\\.org|www\\.cs\\.colostate\\.edu|doi\\.org|bugcounting\\.net|dmtopolog\\.com|stripe\\.com|arxiv\\.org|pinzger\\.github\\.io|www\\.inf\\.usi\\.ch|lemire\\.me|docs\\.oracle\\.com|dev\\.to';
+    return new RegExp(`^https?:\\/\\/(${officeHost}|${otherHosts})\\/`, 'i');
+})();
 
 function ensureDOMPurifyHooks() {
     if (!callOnce(ensureDOMPurifyHooks)) return;
@@ -27,7 +31,7 @@ function ensureDOMPurifyHooks() {
                 return;
             }
             node.setAttribute('target', '_blank');
-            node.setAttribute('rel', 'noopener noreferrer');
+            node.setAttribute('rel', window.REL_EXTERNAL);
         }
     });
 }
@@ -137,6 +141,8 @@ function _finalizeReaderContent(sanitized, path, anchorId) {
         if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
     }
 
+    // Rewrite relative .md links to hash routes (#p=...) and route asset files
+    // through viewer.js (pptx→Office viewer, images→new tab). Disables unsafe hrefs.
     rewriteContentLinks(markdownContent, path);
 
     const h2Elements = markdownContent.querySelectorAll('h2');

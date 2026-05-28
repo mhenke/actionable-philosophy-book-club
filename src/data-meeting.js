@@ -1,6 +1,9 @@
 (function() {
 'use strict';
 
+const VALID_STATUSES = Object.freeze(['done', 'upcoming', 'draft']);
+const STATUS = Object.freeze({ DONE: 'done', UPCOMING: 'upcoming', DRAFT: 'draft' });
+
 class Meeting {
   /**
    * Validates and stores meeting manifest entry data.
@@ -14,9 +17,8 @@ class Meeting {
     if (!manifestEntry?.title || typeof manifestEntry.title !== 'string') {
       throw new Error(`Meeting ${manifestEntry.id}: title is required and must be a string`);
     }
-    const validStatuses = ['done', 'upcoming', 'draft'];
-    if (!validStatuses.includes(manifestEntry?.status)) {
-      throw new Error(`Meeting ${manifestEntry.id}: status must be one of [${validStatuses.join(', ')}], got '${manifestEntry.status}'`);
+    if (!VALID_STATUSES.includes(manifestEntry?.status)) {
+      throw new Error(`Meeting ${manifestEntry.id}: status must be one of [${VALID_STATUSES.join(', ')}], got '${manifestEntry.status}'`);
     }
 
     this.id = manifestEntry.id;
@@ -40,14 +42,8 @@ class Meeting {
     return this.status === 'done' && !!(this.video && this.video.file);
   }
 
-  /** @returns {boolean} True when meeting status is 'done'. */
-  isDone() { return this.status === 'done'; }
-  /** @returns {boolean} True when meeting status is 'upcoming'. */
-  isUpcoming() { return this.status === 'upcoming'; }
-  /** @returns {boolean} True when meeting status is 'draft'. */
-  isDraft() { return this.status === 'draft'; }
-
 }
 
 window.Meeting = Meeting;
+window.STATUS = STATUS;
 })();

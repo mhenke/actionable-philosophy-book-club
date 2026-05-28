@@ -22,8 +22,8 @@ function _downloadIcon() {
 
 /** Builds the primary video asset row with metadata (duration, size, label) and download link. */
 function buildVideoRow(meeting) {
-    const videoDuration = meeting.video.duration ?? 0 ? formatDuration(meeting.video.duration ?? 0) : '';
-    const videoSize = meeting.video.fileSize ?? 0 ? formatFileSize(meeting.video.fileSize ?? 0) : '';
+    const videoDuration = meeting.video.duration ? formatDuration(meeting.video.duration) : '';
+    const videoSize = meeting.video.fileSize ? formatFileSize(meeting.video.fileSize) : '';
     const videoMeta = [videoDuration, videoSize].filter(Boolean).join(' · ');
     const metaLine = videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '';
     const videoSlug = _toAssetSlug(meeting.video.file ?? '');
@@ -56,14 +56,9 @@ function _buildPlaceholder(emoji, label) {
                     </div>`;
 }
 
-/** Renders a disabled placeholder row when video is not yet available and placeholders are enabled. */
-function buildVideoPlaceholder() {
-    return _buildPlaceholder('🎬', 'Video Recording');
-}
-
 /** Builds the slides asset row with Office Online viewer link, file size, and download button. */
 function buildSlidesRow(meeting) {
-    const slidesSize = meeting.slides.fileSize ?? 0 ? formatFileSize(meeting.slides.fileSize ?? 0) : '';
+    const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
     const metaLine = slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '';
     const viewerUrl = buildPPTXViewerURL(meeting.slides.file ?? '');
     const inner = `
@@ -73,7 +68,7 @@ function buildSlidesRow(meeting) {
                             </span>
                             ${metaLine}`;
     const wrapper = viewerUrl
-        ? `<a href="${viewerUrl}" target="_blank" rel="noopener noreferrer" class="asset-link asset-link--stacked">${inner}</a>`
+        ? `<a href="${viewerUrl}" target="_blank" rel="${window.REL_EXTERNAL}" class="asset-link asset-link--stacked">${inner}</a>`
         : `<span class="asset-link asset-link--stacked">${inner}</span>`;
     return `
                     <div class="asset-row">
@@ -82,11 +77,6 @@ function buildSlidesRow(meeting) {
                            aria-label="Download slides (${escapeHTML(meeting.session)})"
                            class="asset-dl">${_downloadIcon()}</a>
                     </div>`;
-}
-
-/** Renders a disabled placeholder row when slides are not yet available and placeholders are enabled. */
-function buildSlidesPlaceholder() {
-    return _buildPlaceholder('📊', 'Slides');
 }
 
 /** Builds a podcast asset row with label, type badge, metadata, caption, and download button. */
@@ -131,7 +121,7 @@ function buildResourceStrip(resources) {
         const img = isImage
             ? `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="${label}" loading="lazy" width="120" height="80"></picture>`
             : `<img src="${file}" alt="${label}" loading="lazy" width="120" height="80">`;
-        return `<a href="${file}" target="_blank" rel="noopener noreferrer" class="resource-thumb">
+        return `<a href="${file}" target="_blank" rel="${window.REL_EXTERNAL}" class="resource-thumb">
                             ${img}
                             <span>${label}</span>
                         </a>`;
@@ -170,13 +160,13 @@ function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
     if (meeting.video.file ?? '' && isSafePath(meeting.video.file ?? '', DOMAIN.ASSET)) {
         primaryRows.push(buildVideoRow(meeting));
     } else if (includePlaceholders) {
-        primaryRows.push(buildVideoPlaceholder());
+        primaryRows.push(_buildPlaceholder('🎬', 'Video Recording'));
     }
 
     if (meeting.slides.file ?? '' && isSafePath(meeting.slides.file ?? '', DOMAIN.ASSET)) {
         primaryRows.push(buildSlidesRow(meeting));
     } else if (includePlaceholders) {
-        primaryRows.push(buildSlidesPlaceholder());
+        primaryRows.push(_buildPlaceholder('📊', 'Slides'));
     }
 
     const podcasts = meeting.podcasts;

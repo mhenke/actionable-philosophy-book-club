@@ -3,16 +3,12 @@
  * localStorage or prefers-color-scheme. Runs as a blocking <script> in <head>
  * to prevent FOUC (flash of unstyled content) before the main app.js loads.
  *
- * NOTE: This duplicates localStorage key logic from getSavedTheme() in theme.js.
- * This is intentional — this module runs BEFORE theme.js/storage.js load, so
- * it cannot import buildStorageKey(). Both paths produce 'apbc:theme'.
- * If you change the key here, update getSavedTheme() in theme.js too.
+ * Exports THEME_STORAGE_KEY to window so theme.js can read it without duplicating.
+ * This module runs BEFORE theme.js/storage.js load, so the key is set here.
  *
  * Side-effects: modifies document.documentElement classes early during page load.
  */
 (function() {
-    // NOTE: 'apbc:theme' must match STORAGE_KEY_PREFIX + 'theme' from storage.js.
-    // If changing the prefix in storage.js, update this string too.
     try {
         const theme = localStorage.getItem('apbc:theme');
         if (theme === 'dark') {
@@ -25,4 +21,5 @@
     } catch (e) {
         // Ignore storage access errors
     }
+    window.THEME_STORAGE_KEY = 'apbc:theme';
 })();

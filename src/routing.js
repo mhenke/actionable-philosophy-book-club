@@ -11,8 +11,9 @@
 'use strict';
 const _routeHandlers = {};
 
-/** Registers a named route handler (e.g., 'reader', 'default'). */
+/** Registers a named route handler (e.g., 'reader', 'default'). Silently ignores invalid handlers. */
 function registerRoute(name, handler) {
+    if (typeof handler !== 'function') return;
     _routeHandlers[name] = handler;
 }
 

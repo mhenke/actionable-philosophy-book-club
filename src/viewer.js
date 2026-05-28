@@ -4,10 +4,9 @@
  *
  * The raw content base detects GitHub Pages hostnames (e.g., mhenke.github.io)
  * to build raw.githubusercontent.com URLs for the Office Online viewer.
- * If deployed outside GitHub Pages, use setRawContentBase() to override.
+ * If deployed outside GitHub Pages, call setRawContentBase() to override.
  *
  * Public API:
- * - setRawContentBase(url)
  * - buildPPTXViewerURL(path)
  * - getViewerDestination(path)
  * - classifyAssetPath(path): returns 'slides'|'image'|'video'|'other'
@@ -16,8 +15,11 @@
  */
 (function() {
 'use strict';
+const REL_EXTERNAL = 'noopener noreferrer';
+const OFFICE_VIEWER_ORIGIN = 'https://view.officeapps.live.com';
 let _rawContentBase = null;
 
+/** Overrides the raw content base URL for the Office Online viewer. Used when deployed outside GitHub Pages. */
 function setRawContentBase(url) {
     _rawContentBase = url;
 }
@@ -33,9 +35,10 @@ function _getRawContentBase() {
     return 'https://raw.githubusercontent.com/mhenke/actionable-philosophy-book-club/main/';
 }
 
+/** Builds an Office Online viewer URL for a PPTX file path. Returns null if the path is unsafe. */
 function buildPPTXViewerURL(path) {
     if (!isSafePath(path, DOMAIN.ASSET)) return null;
-    return 'https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(_getRawContentBase() + path);
+    return OFFICE_VIEWER_ORIGIN + '/op/view.aspx?src=' + encodeURIComponent(_getRawContentBase() + path);
 }
 
 /** Classifies a file path by extension: 'slides', 'image', 'video', or 'other'. Single source of truth for file-type decisions. */
@@ -59,17 +62,18 @@ function getViewerDestination(path) {
         return {
             url: buildPPTXViewerURL(path),
             target: '_blank',
-            rel: 'noopener noreferrer'
+            rel: REL_EXTERNAL
         };
     }
     if (type === 'image') {
-        return { url: path, target: '_blank', rel: 'noopener noreferrer' };
+        return { url: path, target: '_blank', rel: REL_EXTERNAL };
     }
     return { url: path };
 }
 
-window.setRawContentBase = setRawContentBase;
 window.buildPPTXViewerURL = buildPPTXViewerURL;
 window.getViewerDestination = getViewerDestination;
 window.classifyAssetPath = classifyAssetPath;
+window.REL_EXTERNAL = REL_EXTERNAL;
+window.OFFICE_VIEWER_ORIGIN = OFFICE_VIEWER_ORIGIN;
 })();

@@ -37,9 +37,7 @@ test('Meeting methods - hasVideo validation', () => {
 
 test('Meeting methods - status getters', () => {
     const m = new Meeting({ id: 'meeting-01', title: 'S1', status: 'done' });
-    assert.strictEqual(m.isDone(), true);
-    assert.strictEqual(m.isUpcoming(), false);
-    assert.strictEqual(m.isDraft(), false);
+    assert.strictEqual(m.status, 'done');
 });
 
 test('Meeting constructor - assets mapping', () => {

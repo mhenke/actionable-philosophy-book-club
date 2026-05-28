@@ -4,7 +4,7 @@
  *
  * Public API:
  * - loadManifest()
- * - getMeetingRepository()
+ * - findMeetings(criteria): queries loaded meetings by criteria
  *
  * Side-effects: populates meetingRepo and ASSET_COPY via _initializeManifestState.
  */
@@ -12,6 +12,12 @@
 'use strict';
 let meetingRepo = null;
 
+/** Queries loaded meetings by criteria. Returns empty array if manifest not yet loaded. */
+function findMeetings(criteria) {
+    return meetingRepo ? meetingRepo.find(criteria) : [];
+}
+
+/** @deprecated Use findMeetings(criteria) instead. */
 function getMeetingRepository() {
     return meetingRepo;
 }
@@ -20,9 +26,15 @@ function _initializeManifestState(manifestData) {
     if (!manifestData.meetings || !Array.isArray(manifestData.meetings)) throw new Error('Invalid manifest structure');
     meetingRepo = new MeetingRepository();
     meetingRepo.setAll(manifestData.meetings);
-    setAssetCopyRegistry(loadAssetCopyRegistry(manifestData.assetCopy));
+    loadAssetCopyRegistry(manifestData.assetCopy);
 }
 
+/**
+ * Loads the meeting manifest: resolves inline data (__MANIFEST_DATA / MANIFEST_DATA)
+ * or fetches docs/manifest.json with an 8s timeout. Initializes the repository and
+ * asset copy registry on success.
+ * @returns {Promise<void>}
+ */
 async function loadManifest() {
     const inlineData = window.__MANIFEST_DATA || (typeof window.MANIFEST_DATA !== 'undefined' ? window.MANIFEST_DATA : null);
     if (inlineData) {
@@ -41,6 +53,6 @@ async function loadManifest() {
     }
 }
 
-window.getMeetingRepository = getMeetingRepository;
+window.findMeetings = findMeetings;
 window.loadManifest = loadManifest;
 })();

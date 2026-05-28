@@ -178,7 +178,36 @@
       "color": "spectrum-1",
       "wash": "--wash-1",
       "readmeUrl": "meetings/meeting-03/README.md",
-      "keyTakeaway": "Abstraction layers are a bet — the question is whether they compress complexity or merely relocate it where the linters can't see."
+      "keyTakeaway": "Abstraction layers are a bet — the question is whether they compress complexity or merely relocate it where the linters can't see.",
+      "video": {
+        "file": "meetings/meeting-03/recordings/03-the-empirical-reality-check.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 240,
+        "fileSize": 25
+      },
+      "slides": {
+        "file": "meetings/meeting-03/slides/03-the-empirical-reality-check.pptx",
+        "label": "Slides",
+        "variant": "canonical",
+        "fileSize": 12
+      },
+      "podcasts": [
+        {
+          "type": "deep-dive",
+          "label": "The Empirical Reality Check Deep Dive",
+          "file": "meetings/meeting-03/recordings/03-empirical-reality-check-deep-dive.m4a",
+          "duration": 1093,
+          "fileSize": 17
+        },
+        {
+          "type": "critique",
+          "label": "Critique of the Empirical Reality Check",
+          "file": "meetings/meeting-03/recordings/03-empirical-reality-check-critique.m4a",
+          "duration": 1206,
+          "fileSize": 19
+        }
+      ]
     },
     {
       "id": "meeting-04",

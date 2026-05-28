@@ -4,7 +4,7 @@
 /** Reads saved theme preference from localStorage. */
 function getSavedTheme() {
     try {
-        return localStorage.getItem(buildStorageKey('theme'));
+        return localStorage.getItem(window.THEME_STORAGE_KEY);
     } catch (err) {
         window.ErrorHandler?.warn('localStorage read failed:', { err });
         return null;
@@ -14,7 +14,7 @@ function getSavedTheme() {
 /** Saves theme preference to localStorage. */
 function saveTheme(theme) {
     try {
-        localStorage.setItem(buildStorageKey('theme'), theme);
+        localStorage.setItem(window.THEME_STORAGE_KEY, theme);
     } catch (err) {
         window.ErrorHandler?.warn('localStorage write failed:', { err });
     }
