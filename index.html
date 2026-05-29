@@ -273,7 +273,7 @@
         .prose h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.3; margin-bottom: 1.5rem; color: var(--banner); }
         @media (min-width: 768px) { .prose h1 { font-size: 1.875rem; } }
         .prose h2 { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.2em; margin-top: 3.5rem; margin-bottom: 1.25rem; color: var(--banner); }
-        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--spectrum-1); }
+        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--banner); }
 
         .prose p { font-size: 1.0625rem; line-height: 1.7; margin-bottom: 1.25rem; color: var(--text-primary); text-wrap: pretty; }
         /* Restore bullets — Tailwind preflight resets list-style to none */
@@ -774,7 +774,8 @@
             --rule-end:   rgba(72, 189, 184, 0.10);
         }
         :root.dark-theme .prose h1,
-        :root.dark-theme .prose h2 {
+        :root.dark-theme .prose h2,
+        :root.dark-theme .prose h3 {
             color: var(--text-primary);
         }
 
