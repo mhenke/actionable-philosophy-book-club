@@ -34,7 +34,7 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
     *   [Read](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) — *The Classical Foundation.* A module's "secret" is the hard boundary between clean software evolution and system rot. Ousterhout's "deep modules" trace directly back to this paper.
 *   **Piccioni, Furia & Meyer (2013)** | *An Empirical Study of API Usability*  | **10 pp**
     *   [Sections I, II, IV](https://bugcounting.net/pubs/esem13.pdf) — Explores how interface complexity and poor type discovery mathematically drive up developer error rates.
-    *   *The Contemporary Foil:* Read this alongside **Topolog / Ivanov (2025, *Complexity Part 4: Abstractions*)**. Topolog acts as a modern, high-density counterweight, extending Piccioni's interface metrics directly into modern UI components, SDK boundaries, and shallow cloud dependencies.
+    *   *The Contemporary Foil:* Read this alongside [**Topolog / Ivanov (2025, *Complexity Part 4: Abstractions*)**](https://dmtopolog.com/complexity-4-abstraction). Topolog acts as a modern, high-density counterweight, extending Piccioni's interface metrics directly into modern UI components, SDK boundaries, and shallow cloud dependencies.
     *   [Read alongside](03-supplement-1-api-design.md): The API Friction Checklist.
 *   **Stripe Engineering (2017)** | *APIs as infrastructure: future-proofing Stripe with versioning*  | **6 pp**
     *   [Read](https://stripe.com/blog/api-versioning) — *Information Hiding at Scale.* A masterclass in change isolation using date-based rolling versions and encapsulated data transformations.
