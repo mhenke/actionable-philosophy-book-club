@@ -17,15 +17,19 @@ function prepareInitialViewFromHash(hash) {
     if (hash.startsWith('#p=')) {
         dashboard.classList.add('hidden-view');
         reader.classList.remove('hidden-view');
+        dashboard.setAttribute('aria-hidden', 'true');
+        reader.setAttribute('aria-hidden', 'false');
     }
 }
 
-/** Toggles visibility between dashboard and reader views. Updates skip-link target. */
+/** Toggles visibility between dashboard and reader views. Updates skip-link target and aria-hidden. */
 function setView(view) {
     if (view !== 'dashboard') view = 'reader';
     const isDashboard = view === 'dashboard';
     dashboard.classList.toggle('hidden-view', !isDashboard);
     reader.classList.toggle('hidden-view', isDashboard);
+    dashboard.setAttribute('aria-hidden', isDashboard ? 'false' : 'true');
+    reader.setAttribute('aria-hidden', isDashboard ? 'true' : 'false');
 
     const skipLink = document.querySelector('a[href^="#"]');
     if (skipLink) {

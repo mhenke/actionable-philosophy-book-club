@@ -788,10 +788,11 @@
         <header class="sticky top-0 z-50" role="banner">
             <div class="banner-bar">
                 <div class="banner-inner">
-                    <p class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</p>
-                    <div class="flex items-center gap-4">
-                        <span class="text-[0.6875rem] swiss-light">John Ousterhout</span>
-                        <button id="theme-toggle-dashboard" class="theme-toggle-btn" aria-label="Toggle theme">
+                    <nav aria-label="Site">
+                        <span class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</span>
+                        <div class="flex items-center gap-4">
+                            <span class="text-[0.6875rem] swiss-light">John Ousterhout</span>
+                            <button id="theme-toggle-dashboard" class="theme-toggle-btn" aria-label="Toggle theme">
                             <svg class="sun-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
                             </svg>
@@ -800,6 +801,7 @@
                             </svg>
                         </button>
                     </div>
+                    </nav>
                 </div>
             </div>
             <div class="spectrum-bar"></div>
@@ -823,7 +825,7 @@
             <h1 class="sr-only">Actionable Philosophy Book Club</h1>
 
             <!-- Next Meeting — header + CTA rendered by renderUpcomingMaterials() from manifest -->
-            <section class="card p-6 md:p-8 hidden-view" aria-labelledby="next-meeting-heading">
+            <section class="card p-6 md:p-8 hidden-view" aria-label="Next Meeting">
                 <div id="upcoming-card-header" class="mb-6"></div>
                 <div class="space-y-5">
                     <div id="upcoming-materials-container" data-asset-container></div>
@@ -918,7 +920,7 @@
     </div>
 
     <!-- Reader View -->
-    <div id="reader-view" class="hidden-view">
+    <div id="reader-view" class="hidden-view" aria-hidden="true">
         <header class="sticky top-0 z-50" role="banner">
             <nav class="banner-bar" aria-label="Reader navigation">
                 <div class="banner-inner">
