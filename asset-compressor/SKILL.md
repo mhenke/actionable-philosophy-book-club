@@ -26,7 +26,21 @@ Invoke the appropriate script from the `scripts/` directory.
 - **Video**: `bash scripts/compress_video.sh <input> <output>`
 - **PPTX**: `bash scripts/compress_pptx.sh <input> <output>`
 
-### 3. Replace and Verify
+### 3. Capture Metadata
+After compression, extract exact duration and file size from the output using `ffprobe`. Always floor the duration (never round up — the label must never overstate playback time).
+
+```bash
+# Get precise duration in seconds (floored)
+ffprobe -v error -show_entries format=duration -of csv=p=0 output.mp4 \
+  | awk '{printf "%.0f\n", int($1)}'
+
+# Get file size in KB
+stat --format=%s output.mp4 | awk '{printf "%.1f\n", $1/1024}'
+```
+
+Write the floored duration and file size to `docs/manifest.json` under the meeting's asset entry. Duration in seconds (integer), fileSize in MB (integer).
+
+### 4. Replace and Verify
 Always verify the output file opens correctly before deleting the original.
 
 ## Quality Standards
