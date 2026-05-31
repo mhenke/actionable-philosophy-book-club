@@ -12,6 +12,7 @@ tests/visual.spec.*
 
 # AI tool artifacts
 impeccable-report*.json
+.aposd/
 
 # Environment
 .env
