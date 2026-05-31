@@ -67,11 +67,11 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 - [ ] Execute: Run the **Vocabulary Audit** on an internal repository before June 10, and bring your identified hidden ley lines to the group session
 
 ## Meeting Materials
-- [03-code-anchors.md](03-code-anchors.md)
 - [03-supplement-1-api-design.md](03-supplement-1-api-design.md)
 - [03-supplement-2-empirical.md](03-supplement-2-empirical.md)
 - [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md)
 - [recordings/](recordings/)
+  - [03-abstraction-reality-check.mp4](recordings/03-abstraction-reality-check.mp4)
   - [03-why-software-abstractions-fail-under-pressure-deep-dive.m4a](recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a)
   - [03-high-price-of-architectural-purity-debate.m4a](recordings/03-high-price-of-architectural-purity-debate.m4a)
   - [03-automating-semantic-coupling-performance-thresholds-critique.m4a](recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a)
