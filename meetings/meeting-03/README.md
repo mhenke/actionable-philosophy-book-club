@@ -20,10 +20,10 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 
 ## Agenda (60 Minutes)
 
-- **The Refresher (5 min):** Quick tactical recap of deep vs. shallow modules from Meeting 02. Refer to `02-essential-questions`.
-- **The Crucible (35 min):** Structured debate working through the three segments of the Lean Reading Bundle.
+- **The Refresher (5 min):** Quick tactical recap of deep vs. shallow modules from Meeting 02. [Video Primer](recordings/03-abstraction-reality-check.mp4)
+- **The Crucible (35 min):** Structured debate working through the three segments of the Lean Reading Bundle. [Slides](slides/03-shattering-the-abstraction-illusion.pptx)
 - **The Application (15 min):** Interactive walkthrough of the **API Friction Checklist** and the **Vocabulary Audit** using the supplement cards.
-- **The Synthesis (5 min):** Final architectural conclusions and log logistics for Meeting 04.
+- **Wrap-up (5 min):** Path voting for next meeting.
 
 ---
 

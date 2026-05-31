@@ -24,6 +24,29 @@ python3 -m http.server 8000   # local preview (fetch() requires HTTP)
 - **Reader**: `loadPage()` in `reader-loader.js` — fetches via `fetchMarkdown()` (20-entry LRU cache), parses with `marked`, sanitizes with `DOMPurify`, then rewrites links and builds file tree from `## Meeting Materials` heading.
 - **Dashboard**: `renderUpcomingMaterials()` + `renderArchiveCards()` in `dashboard.js` share `buildAssetRows()` in `assets.js`.
 
+## Meeting README conventions
+
+Each meeting README must follow meeting 02's section order exactly:
+
+```
+# Meeting NN: Title
+**Date:**
+## High-Level Summary
+## Agenda (60 Minutes)
+## Discussion Points
+   ### ❓ Essential Questions
+   ### 💡 Non-Obvious Insights
+## Action Items
+## Meeting Materials
+   - NN-essential-questions.md
+   - NN-non-obvious-insights.md
+   - recordings/
+   - resources/
+   - slides/
+```
+
+Always include `NN-essential-questions.md` and `NN-non-obvious-insights.md` files in the meeting directory. The Meeting Materials listing order is: docs first, then recordings, then resources, then slides.
+
 ## Hard constraints
 
 - **Never populate `video`, `slides`, `podcasts`, or `resources` in a manifest entry until the actual media files exist on disk.** For upcoming/draft meetings with no assets committed yet: `video: null`, `slides: null`, `podcasts: []`. The code handles null gracefully ("Materials available closer to the meeting."). Adding nonexistent paths creates 404 links on the dashboard card.
