@@ -179,9 +179,49 @@
       "wash": "--wash-1",
       "readmeUrl": "meetings/meeting-03/README.md",
       "keyTakeaway": "Abstraction layers are a bet — the question is whether they compress complexity or merely relocate it where the linters can't see.",
-      "video": null,
-      "slides": null,
-      "podcasts": []
+      "video": {
+        "file": "meetings/meeting-03/recordings/03-abstraction-reality-check.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 505,
+        "fileSize": 28
+      },
+      "slides": {
+        "file": "meetings/meeting-03/slides/03-shattering-the-abstraction-illusion.pptx",
+        "label": "Slides",
+        "variant": "canonical",
+        "fileSize": 12
+      },
+      "podcasts": [
+        {
+          "type": "deep-dive",
+          "label": "Why Software Abstractions Fail Under Pressure",
+          "file": "meetings/meeting-03/recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a",
+          "duration": 1914,
+          "fileSize": 30
+        },
+        {
+          "type": "debate",
+          "label": "The High Price of Architectural Purity",
+          "file": "meetings/meeting-03/recordings/03-high-price-of-architectural-purity-debate.m4a",
+          "duration": 1501,
+          "fileSize": 24
+        },
+        {
+          "type": "critique",
+          "label": "Automating Semantic Coupling & Performance Thresholds",
+          "file": "meetings/meeting-03/recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a",
+          "duration": 428,
+          "fileSize": 7
+        }
+      ],
+      "resources": [
+        {
+          "label": "Temple of Abstraction Guide",
+          "file": "meetings/meeting-03/resources/03-temple-of-abstraction-guide.png",
+          "fileSize": 1.8
+        }
+      ]
     },
     {
       "id": "meeting-04",
