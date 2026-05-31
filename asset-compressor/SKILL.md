@@ -1,6 +1,6 @@
 ---
 name: asset-compressor
-description: Compress PDF, MP4, and PPTX files to minimize repository size. Use when assets exceed GitHub's 50MB recommendation or to reduce overall repo bloat.
+description: Compress PDF, MP4, and PPTX files to minimize repository size. Every asset is compressed unconditionally — no size gate, no confirmation.
 ---
 
 # Asset Compressor
@@ -15,18 +15,14 @@ This skill provides automated workflows for shrinking large media files common i
 
 ## Workflows
 
-### 1. Identify Large Files
-Check for files exceeding the 50MB limit:
-`find . -type f -size +50M`
-
-### 2. Compress a File
-Invoke the appropriate script from the `scripts/` directory.
+### 1. Compress a File
+All meeting assets must be compressed regardless of original file size — no size gate, no confirmation. Invoke the appropriate script:
 
 - **PDF**: `bash scripts/compress_pdf.sh <input> <output>`
 - **Video**: `bash scripts/compress_video.sh <input> <output>`
 - **PPTX**: `bash scripts/compress_pptx.sh <input> <output>`
 
-### 3. Capture Metadata
+### 2. Capture Metadata
 After compression, extract exact duration and file size from the output using `ffprobe`. Always floor the duration (never round up — the label must never overstate playback time).
 
 ```bash
@@ -40,7 +36,7 @@ stat --format=%s output.mp4 | awk '{printf "%.1f\n", $1/1024}'
 
 Write the floored duration and file size to `docs/manifest.json` under the meeting's asset entry. Duration in seconds (integer), fileSize in MB (integer).
 
-### 4. Replace and Verify
+### 3. Replace and Verify
 Always verify the output file opens correctly before deleting the original.
 
 ## Quality Standards
