@@ -71,7 +71,7 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 - [03-supplement-2-empirical.md](03-supplement-2-empirical.md)
 - [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md)
 - [recordings/](recordings/)
-  - *Video primer coming soon.*
+  - [03-navigating-the-architecture-alternate.mp4](recordings/03-navigating-the-architecture-alternate.mp4)
   - [03-why-software-abstractions-fail-under-pressure-deep-dive.m4a](recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a)
   - [03-high-price-of-architectural-purity-debate.m4a](recordings/03-high-price-of-architectural-purity-debate.m4a)
   - [03-automating-semantic-coupling-performance-thresholds-critique.m4a](recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a)

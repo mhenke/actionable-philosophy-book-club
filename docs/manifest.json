@@ -45,11 +45,11 @@
         {
           "type": "alternate",
           "label": "Video Primer",
-          "file": "meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4",
+          "file": "meetings/meeting-03/recordings/03-navigating-the-architecture-alternate.mp4",
           "variant": "alternate",
-          "source_filename": "02-Clean-Code-Paradox-deep-dive.mp4",
-          "duration": 488,
-          "fileSize": 31
+          "source_filename": "Navigating_the_Architecture_Ley_Lines.mp4",
+          "duration": 548,
+          "fileSize": 26
         },
         {
           "type": "deep-dive",
