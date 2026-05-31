@@ -174,7 +174,7 @@
         "file": "meetings/meeting-03/recordings/03-empirical-reality-check.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 505,
+        "duration": 307,
         "fileSize": 9
       },
       "slides": {
@@ -190,21 +190,21 @@
           "file": "meetings/meeting-03/recordings/03-navigating-the-architecture-alternate.mp4",
           "variant": "alternate",
           "source_filename": "Navigating_the_Architecture_Ley_Lines.mp4",
-          "duration": 548,
+          "duration": 547,
           "fileSize": 26
         },
         {
           "type": "deep-dive",
           "label": "Why Software Abstractions Fail Under Pressure",
           "file": "meetings/meeting-03/recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a",
-          "duration": 1914,
+          "duration": 1913,
           "fileSize": 30
         },
         {
           "type": "debate",
           "label": "The High Price of Architectural Purity",
           "file": "meetings/meeting-03/recordings/03-high-price-of-architectural-purity-debate.m4a",
-          "duration": 1501,
+          "duration": 1500,
           "fileSize": 24
         },
         {
