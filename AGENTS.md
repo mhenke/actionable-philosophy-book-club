@@ -27,6 +27,7 @@ python3 -m http.server 8000   # local preview (fetch() requires HTTP)
 ## Hard constraints
 
 - **Never populate `video`, `slides`, `podcasts`, or `resources` in a manifest entry until the actual media files exist on disk.** For upcoming/draft meetings with no assets committed yet: `video: null`, `slides: null`, `podcasts: []`. The code handles null gracefully ("Materials available closer to the meeting."). Adding nonexistent paths creates 404 links on the dashboard card.
+- **Upcoming card has two stages:** Stage 1 (no assets) shows placeholder text. Stage 2 (assets populated) shows video, slides, podcasts, and resources. The transition happens when `video`, `slides`, `podcasts`, and `resources` are populated in the manifest entry.
 - **`## Meeting Materials`** heading triggers file-tree rendering (case-insensitive). Use exact heading or it renders as plain list.
 - **Meeting directories must have a matching manifest entry** or CI fails. Meeting IDs: `meeting-00`, `meeting-01`, etc. `drafts/` is excluded from the manifest.
 
