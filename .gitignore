@@ -40,6 +40,9 @@ Thumbs.db
 # Screenshot dev scripts output
 /tmp/screenshot*.png
 
+# PDF reading resources (downloaded from external URLs in README)
+*.pdf
+
 # Media files that should be on S3 (Optional example)
 # recordings/*.m4
 # recordings/*.mp4
