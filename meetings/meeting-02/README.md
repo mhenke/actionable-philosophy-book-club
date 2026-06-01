@@ -3,7 +3,7 @@
 **Date:** May 27, 2026
 
 ## High-Level Summary
-A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design," focusing on deep modules as complexity sinks. The session concluded with the group selecting **Path 2: The Empirical Reality Check (Modernized)**. This reading bundle pauses the textbook to test Ousterhout's design theories against modern engineering data, historical foundations, measurable JVM behaviors, and hardware realities.
+A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design," focusing on deep modules as complexity sinks (selected as Path 2 during Meeting 01's wrap-up). The session concluded with the group selecting **Path 2: The Empirical Reality Check (Modernized)**. This reading bundle pauses the textbook to test Ousterhout's design theories against modern engineering data, historical foundations, measurable JVM behaviors, and hardware realities.
 
 ## Agenda (60 Minutes)
 1. [Video Primer](recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4). **Refresher Video (5-10 min):** Why great modules take on complexity so the rest of the system stays simple.

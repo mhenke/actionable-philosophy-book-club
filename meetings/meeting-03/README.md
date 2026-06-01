@@ -21,6 +21,8 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 
 Plus **3 supplement reference cards** (2 min each): [API Design](03-supplement-1-api-design.md), [Empirical](03-supplement-2-empirical.md), [Runtime Tax](03-supplement-3-runtime-tax.md).
 
+See the [Lean Reading Bundle Syllabus](03-lean-reading-bundle.md) for full descriptions, companion foils, and reading context.
+
 ---
 
 ## Agenda (60 Minutes)
@@ -49,16 +51,24 @@ Plus **3 supplement reference cards** (2 min each): [API Design](03-supplement-1
 - **Flexibility as Friction:** Empirical usability tokens prove that API flexibility actively harms developer learnability.
 - [See full details in 03-non-obvious-insights.md](03-non-obvious-insights.md)
 
-## Path Chosen: The Empirical Reality Check
+## Choose Your Next Direction
 
-This meeting executes **Path 2** (chosen in Meeting 02). The [Lean Reading Bundle](03-lean-reading-bundle.md) replaces textbook progression with direct engagement with empirical data: Parnas' module foundation, modern API usability studies, coupling perception, and runtime performance taxes. The three supplement reference cards and two exercises (API Friction Checklist, Vocabulary Audit) provide structured take-home tools derived from the readings.
+This meeting executed **Path 2** (The Empirical Reality Check, chosen in Meeting 02). Three paths are on the table for what comes next. Review the options and vote during wrap-up.
+
+See [full path descriptions](03-path-options.md).
+
+- **Path 1: Complete the Textbook** — Return to APoSD Chapters 9-19 with an empirical lens.
+- **Path 2: Architecture Design Studio** — Practice-oriented sessions applying the Friction Checklist and Vocabulary Audit to real code.
+- **Path 3: Systems Under Load** — Deep-dive into runtime tax, hardware constraints, and abstraction collapse at scale.
 
 ## Action Items
 - [ ] Read the [Lean Reading Bundle](03-lean-reading-bundle.md) (~28 pp total: Core + Focused tiers)
 - [ ] Review the three supplement reference cards: [API Design](03-supplement-1-api-design.md), [Empirical](03-supplement-2-empirical.md), [Runtime Tax](03-supplement-3-runtime-tax.md)
 - [ ] Execute: Run the [**Vocabulary Audit**](03-vocabulary-audit.md) on an internal repository before June 10, and bring your identified hidden ley lines to the group session
+- [ ] Review the [path options](03-path-options.md) for next direction and come ready to vote
 
 ## Meeting Materials
+- [03-path-options.md](03-path-options.md)
 - [03-lean-reading-bundle.md](03-lean-reading-bundle.md)
 - [03-essential-questions.md](03-essential-questions.md)
 - [03-non-obvious-insights.md](03-non-obvious-insights.md)

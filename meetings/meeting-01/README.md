@@ -9,7 +9,7 @@ A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software 
 1. [Video Primer](recordings/01-The-Architects-of-Complexity.mp4). **Refresher Video (5-10 min):** Visualizing the shallow vs. deep module gap.
 2. [Slides](slides/01-Architecting-Deep-Systems.pptx). **Discussion (30 min):** Core debate on "Classitis" and why small functions aren't always clean.
 3. **Wrap-up (Last 10 min):**
-   - [Choose Your Adventure](resources/01-choose-your-adventure.png). **Future Planning:** Decide next meeting reading/topic.
+   - [Choose Your Adventure](resources/01-choose-your-adventure.png). **Future Planning:** Group selected Path 2 for Meeting 02's direction.
    - **Retrospective:** Moving beyond tactical tornados in our PRs.
 
 ## Discussion Points
