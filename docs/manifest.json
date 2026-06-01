@@ -171,11 +171,11 @@
       "readmeUrl": "meetings/meeting-03/README.md",
       "keyTakeaway": "Abstraction layers are a bet — the question is whether they compress complexity or merely relocate it where the linters can't see.",
       "video": {
-        "file": "meetings/meeting-03/recordings/03-empirical-reality-check.mp4",
+        "file": "meetings/meeting-03/recordings/03-surviving-system-rot.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 307,
-        "fileSize": 9
+        "duration": 374,
+        "fileSize": 24
       },
       "slides": {
         "file": "meetings/meeting-03/slides/03-shattering-the-abstraction-illusion.pptx",
@@ -220,6 +220,11 @@
           "label": "Temple of Abstraction Guide",
           "file": "meetings/meeting-03/resources/03-temple-of-abstraction-guide.png",
           "fileSize": 0.5
+        },
+        {
+          "label": "Empirical Reality Check Primer",
+          "file": "meetings/meeting-03/resources/03-empirical-reality-check.mp4",
+          "fileSize": 9
         }
       ]
     },
