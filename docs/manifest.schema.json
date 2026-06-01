@@ -62,8 +62,25 @@
               }
             ]
           },
+          "additional_material": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "file"],
+              "properties": {
+                "label": { "type": "string" },
+                "file": { "type": "string" },
+                "category": { "type": "string", "enum": ["deep-dive", "critique", "debate", "alternate"] },
+                "variant": { "type": "string" },
+                "source_filename": { "type": "string" },
+                "duration": { "type": "integer" },
+                "fileSize": { "type": "number" }
+              }
+            }
+          },
           "podcasts": {
             "type": "array",
+            "description": "Deprecated: use additional_material instead",
             "items": {
               "type": "object",
               "required": ["type", "label", "file"],
@@ -78,6 +95,7 @@
           },
           "resources": {
             "type": "array",
+            "description": "Deprecated: use additional_material instead",
             "items": {
               "type": "object",
               "required": ["label", "file"],

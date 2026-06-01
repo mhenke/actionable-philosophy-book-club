@@ -19,7 +19,7 @@
  *
  * Public API (exports via globals): dashboard, reader, markdownContent, readerStatus,
  * upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta,
- * upcomingPodcasts, archiveCardsContainer, draftCardsContainer, siteFooter
+ * upcomingAdditional, archiveCardsContainer, draftCardsContainer, siteFooter
  *
  * Side-effects: reads DOM at module load time; must run after DOM exists in page.
  */
@@ -33,10 +33,10 @@ const upcomingCardHeader = document.getElementById('upcoming-card-header');
 const upcomingMaterialsContainer = document.getElementById('upcoming-materials-container');
 const upcomingKeyTakeaway = document.getElementById('upcoming-key-takeaway');
 const upcomingCta = document.getElementById('upcoming-cta');
-const upcomingPodcasts = document.getElementById('upcoming-podcasts');
+const upcomingAdditional = document.getElementById('upcoming-additional');
 const archiveCardsContainer = document.getElementById('archive-cards-container');
 const draftCardsContainer = document.getElementById('draft-cards-container');
 const siteFooter = document.getElementById('site-footer');
 
-window.DOM = { dashboard, reader, markdownContent, readerStatus, upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingPodcasts, archiveCardsContainer, draftCardsContainer, siteFooter };
+window.DOM = { dashboard, reader, markdownContent, readerStatus, upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingAdditional, archiveCardsContainer, draftCardsContainer, siteFooter };
 })();

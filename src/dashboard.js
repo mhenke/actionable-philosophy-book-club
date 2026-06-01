@@ -1,6 +1,6 @@
 (function() {
 'use strict';
-const { upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingPodcasts, archiveCardsContainer, draftCardsContainer, siteFooter } = window.DOM;
+const { upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingAdditional, archiveCardsContainer, draftCardsContainer, siteFooter } = window.DOM;
 
 /** Returns HTML for a meeting's session/date metadata line, used across all card types. Color defaults to var(--text-primary). */
 function _renderSessionMeta(meeting, color) {
@@ -53,8 +53,8 @@ function renderUpcomingMaterials() {
         });
     }
 
-    const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: false });
-    upcomingMaterialsContainer.innerHTML = (primaryRows.length === 0 && podcastRows.length === 0 && !resourceStrip)
+    const { primaryRows, additionalRows, resourceStrip, additionalSummary } = buildAssetRows(meeting, { includePlaceholders: false });
+    upcomingMaterialsContainer.innerHTML = (primaryRows.length === 0 && additionalRows.length === 0 && !resourceStrip)
         ? `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`
         : primaryRows.join('') + resourceStrip;
 
@@ -71,8 +71,8 @@ function renderUpcomingMaterials() {
         upcomingCta.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
     }
 
-    if (upcomingPodcasts) {
-        upcomingPodcasts.innerHTML = buildPodcastDisclosure(podcastRows, podcastSummary);
+    if (upcomingAdditional) {
+        upcomingAdditional.innerHTML = buildPodcastDisclosure(additionalRows, additionalSummary);
     }
     const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
     if (kbSection) kbSection.classList.remove('hidden-view');
@@ -106,14 +106,14 @@ function _renderCardList(containerId, meetings, cardRenderer) {
 function renderArchiveCards() {
     const done = findMeetings({ status: window.STATUS.DONE });
     _renderCardList('archive-cards-container', done, meeting => {
-        const { primaryRows, podcastRows, resourceStrip, podcastSummary } = buildAssetRows(meeting, { includePlaceholders: true });
-        const podcastSection = buildPodcastDisclosure(podcastRows, podcastSummary);
+        const { primaryRows, additionalRows, resourceStrip, additionalSummary } = buildAssetRows(meeting, { includePlaceholders: true });
+        const additionalSection = buildPodcastDisclosure(additionalRows, additionalSummary);
         return `
                     ${_renderCardHeader(meeting, { badgeText: 'Done', badgeStyle: { borderColor: 'var(--text-muted)', color: 'var(--text-muted)', className: 'font-semibold' } })}
                     ${primaryRows.join('')}
                     ${resourceStrip}
                     <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost">Meeting Notes &rarr;</a>
-                    ${podcastSection}
+                    ${additionalSection}
                 `;
     });
 }

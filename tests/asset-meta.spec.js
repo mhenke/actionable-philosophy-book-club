@@ -14,9 +14,9 @@ test.describe('Stacked asset metadata', () => {
     expect(text).toMatch(/MB/);
   });
 
-  test('podcast row renders .asset-meta with duration and size within disclosure', async ({ page }) => {
+  test('additional_material row renders .asset-meta with duration and size within disclosure', async ({ page }) => {
     await page.goto('/');
-    const disclosure = page.locator('#upcoming-podcasts .podcast-disclosure');
+    const disclosure = page.locator('#upcoming-additional .podcast-disclosure');
     const summary = disclosure.locator('summary');
     await summary.click();
 

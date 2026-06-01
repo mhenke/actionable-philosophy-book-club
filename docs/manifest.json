@@ -41,30 +41,28 @@
         "variant": "canonical",
         "fileSize": 34
       },
-      "podcasts": [
+      "additional_material": [
         {
-          "type": "deep-dive",
           "label": "Why Clean Code Rots Your Codebase",
           "file": "meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a",
+          "category": "deep-dive",
           "duration": 1093,
           "fileSize": 17
         },
         {
-          "type": "debate",
           "label": "Deep Modules vs Small Functions",
           "file": "meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a",
+          "category": "debate",
           "duration": 1319,
           "fileSize": 20
         },
         {
-          "type": "critique",
           "label": "General Purpose Design Stops Information Leaks",
           "file": "meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a",
+          "category": "critique",
           "duration": 1206,
           "fileSize": 19
-        }
-      ],
-      "resources": [
+        },
         {
           "label": "Four Strategies",
           "file": "meetings/meeting-02/resources/02-four-strategies.png",
@@ -99,30 +97,28 @@
         "variant": "canonical",
         "fileSize": 19
       },
-      "podcasts": [
+      "additional_material": [
         {
-          "type": "deep-dive",
           "label": "Strategic Software Design and Deep Modules",
           "file": "meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a",
+          "category": "deep-dive",
           "duration": 1065,
           "fileSize": 16
         },
         {
-          "type": "debate",
           "label": "Deep Modules vs Clean Code for AI",
           "file": "meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a",
+          "category": "debate",
           "duration": 1415,
           "fileSize": 22
         },
         {
-          "type": "critique",
           "label": "How Tactical Programming Creates Complexity",
           "file": "meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a",
+          "category": "critique",
           "duration": 1080,
           "fileSize": 17
-        }
-      ],
-      "resources": [
+        },
         {
           "label": "Architecture of Simplicity",
           "file": "meetings/meeting-01/resources/01-architecture-of-simplicity.png",
@@ -157,8 +153,7 @@
         "variant": "canonical",
         "fileSize": 6
       },
-      "podcasts": [],
-      "resources": []
+      "additional_material": []
     },
     {
       "id": "meeting-03",
@@ -183,46 +178,44 @@
         "variant": "canonical",
         "fileSize": 12
       },
-      "podcasts": [
+      "additional_material": [
         {
-          "type": "alternate",
           "label": "Video Primer",
           "file": "meetings/meeting-03/recordings/03-navigating-the-architecture-alternate.mp4",
+          "category": "alternate",
           "variant": "alternate",
           "source_filename": "Navigating_the_Architecture_Ley_Lines.mp4",
           "duration": 547,
           "fileSize": 26
         },
         {
-          "type": "alternate",
           "label": "Empirical Reality Check Primer",
           "file": "meetings/meeting-03/resources/03-empirical-reality-check.mp4",
+          "category": "alternate",
           "duration": 307,
           "fileSize": 9
         },
         {
-          "type": "deep-dive",
           "label": "Why Software Abstractions Fail Under Pressure",
           "file": "meetings/meeting-03/recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a",
+          "category": "deep-dive",
           "duration": 1913,
           "fileSize": 30
         },
         {
-          "type": "debate",
           "label": "The High Price of Architectural Purity",
           "file": "meetings/meeting-03/recordings/03-high-price-of-architectural-purity-debate.m4a",
+          "category": "debate",
           "duration": 1500,
           "fileSize": 24
         },
         {
-          "type": "critique",
           "label": "Automating Semantic Coupling & Performance Thresholds",
           "file": "meetings/meeting-03/recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a",
+          "category": "critique",
           "duration": 428,
           "fileSize": 7
-        }
-      ],
-      "resources": [
+        },
         {
           "label": "Temple of Abstraction Guide",
           "file": "meetings/meeting-03/resources/03-temple-of-abstraction-guide.png",
@@ -241,8 +234,7 @@
       "readmeUrl": "meetings/meeting-04/README.md",
       "video": null,
       "slides": null,
-      "podcasts": [],
-      "resources": []
+      "additional_material": []
     }
   ]
 }

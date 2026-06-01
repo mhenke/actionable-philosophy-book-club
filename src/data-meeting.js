@@ -28,8 +28,7 @@ class Meeting {
     this.date = manifestEntry.date || '';
     this.video = manifestEntry.video || {};
     this.slides = manifestEntry.slides || {};
-    this.podcasts = Array.isArray(manifestEntry.podcasts) ? manifestEntry.podcasts : [];
-    this.resources = Array.isArray(manifestEntry.resources) ? manifestEntry.resources : [];
+    this.additional_material = Array.isArray(manifestEntry.additional_material) ? manifestEntry.additional_material : [];
     this.color = manifestEntry.color || '';
     this.wash = manifestEntry.wash || '';
     this.duration = manifestEntry.duration || 0;

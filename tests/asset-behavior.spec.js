@@ -85,12 +85,12 @@ test.describe('Asset behaviour — what users actually do', () => {
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
 
-        await page.locator('#upcoming-podcasts details').evaluate(el => { el.open = true; });
+        await page.locator('#upcoming-additional details').evaluate(el => { el.open = true; });
 
-        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Critique Label');
-        await expect(page.locator('#upcoming-podcasts')).toContainText('Route Critique Title');
-        await expect(page.locator('#upcoming-podcasts')).toContainText('Deep Dive');
-        await expect(page.locator('#upcoming-podcasts')).toContainText('An exploration of the session topic');
+        await expect(page.locator('#upcoming-additional')).toContainText('Route Critique Label');
+        await expect(page.locator('#upcoming-additional')).toContainText('Route Critique Title');
+        await expect(page.locator('#upcoming-additional')).toContainText('Deep Dive');
+        await expect(page.locator('#upcoming-additional')).toContainText('An exploration of the session topic');
 
         const loadedRegistry = await page.evaluate(() => window.getAssetCopyRegistry());
         expect(loadedRegistry.critique.label).toBe('Route Critique Label');

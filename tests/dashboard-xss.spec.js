@@ -49,12 +49,12 @@ test.describe('Dashboard Renderer XSS Prevention', () => {
         expect(html).not.toContain('<script>alert');
     });
 
-    test('XSS in podcast label is escaped', async ({ page }) => {
+    test('XSS in additional_material label is escaped', async ({ page }) => {
         await page.goto('/');
         await waitForManifest(page);
         await page.evaluate(() => {
-            const done = window.MEETINGS.find(m => m.status === 'done' && m.podcasts?.length > 0);
-            if (done && done.podcasts[0]) done.podcasts[0].label = '<b onmouseover=alert(1)>click</b>';
+            const done = window.MEETINGS.find(m => m.status === 'done' && m.additional_material?.length > 0);
+            if (done && done.additional_material[0]) done.additional_material[0].label = '<b onmouseover=alert(1)>click</b>';
         });
         await rerenderArchive(page);
         const html = await page.evaluate(() =>
@@ -63,12 +63,12 @@ test.describe('Dashboard Renderer XSS Prevention', () => {
         expect(html).toContain('&lt;b onmouseover=alert(1)&gt;click&lt;/b&gt;');
     });
 
-    test('XSS in resource label is escaped', async ({ page }) => {
+    test('XSS in additional_material resource label is escaped', async ({ page }) => {
         await page.goto('/');
         await waitForManifest(page);
         await page.evaluate(() => {
-            const done = window.MEETINGS.find(m => m.status === 'done' && m.resources?.length > 0);
-            if (done && done.resources[0]) done.resources[0].label = '<img src=x onerror=alert(1)>';
+            const done = window.MEETINGS.find(m => m.status === 'done' && m.additional_material?.length > 0);
+            if (done && done.additional_material[0]) done.additional_material[0].label = '<img src=x onerror=alert(1)>';
         });
         await rerenderArchive(page);
         const html = await page.evaluate(() =>

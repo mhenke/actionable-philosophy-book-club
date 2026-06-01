@@ -47,13 +47,16 @@ test('Meeting constructor - assets mapping', () => {
         status: 'done',
         video: { file: 'video.mp4' },
         slides: { file: 'slides.pptx' },
-        podcasts: ['podcast.m4a'],
-        resources: ['image.png']
+        additional_material: [
+            { label: 'Deep Dive', file: 'podcast.m4a', category: 'deep-dive' },
+            { label: 'Guide', file: 'image.png' }
+        ]
     });
     assert.strictEqual(m.video.file, 'video.mp4');
     assert.strictEqual(m.slides.file, 'slides.pptx');
-    assert.deepStrictEqual(m.podcasts, ['podcast.m4a']);
-    assert.deepStrictEqual(m.resources, ['image.png']);
+    assert.strictEqual(m.additional_material.length, 2);
+    assert.strictEqual(m.additional_material[0].category, 'deep-dive');
+    assert.strictEqual(m.additional_material[1].file, 'image.png');
 });
 
 test('Meeting constructor - optional fields mapping', () => {
@@ -64,8 +67,9 @@ test('Meeting constructor - optional fields mapping', () => {
         date: '2024-01-01',
         video: { file: 'video.mp4', label: 'Main Recording' },
         slides: { file: 'slides.pptx' },
-        podcasts: ['podcast.m4a'],
-        resources: ['image.png'],
+        additional_material: [
+            { label: 'Deep Dive', file: 'podcast.m4a', category: 'deep-dive' }
+        ],
         color: 'spectrum-1',
         wash: 'wash-1',
         duration: 3600
@@ -75,4 +79,5 @@ test('Meeting constructor - optional fields mapping', () => {
     assert.strictEqual(m.wash, 'wash-1');
     assert.strictEqual(m.duration, 3600);
     assert.strictEqual(m.video.label, 'Main Recording');
+    assert.strictEqual(m.additional_material.length, 1);
 });
