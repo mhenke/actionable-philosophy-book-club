@@ -9,7 +9,7 @@ Based on the primary text and supplemental sources for Chapters 1–4, the most 
 
 ## 2. Is your "Tactical Tornado" actually the most expensive person on the team?
 - **The Assumption:** The developer who closes the most tickets in the shortest amount of time is the highest performer. 
-- **The Challenge:** The text introduces the "Tactical Tornado"—a prolific coder whose speed comes from ignoring design and leaving behind "kludges." 
+- **The Challenge:** The text introduces the "Tactical Tornado": a prolific coder whose speed comes from ignoring design and leaving behind "kludges." 
 - **Insight:** If "Strategic Programming" requires a 10–20% upfront time investment to prevent "Change Amplification," how do we shift a culture that rewards the immediate visibility of a bug fix over the invisible prevention of a "Unknown Unknown"?
 
 ## 3. Can a 500-line class be "simpler" than ten 50-line classes?
@@ -19,5 +19,5 @@ Based on the primary text and supplemental sources for Chapters 1–4, the most 
 
 ## 4. Is AI-generated code creating a "Shallow Fragmentation" crisis?
 - **The Assumption:** AI tools make development faster and better by handling boilerplate and small-scale logic. 
-- **The Challenge:** AI is a "Tactical Tornado" by default—it is excellent at "Clean Code" surface aesthetics (naming, small functions) but struggles with the structural depth required for long-term evolvability. 
+- **The Challenge:** AI is a "Tactical Tornado" by default: it is excellent at "Clean Code" surface aesthetics (naming, small functions) but struggles with the structural depth required for long-term evolvability. 
 - **Insight:** If we use AI to accelerate implementation, are we inadvertently accelerating the rate at which our system reaches a state of "Change Amplification," and how does the human role change if we must now act primarily as "Complexity Allocators" rather than code writers?

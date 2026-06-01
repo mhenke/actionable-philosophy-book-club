@@ -17,12 +17,12 @@ A curated synthesis of the design trade-offs, philosophical tensions, and tactic
 ### ❓ Essential Questions
 *   [Key question 1]
 *   [Key question 2]
-*   *See full details in [XX-essential-questions.md](XX-essential-questions.md)*
+*   [See full details in XX-essential-questions.md](XX-essential-questions.md)
 
 ### 💡 Non-Obvious Insights
 *   [Insight 1]
 *   [Insight 2]
-*   *See full details in [XX-non-obvious-insights.md](XX-non-obvious-insights.md)*
+*   [See full details in XX-non-obvious-insights.md](XX-non-obvious-insights.md)
 
 ## Action Items
 - [ ] 

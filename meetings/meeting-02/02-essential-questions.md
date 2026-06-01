@@ -17,7 +17,7 @@ How do pass-through methods and the "decorator" design pattern violate the "diff
 What does it mean to "pull complexity downwards" in software design, and why does Ousterhout critique the widespread use of configuration parameters as a violation of this principle?
 
 ### Q5: Allocation of Responsibility
-Across these chapters, how does Ousterhout’s overarching philosophy dictate the allocation of responsibility—whether between developers and users, layers of a system, or general vs. special-purpose code—to construct "deep modules"?
+Across these chapters, how does Ousterhout’s overarching philosophy dictate the allocation of responsibility: whether between developers and users, layers of a system, or general vs. special-purpose code, to construct "deep modules"?
 
 ---
 

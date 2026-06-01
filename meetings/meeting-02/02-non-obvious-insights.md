@@ -12,7 +12,7 @@ Conventionally, "general-purpose" implies "more features." However, Chapter 6 su
 
 ## 3. The "Sacrificial" Developer Ethos
 Chapter 8 (Pulling Complexity Downwards) implies a radical shift in developer ego. 
-- **Insight:** A "great" developer is one who takes on "extra suffering"—writing much harder, more complex internal logic—specifically so that the person using their code doesn't have to. It's a move from "Developer Experience for the author" to "Developer Experience for the consumer."
+- **Insight:** A "great" developer is one who takes on "extra suffering": writing much harder, more complex internal logic, specifically so that the person using their code doesn't have to. It's a move from "Developer Experience for the author" to "Developer Experience for the consumer."
 
 ## 4. Tensions and Contradictions
 

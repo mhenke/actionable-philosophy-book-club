@@ -20,7 +20,7 @@ The supplemental sources describe the "Tactical Tornado" as a prolific programme
 ## 4. How do "Unknown Unknowns" act as the most dangerous symptom of complexity?
 While "Change Amplification" is visible and "Cognitive Load" is felt, "Unknown Unknowns" (not knowing which parts of the system must be modified to complete a task) are often invisible until a bug occurs. 
 
-**Critical Thinking:** How do specific design choices—like information leakage or obscure dependencies—directly create these "Unknown Unknowns," and how does "Strategic Programming" proactively eliminate them?
+**Critical Thinking:** How do specific design choices, like information leakage or obscure dependencies, directly create these "Unknown Unknowns," and how does "Strategic Programming" proactively eliminate them?
 
 ## 5. In an era of AI-generated code, who owns the "Structural Integrity" of the system?
 The supplemental PDF on AI Modularity suggests that LLMs are "Tactical Tornadoes" by default, producing code that looks clean but lacks depth. 
