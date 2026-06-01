@@ -8,18 +8,20 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 
 **Total Reading: ~28 pp required + ~9 pp optional**
 
-| Tier | What | Pages |
-|------|------|-------|
-| Core | [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | 6 |
-| Core | [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV · [Checklist](03-api-friction-checklist.md) | 4 |
-| Core | [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) · [Supplement](03-supplement-1-api-design.md) | 7 |
-| Core | [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V · [Audit](03-vocabulary-audit.md) · [Supplement](03-supplement-2-empirical.md) | 5 |
-| Core | [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) · [Supplement](03-supplement-3-runtime-tax.md) | 2 |
-| Focused | [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html) · [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) · [Supplement](03-supplement-3-runtime-tax.md) | ~4 |
-| Optional | [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) | 5 |
-| Optional | [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) | 4 |
+| What | Pages |
+|------|------:|
+| [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | 6 |
+| [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV  ·  [Checklist](03-api-friction-checklist.md) | 4 |
+| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning)  ·  [API Design](03-supplement-1-api-design.md) | 7 |
+| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V  ·  [Audit](03-vocabulary-audit.md)  ·  [Empirical](03-supplement-2-empirical.md) | 5 |
+| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/)  ·  [Runtime Tax](03-supplement-3-runtime-tax.md) | 2 |
+| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html)  ·  [Runtime Tax](03-supplement-3-runtime-tax.md) | ~4 |
+| [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) (Optional) | 5 |
+| [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) (Optional) | 4 |
 
-Plus **3 supplement reference cards** (2 min each): [API Design](03-supplement-1-api-design.md), [Empirical](03-supplement-2-empirical.md), [Runtime Tax](03-supplement-3-runtime-tax.md).
+<br>
+
+Plus **3 supplement reference cards** (2 min each)  ·  [API Design](03-supplement-1-api-design.md)  ·  [Empirical](03-supplement-2-empirical.md)  ·  [Runtime Tax](03-supplement-3-runtime-tax.md)
 
 See the [Lean Reading Bundle Syllabus](03-lean-reading-bundle.md) for full descriptions, companion foils, and reading context.
 
@@ -53,22 +55,14 @@ See the [Lean Reading Bundle Syllabus](03-lean-reading-bundle.md) for full descr
 
 ## Choose Your Next Direction
 
-This meeting executed **Path 2** (The Empirical Reality Check, chosen in Meeting 02). Three paths are on the table for what comes next. Review the options and vote during wrap-up.
-
-See [full path descriptions](03-path-options.md).
-
-- **Path 1: Complete the Textbook** — Return to APoSD Chapters 9-19 with an empirical lens.
-- **Path 2: Architecture Design Studio** — Practice-oriented sessions applying the Friction Checklist and Vocabulary Audit to real code.
-- **Path 3: Systems Under Load** — Deep-dive into runtime tax, hardware constraints, and abstraction collapse at scale.
+This meeting executed **Path 2** (The Empirical Reality Check, chosen in Meeting 02). Options for the next direction will be presented during wrap-up for group voting.
 
 ## Action Items
 - [ ] Read the [Lean Reading Bundle](03-lean-reading-bundle.md) (~28 pp total: Core + Focused tiers)
 - [ ] Review the three supplement reference cards: [API Design](03-supplement-1-api-design.md), [Empirical](03-supplement-2-empirical.md), [Runtime Tax](03-supplement-3-runtime-tax.md)
 - [ ] Execute: Run the [**Vocabulary Audit**](03-vocabulary-audit.md) on an internal repository before June 10, and bring your identified hidden ley lines to the group session
-- [ ] Review the [path options](03-path-options.md) for next direction and come ready to vote
 
 ## Meeting Materials
-- [03-path-options.md](03-path-options.md)
 - [03-lean-reading-bundle.md](03-lean-reading-bundle.md)
 - [03-essential-questions.md](03-essential-questions.md)
 - [03-non-obvious-insights.md](03-non-obvious-insights.md)
