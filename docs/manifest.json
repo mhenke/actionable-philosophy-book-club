@@ -194,6 +194,13 @@
           "fileSize": 26
         },
         {
+          "type": "alternate",
+          "label": "Empirical Reality Check Primer",
+          "file": "meetings/meeting-03/resources/03-empirical-reality-check.mp4",
+          "duration": 307,
+          "fileSize": 9
+        },
+        {
           "type": "deep-dive",
           "label": "Why Software Abstractions Fail Under Pressure",
           "file": "meetings/meeting-03/recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a",
@@ -220,11 +227,6 @@
           "label": "Temple of Abstraction Guide",
           "file": "meetings/meeting-03/resources/03-temple-of-abstraction-guide.png",
           "fileSize": 0.5
-        },
-        {
-          "label": "Empirical Reality Check Primer",
-          "file": "meetings/meeting-03/resources/03-empirical-reality-check.mp4",
-          "fileSize": 9
         }
       ]
     },
