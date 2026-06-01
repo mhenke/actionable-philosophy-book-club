@@ -8,16 +8,16 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 
 **Total Reading: ~28 pp required + ~9 pp optional**
 
-| Tier | What | Pages | External | Internal |
-|------|------|-------|----------|----------|
-| Core | Parnas (1972) | 6 | [Read](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | [Bundle](03-lean-reading-bundle.md) |
-| Core | Piccioni (2013) sections I, II, IV | 4 | [Read](https://bugcounting.net/pubs/esem13.pdf) | [Checklist](03-api-friction-checklist.md) · [Bundle](03-lean-reading-bundle.md) |
-| Core | Stripe Engineering (2017) | 7 | [Read](https://stripe.com/blog/api-versioning) | [Supplement 1](03-supplement-1-api-design.md) · [Bundle](03-lean-reading-bundle.md) |
-| Core | Bavota et al. (2013) sections I, III, V | 5 | [Read](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) | [Audit](03-vocabulary-audit.md) · [Supplement 2](03-supplement-2-empirical.md) · [Bundle](03-lean-reading-bundle.md) |
-| Core | Lemire (2022) | 2 | [Read](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | [Supplement 3](03-supplement-3-runtime-tax.md) · [Bundle](03-lean-reading-bundle.md) |
-| Focused | Java NIO javadoc | ~4 | [Spec](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html) · [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | [Supplement 3](03-supplement-3-runtime-tax.md) · [Bundle](03-lean-reading-bundle.md) |
-| Optional | Topolog (2025) | 5 | [Read](https://dmtopolog.com/complexity-4-abstraction) | [Bundle](03-lean-reading-bundle.md) |
-| Optional | Barroso (2026) | 4 | [Read](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) | [Bundle](03-lean-reading-bundle.md) |
+| Tier | What | Pages |
+|------|------|-------|
+| Core | [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | 6 |
+| Core | [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV · [Checklist](03-api-friction-checklist.md) | 4 |
+| Core | [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) · [Supplement](03-supplement-1-api-design.md) | 7 |
+| Core | [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V · [Audit](03-vocabulary-audit.md) · [Supplement](03-supplement-2-empirical.md) | 5 |
+| Core | [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) · [Supplement](03-supplement-3-runtime-tax.md) | 2 |
+| Focused | [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html) · [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) · [Supplement](03-supplement-3-runtime-tax.md) | ~4 |
+| Optional | [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) | 5 |
+| Optional | [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) | 4 |
 
 Plus **3 supplement reference cards** (2 min each): [API Design](03-supplement-1-api-design.md), [Empirical](03-supplement-2-empirical.md), [Runtime Tax](03-supplement-3-runtime-tax.md).
 
