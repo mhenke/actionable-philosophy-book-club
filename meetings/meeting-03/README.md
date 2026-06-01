@@ -2,15 +2,7 @@
 
 **Date:** June 10, 2026
 
-### Contents
-- Why This Meeting Exists
-- Agenda (60 Minutes)
-- The Lean Reading Bundle
-- Action Items
-
----
-
-## Why This Meeting Exists
+## High-Level Summary
 
 Abstractions compress complexity. They do not eliminate it. This meeting pressure-tests John Ousterhout's design theories against concrete empirical data, hardware taxes, and organizational friction. Every reading and exercise has earned its place: zero academic filler, zero uncontextualized code blocks.
 
@@ -28,15 +20,6 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 | Optional | Barroso contemporary foil | 4 |
 
 Plus **3 supplement reference cards** (2 min each): API Design, Empirical, Runtime Tax.
-
----
-
-## Agenda (60 Minutes)
-
-- [Video Primer](recordings/03-empirical-reality-check.mp4). **The Refresher (5 min):** Quick tactical recap of deep vs. shallow modules from Meeting 02.
-- [Slides](slides/03-shattering-the-abstraction-illusion.pptx). **The Crucible (35 min):** Structured debate working through the three segments of the Lean Reading Bundle.
-- **The Application (15 min):** Interactive walkthrough of the [**API Friction Checklist**](03-api-friction-checklist.md) and [**Vocabulary Audit**](03-vocabulary-audit.md) using the supplement cards.
-- **Wrap-up (5 min):** Path voting for next meeting.
 
 ---
 
@@ -74,6 +57,31 @@ Plus **3 supplement reference cards** (2 min each): API Design, Empirical, Runti
     *   [Read alongside](03-supplement-3-runtime-tax.md): Runtime Tax supplement.
 
 ---
+
+## Agenda (60 Minutes)
+
+- [Video Primer](recordings/03-empirical-reality-check.mp4). **The Refresher (5 min):** Quick tactical recap of deep vs. shallow modules from Meeting 02.
+- [Slides](slides/03-shattering-the-abstraction-illusion.pptx). **The Crucible (35 min):** Structured debate working through the three segments of the Lean Reading Bundle.
+- **The Application (15 min):** Interactive walkthrough of the [**API Friction Checklist**](03-api-friction-checklist.md) and [**Vocabulary Audit**](03-vocabulary-audit.md) using the supplement cards.
+- **Wrap-up (5 min):** Path voting for next meeting.
+
+---
+
+## Discussion Points
+
+### ❓ Essential Questions
+- **Segment 1: Modern API Design & Information Hiding.** Does Parnas' module/secrecy criterion hold in cloud-native architectures where module boundaries are network calls? How do Stripe's rolling versioning and Topolog's interface metrics extend or challenge the 1972 foundation?
+- **Segment 2: Cognitive Load vs. Lint Rules.** If semantic coupling dominates developer mental models, how should code review checklists and team standards evolve beyond structural dependency metrics?
+- **Segment 3: Runtime & Abstraction Tax.** At what inflection point does the elegance of an abstraction become a performance liability, and what's the earliest observable signal before the 10,000x penalty hits?
+
+### 💡 Non-Obvious Insights
+- **Parnas' Secret vs. API Governance.** The module's "secret" was design decisions, not code. Modern API surface governance makes this more visible but no easier: your OpenAPI spec leaks everything.
+- **Semantic Coupling Discovery.** Shared terminology across services IS coupling. A vocabulary audit reveals fault lines that no static analysis tool catches.
+- **10,000x Isn't Theoretical.** Lemire's exception benchmark is the smoking gun for why abstraction boundaries must be leak-aware, not leak-proof.
+
+## Path Chosen: The Empirical Reality Check
+
+This meeting executes **Path 2** (chosen in Meeting 02). The Lean Reading Bundle above replaces textbook progression with direct engagement with empirical data: Parnas' module foundation, modern API usability studies, coupling perception, and runtime performance taxes. The three supplement reference cards and two exercises (API Friction Checklist, Vocabulary Audit) provide structured take-home tools derived from the readings.
 
 ## Action Items
 - [ ] Read the Lean Reading Bundle (~28 pp total: Core + Focused tiers)
