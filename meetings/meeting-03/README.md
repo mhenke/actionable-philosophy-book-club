@@ -12,10 +12,10 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 |------|------:|
 | [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | 6 |
 | [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV  ·  [Checklist](03-api-friction-checklist.md) | 4 |
-| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning)  ·  [API Design](03-supplement-1-api-design.md) | 7 |
-| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V  ·  [Audit](03-vocabulary-audit.md)  ·  [Empirical](03-supplement-2-empirical.md) | 5 |
-| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/)  ·  [Runtime Tax](03-supplement-3-runtime-tax.md) | 2 |
-| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html)  ·  [Runtime Tax](03-supplement-3-runtime-tax.md) | ~4 |
+| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) | 7 |
+| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V  ·  [Audit](03-vocabulary-audit.md) | 5 |
+| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | 2 |
+| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | ~4 |
 | [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) (Optional) | 5 |
 | [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) (Optional) | 4 |
 
