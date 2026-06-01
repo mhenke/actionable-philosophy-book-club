@@ -8,16 +8,16 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 
 **Total Reading: ~28 pp required + ~9 pp optional**
 
-| What | Pages |
-|------|------:|
-| [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | 6 |
-| [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV | 4 ¹ |
-| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) | 7 ² |
-| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V | 5 ³˒⁵ |
-| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | 2 ⁴ |
-| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | ~4 ⁴ |
-| [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) (Optional) | 5 |
-| [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) (Optional) | 4 |
+| What | Ref | Pages |
+|------|:---:|------:|
+| [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | | 6 |
+| [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV | ¹ | 4 |
+| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) | ² | 7 |
+| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V | ³˒⁵ | 5 |
+| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | ⁴ | 2 |
+| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | ⁴ | ~4 |
+| [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) (Optional) | | 5 |
+| [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) (Optional) | | 4 |
 
 <br>
 
