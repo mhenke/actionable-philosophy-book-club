@@ -11,11 +11,11 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 | What | Pages | Ref |
 |------|------:|:---:|
 | [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | 6 | |
-| [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV | 4 | 1 |
-| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) | 7 | 2 |
-| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V | 5 | 3, 5 |
-| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | 2 | 4 |
-| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | ~4 | 4 |
+| [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV | 4 | A |
+| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) | 7 | B |
+| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V | 5 | C, E |
+| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | 2 | D |
+| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | ~4 | D |
 | [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) (Optional) | 5 | |
 | [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) (Optional) | 4 | |
 
@@ -23,11 +23,11 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 
 Plus **3 supplement reference cards** (2 min each) and **2 worksheets**:
 
-1 [Checklist](03-api-friction-checklist.md) — Piccioni worksheet
-2 [API Design](03-supplement-1-api-design.md) — Stripe supplement
-3 [Empirical](03-supplement-2-empirical.md) — Bavota supplement
-4 [Runtime Tax](03-supplement-3-runtime-tax.md) — Lemire, Java NIO supplement
-5 [Audit](03-vocabulary-audit.md) — Bavota worksheet
+A [Checklist](03-api-friction-checklist.md) — Piccioni worksheet
+B [API Design](03-supplement-1-api-design.md) — Stripe supplement
+C [Empirical](03-supplement-2-empirical.md) — Bavota supplement
+D [Runtime Tax](03-supplement-3-runtime-tax.md) — Lemire, Java NIO supplement
+E [Audit](03-vocabulary-audit.md) — Bavota worksheet
 
 See the [Lean Reading Bundle Syllabus](03-lean-reading-bundle.md) for full descriptions, companion foils, and reading context.
 
