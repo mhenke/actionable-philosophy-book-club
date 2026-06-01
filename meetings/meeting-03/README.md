@@ -27,9 +27,8 @@ Plus **3 supplement reference cards** (2 min each) and **2 worksheets**:
 |:---:|------|:-----|
 | A | [Checklist](03-api-friction-checklist.md) — Piccioni worksheet | [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) |
 | B | [API Design](03-supplement-1-api-design.md) — Stripe supplement | [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) |
-| C | [Empirical](03-supplement-2-empirical.md) — Bavota supplement | [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) |
+| C, E | [Empirical](03-supplement-2-empirical.md), [Audit](03-vocabulary-audit.md) — Bavota supplement & worksheet | [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) |
 | D | [Runtime Tax](03-supplement-3-runtime-tax.md) — Lemire, Java NIO supplement | [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/), [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html) |
-| E | [Audit](03-vocabulary-audit.md) — Bavota worksheet | [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) |
 
 See the [Lean Reading Bundle Syllabus](03-lean-reading-bundle.md) for full descriptions, companion foils, and reading context.
 
