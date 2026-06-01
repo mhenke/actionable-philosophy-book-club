@@ -70,14 +70,19 @@ Plus **3 supplement reference cards** (2 min each): API Design, Empirical, Runti
 ## Discussion Points
 
 ### ❓ Essential Questions
-- **Segment 1: Modern API Design & Information Hiding.** Does Parnas' module/secrecy criterion hold in cloud-native architectures where module boundaries are network calls? How do Stripe's rolling versioning and Topolog's interface metrics extend or challenge the 1972 foundation?
-- **Segment 2: Cognitive Load vs. Lint Rules.** If semantic coupling dominates developer mental models, how should code review checklists and team standards evolve beyond structural dependency metrics?
-- **Segment 3: Runtime & Abstraction Tax.** At what inflection point does the elegance of an abstraction become a performance liability, and what's the earliest observable signal before the 10,000x penalty hits?
+- **Information Hiding:** Why must software decomposition be driven by hidden design decisions rather than processing steps?
+- **Semantic Coupling:** Why does shared vocabulary dictate system fragility more than any import statement?
+- **Abstraction Failure:** How do "surprise tokens" and "wrong-level abstractions" systematically reveal where an API's design is broken?
+- **APIs as Infrastructure:** Why does Stripe reject major versioning, and how do "version change modules" hide history from internal developers?
+- **The Runtime Tax:** When does an elegant abstraction force the CPU to pay a 10,000x penalty?
+- [See full details in 03-essential-questions.md](03-essential-questions.md)
 
 ### 💡 Non-Obvious Insights
-- **Parnas' Secret vs. API Governance.** The module's "secret" was design decisions, not code. Modern API surface governance makes this more visible but no easier: your OpenAPI spec leaks everything.
-- **Semantic Coupling Discovery.** Shared terminology across services IS coupling. A vocabulary audit reveals fault lines that no static analysis tool catches.
-- **10,000x Isn't Theoretical.** Lemire's exception benchmark is the smoking gun for why abstraction boundaries must be leak-aware, not leak-proof.
+- **Naming as Architecture:** Shared domain vocabulary between microservices is coupling that no static analysis tool detects.
+- **Hiding History:** Stripe's date-based versioning proves you can encapsulate time itself as a design decision.
+- **The Hardware Tax:** A 10,000x performance penalty is the CPU's way of telling you your abstraction is leaking.
+- **Flexibility as Friction:** Empirical usability tokens prove that API flexibility actively harms developer learnability.
+- [See full details in 03-non-obvious-insights.md](03-non-obvious-insights.md)
 
 ## Path Chosen: The Empirical Reality Check
 
@@ -89,6 +94,8 @@ This meeting executes **Path 2** (chosen in Meeting 02). The Lean Reading Bundle
 - [ ] Execute: Run the [**Vocabulary Audit**](03-vocabulary-audit.md) on an internal repository before June 10, and bring your identified hidden ley lines to the group session
 
 ## Meeting Materials
+- [03-essential-questions.md](03-essential-questions.md)
+- [03-non-obvious-insights.md](03-non-obvious-insights.md)
 - [03-api-friction-checklist.md](03-api-friction-checklist.md)
 - [03-vocabulary-audit.md](03-vocabulary-audit.md)
 - [03-supplement-1-api-design.md](03-supplement-1-api-design.md)
