@@ -10,7 +10,7 @@ The project is built as a "Zero Ceremony" static SPA, meaning it requires no com
 - **Styling:** Tailwind CSS (v3) via CLI.
 - **Testing:** Playwright for E2E, XSS, and routing verification.
 - **Fonts:** System font stack (Swiss/International Style) for zero-latency rendering.
-- **Utilities:** FFmpeg-based compression scripts (`asset-compressor/`), Python simple server for local preview.
+- **Utilities:** FFmpeg-based compression scripts (`skills/asset-compressor/`), Python simple server for local preview.
 
 ## Core Architecture
 The application logic is driven by a central **MEETINGS manifest** in `docs/manifest.json`. This manifest defines:
@@ -57,7 +57,7 @@ npm test
 
 ### Asset Management
 - **Size Limit:** No single file should exceed **50MB**.
-- **Compression:** Use the scripts in `asset-compressor/` (FFmpeg) to shrink recordings and slides before committing.
+- **Compression:** Use the scripts in `skills/asset-compressor/` (FFmpeg) to shrink recordings and slides before committing.
 - **Directory Structure:**
   - `meetings/meeting-NN/`
     - `README.md` (Main agenda/notes)
@@ -76,5 +76,5 @@ npm test
 - `docs/manifest.json`: Canonical meeting data manifest (inlined into `dist/app.js` at build time).
 - `src/`: JS source modules (setup.js through app.js) concatenated into `dist/app.js` via `npm run build:js`.
 - `PRODUCT.md` / `DESIGN.md`: High-level product and aesthetic goals.
-- `asset-compressor/`: Authoritative FFmpeg scripts for asset optimization.
+- `skills/asset-compressor/`: Authoritative FFmpeg scripts for asset optimization.
 - `docs/adr/`: Architectural Decision Records (e.g., Office Online for PPTX viewing).

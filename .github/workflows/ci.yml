@@ -65,7 +65,7 @@ jobs:
             SIZE_KB=$(du -k "$file" | cut -f1)
             if [ "$SIZE_KB" -gt "$MAX_KB" ]; then
               echo "OVERSIZED: $file (${SIZE_KB} KB, limit ${MAX_KB} KB)"
-              echo "  Use asset-compressor/scripts/ to compress before committing."
+              echo "  Use skills/asset-compressor/scripts/ to compress before committing."
               ERRORS=$((ERRORS + 1))
             fi
           done < <(find meetings \( -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.webp" \) -type f -print0 2>/dev/null)
@@ -77,8 +77,8 @@ jobs:
       - name: ShellCheck bash scripts
         run: |
           shellcheck tests/check-links.sh
-          shellcheck asset-compressor/scripts/rename_asset.sh
-          shellcheck asset-compressor/scripts/compress_video.sh
+          shellcheck skills/asset-compressor/scripts/rename_asset.sh
+          shellcheck skills/asset-compressor/scripts/compress_video.sh
 
       - name: Verify .nojekyll exists
         run: test -f .nojekyll

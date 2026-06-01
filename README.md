@@ -22,10 +22,11 @@ For the best experience, including mobile-optimized navigation, meeting agendas,
 *   **[`meetings/`](meetings/)**: Historical notes, slides, and video recaps for every session.
 *   **[`docs/`](docs/)**: Design principles, glossary, and architectural decisions.
 *   **[`templates/`](templates/)**: Scaffolding for new meetings and AI prompt templates.
-*   **[`asset-compressor/`](asset-compressor/)**: Custom AI tool for optimizing repository media.
+*   **[`skills/asset-compressor/`](skills/asset-compressor/)**: Custom AI tool for optimizing repository media.
+*   **[`skills/vocabulary-audit/`](skills/vocabulary-audit/)**: Skill for detecting hidden semantic coupling between services.
 
 ## 🤖 AI-Assisted Workflows
-We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompts/) to extract insights, and the [Asset Compressor Skill](asset-compressor.skill) to both compress media files and automatically extract file metadata for the dashboard.
+We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompts/) to extract insights, and the [Asset Compressor Skill](skills/asset-compressor/) to compress media files. Install skills via `npx skills add mhenke/actionable-philosophy-book-club`.
 
 ## 💻 Local Development
 
@@ -87,7 +88,7 @@ The manifest data is inlined into `dist/app.js` at build time. The dashboard rea
 - Podcasts (M4A): duration + fileSize
 - Resources (PNG/JPG): fileSize
 
-See the [asset-compressor skill](asset-compressor.skill) for full compression and metadata extraction capabilities.
+See the [asset-compressor skill](skills/asset-compressor/) for full compression and metadata extraction capabilities. See the [vocabulary-audit skill](skills/vocabulary-audit/) for detecting hidden semantic coupling.
 
 ## 📐 Architecture Decision Records
 

@@ -14,7 +14,7 @@ We value participation over perfect formatting. Our goal is to share knowledge a
 
 ## 📦 Large File Policy
 - **Files < 50MB:** Commit directly to the repository.
-- **Files > 50MB:** Do not commit to git. Use the **`asset-compressor`** skill to shrink them first.
+- **Files > 50MB:** Do not commit to git. Use the **`asset-compressor`** skill (`skills/asset-compressor/`) to shrink them first.
 - **Persistent Large Files:** If a file cannot be shrunk below 50MB, upload it to AWS S3 and provide a link in the relevant meeting's `README.md`.
 
 ## ➕ How to Add a New Meeting
