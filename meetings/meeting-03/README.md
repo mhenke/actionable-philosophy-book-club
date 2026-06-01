@@ -11,17 +11,23 @@ Abstractions compress complexity. They do not eliminate it. This meeting pressur
 | What | Pages |
 |------|------:|
 | [Parnas (1972)](https://www.cs.colostate.edu/~france/CS314/Readings/Parnas-decomposition.pdf) | 6 |
-| [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV | 4 |
-| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) | 7 |
-| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V | 5 |
-| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | 2 |
-| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | ~4 |
+| [Piccioni (2013)](https://bugcounting.net/pubs/esem13.pdf) sections I, II, IV | 4 ¹ |
+| [Stripe Engineering (2017)](https://stripe.com/blog/api-versioning) | 7 ² |
+| [Bavota et al. (2013)](https://www.inf.usi.ch/faculty/bavota/papers/icse2013_Coupling.pdf) sections I, III, V | 5 ³˒⁵ |
+| [Lemire (2022)](https://lemire.me/blog/2022/05/13/avoid-exception-throwing-in-performance-sensitive-code/) | 2 ⁴ |
+| [Java NIO javadoc](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/package-summary.html)  ·  [FileChannel](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/channels/FileChannel.html) | ~4 ⁴ |
 | [Topolog (2025)](https://dmtopolog.com/complexity-4-abstraction) (Optional) | 5 |
 | [Barroso (2026)](https://dev.to/walternascimentobarroso/abstraction-designing-systems-that-dont-collapse-under-complexity-3h29) (Optional) | 4 |
 
 <br>
 
-Plus **3 supplement reference cards** (2 min each)  ·  [API Design](03-supplement-1-api-design.md)  ·  [Empirical](03-supplement-2-empirical.md)  ·  [Runtime Tax](03-supplement-3-runtime-tax.md) plus the [Checklist](03-api-friction-checklist.md) and [Audit](03-vocabulary-audit.md) worksheets
+Plus **3 supplement reference cards** (2 min each) and **2 worksheets**:
+
+¹ [Checklist](03-api-friction-checklist.md) — Piccioni worksheet
+² [API Design](03-supplement-1-api-design.md) — Stripe supplement
+³ [Empirical](03-supplement-2-empirical.md) — Bavota supplement
+⁴ [Runtime Tax](03-supplement-3-runtime-tax.md) — Lemire, Java NIO supplement
+⁵ [Audit](03-vocabulary-audit.md) — Bavota worksheet
 
 See the [Lean Reading Bundle Syllabus](03-lean-reading-bundle.md) for full descriptions, companion foils, and reading context.
 
