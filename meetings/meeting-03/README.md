@@ -55,12 +55,10 @@ See the [Lean Reading Bundle Syllabus](03-lean-reading-bundle.md) for full descr
 
 ## Choose Your Next Direction
 
-This meeting executed **Path 2** (The Empirical Reality Check, chosen in Meeting 02). Options for the next direction will be presented during wrap-up for group voting.
+Options will be added here when finalized. The group votes during wrap-up.
 
 ## Action Items
-- [ ] Read the [Lean Reading Bundle](03-lean-reading-bundle.md) (~28 pp total: Core + Focused tiers)
-- [ ] Review the three supplement reference cards: [API Design](03-supplement-1-api-design.md), [Empirical](03-supplement-2-empirical.md), [Runtime Tax](03-supplement-3-runtime-tax.md)
-- [ ] Execute: Run the [**Vocabulary Audit**](03-vocabulary-audit.md) on an internal repository before June 10, and bring your identified hidden ley lines to the group session
+- [ ] Vote on next meeting direction during wrap-up
 
 ## Meeting Materials
 - [03-lean-reading-bundle.md](03-lean-reading-bundle.md)
