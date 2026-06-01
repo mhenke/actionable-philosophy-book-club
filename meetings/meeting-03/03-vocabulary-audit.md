@@ -2,6 +2,12 @@
 
 Run this on two supposedly decoupled services in your own codebase to find hidden semantic coupling.
 
+## Install
+
+```bash
+npx skills add mhenke/actionable-philosophy-book-club --include vocabulary-audit
+```
+
 ## Steps
 
 1. **Extract the nouns.** Scrape public interfaces, variable names, and comments from both services. Strip programming keywords and stop words.
