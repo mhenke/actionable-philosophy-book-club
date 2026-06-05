@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/asset-manifest.json
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/recordings/03-high-price-of-architectural-purity-debate.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/recordings/03-navigating-the-architecture-alternate.mp4
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/recordings/03-surviving-system-rot.mp4
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-empirical-reality-check.mp4
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-barroso-abstraction.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-bavota-coupling.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-guide.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-java-nio-direct-vs-nondirect.pdf

@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/prompts/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/prompts/anime-temple-essential-questions-deck.md
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/prompts/five-essential-questions-prompt.md
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/prompts/non-obvious-inisght-prompt.md
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/prompts/slide-deck-prompt-template.md
+/home/mhenke/Projects/actionable-philosophy-book-club/test-results/.last-run.json
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/asset-behavior.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/asset-meta.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/check-links.sh
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/csp.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/dashboard-xss.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/layout-regression.spec.js

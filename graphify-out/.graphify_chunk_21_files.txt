@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-podcast-asset-availability-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-podcast-summary-icon-dedup-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-spectrum-rule-fullwidth-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-spectrum-rule-fullwidth-implementation.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-app-js-module-split-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-app-js-module-split-plan.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-asset-copy-truth-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-asset-copy-truth.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-distinguish-video-rows-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-distinguish-video-rows-plan.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-folder-tree-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-18-loading-flash-fixes-design.md

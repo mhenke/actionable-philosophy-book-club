@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/ux-writing.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/cleanup-deprecated.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/command-metadata.json
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/critique-storage.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/design-parser.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/detect-csp.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/impeccable-paths.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/is-generated.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-accept.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-browser-session.js
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-browser.js
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-complete.mjs

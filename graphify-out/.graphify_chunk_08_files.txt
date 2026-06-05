@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.github/workflows/uptime.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.opencode/opencode.json
+/home/mhenke/Projects/actionable-philosophy-book-club/.opencode/package.json
+/home/mhenke/Projects/actionable-philosophy-book-club/.opencode/plugins/graphify.js
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/meeting-03-full.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-16T00-00-19-558Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-16T01-06-37-614Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-16T16-57-06-671Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-16T16-57-17-146Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-17T01-47-53-117Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-17T01-48-53-432Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-17T01-51-55-817Z.yml

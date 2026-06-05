@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-completion.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-inject.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-poll.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-resume.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-server.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-session-store.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-status.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live-wrap.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/live.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/load-context.mjs
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/modern-screenshot.umd.js
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/scripts/pin.mjs

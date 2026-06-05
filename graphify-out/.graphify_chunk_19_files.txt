@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0005-markdown-rendering.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0006-manifest-location.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0007-command-palette-removal.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0008-behavior-first-test-strategy.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0009-plain-language-section-naming.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0010-manifest-fetch-resilience.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0011-prose-section-separators.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0012-copy-link-removal.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0013-js-extraction-build-pipeline.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/personas/persona-red-flags.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-16-alternate-video-implementation-plan.md

@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-18-loading-skeleton-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-18-section-h2-spacing-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-23-design-polish-toc-spec.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-06-01-vocabulary-audit-skill-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/drafts/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/drafts/recordings/Clean-Code-versus-Deep-Software-Design-deep-dive.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/drafts/recordings/Ousterhout-versus-Uncle-Bob-on-software-design-critique.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/drafts/recordings/Ousterhout-versus-Uncle-Bob-on-software-design-deep-dive.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-00/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-01/01-essential-questions.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-01/01-non-obvious-insights.md

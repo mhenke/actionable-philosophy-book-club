@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/agents/impeccable-asset-producer.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/adapt.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/animate.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/audit.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/bolder.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/brand.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/clarify.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/codex.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/cognitive-load.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/color-and-contrast.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/colorize.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/craft.md

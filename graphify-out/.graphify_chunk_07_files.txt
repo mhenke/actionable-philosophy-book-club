@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/audit/2026-05-23T19-46-02Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/audit/2026-05-28T16-23-52Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/audit/2026-05-28T16-36-42Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/critique/2026-05-23T19-10-00Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/critique/2026-05-25T00-56-15Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/critique/2026-05-25T01-54-38Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/critique/2026-05-28T17-09-48Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/critique/2026-05-28T17-16-03Z__src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.aposd/critique/src.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.claude/settings.local.json
+/home/mhenke/Projects/actionable-philosophy-book-club/.github/dependabot.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.github/workflows/ci.yml

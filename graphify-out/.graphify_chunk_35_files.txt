@@ -1,0 +1,2 @@
+graphify-out/transcripts/Ousterhout-versus-Uncle-Bob-on-software-design-critique.txt
+graphify-out/transcripts/Ousterhout-versus-Uncle-Bob-on-software-design-deep-dive.txt

@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/manifest-rendering.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/routing.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/theme-toggle.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/video-resume.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/xss.spec.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/data-meeting.test.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/formatters.test.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/path-validator.test.js
+/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/test-helper.js
+graphify-out/transcripts/00-The-Complexity-Governor.txt
+graphify-out/transcripts/01-The-Architects-of-Complexity.txt
+graphify-out/transcripts/Clean-Code-versus-Deep-Software-Design-deep-dive.txt

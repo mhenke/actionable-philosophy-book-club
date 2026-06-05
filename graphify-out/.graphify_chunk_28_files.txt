@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-lemire-exception-performance.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-parnas-decomposition.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-piccioni-api-usability.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-stripe-api-versioning.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-reading-topolog-abstraction.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-supplement-1-api-design.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-supplement-2-empirical.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-03/resources/03-supplement-3-runtime-tax.pdf
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-04/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/playwright-report/index.html
+/home/mhenke/Projects/actionable-philosophy-book-club/scripts/extract_metadata.py
+/home/mhenke/Projects/actionable-philosophy-book-club/scripts/minify-html.mjs

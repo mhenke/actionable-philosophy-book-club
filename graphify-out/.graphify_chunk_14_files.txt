@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-23-09-047Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-23-13-087Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-25-44-580Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-26-42-603Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-26-49-734Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-26-51-882Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-27-22-592Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-30-37-985Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-36-04-509Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-36-15-386Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T18-36-28-538Z.yml
+/home/mhenke/Projects/actionable-philosophy-book-club/.playwright-mcp/page-2026-05-23T19-03-12-786Z.yml

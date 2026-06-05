@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-16-alternate-video-labeling-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-16-visual-polish-ux-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-16-visual-polish-ux.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-additional-resources-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-additional-resources-implementation.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-comprehensive-persona-fixes-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-comprehensive-persona-fixes-implementation.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-h3-gradient-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-icon-pill-podcast-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-p3-low-priority.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-palette-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/plans/2026-05-17-personas-design.md

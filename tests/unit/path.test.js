@@ -4,8 +4,6 @@ import { loadSource } from './test-helper.js';
 
 const { isSafePath, DOMAIN } = loadSource('src/path.js');
 
-const check = (path) => isSafePath(path, DOMAIN.REPO);
-
 test('isSafePath - valid paths', () => {
     const valid = [
         'meetings/meeting-01/README.md',
@@ -19,7 +17,7 @@ test('isSafePath - valid paths', () => {
         'templates/discussion.md',
     ];
     for (const path of valid) {
-        assert.strictEqual(check(path), true, `should accept: ${path}`);
+        assert.strictEqual(isSafePath(path, DOMAIN.REPO), true, `should accept: ${path}`);
     }
 });
 
@@ -51,7 +49,7 @@ test('isSafePath - rejected paths', () => {
     ];
 
     for (const [path, reason] of invalid) {
-        assert.strictEqual(check(path), false, `should reject ${reason}: ${path}`);
+        assert.strictEqual(isSafePath(path, DOMAIN.REPO), false, `should reject ${reason}: ${path}`);
     }
 
     assert.strictEqual(isSafePath(null, DOMAIN.REPO), false, 'should reject null');

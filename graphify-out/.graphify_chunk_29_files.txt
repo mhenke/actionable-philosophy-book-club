@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/SKILL.md
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/compress_pdf.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/compress_pdf.sh
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/compress_pptx.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/compress_pptx.sh
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/compress_video.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/compress_video.sh
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/rename_asset.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/scripts/rename_asset.sh
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/SKILL.md
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/scripts/vocab_audit.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/test_vocab_audit.py

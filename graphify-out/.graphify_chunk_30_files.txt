@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/fixtures/explicit-coupling/service_a/order.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/fixtures/explicit-coupling/service_b/invoice.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/fixtures/hidden-coupling/service_a/order.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/fixtures/hidden-coupling/service_b/invoice.py
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/fixtures/no-overlap/service_a/weather.go
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/fixtures/no-overlap/service_b/calendar.js
+/home/mhenke/Projects/actionable-philosophy-book-club/skills/vocabulary-audit/tests/fixtures/tokenization/mixed_case.py
+/home/mhenke/Projects/actionable-philosophy-book-club/src/_manifest.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/app.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/asset-copy.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/asset-delegation.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/assets.js

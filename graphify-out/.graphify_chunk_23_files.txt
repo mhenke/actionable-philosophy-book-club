@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/plans/2026-05-18-section-h2-spacing.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/plans/2026-05-23-design-polish-toc.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/plans/2026-05-23-design-refactoring.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/plans/2026-05-23-rename-asset-python-rewrite-walkthrough.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/plans/2026-05-23-rename-asset-python-rewrite.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/plans/2026-05-23-unify-compressors-and-refactor-critique-issues-walkthrough.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/plans/2026-05-23-unify-compressors-and-refactor-critique-issues.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-15-book-club-bootstrap-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-16-alternate-asset-ui-fix.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-16-podcasts-resources-display-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-16-terminology-recap-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/superpowers/specs/2026-05-17-loading-ux-design.md

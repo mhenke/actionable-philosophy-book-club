@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/critique.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/delight.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/distill.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/document.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/extract.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/harden.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/heuristics-scoring.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/interaction-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/layout.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/live.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/motion-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/onboard.md

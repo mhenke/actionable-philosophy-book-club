@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/ai-workflow-ideas.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/content-contract.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/design-principles.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/glossary.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/manifest.json
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/manifest.schema.json
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/onboarding.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/why-book-now.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0001-powerpoint-viewer-selection.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0002-single-page-reader.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0003-ci-environment-standardization.md
+/home/mhenke/Projects/actionable-philosophy-book-club/docs/adr/0004-tailwind-css.md

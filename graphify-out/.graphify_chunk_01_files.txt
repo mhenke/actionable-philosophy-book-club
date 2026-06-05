@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/AGENTS.md
+/home/mhenke/Projects/actionable-philosophy-book-club/CONTRIBUTING.md
+/home/mhenke/Projects/actionable-philosophy-book-club/DESIGN.md
+/home/mhenke/Projects/actionable-philosophy-book-club/GEMINI.md
+/home/mhenke/Projects/actionable-philosophy-book-club/PRODUCT.md
+/home/mhenke/Projects/actionable-philosophy-book-club/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/SECURITY.md
+/home/mhenke/Projects/actionable-philosophy-book-club/index.html
+/home/mhenke/Projects/actionable-philosophy-book-club/package.json
+/home/mhenke/Projects/actionable-philosophy-book-club/playwright.config.js
+/home/mhenke/Projects/actionable-philosophy-book-club/skills-lock.json
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/SKILL.md

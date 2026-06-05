@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/src/setup.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/storage.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/test-hooks.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/theme-init.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/theme.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/toast.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/video-player.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/view.js
+/home/mhenke/Projects/actionable-philosophy-book-club/src/viewer.js
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/ai-prompts-template.md
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/discussion-template.md
+/home/mhenke/Projects/actionable-philosophy-book-club/templates/meeting-README-template.md

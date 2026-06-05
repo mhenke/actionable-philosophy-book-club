@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-01/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-02/02-complexity-case-options.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-02/02-essential-questions.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-02/02-non-obvious-insights.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-02/README.md
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-02/asset-manifest.json
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4
+/home/mhenke/Projects/actionable-philosophy-book-club/meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a

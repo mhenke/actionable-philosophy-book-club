@@ -1,0 +1,12 @@
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/optimize.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/overdrive.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/personas.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/polish.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/product.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/quieter.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/responsive-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/shape.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/spatial-design.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/teach.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/typeset.md
+/home/mhenke/Projects/actionable-philosophy-book-club/.agents/skills/impeccable/reference/typography.md
