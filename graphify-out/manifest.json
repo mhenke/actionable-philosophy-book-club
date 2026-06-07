@@ -150,9 +150,9 @@
     "semantic_hash": "31666bf5c345d3c2f263dbbfa1d0b8a1"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/package.json": {
-    "mtime": 1779990168.465892,
-    "ast_hash": "bae222c91dc65cbec81ae78a25686541",
-    "semantic_hash": "bae222c91dc65cbec81ae78a25686541"
+    "mtime": 1780789778.5507417,
+    "ast_hash": "cd5ebd7a42bd9bf4f9ea9da6bcfb73fd",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/playwright.config.js": {
     "mtime": 1779564383.1174438,
@@ -260,14 +260,14 @@
     "semantic_hash": "e0df3619d96aa8259d7fefe13bcfd991"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/_manifest.js": {
-    "mtime": 1780339109.1323123,
+    "mtime": 1780792773.1595242,
     "ast_hash": "a4c8dd1f0b770b8c6710fe3abc6e3e46",
     "semantic_hash": "a4c8dd1f0b770b8c6710fe3abc6e3e46"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/app.js": {
-    "mtime": 1779990168.4664025,
-    "ast_hash": "66b3e714bbcd819d2d1729c290fed20a",
-    "semantic_hash": "66b3e714bbcd819d2d1729c290fed20a"
+    "mtime": 1780789762.5048137,
+    "ast_hash": "fbb860525fa538bb3e947690e6ebee50",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/asset-copy.js": {
     "mtime": 1779990168.4664025,
@@ -280,14 +280,14 @@
     "semantic_hash": "13d1a8034bea3c2ca02483e6edd45afa"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/assets.js": {
-    "mtime": 1780338799.2142835,
-    "ast_hash": "f8f11b251b034c2be678be9fc8f427ab",
-    "semantic_hash": "f8f11b251b034c2be678be9fc8f427ab"
+    "mtime": 1780792431.4740956,
+    "ast_hash": "027f79bae393b007a3e47f8690b6b888",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/dashboard.js": {
-    "mtime": 1780338862.2622826,
-    "ast_hash": "08919e8762b34a9221e85fc83a84db91",
-    "semantic_hash": "08919e8762b34a9221e85fc83a84db91"
+    "mtime": 1780792725.7997243,
+    "ast_hash": "656d378b5229fefa16189028fa0968fc",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/data-meeting.js": {
     "mtime": 1780338666.8513007,
@@ -295,19 +295,14 @@
     "semantic_hash": "17148ccb98c359793653cf12298c4d6c"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/data-repository.js": {
-    "mtime": 1779674204.7740285,
-    "ast_hash": "14f95d4c18aed9462b43da2a1a903202",
-    "semantic_hash": "14f95d4c18aed9462b43da2a1a903202"
+    "mtime": 1780789676.379049,
+    "ast_hash": "4e5eed6dbdbaa3300388965cee53018e",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/format.js": {
     "mtime": 1779562055.7690365,
     "ast_hash": "7078d020d10f7bb8cefa19a09127d859",
     "semantic_hash": "7078d020d10f7bb8cefa19a09127d859"
-  },
-  "/home/mhenke/Projects/actionable-philosophy-book-club/src/manifest.js": {
-    "mtime": 1780001832.1344893,
-    "ast_hash": "4ec4bfdd08301763b9c41b8dfd1f0589",
-    "semantic_hash": "4ec4bfdd08301763b9c41b8dfd1f0589"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/markdown-cache.js": {
     "mtime": 1779990168.4664025,
@@ -330,9 +325,9 @@
     "semantic_hash": "3d4ddd2bfd3fc6a44f74dda5667d0bb7"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/reader-loader.js": {
-    "mtime": 1779990168.4664025,
-    "ast_hash": "820e78fdf07c8ee9620e354924a80f42",
-    "semantic_hash": "820e78fdf07c8ee9620e354924a80f42"
+    "mtime": 1780792449.9900014,
+    "ast_hash": "5b28b74b0139291fd87d2b7506a93a45",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/retry.js": {
     "mtime": 1779562066.8840392,
@@ -350,9 +345,9 @@
     "semantic_hash": "5e16a0f1f24c359bcd6f1542953d14dd"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/storage.js": {
-    "mtime": 1779990168.4664025,
-    "ast_hash": "0f194a48c68d4f3c38f8022128b6bea8",
-    "semantic_hash": "0f194a48c68d4f3c38f8022128b6bea8"
+    "mtime": 1780792375.587388,
+    "ast_hash": "8f96338259ea543d43fd1f151a74af7e",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/test-hooks.js": {
     "mtime": 1779990168.4664025,
@@ -360,14 +355,14 @@
     "semantic_hash": "ca1fba3a04a4fd882846771686df027e"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/theme-init.js": {
-    "mtime": 1779990168.4664025,
-    "ast_hash": "fc331af934d22753ecd78cc6c77c47ac",
-    "semantic_hash": "fc331af934d22753ecd78cc6c77c47ac"
+    "mtime": 1780784729.9111814,
+    "ast_hash": "8672699234f94378a3f299e3b0b90420",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/theme.js": {
-    "mtime": 1779990168.4664025,
-    "ast_hash": "07c5b0c0bef0ecfd014eed220cd3eddc",
-    "semantic_hash": "07c5b0c0bef0ecfd014eed220cd3eddc"
+    "mtime": 1780784735.3591778,
+    "ast_hash": "5ca49c920e3b70e8fdce6e9be2e3ff2a",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/toast.js": {
     "mtime": 1779671628.9336476,
@@ -375,9 +370,9 @@
     "semantic_hash": "fa255afb24e6ef390404a10d21f638d6"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/video-player.js": {
-    "mtime": 1779990168.4664025,
-    "ast_hash": "2dce96f4d31513cbd169762f11b3116b",
-    "semantic_hash": "2dce96f4d31513cbd169762f11b3116b"
+    "mtime": 1780792415.9041758,
+    "ast_hash": "ec16ea41f3d09363b99e957dc88644f6",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/view.js": {
     "mtime": 1780083077.3304625,
@@ -385,12 +380,12 @@
     "semantic_hash": "e5d8975623c531a185f39f57a1d07b17"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/src/viewer.js": {
-    "mtime": 1779990168.4664025,
-    "ast_hash": "6ee4ffa6f02c931b2464bc4335f45aea",
-    "semantic_hash": "6ee4ffa6f02c931b2464bc4335f45aea"
+    "mtime": 1780792402.5612454,
+    "ast_hash": "531da9ee7a7b5bb8b4c986f79008038d",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/test-results/.last-run.json": {
-    "mtime": 1780339133.6963172,
+    "mtime": 1780792790.1694534,
     "ast_hash": "f196824657d8858bc7fa44eecbba38b1",
     "semantic_hash": "f196824657d8858bc7fa44eecbba38b1"
   },
@@ -1295,9 +1290,9 @@
     "semantic_hash": "e75e83b15b5248836e402029c944fce9"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/AGENTS.md": {
-    "mtime": 1780404402.7653515,
-    "ast_hash": "8c2d82da4a726cc0d37a71ee11913913",
-    "semantic_hash": "8c2d82da4a726cc0d37a71ee11913913"
+    "mtime": 1780783980.6382017,
+    "ast_hash": "4ddc154d06888852082a8918706894ee",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/CONTRIBUTING.md": {
     "mtime": 1780341445.374964,
@@ -1800,9 +1795,9 @@
     "semantic_hash": "5e88db145c25886019152d7273739fce"
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/playwright-report/index.html": {
-    "mtime": 1780339133.6963172,
-    "ast_hash": "97b6d01ef9917e3ba6627c6194aaa52c",
-    "semantic_hash": "97b6d01ef9917e3ba6627c6194aaa52c"
+    "mtime": 1780792790.1694534,
+    "ast_hash": "f9c8b9408ee7d9c5a1c6c756aef8e47d",
+    "semantic_hash": ""
   },
   "/home/mhenke/Projects/actionable-philosophy-book-club/skills/asset-compressor/SKILL.md": {
     "mtime": 1780341912.1589365,
@@ -2108,5 +2103,40 @@
     "mtime": 1780404364.7795248,
     "ast_hash": "e956f7b46a82a8d0d6d0e270f9ee29ad",
     "semantic_hash": "e956f7b46a82a8d0d6d0e270f9ee29ad"
+  },
+  "/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/reader-loader.test.js": {
+    "mtime": 1780792572.3254082,
+    "ast_hash": "adb3582379e4d556cee0ca0ed032e278",
+    "semantic_hash": ""
+  },
+  "/home/mhenke/Projects/actionable-philosophy-book-club/.claude/pipeline/project-doc.md": {
+    "mtime": 1780783902.7294722,
+    "ast_hash": "b584805801094c99b4274c23cd6023bd",
+    "semantic_hash": ""
+  },
+  "/home/mhenke/Projects/actionable-philosophy-book-club/CONTEXT.md": {
+    "mtime": 1780784550.6313663,
+    "ast_hash": "17f11180775c53b8c2444605477b49d4",
+    "semantic_hash": ""
+  },
+  "/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/assets.test.js": {
+    "mtime": 1780792555.531487,
+    "ast_hash": "a3d454ebfa2ab2459582cc60c09ddef8",
+    "semantic_hash": ""
+  },
+  "/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/config.test.js": {
+    "mtime": 1780792490.5607994,
+    "ast_hash": "f8ae65a0dd7430db4727da782dc2a97b",
+    "semantic_hash": ""
+  },
+  "/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/dashboard.test.js": {
+    "mtime": 1780792747.6936312,
+    "ast_hash": "122b69baefba2c72efa059ffc16dafe3",
+    "semantic_hash": ""
+  },
+  "/home/mhenke/Projects/actionable-philosophy-book-club/tests/unit/data-repository.test.js": {
+    "mtime": 1780789713.4419947,
+    "ast_hash": "c8a5118ac24ccc22661bfc9c46423a26",
+    "semantic_hash": ""
   }
 }

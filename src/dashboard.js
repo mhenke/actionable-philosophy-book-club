@@ -26,6 +26,14 @@ function _renderCardHeader(meeting, opts = {}) {
                     </div>`;
 }
 
+/** Clears a dashboard container and hides its parent section. Used when a section has no content to show. */
+function _hideEmptySection(container) {
+    if (!container) return;
+    container.innerHTML = '';
+    const section = container.closest('section');
+    if (section) section.classList.add('hidden-view');
+}
+
 /** Renders the upcoming meeting card: header, asset rows, key takeaway, CTA, and podcast disclosure. */
 function renderUpcomingMaterials() {
     if (!upcomingMaterialsContainer) return;
@@ -84,8 +92,7 @@ function _renderCardList(containerId, meetings, cardRenderer) {
     if (!container) return;
     const section = container.closest('section');
     if (meetings.length === 0) {
-        container.innerHTML = '';
-        if (section) section.classList.add('hidden-view');
+        _hideEmptySection(container);
         return;
     }
     if (section) section.classList.remove('hidden-view');
@@ -128,7 +135,7 @@ function setupManifestRetryUI() {
         message: "Couldn't load sessions",
         retryLabel: 'Tap to retry',
         onRetry: async () => {
-            await loadManifest();
+            await loadRepository();
             if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
             renderUpcomingMaterials();
             renderArchiveCards();
@@ -138,20 +145,14 @@ function setupManifestRetryUI() {
     if (upcomingMaterialsContainer) upcomingMaterialsContainer.innerHTML = '';
     if (upcomingCta) upcomingCta.innerHTML = '';
     if (archiveCardsContainer) archiveCardsContainer.innerHTML = '';
-    if (draftCardsContainer) {
-        draftCardsContainer.innerHTML = '';
-        const draftSection = draftCardsContainer.closest('section');
-        if (draftSection) draftSection.classList.add('hidden-view');
-    }
+    _hideEmptySection(draftCardsContainer);
 }
 
 /** Renders draft meeting cards with placeholder content. */
 function renderDraftCards() {
     const drafts = findMeetings({ status: window.STATUS.DRAFT });
     if (drafts.length === 0) {
-        if (draftCardsContainer) draftCardsContainer.innerHTML = '';
-        const section = draftCardsContainer?.closest('section');
-        if (section) section.classList.add('hidden-view');
+        _hideEmptySection(draftCardsContainer);
         return;
     }
     _renderCardList('draft-cards-container', drafts, meeting => `
@@ -164,4 +165,7 @@ window.renderUpcomingMaterials = renderUpcomingMaterials;
 window.renderArchiveCards = renderArchiveCards;
 window.renderDraftCards = renderDraftCards;
 window.setupManifestRetryUI = setupManifestRetryUI;
+if (window.__TEST__) {
+    window.__dashboardTestHooks = { hideEmptySection: _hideEmptySection };
+}
 })();

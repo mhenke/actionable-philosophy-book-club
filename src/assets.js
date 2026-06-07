@@ -94,7 +94,7 @@ function buildSlidesRow(meeting) {
         label: label,
         href: viewerUrl || '',
         hrefTarget: viewerUrl ? '_blank' : '',
-        hrefRel: viewerUrl ? window.REL_EXTERNAL : '',
+        hrefRel: viewerUrl ? window.ExternalLinkConfig.REL : '',
         downloadHref: file,
         downloadLabel: `Download slides (${escapeHTML(meeting.session)})`,
         meta: slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '',
@@ -141,7 +141,7 @@ function buildResourceStrip(additionalMaterial) {
         const file = escapeHTML(res.file);
         const label = escapeHTML(res.label);
         const img = `<picture><source srcset="${file}" type="image/webp"><img src="${file}" alt="${label}" loading="lazy" width="120" height="80"></picture>`;
-        return `<a href="${file}" target="_blank" rel="${window.REL_EXTERNAL}" class="resource-thumb">
+        return `                        <a href="${file}" target="_blank" rel="${window.ExternalLinkConfig.REL}" class="resource-thumb">
                             ${img}
                             <span>${label}</span>
                         </a>`;
@@ -177,13 +177,13 @@ function buildAdditionalSummary(additionalMaterial) {
 function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
     const primaryRows = [];
 
-    if (meeting.video.file ?? '' && isSafePath(meeting.video.file ?? '', DOMAIN.ASSET)) {
+    if ((meeting.video.file ?? '') && isSafePath(meeting.video.file ?? '', DOMAIN.ASSET)) {
         primaryRows.push(buildVideoRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(_buildPlaceholder('🎬', 'Video Recording'));
     }
 
-    if (meeting.slides.file ?? '' && isSafePath(meeting.slides.file ?? '', DOMAIN.ASSET)) {
+    if ((meeting.slides.file ?? '') && isSafePath(meeting.slides.file ?? '', DOMAIN.ASSET)) {
         primaryRows.push(buildSlidesRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(_buildPlaceholder('📊', 'Slides'));
@@ -204,4 +204,7 @@ window.buildAssetRows = buildAssetRows;
 window.buildPodcastDisclosure = buildPodcastDisclosure;
 window.buildAdditionalRow = buildAdditionalRow;
 window.buildAdditionalSummary = buildAdditionalSummary;
+if (window.__TEST__) {
+    window.__assetsTestHooks = { buildAssetRows, buildPodcastDisclosure, buildAdditionalRow, buildAdditionalSummary };
+}
 })();

@@ -77,9 +77,11 @@ function clearVideoResumePosition(filePath) {
     }
 }
 
-/** Video resume threshold and save interval — consumed as bare globals by video-player.js. */
-window.RESUME_MIN_SECONDS = RESUME_MIN_SECONDS;
-window.PROGRESS_SAVE_MS = PROGRESS_SAVE_MS;
+/** Video resume configuration: minimum seconds before a position is worth saving, and how often to persist during playback. Consumed by video-player.js via window.VideoResumeConfig. */
+window.VideoResumeConfig = Object.freeze({
+    MIN_SECONDS: RESUME_MIN_SECONDS,
+    SAVE_INTERVAL_MS: PROGRESS_SAVE_MS,
+});
 window.buildStorageKey = buildStorageKey;
 window.setSessionStorageErrorHandler = setSessionStorageErrorHandler;
 window.getSavedVideoResumeTime = getSavedVideoResumeTime;

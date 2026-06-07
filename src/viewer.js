@@ -74,6 +74,8 @@ function getViewerDestination(path) {
 window.buildPPTXViewerURL = buildPPTXViewerURL;
 window.getViewerDestination = getViewerDestination;
 window.classifyAssetPath = classifyAssetPath;
-window.REL_EXTERNAL = REL_EXTERNAL;
-window.OFFICE_VIEWER_ORIGIN = OFFICE_VIEWER_ORIGIN;
+window.ExternalLinkConfig = Object.freeze({
+    REL: REL_EXTERNAL,
+    OFFICE_VIEWER_ORIGIN,
+});
 })();

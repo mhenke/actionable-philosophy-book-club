@@ -1,10 +1,12 @@
 (function() {
 'use strict';
 
+const { STORAGE_KEY, DARK_CLASS, LIGHT_CLASS } = window.THEME_CONFIG;
+
 /** Reads saved theme preference from localStorage. */
 function getSavedTheme() {
     try {
-        return localStorage.getItem(window.THEME_STORAGE_KEY);
+        return localStorage.getItem(STORAGE_KEY);
     } catch (err) {
         window.ErrorHandler?.warn('localStorage read failed:', { err });
         return null;
@@ -14,7 +16,7 @@ function getSavedTheme() {
 /** Saves theme preference to localStorage. */
 function saveTheme(theme) {
     try {
-        localStorage.setItem(window.THEME_STORAGE_KEY, theme);
+        localStorage.setItem(STORAGE_KEY, theme);
     } catch (err) {
         window.ErrorHandler?.warn('localStorage write failed:', { err });
     }
@@ -22,8 +24,8 @@ function saveTheme(theme) {
 
 /** Returns true if the current theme is dark (checks classes, falls back to prefers-color-scheme). */
 function isDarkTheme() {
-    if (document.documentElement.classList.contains('dark-theme')) return true;
-    if (document.documentElement.classList.contains('light-theme')) return false;
+    if (document.documentElement.classList.contains(DARK_CLASS)) return true;
+    if (document.documentElement.classList.contains(LIGHT_CLASS)) return false;
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
 }
 
@@ -34,11 +36,11 @@ function _persistThemePreference(isDark) {
 /** Applies dark/light theme classes, persists to localStorage if user-initiated, syncs toggle labels, shows toast. */
 function setTheme(isDark, userInitiated = false) {
     if (isDark) {
-        document.documentElement.classList.add('dark-theme');
-        document.documentElement.classList.remove('light-theme');
+        document.documentElement.classList.add(DARK_CLASS);
+        document.documentElement.classList.remove(LIGHT_CLASS);
     } else {
-        document.documentElement.classList.add('light-theme');
-        document.documentElement.classList.remove('dark-theme');
+        document.documentElement.classList.add(LIGHT_CLASS);
+        document.documentElement.classList.remove(DARK_CLASS);
     }
     if (userInitiated) _persistThemePreference(isDark);
 

@@ -68,7 +68,7 @@ function showDashboardRenderError(err) {
     }
 
     try {
-        await loadManifest();
+        await loadRepository();
     } catch (err) {
         window.ErrorHandler?.warn('Manifest load failed:', { err });
         setupManifestRetryUI();

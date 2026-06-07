@@ -48,7 +48,7 @@ function _tryLoadCaptionTrack(video, filePath) {
 function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, filePath, label, signal) {
     resumeBar.style.display = 'none';
     const savedTime = getSavedVideoResumeTime(filePath);
-    if (savedTime <= RESUME_MIN_SECONDS) return;
+    if (savedTime <= window.VideoResumeConfig.MIN_SECONDS) return;
 
     const mins = Math.floor(savedTime / 60);
     const secs = Math.floor(savedTime % 60);
@@ -74,7 +74,7 @@ function _setupResumeBar(resumeBar, resumeText, resumeBtn, startBtn, video, file
 
 function _wireVideoEvents(els, lastFocus, filePath, signal) {
     const saveProgress = () => saveVideoResumePosition(filePath, els.video.currentTime);
-    const vpInterval = setInterval(saveProgress, PROGRESS_SAVE_MS);
+    const vpInterval = setInterval(saveProgress, window.VideoResumeConfig.SAVE_INTERVAL_MS);
     signal.addEventListener('abort', () => clearInterval(vpInterval), { once: true });
 
     const onClose = () => {

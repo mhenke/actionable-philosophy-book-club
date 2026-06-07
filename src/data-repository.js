@@ -1,59 +1,84 @@
 /**
- * MeetingRepository: Single access point for meeting data.
+ * Repository for meeting data: owns the in-memory meeting collection,
+ * loads it from inline or fetched manifest data, and exposes find queries.
  *
- * Encapsulates meeting data to enforce information hiding (APOSD Principle 3).
- * All read/write access goes through this repository, preventing direct mutation
- * and allowing schema changes without touching callers.
+ * Public API:
+ * - MeetingRepository.setAll(plainMeetings): validates and wraps the input
+ * - MeetingRepository.find(criteria): queries meetings by status or id
+ * - loadRepository(): resolves inline or fetched manifest, populates the singleton
+ * - findMeetings(criteria): queries the loaded repository (singleton proxy)
  *
- * APOSD Principle 2 (Deep Modules): Simple interface (find(criteria)),
- * powerful implementation (compound queries, validation, mutation control).
- *
- * APOSD Principle 7 (Define Errors Out of Existence): Validates schema at load
- * time, preventing invalid meetings from existing in memory.
+ * Side-effects: populates the meeting repo singleton and the asset copy registry
+ * when loadRepository runs.
  */
 (function() {
 'use strict';
 
-class MeetingRepository {
-  constructor() {
-    this.meetings = [];
-  }
+let _repo = null;
 
+class MeetingRepository {
   /**
-   * Load meetings from manifest data. Wraps each in Meeting class for validation.
-   * 
-   * APOSD Principle 7 (Define Errors Out of Existence):
-   * Throws on schema errors at load time, not render time.
-   * This prevents invalid meetings from existing in memory.
-   * 
-   * @param {Array} plainMeetings - Plain meeting objects from manifest.json
-   * @throws {Error} If meetings is not an array or any meeting fails validation
+   * Validates and stores plain meeting manifest entries, wrapping each in a Meeting instance.
+   * @param {object[]} plainMeetings - Array of raw meeting objects from the manifest
    */
   setAll(plainMeetings) {
-    if (!Array.isArray(plainMeetings)) {
-      throw new Error('Meetings must be an array');
-    }
-    // Wrap each in Meeting class (validates on construction)
-    this.meetings = plainMeetings.map(m => new Meeting(m));
+    if (!Array.isArray(plainMeetings)) throw new Error('MeetingRepository.setAll requires an array');
+    this.meetings = plainMeetings.map(m => new window.Meeting(m));
   }
 
   /**
-   * Find meetings by optional criteria. Returns all meetings when called with no arguments.
-   * Filtering by id returns a single meeting or null; filtering by status returns an array.
-   *
-   * Deepens the module: one method replaces three, compound queries are trivial to add.
-   *
-   * @param {object} [criteria] - Optional filter: { id, status }
-   * @returns {Array|object|null}
+   * Queries meetings by criteria. Returns an array of matching meetings, a single meeting
+   * by id, or an empty array when no matches exist.
+   * @param {object} criteria
+   * @param {string} [criteria.id] - return the meeting with this id (or null)
+   * @param {string} [criteria.status] - return all meetings with this status
+   * @returns {object[]|object|null}
    */
   find(criteria) {
-    if (!criteria) return [...this.meetings];
-    if (criteria.id) return this.meetings.find(m => m && m.id === criteria.id) || null;
-    if (criteria.status) return this.meetings.filter(m => m && m.status === criteria.status);
+    if (criteria?.id) {
+      return this.meetings.find(m => m.id === criteria.id) || null;
+    }
+    if (criteria?.status) {
+      return this.meetings.filter(m => m.status === criteria.status);
+    }
     return [...this.meetings];
   }
+}
 
+/** Queries the loaded repository. Returns empty array when the repository is not loaded. */
+function findMeetings(criteria) {
+  return _repo ? _repo.find(criteria) : (criteria?.id ? null : []);
+}
+
+/**
+ * Loads the meeting manifest: resolves inline data (__MANIFEST_DATA) or
+ * fetches docs/manifest.json with an 8s timeout. Returns the populated repository.
+ * @returns {Promise<MeetingRepository>}
+ */
+async function loadRepository() {
+  const inlineData = window.__MANIFEST_DATA;
+  let manifestData = inlineData;
+  if (!manifestData) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch('docs/manifest.json', { signal: controller.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      manifestData = await response.json();
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+  if (!manifestData.meetings || !Array.isArray(manifestData.meetings)) {
+    throw new Error('Invalid manifest structure');
+  }
+  _repo = new MeetingRepository();
+  _repo.setAll(manifestData.meetings);
+  window.loadAssetCopyRegistry?.(manifestData.assetCopy);
+  return _repo;
 }
 
 window.MeetingRepository = MeetingRepository;
+window.findMeetings = findMeetings;
+window.loadRepository = loadRepository;
 })();

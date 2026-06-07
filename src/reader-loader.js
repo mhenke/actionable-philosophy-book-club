@@ -11,16 +11,20 @@
 const { markdownContent, readerStatus } = window.DOM;
 let _activeReaderController = null;
 let _loadPageGeneration = 0;
+const _SANITIZE_OPTIONS = {
+    FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
+    FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput', 'onmouseover', 'onmouseenter', 'onfocus', 'onkeydown', 'onkeyup'],
+};
 
 const _ALLOWED_EXTERNAL_HOSTS = (function() {
-    const officeHost = window.OFFICE_VIEWER_ORIGIN ? new URL(window.OFFICE_VIEWER_ORIGIN).hostname : 'view.officeapps.live.com';
+    const officeHost = window.ExternalLinkConfig ? new URL(window.ExternalLinkConfig.OFFICE_VIEWER_ORIGIN).hostname : 'view.officeapps.live.com';
     const otherHosts = 'mhenke\\.github\\.io|github\\.com|dl\\.acm\\.org|www\\.cs\\.colostate\\.edu|doi\\.org|bugcounting\\.net|dmtopolog\\.com|stripe\\.com|arxiv\\.org|pinzger\\.github\\.io|www\\.inf\\.usi\\.ch|lemire\\.me|docs\\.oracle\\.com|dev\\.to';
     return new RegExp(`^https?:\\/\\/(${officeHost}|${otherHosts})\\/`, 'i');
 })();
 
 function ensureDOMPurifyHooks() {
     if (!callOnce(ensureDOMPurifyHooks)) return;
-    DOMPurify.addHook('afterSanitizeAttributes', node => {
+    window.DOMPurify.addHook('afterSanitizeAttributes', node => {
         if (node.tagName !== 'A') return;
         const href = node.getAttribute('href') || '';
         if (/^https?:/i.test(href)) {
@@ -31,7 +35,7 @@ function ensureDOMPurifyHooks() {
                 return;
             }
             node.setAttribute('target', '_blank');
-            node.setAttribute('rel', window.REL_EXTERNAL);
+            node.setAttribute('rel', window.ExternalLinkConfig.REL);
         }
     });
 }
@@ -191,6 +195,34 @@ function _showReaderError(path, anchorId, { message = 'Document unavailable.' } 
     readerStatus.textContent = message;
 }
 
+function _isCurrentReaderGeneration(ctx) {
+    return typeof ctx.generation !== 'number' || ctx.generation === _loadPageGeneration;
+}
+
+async function runPipeline(ctx, stages) {
+    let current = ctx;
+    for (const stage of stages) {
+        if (!_isCurrentReaderGeneration(current)) return current;
+        current = (await stage(current)) || current;
+    }
+    return current;
+}
+
+async function fetchStage(ctx) {
+    ctx.text = await window.fetchMarkdown(ctx.path, ctx.signal);
+    return ctx;
+}
+
+async function parseSanitizeStage(ctx) {
+    ctx.sanitized = window.DOMPurify.sanitize(window.marked.parse(ctx.text), _SANITIZE_OPTIONS);
+    return ctx;
+}
+
+async function renderStage(ctx) {
+    _finalizeReaderContent(ctx.sanitized, ctx.path, ctx.anchorId);
+    return ctx;
+}
+
 /**
  * Fetches, parses, sanitizes, and renders a markdown file into the reader view.
  * Manages concurrency via generation counter and AbortController, with a 15s timeout.
@@ -198,26 +230,28 @@ function _showReaderError(path, anchorId, { message = 'Document unavailable.' } 
 async function loadPage(path, anchorId) {
     const myGeneration = ++_loadPageGeneration;
 
-    if (typeof marked === 'undefined' || typeof DOMPurify === 'undefined') {
+    if (typeof window.marked === 'undefined' || typeof window.DOMPurify === 'undefined') {
         _showReaderUnavailable();
         return;
     }
+    ensureDOMPurifyHooks();
     _setupReaderLoading();
 
     if (_activeReaderController) _activeReaderController.abort();
     const controller = new AbortController();
     _activeReaderController = controller;
     const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const ctx = {
+        path,
+        anchorId,
+        generation: myGeneration,
+        signal: controller.signal,
+        text: '',
+        sanitized: '',
+    };
 
     try {
-        const text = await fetchMarkdown(path, controller.signal);
-        if (myGeneration !== _loadPageGeneration) return;
-        ensureDOMPurifyHooks();
-        const sanitized = DOMPurify.sanitize(marked.parse(text), {
-            FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
-            FORBID_ATTR: ['style', 'onerror', 'onload', 'onclick', 'oninput', 'onmouseover', 'onmouseenter', 'onfocus', 'onkeydown', 'onkeyup'],
-        });
-        _finalizeReaderContent(sanitized, path, anchorId);
+        await runPipeline(ctx, [fetchStage, parseSanitizeStage, renderStage]);
     } catch (err) {
         if (myGeneration !== _loadPageGeneration) return;
         window.ErrorHandler?.warn('loadPage failed:', { err });
@@ -232,4 +266,12 @@ async function loadPage(path, anchorId) {
 }
 
 window.loadPage = loadPage;
+if (window.__TEST__) {
+    window.__readerPipeline = {
+        runPipeline,
+        fetchStage,
+        parseSanitizeStage,
+        renderStage,
+    };
+}
 })();
