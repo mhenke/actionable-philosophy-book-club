@@ -1,11 +1,10 @@
 /**
- * Markdown fetch cache: LRU cache for markdown document fetches, plus one-shot guard utility.
+ * Markdown fetch cache: LRU cache for markdown document fetches.
  *
  * Public API:
  * - fetchMarkdown(path, signal): cached fetch for markdown documents
- * - callOnce(key): one-shot guard keyed by function reference identity
  *
- * Side-effects: caches promises in an internal LRU map; uses WeakMap for guard state.
+ * Side-effects: caches promises in an internal LRU map; uses WeakMap for guard state (via primitive.js).
  */
 (function() {
 'use strict';
@@ -20,7 +19,7 @@ const mdCache = new Map();
  * @returns {Promise<string>}
  */
 function fetchMarkdown(path, signal) {
-    if (!isSafePath(path, DOMAIN.REPO)) return Promise.reject(new Error('Unsafe path: ' + path));
+    if (!window.isSafePath(path, window.DOMAIN.REPO)) return Promise.reject(new Error('Unsafe path: ' + path));
     if (mdCache.has(path)) {
         const val = mdCache.get(path);
         mdCache.delete(path);
@@ -42,14 +41,5 @@ function fetchMarkdown(path, signal) {
     return promise;
 }
 
-/** One-shot guard keyed by function reference identity. Returns true only the first time a given key is passed. */
-const _called = new WeakMap();
-function callOnce(key) {
-    if (_called.has(key)) return false;
-    _called.set(key, true);
-    return true;
-}
-
 window.fetchMarkdown = fetchMarkdown;
-window.callOnce = callOnce;
 })();

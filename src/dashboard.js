@@ -2,30 +2,6 @@
 'use strict';
 const { upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingAdditional, archiveCardsContainer, draftCardsContainer, siteFooter } = window.DOM;
 
-/** Returns HTML for a meeting's session/date metadata line, used across all card types. Color defaults to var(--text-primary). */
-function _renderSessionMeta(meeting, color) {
-    const c = color || 'var(--text-primary)';
-    return `<span class="text-[11px] font-semibold uppercase tracking-[0.2em] block mb-1" style="color:${c}">${escapeHTML(meeting.session)} <span class="font-normal" style="color:var(--text-muted)">&bull; ${escapeHTML(meeting.date)}</span></span>`;
-}
-
-function _renderCardBadge(text, { borderColor = 'var(--text-muted)', color = 'var(--text-muted)', className = 'font-semibold' } = {}) {
-    return `<span class="shrink-0 text-[0.6875rem] ${className} uppercase tracking-widest leading-none" style="border:1px solid ${borderColor};color:${color}; padding: 3px 8px; display: inline-flex; align-items: center;">${escapeHTML(text)}</span>`;
-}
-
-function _renderCardHeader(meeting, opts = {}) {
-    const tag = opts.tag || 'h3';
-    const titleId = opts.titleId ? ` id="${opts.titleId}"` : '';
-    const titleClass = opts.titleClass || 'text-xl font-bold tracking-tight';
-    const extraClass = opts.extraClass || 'mb-5';
-    return `<div class="flex justify-between items-start${extraClass ? ' ' + extraClass : ''} gap-4">
-                        <div class="card-title">
-                            ${_renderSessionMeta(meeting, opts.metaColor)}
-                            <${tag}${titleId} class="${titleClass}">${escapeHTML(meeting.title)}</${tag}>
-                        </div>
-                        ${_renderCardBadge(opts.badgeText || '', opts.badgeStyle || {})}
-                    </div>`;
-}
-
 /** Clears a dashboard container and hides its parent section. Used when a section has no content to show. */
 function _hideEmptySection(container) {
     if (!container) return;
@@ -34,7 +10,7 @@ function _hideEmptySection(container) {
     if (section) section.classList.add('hidden-view');
 }
 
-/** Renders the upcoming meeting card: header, asset rows, key takeaway, CTA, and podcast disclosure. */
+/** Renders the upcoming meeting card using renderMeetingCard. */
 function renderUpcomingMaterials() {
     if (!upcomingMaterialsContainer) return;
 
@@ -45,43 +21,18 @@ function renderUpcomingMaterials() {
         if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
         if (upcomingKeyTakeaway) upcomingKeyTakeaway.innerHTML = '';
         if (upcomingCta) upcomingCta.innerHTML = '';
+        if (upcomingAdditional) upcomingAdditional.innerHTML = '';
         return;
     }
     if (upcomingSection) upcomingSection.classList.remove('hidden-view');
 
-    if (upcomingCardHeader) {
-        upcomingCardHeader.innerHTML = _renderCardHeader(meeting, {
-            tag: 'h2',
-            titleId: 'next-meeting-heading',
-            titleClass: 'text-2xl md:text-3xl font-bold tracking-tight',
-            metaColor: 'var(--spectrum-2)',
-            badgeText: 'Upcoming',
-            extraClass: '',
-            badgeStyle: { borderColor: 'var(--spectrum-2)', color: 'var(--spectrum-2)', className: 'font-bold' },
-        });
-    }
+    const parts = renderMeetingCard(meeting, { status: 'upcoming' });
+    if (upcomingCardHeader) upcomingCardHeader.innerHTML = parts.header;
+    upcomingMaterialsContainer.innerHTML = parts.materials;
+    if (upcomingKeyTakeaway) upcomingKeyTakeaway.innerHTML = parts.takeaway;
+    if (upcomingCta) upcomingCta.innerHTML = parts.cta;
+    if (upcomingAdditional) upcomingAdditional.innerHTML = parts.disclosure;
 
-    const { primaryRows, additionalRows, resourceStrip, additionalSummary } = buildAssetRows(meeting, { includePlaceholders: false });
-    upcomingMaterialsContainer.innerHTML = (primaryRows.length === 0 && additionalRows.length === 0 && !resourceStrip)
-        ? `<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>`
-        : primaryRows.join('') + resourceStrip;
-
-    if (upcomingKeyTakeaway) {
-        upcomingKeyTakeaway.innerHTML = meeting.keyTakeaway
-            ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
-                               <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
-                               <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
-                           </div>`
-            : '';
-    }
-
-    if (upcomingCta && meeting.readmeUrl) {
-        upcomingCta.innerHTML = `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`;
-    }
-
-    if (upcomingAdditional) {
-        upcomingAdditional.innerHTML = buildPodcastDisclosure(additionalRows, additionalSummary);
-    }
     const kbSection = document.querySelector('[aria-labelledby="section-kb"]');
     if (kbSection) kbSection.classList.remove('hidden-view');
     if (siteFooter) siteFooter.classList.remove('hidden-view');
@@ -109,19 +60,12 @@ function _renderCardList(containerId, meetings, cardRenderer) {
     container.appendChild(fragment);
 }
 
-/** Renders archive cards for completed meetings with assets, notes link, and podcast disclosure. */
+/** Renders archive cards for completed meetings using renderMeetingCard. */
 function renderArchiveCards() {
     const done = findMeetings({ status: window.STATUS.DONE });
     _renderCardList('archive-cards-container', done, meeting => {
-        const { primaryRows, additionalRows, resourceStrip, additionalSummary } = buildAssetRows(meeting, { includePlaceholders: true });
-        const additionalSection = buildPodcastDisclosure(additionalRows, additionalSummary);
-        return `
-                    ${_renderCardHeader(meeting, { badgeText: 'Done', badgeStyle: { borderColor: 'var(--text-muted)', color: 'var(--text-muted)', className: 'font-semibold' } })}
-                    ${primaryRows.join('')}
-                    ${resourceStrip}
-                    <a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn-ghost">Meeting Notes &rarr;</a>
-                    ${additionalSection}
-                `;
+        const parts = renderMeetingCard(meeting, { status: 'archive' });
+        return parts.header + parts.materials + parts.disclosure;
     });
 }
 
@@ -135,7 +79,8 @@ function setupManifestRetryUI() {
         message: "Couldn't load sessions",
         retryLabel: 'Tap to retry',
         onRetry: async () => {
-            await loadRepository();
+            const manifest = await loadManifest();
+            MeetingRepository.setAll(manifest.meetings);
             if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
             renderUpcomingMaterials();
             renderArchiveCards();
@@ -148,17 +93,17 @@ function setupManifestRetryUI() {
     _hideEmptySection(draftCardsContainer);
 }
 
-/** Renders draft meeting cards with placeholder content. */
+/** Renders draft meeting cards using renderMeetingCard. */
 function renderDraftCards() {
     const drafts = findMeetings({ status: window.STATUS.DRAFT });
     if (drafts.length === 0) {
         _hideEmptySection(draftCardsContainer);
         return;
     }
-    _renderCardList('draft-cards-container', drafts, meeting => `
-                    ${_renderCardHeader(meeting, { titleClass: 'text-xl font-bold tracking-tight text-muted', badgeText: 'Planned', badgeStyle: { borderColor: 'var(--text-muted)', color: 'var(--text-muted)', className: 'font-bold' } })}
-                    <p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>
-                `);
+    _renderCardList('draft-cards-container', drafts, meeting => {
+        const parts = renderMeetingCard(meeting, { status: 'draft' });
+        return parts.header + parts.materials;
+    });
 }
 
 window.renderUpcomingMaterials = renderUpcomingMaterials;

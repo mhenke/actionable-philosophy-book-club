@@ -26,8 +26,8 @@ class Meeting {
     this.session = manifestEntry.session || '';
     this.status = manifestEntry.status;
     this.date = manifestEntry.date || '';
-    this.video = manifestEntry.video || {};
-    this.slides = manifestEntry.slides || {};
+    this.video = manifestEntry.video ?? null;
+    this.slides = manifestEntry.slides ?? null;
     this.additional_material = Array.isArray(manifestEntry.additional_material) ? manifestEntry.additional_material : [];
     this.color = manifestEntry.color || '';
     this.wash = manifestEntry.wash || '';
@@ -38,7 +38,7 @@ class Meeting {
 
   /** Returns true when the meeting has a video asset and status is done. */
   hasVideo() {
-    return this.status === 'done' && !!(this.video && this.video.file);
+    return this.status === 'done' && !!(this.video?.file);
   }
 
 }

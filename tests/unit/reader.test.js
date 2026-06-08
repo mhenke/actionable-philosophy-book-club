@@ -7,7 +7,7 @@ import path from 'node:path';
 const PROJECT_ROOT = path.resolve(import.meta.dirname, '../../');
 
 function loadReaderLoader(overrides = {}) {
-  const absolutePath = path.resolve(PROJECT_ROOT, 'src/reader-loader.js');
+  const absolutePath = path.resolve(PROJECT_ROOT, 'src/reader.js');
   const code = fs.readFileSync(absolutePath, 'utf8');
 
   const markdownContent = {
@@ -36,7 +36,6 @@ function loadReaderLoader(overrides = {}) {
     marked: {
       parse(value) { return `<h1>${value}</h1>`; },
     },
-    fetchMarkdown: async () => 'default markdown',
     rewriteContentLinks() {},
     showRetryUI() {},
     navigateToDashboard() {},
@@ -63,6 +62,7 @@ function loadReaderLoader(overrides = {}) {
     URL,
     setTimeout,
     clearTimeout,
+    fetch: async () => ({ ok: true, text: async () => 'default markdown' }),
     ...overrides.context,
   };
 
@@ -137,10 +137,10 @@ test('parseSanitizeStage stores sanitized html on the pipeline context', async (
 test('fetchStage stores fetched markdown text on the pipeline context', async () => {
   const fetchCalls = [];
   const { __readerPipeline } = loadReaderLoader({
-    window: {
-      fetchMarkdown: async (pathValue, signal) => {
-        fetchCalls.push({ path: pathValue, signal });
-        return '# Notes';
+    context: {
+      fetch: async (url, opts) => {
+        fetchCalls.push({ path: url, signal: opts?.signal });
+        return { ok: true, text: async () => '# Notes' };
       },
     },
   });
