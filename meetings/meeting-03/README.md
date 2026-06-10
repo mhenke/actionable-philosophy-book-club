@@ -75,3 +75,4 @@ Options will be added here when finalized. The group votes during wrap-up.
   - [03-shattering-the-abstraction-illusion.pptx](slides/03-shattering-the-abstraction-illusion.pptx)
 - [resources/](resources/)
   - [03-temple-of-abstraction-guide.png](resources/03-temple-of-abstraction-guide.png)
+  - [03-complexity-romance-learning-paths.png](resources/03-complexity-romance-learning-paths.png)

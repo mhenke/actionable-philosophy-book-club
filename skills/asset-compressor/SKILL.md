@@ -15,6 +15,11 @@ This skill provides automated workflows for shrinking large media files common i
 - **MP4/Video**: Uses FFmpeg with x264/AAC and 720p scaling.
 - **PPTX**: Re-compresses the OOXML package with maximum ZIP compression.
 
+
+## Staging Folder
+
+Incoming meeting assets are staged in `~/Downloads/aposd/` before processing. Check this folder first when looking for new assets to add to a meeting. The `completed/` subfolder holds assets that have already been processed.
+
 ## Workflows
 
 ### 1. Compress a File
