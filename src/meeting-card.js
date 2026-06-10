@@ -235,7 +235,7 @@ function buildResourceStrip(additionalMaterial) {
         const file = escapeHTML(res.file);
         const label = escapeHTML(res.label);
         const webpFile = file.replace(/\.\w+$/, '.webp');
-        const img = `<picture><source srcset="${webpFile}" type="image/webp"><img src="${file}" alt="${label}" loading="lazy" width="120" height="80"></picture>`;
+        const img = `<picture><source srcset="${webpFile}" type="image/webp"><img src="${file}" alt="${label}" loading="lazy" width="200" height="140"></picture>`;
         return `                        <a href="${file}" target="_blank" rel="${REL_EXTERNAL}" class="resource-thumb">
                             ${img}
                             <span>${label}</span>
