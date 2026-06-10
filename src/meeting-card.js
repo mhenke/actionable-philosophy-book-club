@@ -262,13 +262,13 @@ function buildAdditionalSummary(additionalMaterial) {
 function buildAssetRows(meeting, { includePlaceholders = false } = {}) {
     const primaryRows = [];
 
-    if ((meeting.video.file ?? '') && isSafePath(meeting.video.file ?? '', DOMAIN.ASSET)) {
+    if (meeting.video?.file && isSafePath(meeting.video.file, DOMAIN.ASSET)) {
         primaryRows.push(buildVideoRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(_buildPlaceholder('\uD83C\uDFAC', 'Video Recording'));
     }
 
-    if ((meeting.slides.file ?? '') && isSafePath(meeting.slides.file ?? '', DOMAIN.ASSET)) {
+    if (meeting.slides?.file && isSafePath(meeting.slides.file, DOMAIN.ASSET)) {
         primaryRows.push(buildSlidesRow(meeting));
     } else if (includePlaceholders) {
         primaryRows.push(_buildPlaceholder('\uD83D\uDCCA', 'Slides'));
