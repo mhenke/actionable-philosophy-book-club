@@ -160,7 +160,7 @@
       "session": "Meeting 03",
       "date": "10 Jun 2026",
       "title": "The Empirical Reality Check",
-      "status": "upcoming",
+      "status": "done",
       "color": "spectrum-1",
       "wash": "--wash-1",
       "readmeUrl": "meetings/meeting-03/README.md",
@@ -232,14 +232,46 @@
       "id": "meeting-04",
       "session": "Meeting 04",
       "date": "24 Jun 2026",
-      "title": "TBD",
-      "status": "draft",
+      "title": "The Complexity Romance",
+      "status": "upcoming",
       "color": "spectrum-2",
       "wash": "--wash-2",
       "readmeUrl": "meetings/meeting-04/README.md",
       "video": null,
-      "slides": null,
-      "additional_material": []
+      "slides": {
+        "file": "meetings/meeting-04/slides/04-the-complexity-romance.pptx",
+        "label": "Slides",
+        "variant": "canonical",
+        "fileSize": 25
+      },
+      "additional_material": [
+        {
+          "label": "Why Tiny Functions Ruin Software Architecture",
+          "file": "meetings/meeting-04/recordings/04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a",
+          "category": "deep-dive",
+          "duration": 1142,
+          "fileSize": 18
+        },
+        {
+          "label": "Why Tiny Functions Ruin Software Architecture",
+          "file": "meetings/meeting-04/recordings/04-why-tiny-functions-ruin-software-architecture-debate.m4a",
+          "category": "debate",
+          "duration": 1142,
+          "fileSize": 18
+        },
+        {
+          "label": "Ousterhout versus Martin: Physical Evidence",
+          "file": "meetings/meeting-04/recordings/04-ousterhout-versus-martin-physical-evidence-critique.m4a",
+          "category": "critique",
+          "duration": 1023,
+          "fileSize": 16
+        },
+        {
+          "label": "The Complexity Romance Infographic",
+          "file": "meetings/meeting-04/resources/04-the-complexity-romance-infographic.png",
+          "fileSize": 0.5
+        }
+      ]
     }
   ]
 }
