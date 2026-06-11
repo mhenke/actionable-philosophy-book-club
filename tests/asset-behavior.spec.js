@@ -50,8 +50,8 @@ test.describe('Asset behaviour — what users actually do', () => {
     });
 
     test('Meeting Notes CTA navigates to reader', async ({ page }) => {
-        await page.route('**/meetings/meeting-03/README.md', route =>
-            route.fulfill({ body: '# Meeting 03\n\nThe Empirical Reality Check.' })
+        await page.route('**/meetings/meeting-04/README.md', route =>
+            route.fulfill({ body: '# Meeting 04\n\nThe Complexity Romance.' })
         );
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
@@ -59,14 +59,14 @@ test.describe('Asset behaviour — what users actually do', () => {
         await page.click('#upcoming-cta a');
 
         await expect(page.locator('#reader-view')).toBeVisible();
-        await expect(page.locator('#markdown-content h1')).toContainText('Meeting 03');
+        await expect(page.locator('#markdown-content h1')).toContainText('Meeting 04');
     });
 
     test('upcoming card renders meeting title from manifest', async ({ page }) => {
         await page.goto('/');
         await page.waitForFunction(() => window.__manifestLoaded === true);
 
-        const heading = page.locator('#next-meeting-heading');
+        const heading = page.locator('#upcoming-meeting-heading');
         await expect(heading).toBeVisible();
         await expect(heading).not.toBeEmpty();
     });

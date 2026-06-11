@@ -799,7 +799,7 @@
         <header class="sticky top-0 z-50" role="banner">
             <div class="banner-bar">
                 <div class="banner-inner">
-                    <nav aria-label="Site">
+                    <nav aria-label="Site" class="flex items-center justify-between w-full">
                         <span class="text-sm md:text-base swiss-caps flex items-center min-h-[44px]">A Philosophy of Software Design</span>
                         <div class="flex items-center gap-4">
                             <span class="text-[0.6875rem] swiss-light">John Ousterhout</span>
@@ -835,13 +835,13 @@
 
             <h1 class="sr-only">Actionable Philosophy Book Club</h1>
 
-            <!-- Next Meeting — header + CTA rendered by renderUpcomingMaterials() from manifest -->
-            <section class="card p-6 md:p-8 hidden-view" aria-label="Next Meeting">
+            <!-- Upcoming Meeting — header + CTA rendered by renderUpcomingMaterials() from manifest -->
+            <section class="card p-6 md:p-8 hidden-view" aria-label="Upcoming Meeting">
                 <div id="upcoming-card-header" class="mb-6"></div>
                 <div class="space-y-5">
                     <div id="upcoming-materials-container" data-asset-container></div>
-                    <div id="upcoming-what-to-read"></div>
                     <div id="upcoming-key-takeaway"></div>
+                    <div id="upcoming-what-to-read"></div>
                     <div id="upcoming-cta" class="flex justify-center"></div>
                     <div id="upcoming-additional" data-asset-container></div>
                 </div>

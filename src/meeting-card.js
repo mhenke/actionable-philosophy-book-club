@@ -342,7 +342,7 @@ function renderMeetingCard(meeting, { status }) {
     if (status === 'upcoming') {
         const header = _renderCardHeader(meeting, {
             tag: 'h2',
-            titleId: 'next-meeting-heading',
+            titleId: 'upcoming-meeting-heading',
             titleClass: 'text-2xl md:text-3xl font-bold tracking-tight',
             metaColor: 'var(--spectrum-2)',
             badgeText: 'Upcoming',
@@ -357,15 +357,15 @@ function renderMeetingCard(meeting, { status }) {
 
         const whatToRead = meeting.whatToRead
             ? `<div class="border p-5" style="background:var(--wash-2);border-color:var(--border-low);">
-                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">📖 What to Read</p>
+                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 mb-2">Required Reading</p>
                                 <p class="text-base leading-relaxed" style="color:var(--text-primary)">${escapeHTML(meeting.whatToRead)}</p>
                             </div>`
             : '';
 
         const takeaway = meeting.keyTakeaway
-            ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
-                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
-                                <p class="text-lg leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
+            ? `<div class="border p-5 md:p-6" style="background:var(--wash-1);border-color:var(--border-low);">
+                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 mb-3">Key Takeaway</p>
+                                <p class="text-xl leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
                             </div>`
             : '';
 

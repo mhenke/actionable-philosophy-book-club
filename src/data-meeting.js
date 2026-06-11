@@ -34,6 +34,7 @@ class Meeting {
     this.duration = manifestEntry.duration || 0;
     this.readmeUrl = manifestEntry.readmeUrl || '';
     this.keyTakeaway = manifestEntry.keyTakeaway || '';
+    this.whatToRead = manifestEntry.whatToRead || '';
   }
 
   /** Returns true when the meeting has a video asset and status is done. */
