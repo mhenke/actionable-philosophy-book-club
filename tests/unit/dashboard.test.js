@@ -35,6 +35,7 @@ function loadDashboard() {
             upcomingCardHeader: containerStub('upcoming-card-header'),
             upcomingMaterialsContainer: containerStub('upcoming-materials'),
             upcomingKeyTakeaway: containerStub('upcoming-key-takeaway'),
+            upcomingWhatToRead: containerStub('upcoming-what-to-read'),
             upcomingCta: containerStub('upcoming-cta'),
             upcomingAdditional: containerStub('upcoming-additional'),
             archiveCardsContainer: containerStub('archive-cards'),

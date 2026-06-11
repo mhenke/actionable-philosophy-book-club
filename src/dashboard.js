@@ -1,6 +1,6 @@
 (function() {
 'use strict';
-const { upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingCta, upcomingAdditional, archiveCardsContainer, draftCardsContainer, siteFooter } = window.DOM;
+const { upcomingCardHeader, upcomingMaterialsContainer, upcomingKeyTakeaway, upcomingWhatToRead, upcomingCta, upcomingAdditional, archiveCardsContainer, draftCardsContainer, siteFooter } = window.DOM;
 
 /** Clears a dashboard container and hides its parent section. Used when a section has no content to show. */
 function _hideEmptySection(container) {
@@ -20,6 +20,7 @@ function renderUpcomingMaterials() {
         upcomingMaterialsContainer.innerHTML = '';
         if (upcomingCardHeader) upcomingCardHeader.innerHTML = '';
         if (upcomingKeyTakeaway) upcomingKeyTakeaway.innerHTML = '';
+        if (upcomingWhatToRead) upcomingWhatToRead.innerHTML = '';
         if (upcomingCta) upcomingCta.innerHTML = '';
         if (upcomingAdditional) upcomingAdditional.innerHTML = '';
         return;
@@ -29,6 +30,7 @@ function renderUpcomingMaterials() {
     const parts = renderMeetingCard(meeting, { status: 'upcoming' });
     if (upcomingCardHeader) upcomingCardHeader.innerHTML = parts.header;
     upcomingMaterialsContainer.innerHTML = parts.materials;
+    if (upcomingWhatToRead) upcomingWhatToRead.innerHTML = parts.whatToRead;
     if (upcomingKeyTakeaway) upcomingKeyTakeaway.innerHTML = parts.takeaway;
     if (upcomingCta) upcomingCta.innerHTML = parts.cta;
     if (upcomingAdditional) upcomingAdditional.innerHTML = parts.disclosure;

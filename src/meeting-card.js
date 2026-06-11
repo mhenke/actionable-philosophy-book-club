@@ -317,7 +317,7 @@ function _renderCardHeader(meeting, opts = {}) {
  * @param {object} meeting - Meeting object with video/slides/additional_material etc.
  * @param {object} options
  * @param {'upcoming'|'archive'|'draft'} options.status - Card type
- * @returns {{ header: string, materials: string, takeaway: string, cta: string, disclosure: string }}
+ * @returns {{ header: string, materials: string, whatToRead: string, takeaway: string, cta: string, disclosure: string }}
  *   Parts for each card section. Archive/draft return empty strings for unused parts.
  */
 function renderMeetingCard(meeting, { status }) {
@@ -330,6 +330,7 @@ function renderMeetingCard(meeting, { status }) {
             }),
             materials: '<p class="text-[0.6875rem] uppercase tracking-[0.2em] text-muted mt-auto">Materials will appear when session is confirmed.</p>',
             takeaway: '',
+            whatToRead: '',
             cta: '',
             disclosure: '',
         };
@@ -354,6 +355,13 @@ function renderMeetingCard(meeting, { status }) {
             ? primaryRows.join('') + resourceStrip
             : '<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>';
 
+        const whatToRead = meeting.whatToRead
+            ? `<div class="border p-5" style="background:var(--wash-2);border-color:var(--border-low);">
+                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">📖 What to Read</p>
+                                <p class="text-base leading-relaxed" style="color:var(--text-primary)">${escapeHTML(meeting.whatToRead)}</p>
+                            </div>`
+            : '';
+
         const takeaway = meeting.keyTakeaway
             ? `<div class="border p-5" style="background:var(--wash-1);border-color:var(--border-low);">
                                 <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-spectrum-2 mb-2">Key Takeaway</p>
@@ -367,7 +375,7 @@ function renderMeetingCard(meeting, { status }) {
 
         const disclosure = buildPodcastDisclosure(additionalRows, additionalSummary);
 
-        return { header, materials, takeaway, cta, disclosure };
+        return { header, materials, whatToRead, takeaway, cta, disclosure };
     }
 
     // Archive
@@ -383,7 +391,7 @@ function renderMeetingCard(meeting, { status }) {
     const materials = primaryRows.join('') + resourceStrip + notesLink;
     const disclosure = buildPodcastDisclosure(additionalRows, additionalSummary);
 
-    return { header, materials, takeaway: '', cta: '', disclosure };
+    return { header, materials, takeaway: '', whatToRead: '', cta: '', disclosure };
 }
 
 window.renderMeetingCard = renderMeetingCard;
