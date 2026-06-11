@@ -44,10 +44,17 @@ stat --format=%s output.mp4 | awk '{printf "%.1f\n", $1/1024}'
 
 Write the floored duration and file size to `docs/manifest.json` under the meeting's asset entry. Duration in seconds (integer), fileSize in MB (integer).
 
-### 3. Replace and Verify
+### 3. Archive Source
+After compression succeeds and the output is in place, move the original source file from `~/Downloads/aposd/` to `~/Downloads/aposd/completed/`:
+
+```bash
+mv ~/Downloads/aposd/<original-source-file> ~/Downloads/aposd/completed/
+```
+
+### 4. Replace and Verify
 Always verify the output file opens correctly before deleting the original.
 
-### 4. Compress an Image
+### 5. Compress an Image
 Images use a dual-format strategy: full-resolution WebP for sharp display + scaled PNG as fallback.
 
 **Step A — Generate full-resolution WebP (primary):**

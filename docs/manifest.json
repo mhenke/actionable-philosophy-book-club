@@ -238,11 +238,11 @@
       "wash": "--wash-2",
       "readmeUrl": "meetings/meeting-04/README.md",
       "video": {
-        "file": "meetings/meeting-04/recordings/04-the-contrarian-coder.mp4",
+        "file": "meetings/meeting-04/recordings/04-the-dogma-disruption-unlearning-clean-code.mp4",
         "label": "Video Primer",
         "variant": "canonical",
-        "duration": 262,
-        "fileSize": 14
+        "duration": 363,
+        "fileSize": 20
       },
       "slides": {
         "file": "meetings/meeting-04/slides/04-the-complexity-romance.pptx",
@@ -276,6 +276,13 @@
           "label": "The Complexity Romance Infographic",
           "file": "meetings/meeting-04/resources/04-the-complexity-romance-infographic.png",
           "fileSize": 0.5
+        },
+        {
+          "label": "The Contrarian Coder",
+          "file": "meetings/meeting-04/recordings/04-the-contrarian-coder.mp4",
+          "category": "alternate",
+          "duration": 262,
+          "fileSize": 14
         }
       ]
     }
