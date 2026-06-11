@@ -1,6 +1,6 @@
 ---
 name: asset-compressor
-description: Compress PDF, MP4, and PPTX files to minimize repository size. Every asset is compressed unconditionally — no size gate, no confirmation.
+description: Compress PDF, MP4, PPTX, and image files to minimize repository size. Every asset is compressed unconditionally — no size gate, no confirmation.
 metadata:
   internal: true
 ---
@@ -14,6 +14,7 @@ This skill provides automated workflows for shrinking large media files common i
 - **PDF**: Uses Ghostscript with `/ebook` settings.
 - **MP4/Video**: Uses FFmpeg with x264/AAC and 720p scaling.
 - **PPTX**: Re-compresses the OOXML package with maximum ZIP compression.
+- **PNG/Image**: Full-resolution WebP (quality 70) + 50%-scale PNG fallback. Uses ImageMagick `convert` for PNG and FFmpeg for WebP.
 
 
 ## Staging Folder
@@ -46,7 +47,33 @@ Write the floored duration and file size to `docs/manifest.json` under the meeti
 ### 3. Replace and Verify
 Always verify the output file opens correctly before deleting the original.
 
+### 4. Compress an Image
+Images use a dual-format strategy: full-resolution WebP for sharp display + scaled PNG as fallback.
+
+**Step A — Generate full-resolution WebP (primary):**
+```bash
+ffmpeg -i <input>.png -quality 70 -y <output>.webp
+```
+
+Verify the webp is under 512KB. If over, reduce quality to 60 and retry.
+
+**Step B — Generate scaled PNG (fallback):**
+```bash
+convert <input>.png -resize 50% -quality 80 -strip <output>.png
+```
+
+The 50% scale keeps the PNG fallback reasonable in size while the full-res webp handles sharp display. Both files go into the same `resources/` directory.
+
+**Step C — Verify both files:**
+```bash
+du -k <output>.webp <output>.png
+identify <output>.png | awk '{print $3}'
+```
+
+The webp must be under 512KB (CI gate). The PNG fallback can exceed 512KB — only webp and png files under 512KB pass the CI image gate, but the gate checks both formats independently.
+
 ## Quality Standards
+- Images: Full-resolution WebP at quality 70 (primary), 50%-scale PNG at quality 80 (fallback). WebP must be under 512KB.
 - Videos are scaled to a maximum height of 720p.
 - PDFs use 150dpi (/ebook) settings.
 - PPTX compression currently focuses on package-level ZIP optimization.
