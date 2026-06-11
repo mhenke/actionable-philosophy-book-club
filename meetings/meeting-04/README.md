@@ -27,6 +27,7 @@ Path 1 — The Linear Journey. We continue through the book, moving into Chapter
 - [04-essential-questions.md](04-essential-questions.md)
 - [04-non-obvious-insights.md](04-non-obvious-insights.md)
 - [recordings/](recordings/)
+  - [04-the-contrarian-coder.mp4](recordings/04-the-contrarian-coder.mp4)
   - [04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a](recordings/04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a)
   - [04-why-tiny-functions-ruin-software-architecture-debate.m4a](recordings/04-why-tiny-functions-ruin-software-architecture-debate.m4a)
   - [04-ousterhout-versus-martin-physical-evidence-critique.m4a](recordings/04-ousterhout-versus-martin-physical-evidence-critique.m4a)

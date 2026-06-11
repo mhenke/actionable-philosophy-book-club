@@ -237,7 +237,13 @@
       "color": "spectrum-2",
       "wash": "--wash-2",
       "readmeUrl": "meetings/meeting-04/README.md",
-      "video": null,
+      "video": {
+        "file": "meetings/meeting-04/recordings/04-the-contrarian-coder.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 262,
+        "fileSize": 14
+      },
       "slides": {
         "file": "meetings/meeting-04/slides/04-the-complexity-romance.pptx",
         "label": "Slides",
