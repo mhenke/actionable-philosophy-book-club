@@ -237,7 +237,7 @@
       "color": "spectrum-2",
       "wash": "--wash-2",
       "keyTakeaway": "Depth minimizes dependencies; fragmentation maximizes them. Never sacrifice architectural depth for short methods \u2014 build deep modules that hide complexity behind simple interfaces.",
-      "whatToRead": "Comments-first design, the Obviousness Litmus Test, and Design it Twice — three principles that turn documentation from afterthought into architecture.",
+      "whatToRead": "Chapters 9\u201311 of A Philosophy of Software Design",
       "readmeUrl": "meetings/meeting-04/README.md",
       "video": {
         "file": "meetings/meeting-04/recordings/04-the-dogma-disruption-unlearning-clean-code.mp4",

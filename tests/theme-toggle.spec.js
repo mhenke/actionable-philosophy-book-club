@@ -100,7 +100,7 @@ test.describe('Manual Theme Toggle', () => {
             document.documentElement.classList.add('light-theme');
         });
         
-        const takeaway = page.locator('#upcoming-key-takeaway p.italic');
+        const takeaway = page.locator('#upcoming-key-takeaway p.text-base');
         await expect(takeaway).toBeVisible();
 
         let color = await takeaway.evaluate((el) => window.getComputedStyle(el).color);

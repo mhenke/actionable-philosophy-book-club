@@ -356,16 +356,16 @@ function renderMeetingCard(meeting, { status }) {
             : '<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>';
 
         const whatToRead = meeting.whatToRead
-            ? `<div class="border p-5" style="background:var(--wash-2);border-color:var(--border-low);">
-                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 mb-2">Required Reading</p>
-                                <p class="text-base leading-relaxed" style="color:var(--text-primary)">${escapeHTML(meeting.whatToRead)}</p>
+            ? `<div class="what-to-read-block">
+                                <p class="what-to-read-label"><span aria-hidden="true">📖</span> What to Read</p>
+                                <p class="what-to-read-text">${escapeHTML(meeting.whatToRead)}</p>
                             </div>`
             : '';
 
         const takeaway = meeting.keyTakeaway
-            ? `<div class="border p-5 md:p-6" style="background:var(--wash-1);border-color:var(--border-low);">
-                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-spectrum-2 mb-3">Key Takeaway</p>
-                                <p class="text-xl leading-relaxed italic" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
+            ? `<div class="mb-6">
+                                <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-muted mb-3">Key Takeaway</p>
+                                <p class="text-base leading-relaxed" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
                             </div>`
             : '';
 

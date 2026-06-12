@@ -4,7 +4,7 @@
 
 ## High-Level Summary
 
-Path 1 — The Linear Journey. We continue through the book, moving into Chapters 9–11 where Ousterhout tackles the tension between "different" and "better." This session examines why tiny functions can ruin software architecture, and whether the romance of simplicity is a design principle or a mirage.
+We continue through the book, moving into Chapters 9–11 where Ousterhout tackles the tension between "different" and "better." This session examines why tiny functions can ruin software architecture, and whether the romance of simplicity is a design principle or a mirage.
 
 ## Agenda (60 Minutes)
 
