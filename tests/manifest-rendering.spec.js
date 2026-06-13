@@ -4,6 +4,17 @@ test.beforeEach(async ({ page }) => { await page.addInitScript(() => { window.__
 
 test.describe('Manifest Rendering', () => {
 
+    test('archive cards are sorted by date descending (most recent first)', async ({ page }) => {
+        await page.goto('/');
+        const titles = await page.locator('#archive-cards-container .card h3').allTextContents();
+        expect(titles).toEqual([
+            'The Empirical Reality Check',
+            'Complexity Engineering',
+            'Deep Systems',
+            'The Kickoff',
+        ]);
+    });
+
     test('draft meetings render in drafts section, not archive', async ({ page }) => {
         await page.goto('/');
         const expectedDone = await page.evaluate(() => window.MEETINGS.filter(m => m.status === 'done').length);

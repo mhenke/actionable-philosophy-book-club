@@ -62,9 +62,13 @@ function _renderCardList(containerId, meetings, cardRenderer) {
     container.appendChild(fragment);
 }
 
+/** Parse "DD MMM YYYY" date string to a Date for sorting. */
+function _parseDate(dateStr) { return new Date(dateStr); }
+
 /** Renders archive cards for completed meetings using renderMeetingCard. */
 function renderArchiveCards() {
     const done = findMeetings({ status: window.STATUS.DONE });
+    done.sort((a, b) => _parseDate(b.date) - _parseDate(a.date));
     _renderCardList('archive-cards-container', done, meeting => {
         const parts = renderMeetingCard(meeting, { status: 'archive' });
         return parts.header + parts.materials + parts.disclosure;
@@ -113,6 +117,6 @@ window.renderArchiveCards = renderArchiveCards;
 window.renderDraftCards = renderDraftCards;
 window.setupManifestRetryUI = setupManifestRetryUI;
 if (window.__TEST__) {
-    window.__dashboardTestHooks = { hideEmptySection: _hideEmptySection };
+    window.__dashboardTestHooks = { hideEmptySection: _hideEmptySection, parseDate: _parseDate };
 }
 })();
