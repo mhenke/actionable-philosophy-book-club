@@ -283,14 +283,6 @@
           "caption": "Examines how over-fragmentation into shallow methods increases system-wide cognitive load despite making individual functions look cleaner"
         },
         {
-          "label": "Why Tiny Functions Ruin Software Architecture",
-          "file": "meetings/meeting-04/recordings/04-why-tiny-functions-ruin-software-architecture-debate.m4a",
-          "category": "debate",
-          "duration": 1142,
-          "fileSize": 18,
-          "caption": "Structured debate on deep modules versus the fragmentation encouraged by Clean Code's short-method heuristics"
-        },
-        {
           "label": "Ousterhout versus Martin: Physical Evidence",
           "file": "meetings/meeting-04/recordings/04-ousterhout-versus-martin-physical-evidence-critique.m4a",
           "category": "critique",

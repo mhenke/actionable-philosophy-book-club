@@ -39,7 +39,6 @@ We continue through the book, moving into Chapters 9–11 where Ousterhout tackl
   - [04-the-dogma-disruption-unlearning-clean-code.mp4](recordings/04-the-dogma-disruption-unlearning-clean-code.mp4)
   - [04-the-contrarian-coder.mp4](recordings/04-the-contrarian-coder.mp4) (alternate primer)
   - [04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a](recordings/04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a)
-  - [04-why-tiny-functions-ruin-software-architecture-debate.m4a](recordings/04-why-tiny-functions-ruin-software-architecture-debate.m4a)
   - [04-ousterhout-versus-martin-physical-evidence-critique.m4a](recordings/04-ousterhout-versus-martin-physical-evidence-critique.m4a)
 - [slides/](slides/)
   - [04-the-complexity-romance.pptx](slides/04-the-complexity-romance.pptx)

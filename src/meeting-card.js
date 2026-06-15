@@ -164,6 +164,7 @@ function buildVideoRow(meeting) {
     const session = escapeHTML(meeting.session);
     const label = escapeHTML(meeting.video.label ?? '');
     const file = escapeHTML(meeting.video.file ?? '');
+    const caption = meeting.video.caption ? escapeHTML(meeting.video.caption) : '';
     const metaSuffix = [videoDuration, videoSize].filter(Boolean).map(s => ', ' + s).join('');
     return _buildAssetRow({
         id: `asset-${id}-video-${videoSlug}`,
@@ -177,6 +178,7 @@ function buildVideoRow(meeting) {
         downloadHref: file,
         downloadLabel: `Download ${label}${metaSuffix} (${session})`,
         meta: videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '',
+        caption: caption,
     });
 }
 
@@ -184,6 +186,7 @@ function buildSlidesRow(meeting) {
     const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
     const file = escapeHTML(meeting.slides.file ?? '');
     const label = escapeHTML(meeting.slides.label ?? '');
+    const caption = meeting.slides.caption ? escapeHTML(meeting.slides.caption) : '';
     const viewerUrl = window.buildPPTXViewerURL(meeting.slides.file ?? '');
     return _buildAssetRow({
         icon: '\uD83D\uDCCA',
@@ -195,6 +198,7 @@ function buildSlidesRow(meeting) {
         downloadHref: file,
         downloadLabel: `Download slides (${escapeHTML(meeting.session)})`,
         meta: slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '',
+        caption: caption,
     });
 }
 
@@ -206,7 +210,7 @@ function buildAdditionalRow(item, meeting) {
         ? { icon: copy.icon || '\uD83C\uDF99', color: copy.color || 'var(--spectrum-2)' }
         : (isAudio ? { icon: '\uD83C\uDF99', color: 'var(--spectrum-2)' } : { icon: '\uD83D\uDCC4', color: 'var(--spectrum-2)' });
     const badgeLabel = category ? (copy.label || category) : '';
-    const caption = category ? (copy.title || '') : '';
+    const caption = item.caption ? escapeHTML(item.caption) : (category ? (copy.title || '') : '');
     const itemDuration = item.duration ? formatDuration(item.duration) : '';
     const itemSize = item.fileSize ? formatFileSize(item.fileSize) : '';
     const itemMeta = [itemDuration, itemSize].filter(Boolean).join(' \u00B7 ');
