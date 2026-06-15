@@ -132,7 +132,7 @@ function _buildAssetRow(config) {
     const metaPart = config.meta ? `<span class="asset-meta">${config.meta}</span>` : '';
     const captionPart = config.caption ? `<span class="podcast-caption">${escapeHTML(config.caption)}</span>` : '';
 
-    const innerContent = `<span class="asset-link-top">${iconPart}${labelPart}</span>${metaPart}${captionPart}`;
+    const innerContent = `<span class="asset-link-top">${iconPart}${labelPart}${metaPart}</span>${captionPart}`;
 
     const linkContent = config.href
         ? `<a href="${escapeHTML(config.href)}" class="asset-link asset-link--stacked"${config.ariaLabel ? ` aria-label="${config.ariaLabel}"` : ''}${config.hrefTarget ? ` target="${config.hrefTarget}"` : ''}${config.hrefRel ? ` rel="${config.hrefRel}"` : ''}>${innerContent}</a>`

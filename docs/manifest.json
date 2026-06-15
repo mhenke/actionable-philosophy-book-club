@@ -34,14 +34,14 @@
         "variant": "canonical",
         "duration": 189,
         "fileSize": 31,
-        "caption": "Covers information hiding, general-purpose design, layered abstraction, and pulling complexity downward (Chapters 5\u20138 primer)"
+        "caption": "Information hiding, layered abstraction, pulling complexity downward (Chapters 5–8)"
       },
       "slides": {
         "file": "meetings/meeting-02/slides/02-the-complexity-case.pptx",
         "label": "Slides",
         "variant": "canonical",
         "fileSize": 34,
-        "caption": "Discussion deck: pass-through methods, decorator anti-patterns, general-purpose vs. YAGNI, and path voting options"
+        "caption": "Pass-through methods, decorators, general-purpose vs. YAGNI, path voting"
       },
       "additional_material": [
         {
@@ -58,7 +58,7 @@
           "category": "debate",
           "duration": 1319,
           "fileSize": 20,
-          "caption": "Structured debate on whether small functions reduce or merely redistribute complexity"
+          "caption": "Do small functions reduce complexity or just redistribute it?"
         },
         {
           "label": "General Purpose Design Stops Information Leaks",
@@ -66,7 +66,7 @@
           "category": "critique",
           "duration": 1206,
           "fileSize": 19,
-          "caption": "Critiques information leakage in temporal decomposition and evaluates the general-purpose sweet spot"
+          "caption": "Information leakage in temporal decomposition and the general-purpose sweet spot"
         },
         {
           "label": "Four Strategies",
@@ -95,14 +95,14 @@
         "variant": "canonical",
         "duration": 287,
         "fileSize": 17,
-        "caption": "Introduces the complexity waterfall, tactical tornados, and the cost of shallow modules (Chapters 1\u20134 primer)"
+        "caption": "Complexity waterfall, tactical tornados, shallow modules (Chapters 1–4)"
       },
       "slides": {
         "file": "meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx",
         "label": "Slides",
         "variant": "canonical",
         "fileSize": 19,
-        "caption": "Discussion deck: classitis, unknown unknowns, shallow vs. deep, and AI modularity debt"
+        "caption": "Classitis, unknown unknowns, shallow vs. deep, AI modularity debt"
       },
       "additional_material": [
         {
@@ -119,7 +119,7 @@
           "category": "debate",
           "duration": 1415,
           "fileSize": 22,
-          "caption": "Debates whether clean code heuristics hold up when LLMs generate the implementation"
+          "caption": "Clean code heuristics under LLM-generated code"
         },
         {
           "label": "How Tactical Programming Creates Complexity",
@@ -127,7 +127,7 @@
           "category": "critique",
           "duration": 1080,
           "fileSize": 17,
-          "caption": "Critiques the tactical tornado mindset and its hidden cost to long-term system integrity"
+          "caption": "The tactical tornado's hidden cost to long-term integrity"
         },
         {
           "label": "Architecture of Simplicity",
@@ -156,14 +156,14 @@
         "variant": "canonical",
         "duration": 180,
         "fileSize": 11,
-        "caption": "Establishes club goals, distributes copies of A Philosophy of Software Design, and aligns on zero-ceremony meeting format"
+        "caption": "Club goals, book distribution, zero-ceremony format"
       },
       "slides": {
         "file": "meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx",
         "label": "Slides",
         "variant": "canonical",
         "fileSize": 6,
-        "caption": "Kickoff presentation: club cadence, reading plan, and discussion norms"
+        "caption": "Cadence, reading plan, discussion norms"
       },
       "additional_material": []
     },
@@ -176,21 +176,21 @@
       "color": "spectrum-1",
       "wash": "--wash-1",
       "readmeUrl": "meetings/meeting-03/README.md",
-      "keyTakeaway": "Abstraction layers are a bet \u2014 the question is whether they compress complexity or merely relocate it where the linters can't see.",
+      "keyTakeaway": "Abstraction layers are a bet — the question is whether they compress complexity or merely relocate it where the linters can't see.",
       "video": {
         "file": "meetings/meeting-03/recordings/03-surviving-system-rot.mp4",
         "label": "Video Primer",
         "variant": "canonical",
         "duration": 374,
         "fileSize": 24,
-        "caption": "Recaps deep vs. shallow modules and introduces the empirical evidence gauntlet: Parnas decomposition, coupling metrics, and the exception tax"
+        "caption": "Deep vs. shallow modules and the empirical evidence gauntlet"
       },
       "slides": {
         "file": "meetings/meeting-03/slides/03-shattering-the-abstraction-illusion.pptx",
         "label": "Slides",
         "variant": "canonical",
         "fileSize": 12,
-        "caption": "Discussion deck: Parnas decomposition, API usability tokens, Stripe versioning, Bavota coupling study, and the runtime tax evidence"
+        "caption": "Parnas decomposition, API usability, Stripe versioning, coupling studies"
       },
       "additional_material": [
         {
@@ -201,7 +201,7 @@
           "source_filename": "Navigating_the_Architecture_Ley_Lines.mp4",
           "duration": 547,
           "fileSize": 26,
-          "caption": "Alternate primer on abstraction collapse under hardware constraints and organizational friction"
+          "caption": "Abstraction collapse under hardware constraints and org friction"
         },
         {
           "label": "Empirical Reality Check Primer",
@@ -209,7 +209,7 @@
           "category": "alternate",
           "duration": 307,
           "fileSize": 9,
-          "caption": "Tactical refresher on deep vs shallow modules and the empirical evidence gauntlet ahead"
+          "caption": "Refresher on deep vs. shallow modules and the evidence gauntlet"
         },
         {
           "label": "Why Software Abstractions Fail Under Pressure",
@@ -225,7 +225,7 @@
           "category": "debate",
           "duration": 1500,
           "fileSize": 24,
-          "caption": "Debates whether Parnas's information hiding survives modern microservice architectures and performance demands"
+          "caption": "Does Parnas's information hiding survive microservices and performance demands?"
         },
         {
           "label": "Automating Semantic Coupling & Performance Thresholds",
@@ -233,7 +233,7 @@
           "category": "critique",
           "duration": 428,
           "fileSize": 7,
-          "caption": "Critiques the gap between academic coupling metrics and practical CI/CD tooling, proposing automation thresholds"
+          "caption": "Academic coupling metrics vs. practical CI/CD tooling"
         },
         {
           "label": "Temple of Abstraction Guide",
@@ -255,8 +255,8 @@
       "status": "upcoming",
       "color": "spectrum-2",
       "wash": "--wash-2",
-      "keyTakeaway": "Depth minimizes dependencies; fragmentation maximizes them. Never sacrifice architectural depth for short methods \u2014 build deep modules that hide complexity behind simple interfaces.",
-      "whatToRead": "Chapters 9\u201311 of A Philosophy of Software Design",
+      "keyTakeaway": "Depth minimizes dependencies; fragmentation maximizes them. Never sacrifice architectural depth for short methods — build deep modules that hide complexity behind simple interfaces.",
+      "whatToRead": "Chapters 9–11 of A Philosophy of Software Design",
       "readmeUrl": "meetings/meeting-04/README.md",
       "video": {
         "file": "meetings/meeting-04/recordings/04-the-dogma-disruption-unlearning-clean-code.mp4",
@@ -264,14 +264,14 @@
         "variant": "canonical",
         "duration": 363,
         "fileSize": 20,
-        "caption": "Challenges the Clean Code orthodoxy and introduces Ousterhout\u2019s case for module depth over method brevity (Chapters 9\u201311 primer)"
+        "caption": "Clean Code orthodoxy vs. module depth (Chapters 9–11)"
       },
       "slides": {
         "file": "meetings/meeting-04/slides/04-the-complexity-romance.pptx",
         "label": "Slides",
         "variant": "canonical",
         "fileSize": 35,
-        "caption": "Discussion deck: combining vs. separating, exception handling strategies, defining errors out of existence, and the Design it Twice principle"
+        "caption": "Combining vs. separating, exception handling, defining errors away, Design it Twice"
       },
       "additional_material": [
         {
@@ -288,7 +288,7 @@
           "category": "debate",
           "duration": 1315,
           "fileSize": 20,
-          "caption": "Structured debate on deep modules versus the fragmentation encouraged by Clean Code's short-method heuristics"
+          "caption": "Deep modules vs. Clean Code's short-method heuristics"
         },
         {
           "label": "Ousterhout versus Martin: Physical Evidence",
@@ -296,7 +296,7 @@
           "category": "critique",
           "duration": 1023,
           "fileSize": 16,
-          "caption": "Critiques the physical evidence behind Ousterhout's arguments and their tension with defensive programming conventions"
+          "caption": "Ousterhout's evidence and its tension with defensive programming"
         },
         {
           "label": "The Contrarian Coder",
