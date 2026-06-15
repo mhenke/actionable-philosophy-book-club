@@ -100,6 +100,33 @@ All meeting assets follow this pattern:
 
 `NN` is the zero-padded meeting number (`00`, `01`, `02`…).
 
+## Asset Descriptions
+
+After renaming and compressing an asset, add it to the meeting README's Meeting Materials section with a content-specific description. Use the emoji format with duration and file size:
+
+```
+  - 🎬 [NN-slug.mp4](recordings/NN-slug.mp4) Mm Ss · XXMB — Specific description
+  - 📊 [NN-slug.pptx](slides/NN-slug.pptx) — Specific description
+  - 🔬 [NN-slug-deep-dive.m4a](recordings/NN-slug-deep-dive.m4a) Mm Ss · XXMB — Specific description
+  - ⚔️ [NN-slug-debate.m4a](recordings/NN-slug-debate.m4a) Mm Ss · XXMB — Specific description
+  - 🔍 [NN-slug-critique.m4a](recordings/NN-slug-critique.m4a) Mm Ss · XXMB — Specific description
+```
+
+Emoji categories: 🎬 video, 📊 slides, 🔬 deep dive, ⚔️ debate, 🔍 critique.
+
+Descriptions must be content-specific — capture the unique angle or argument of each recording. Never use generic descriptions like "An exploration of the session topic" or "A structured debate between two design perspectives." Instead, reference the specific concepts, authors, or arguments the recording covers (e.g., "Examines how over-fragmentation into shallow methods increases system-wide cognitive load despite making individual functions look cleaner").
+
+Pull duration with:
+```bash
+ffprobe -v error -show_entries format=duration -of csv=p=0 <file> | awk '{printf "%.0f", int($1)}'
+```
+Convert seconds to `Mm Ss` format (e.g., 374 → `6m 14s`).
+
+Pull size with:
+```bash
+stat --format=%s <file> | awk '{printf "%.0f", $1/1024/1024}'
+```
+
 ## Rename & Organize
 
 Use `rename_asset.sh` to rename a file to convention and move it into the correct meeting subdirectory.

@@ -48,6 +48,21 @@ Each meeting README must follow meeting 02's section order exactly:
 
 Always include `NN-essential-questions.md` and `NN-non-obvious-insights.md` files in the meeting directory. The Meeting Materials listing order is: docs first, then recordings, then resources, then slides.
 
+## Asset descriptions
+
+Every recording and slide in the Meeting Materials section must have a content-specific description using this format:
+
+```
+  - 🎬 [NN-slug.mp4](recordings/NN-slug.mp4) Mm Ss · XXMB — Specific description
+  - 📊 [NN-slug.pptx](slides/NN-slug.pptx) — Specific description
+  - 🔬 [NN-slug-deep-dive.m4a](recordings/...) Mm Ss · XXMB — Specific description
+  - ⚔️ [NN-slug-debate.m4a](recordings/...) Mm Ss · XXMB — Specific description
+  - 🔍 [NN-slug-critique.m4a](recordings/...) Mm Ss · XXMB — Specific description
+```
+
+Emoji categories: 🎬 video, 📊 slides, 🔬 deep dive, ⚔️ debate, 🔍 critique.
+Descriptions must be content-specific (not "An exploration of the session topic") — capture the unique angle or argument of each recording. Pull duration with `ffprobe -v error -show_entries format=duration -of csv=p=0 <file> | awk '{printf "%.0f", int($1)}'` and size with `stat --format=%s <file> | awk '{printf "%.1f", $1/1024/1024}'`.
+
 ## Hard constraints
 
 - **Never populate `video`, `slides`, or `additional_material[]` in a manifest entry until the actual media files exist on disk.** For upcoming/draft meetings with no assets committed yet: `video: null`, `slides: null`, `additional_material: []`. The code handles null gracefully ("Materials available closer to the meeting."). Adding nonexistent paths creates 404 links on the dashboard card.

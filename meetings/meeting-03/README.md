@@ -66,13 +66,13 @@ Options will be added here when finalized. The group votes during wrap-up.
 - [03-supplement-2-empirical.md](03-supplement-2-empirical.md)
 - [03-supplement-3-runtime-tax.md](03-supplement-3-runtime-tax.md)
 - [recordings/](recordings/)
-  - [03-empirical-reality-check.mp4](recordings/03-empirical-reality-check.mp4)
-  - [03-navigating-the-architecture-alternate.mp4](recordings/03-navigating-the-architecture-alternate.mp4)
-  - [03-why-software-abstractions-fail-under-pressure-deep-dive.m4a](recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a)
-  - [03-high-price-of-architectural-purity-debate.m4a](recordings/03-high-price-of-architectural-purity-debate.m4a)
-  - [03-automating-semantic-coupling-performance-thresholds-critique.m4a](recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a)
+  - 🎬 [03-surviving-system-rot.mp4](recordings/03-surviving-system-rot.mp4) 6m 14s · 24MB — Recaps deep vs. shallow modules and introduces the empirical evidence gauntlet: Parnas decomposition, coupling metrics, and the exception tax
+  - 🎬 [03-navigating-the-architecture-alternate.mp4](recordings/03-navigating-the-architecture-alternate.mp4) 9m 7s · 26MB — Alternate primer on abstraction collapse under hardware constraints and organizational friction
+  - 🔬 [03-why-software-abstractions-fail-under-pressure-deep-dive.m4a](recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a) 31m 53s · 29MB — Deep analysis of Lemire's exception tax benchmarks, Java NIO Direct Buffers, and when abstractions collapse under load
+  - ⚔️ [03-high-price-of-architectural-purity-debate.m4a](recordings/03-high-price-of-architectural-purity-debate.m4a) 25m 0s · 23MB — Debates whether Parnas's information hiding survives modern microservice architectures and performance demands
+  - 🔍 [03-automating-semantic-coupling-performance-thresholds-critique.m4a](recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a) 7m 8s · 7MB — Critiques the gap between academic coupling metrics and practical CI/CD tooling, proposing automation thresholds
 - [slides/](slides/)
-  - [03-shattering-the-abstraction-illusion.pptx](slides/03-shattering-the-abstraction-illusion.pptx)
+  - 📊 [03-shattering-the-abstraction-illusion.pptx](slides/03-shattering-the-abstraction-illusion.pptx) — Discussion deck: Parnas decomposition, API usability tokens, Stripe versioning, Bavota coupling study, and the runtime tax evidence
 - [resources/](resources/)
   - [03-temple-of-abstraction-guide.png](resources/03-temple-of-abstraction-guide.png)
   - [03-complexity-romance-learning-paths.png](resources/03-complexity-romance-learning-paths.png)

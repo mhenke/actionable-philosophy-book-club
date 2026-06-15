@@ -17,7 +17,7 @@ The inaugural kickoff for the Actionable Philosophy Book Club. We established ou
 
 ## Meeting Materials
 - [recordings/](recordings/)
-  - [00-The-Complexity-Governor.mp4](recordings/00-The-Complexity-Governor.mp4)
+  - 🎬 [00-The-Complexity-Governor.mp4](recordings/00-The-Complexity-Governor.mp4) 3m 0s · 11MB — Establishes club goals, distributes copies of A Philosophy of Software Design, and aligns on zero-ceremony meeting format
 - [resources/](resources/)
 - [slides/](slides/)
-  - [00-Strategic-Design-for-the-AI-Era.pptx](slides/00-Strategic-Design-for-the-AI-Era.pptx)
+  - 📊 [00-Strategic-Design-for-the-AI-Era.pptx](slides/00-Strategic-Design-for-the-AI-Era.pptx) — Kickoff presentation: club cadence, reading plan, and discussion norms
