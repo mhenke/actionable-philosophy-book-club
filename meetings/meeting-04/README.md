@@ -36,12 +36,12 @@ We continue through the book, moving into Chapters 9–11 where Ousterhout tackl
 - [04-essential-questions.md](04-essential-questions.md)
 - [04-non-obvious-insights.md](04-non-obvious-insights.md)
 - [recordings/](recordings/)
-  - 🎬 [04-the-dogma-disruption-unlearning-clean-code.mp4](recordings/04-the-dogma-disruption-unlearning-clean-code.mp4) 6m 3s · 20MB — Challenges the Clean Code orthodoxy and introduces Ousterhout's case for module depth over method brevity (Chapters 9–11 primer)
-  - 🎬 [04-the-contrarian-coder.mp4](recordings/04-the-contrarian-coder.mp4) 4m 22s · 14MB — Alternate primer questioning whether the romance of simplicity is a design principle or a mirage
-  - 🔬 [04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a](recordings/04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a) 19m 2s · 18MB — Examines how over-fragmentation into shallow methods increases system-wide cognitive load despite making individual functions look cleaner
-  - ⚔️ [04-deep-modules-versus-clean-code-fragmentation-debate.m4a](recordings/04-deep-modules-versus-clean-code-fragmentation-debate.m4a) 21m 55s · 20MB — Structured debate on deep modules versus the fragmentation encouraged by Clean Code's short-method heuristics
-  - 🔍 [04-ousterhout-versus-martin-physical-evidence-critique.m4a](recordings/04-ousterhout-versus-martin-physical-evidence-critique.m4a) 17m 3s · 16MB — Critiques the physical evidence behind Ousterhout's arguments and their tension with defensive programming conventions
+  - [04-the-dogma-disruption-unlearning-clean-code.mp4](recordings/04-the-dogma-disruption-unlearning-clean-code.mp4)
+  - [04-the-contrarian-coder.mp4](recordings/04-the-contrarian-coder.mp4) (alternate primer)
+  - [04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a](recordings/04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a)
+  - [04-why-tiny-functions-ruin-software-architecture-debate.m4a](recordings/04-why-tiny-functions-ruin-software-architecture-debate.m4a)
+  - [04-ousterhout-versus-martin-physical-evidence-critique.m4a](recordings/04-ousterhout-versus-martin-physical-evidence-critique.m4a)
 - [slides/](slides/)
-  - 📊 [04-the-complexity-romance.pptx](slides/04-the-complexity-romance.pptx) — Discussion deck: combining vs. separating, exception handling strategies, defining errors out of existence, and the Design it Twice principle
+  - [04-the-complexity-romance.pptx](slides/04-the-complexity-romance.pptx)
 - [resources/](resources/)
   - [04-the-complexity-romance-infographic.png](resources/04-the-complexity-romance-infographic.png)

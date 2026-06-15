@@ -59,13 +59,12 @@ The group selected Path 2 (with modifications) to test Ousterhout's abstractions
 - [02-non-obvious-insights.md](02-non-obvious-insights.md)
 - [02-complexity-case-options.md](02-complexity-case-options.md)
 - [recordings/](recordings/)
-  - 🎬 [02-complexity-governance-the-four-pillars-of-deep-modules.mp4](recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4) 3m 9s · 10MB — Covers information hiding, general-purpose design, layered abstraction, and pulling complexity downward (Chapters 5–8 primer)
-  - 🎬 [02-Clean-Code-Paradox-deep-dive.mp4](recordings/02-Clean-Code-Paradox-deep-dive.mp4) 8m 8s · 31MB — Video deep dive examining why clean-looking code can signal shallow architecture
-  - 🔬 [02-clean-code-rots-codebase-deep-dive.m4a](recordings/02-clean-code-rots-codebase-deep-dive.m4a) 18m 12s · 17MB — Analyzes how over-fragmentation following Clean Code heuristics accelerates codebase decay
-  - ⚔️ [02-deep-modules-vs-small-functions-debate.m4a](recordings/02-deep-modules-vs-small-functions-debate.m4a) 21m 58s · 20MB — Structured debate on whether small functions reduce or merely redistribute complexity
-  - 🔍 [02-info-leaks-general-purpose-critique.m4a](recordings/02-info-leaks-general-purpose-critique.m4a) 20m 6s · 19MB — Critiques information leakage in temporal decomposition and evaluates the general-purpose sweet spot
+  - [02-complexity-governance-the-four-pillars-of-deep-modules.mp4](recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4)
+  - [02-clean-code-rots-codebase-deep-dive.m4a](recordings/02-clean-code-rots-codebase-deep-dive.m4a)
+  - [02-deep-modules-vs-small-functions-debate.m4a](recordings/02-deep-modules-vs-small-functions-debate.m4a)
+  - [02-info-leaks-general-purpose-critique.m4a](recordings/02-info-leaks-general-purpose-critique.m4a)
 - [resources/](resources/)
   - [02-four-strategies.png](resources/02-four-strategies.png)
   - [02-choose-your-next-meeting.png](resources/02-choose-your-next-meeting.png)
 - [slides/](slides/)
-  - 📊 [02-the-complexity-case.pptx](slides/02-the-complexity-case.pptx) — Discussion deck: pass-through methods, decorator anti-patterns, general-purpose vs. YAGNI, and path voting options
+  - [02-the-complexity-case.pptx](slides/02-the-complexity-case.pptx)

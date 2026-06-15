@@ -111,7 +111,7 @@ function buildAdditionalRow(item, meeting) {
         ? { icon: copy.icon || '\uD83C\uDF99', color: copy.color || 'var(--spectrum-2)' }
         : (isAudio ? { icon: '\uD83C\uDF99', color: 'var(--spectrum-2)' } : { icon: '\uD83D\uDCC4', color: 'var(--spectrum-2)' });
     const badgeLabel = category ? (copy.label || category) : '';
-    const caption = category ? (copy.title || '') : '';
+    const caption = item.caption || (category ? (copy.title || '') : '');
     const itemDuration = item.duration ? formatDuration(item.duration) : '';
     const itemSize = item.fileSize ? formatFileSize(item.fileSize) : '';
     const itemMeta = [itemDuration, itemSize].filter(Boolean).join(' \u00B7 ');

@@ -47,21 +47,24 @@
           "file": "meetings/meeting-02/recordings/02-clean-code-rots-codebase-deep-dive.m4a",
           "category": "deep-dive",
           "duration": 1093,
-          "fileSize": 17
+          "fileSize": 17,
+          "caption": "Analyzes how over-fragmentation following Clean Code heuristics accelerates codebase decay"
         },
         {
           "label": "Deep Modules vs Small Functions",
           "file": "meetings/meeting-02/recordings/02-deep-modules-vs-small-functions-debate.m4a",
           "category": "debate",
           "duration": 1319,
-          "fileSize": 20
+          "fileSize": 20,
+          "caption": "Structured debate on whether small functions reduce or merely redistribute complexity"
         },
         {
           "label": "General Purpose Design Stops Information Leaks",
           "file": "meetings/meeting-02/recordings/02-info-leaks-general-purpose-critique.m4a",
           "category": "critique",
           "duration": 1206,
-          "fileSize": 19
+          "fileSize": 19,
+          "caption": "Critiques information leakage in temporal decomposition and evaluates the general-purpose sweet spot"
         },
         {
           "label": "Four Strategies",
@@ -103,21 +106,24 @@
           "file": "meetings/meeting-01/recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a",
           "category": "deep-dive",
           "duration": 1065,
-          "fileSize": 16
+          "fileSize": 16,
+          "caption": "Explores how strategic design differs from tactical coding and why deep modules reduce cognitive load"
         },
         {
           "label": "Deep Modules vs Clean Code for AI",
           "file": "meetings/meeting-01/recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a",
           "category": "debate",
           "duration": 1415,
-          "fileSize": 22
+          "fileSize": 22,
+          "caption": "Debates whether clean code heuristics hold up when LLMs generate the implementation"
         },
         {
           "label": "How Tactical Programming Creates Complexity",
           "file": "meetings/meeting-01/recordings/01-tactical-programming-complexity-critique.m4a",
           "category": "critique",
           "duration": 1080,
-          "fileSize": 17
+          "fileSize": 17,
+          "caption": "Critiques the tactical tornado mindset and its hidden cost to long-term system integrity"
         },
         {
           "label": "Architecture of Simplicity",
@@ -186,35 +192,40 @@
           "variant": "alternate",
           "source_filename": "Navigating_the_Architecture_Ley_Lines.mp4",
           "duration": 547,
-          "fileSize": 26
+          "fileSize": 26,
+          "caption": "Alternate primer on abstraction collapse under hardware constraints and organizational friction"
         },
         {
           "label": "Empirical Reality Check Primer",
           "file": "meetings/meeting-03/resources/03-empirical-reality-check.mp4",
           "category": "alternate",
           "duration": 307,
-          "fileSize": 9
+          "fileSize": 9,
+          "caption": "Tactical refresher on deep vs shallow modules and the empirical evidence gauntlet ahead"
         },
         {
           "label": "Why Software Abstractions Fail Under Pressure",
           "file": "meetings/meeting-03/recordings/03-why-software-abstractions-fail-under-pressure-deep-dive.m4a",
           "category": "deep-dive",
           "duration": 1913,
-          "fileSize": 30
+          "fileSize": 30,
+          "caption": "Deep analysis of Lemire's exception tax benchmarks, Java NIO Direct Buffers, and when abstractions collapse under load"
         },
         {
           "label": "The High Price of Architectural Purity",
           "file": "meetings/meeting-03/recordings/03-high-price-of-architectural-purity-debate.m4a",
           "category": "debate",
           "duration": 1500,
-          "fileSize": 24
+          "fileSize": 24,
+          "caption": "Debates whether Parnas's information hiding survives modern microservice architectures and performance demands"
         },
         {
           "label": "Automating Semantic Coupling & Performance Thresholds",
           "file": "meetings/meeting-03/recordings/03-automating-semantic-coupling-performance-thresholds-critique.m4a",
           "category": "critique",
           "duration": 428,
-          "fileSize": 7
+          "fileSize": 7,
+          "caption": "Critiques the gap between academic coupling metrics and practical CI/CD tooling, proposing automation thresholds"
         },
         {
           "label": "Temple of Abstraction Guide",
@@ -258,33 +269,32 @@
           "file": "meetings/meeting-04/recordings/04-why-tiny-functions-ruin-software-architecture-deep-dive.m4a",
           "category": "deep-dive",
           "duration": 1142,
-          "fileSize": 18
+          "fileSize": 18,
+          "caption": "Examines how over-fragmentation into shallow methods increases system-wide cognitive load despite making individual functions look cleaner"
         },
         {
           "label": "Why Tiny Functions Ruin Software Architecture",
           "file": "meetings/meeting-04/recordings/04-why-tiny-functions-ruin-software-architecture-debate.m4a",
           "category": "debate",
           "duration": 1142,
-          "fileSize": 18
+          "fileSize": 18,
+          "caption": "Structured debate on deep modules versus the fragmentation encouraged by Clean Code's short-method heuristics"
         },
         {
           "label": "Ousterhout versus Martin: Physical Evidence",
           "file": "meetings/meeting-04/recordings/04-ousterhout-versus-martin-physical-evidence-critique.m4a",
           "category": "critique",
           "duration": 1023,
-          "fileSize": 16
-        },
-        {
-          "label": "The Complexity Romance Infographic",
-          "file": "meetings/meeting-04/resources/04-the-complexity-romance-infographic.png",
-          "fileSize": 0.5
+          "fileSize": 16,
+          "caption": "Critiques the physical evidence behind Ousterhout's arguments and their tension with defensive programming conventions"
         },
         {
           "label": "The Contrarian Coder",
           "file": "meetings/meeting-04/recordings/04-the-contrarian-coder.mp4",
           "category": "alternate",
           "duration": 262,
-          "fileSize": 14
+          "fileSize": 14,
+          "caption": "Alternate primer questioning whether the romance of simplicity is a design principle or a mirage"
         }
       ]
     }

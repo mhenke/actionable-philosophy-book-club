@@ -33,12 +33,12 @@ A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software 
 - [01-essential-questions.md](01-essential-questions.md)
 - [01-non-obvious-insights.md](01-non-obvious-insights.md)
 - [recordings/](recordings/)
-  - 🎬 [01-The-Architects-of-Complexity.mp4](recordings/01-The-Architects-of-Complexity.mp4) 4m 46s · 17MB — Introduces the complexity waterfall, tactical tornados, and the cost of shallow modules (Chapters 1–4 primer)
-  - 🔬 [01-strategic-software-design-and-deep-modules-deep-dive.m4a](recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a) 17m 45s · 16MB — Explores how strategic design differs from tactical coding and why deep modules reduce cognitive load
-  - ⚔️ [01-deep-modules-versus-clean-code-for-ai-debate.m4a](recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a) 23m 34s · 22MB — Debates whether clean code heuristics hold up when LLMs generate the implementation
-  - 🔍 [01-tactical-programming-complexity-critique.m4a](recordings/01-tactical-programming-complexity-critique.m4a) 17m 59s · 17MB — Critiques the tactical tornado mindset and its hidden cost to long-term system integrity
+  - [01-The-Architects-of-Complexity.mp4](recordings/01-The-Architects-of-Complexity.mp4)
+  - [01-strategic-software-design-and-deep-modules-deep-dive.m4a](recordings/01-strategic-software-design-and-deep-modules-deep-dive.m4a)
+  - [01-deep-modules-versus-clean-code-for-ai-debate.m4a](recordings/01-deep-modules-versus-clean-code-for-ai-debate.m4a)
+  - [01-tactical-programming-complexity-critique.m4a](recordings/01-tactical-programming-complexity-critique.m4a)
 - [resources/](resources/)
   - [01-architecture-of-simplicity.png](resources/01-architecture-of-simplicity.png)
   - [01-choose-your-adventure.png](resources/01-choose-your-adventure.png)
 - [slides/](slides/)
-  - 📊 [01-Architecting-Deep-Systems.pptx](slides/01-Architecting-Deep-Systems.pptx) — Discussion deck: classitis, unknown unknowns, shallow vs. deep, and AI modularity debt
+  - [01-Architecting-Deep-Systems.pptx](slides/01-Architecting-Deep-Systems.pptx)
