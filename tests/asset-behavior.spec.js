@@ -80,6 +80,12 @@ test.describe('Asset behaviour — what users actually do', () => {
         };
         delete manifest.assetCopy['deep-dive'];
 
+        // Strip item-level captions so fallback to copy.title is exercised
+        const m04 = manifest.meetings.find(m => m.id === 'meeting-04');
+        if (m04) {
+            m04.additional_material.forEach(item => { delete item.caption; });
+        }
+
         await page.addInitScript({ content: `window.__MANIFEST_DATA = ${JSON.stringify(manifest)};` });
 
         await page.goto('/');
