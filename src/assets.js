@@ -45,7 +45,7 @@ function _buildAssetRow(config) {
     return `<div class="asset-row"${rowAttrs}${testidAttr}${canonicalAttr}>${linkContent}${dlContent}</div>`;
 }
 
-/** Builds the primary video asset row with metadata (duration, size, label) and download link. */
+/** Builds the primary video asset row with metadata (duration, size, label, caption) and download link. */
 function buildVideoRow(meeting) {
     const videoDuration = meeting.video.duration ? formatDuration(meeting.video.duration) : '';
     const videoSize = meeting.video.fileSize ? formatFileSize(meeting.video.fileSize) : '';
@@ -55,6 +55,7 @@ function buildVideoRow(meeting) {
     const session = escapeHTML(meeting.session);
     const label = escapeHTML(meeting.video.label ?? '');
     const file = escapeHTML(meeting.video.file ?? '');
+    const caption = meeting.video.caption ? escapeHTML(meeting.video.caption) : '';
     const metaSuffix = [videoDuration, videoSize].filter(Boolean).map(s => ', ' + s).join('');
     return _buildAssetRow({
         id: `asset-${id}-video-${videoSlug}`,
@@ -68,6 +69,7 @@ function buildVideoRow(meeting) {
         downloadHref: file,
         downloadLabel: `Download ${label}${metaSuffix} (${session})`,
         meta: videoMeta ? `<span class="asset-meta">${videoMeta}</span>` : '',
+        caption: caption,
     });
 }
 
@@ -82,11 +84,12 @@ function _buildPlaceholder(emoji, label) {
                     </div>`;
 }
 
-/** Builds the slides asset row with Office Online viewer link, file size, and download button. */
+/** Builds the slides asset row with Office Online viewer link, file size, caption, and download button. */
 function buildSlidesRow(meeting) {
     const slidesSize = meeting.slides.fileSize ? formatFileSize(meeting.slides.fileSize) : '';
     const file = escapeHTML(meeting.slides.file ?? '');
     const label = escapeHTML(meeting.slides.label ?? '');
+    const caption = meeting.slides.caption ? escapeHTML(meeting.slides.caption) : '';
     const viewerUrl = buildPPTXViewerURL(meeting.slides.file ?? '');
     return _buildAssetRow({
         icon: '\uD83D\uDCCA',
@@ -98,6 +101,7 @@ function buildSlidesRow(meeting) {
         downloadHref: file,
         downloadLabel: `Download slides (${escapeHTML(meeting.session)})`,
         meta: slidesSize ? `<span class="asset-meta">${slidesSize}</span>` : '',
+        caption: caption,
     });
 }
 

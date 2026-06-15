@@ -33,13 +33,15 @@
         "label": "Video Primer",
         "variant": "canonical",
         "duration": 189,
-        "fileSize": 31
+        "fileSize": 31,
+        "caption": "Covers information hiding, general-purpose design, layered abstraction, and pulling complexity downward (Chapters 5\u20138 primer)"
       },
       "slides": {
         "file": "meetings/meeting-02/slides/02-the-complexity-case.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 34
+        "fileSize": 34,
+        "caption": "Discussion deck: pass-through methods, decorator anti-patterns, general-purpose vs. YAGNI, and path voting options"
       },
       "additional_material": [
         {
@@ -92,13 +94,15 @@
         "label": "Video Primer",
         "variant": "canonical",
         "duration": 287,
-        "fileSize": 17
+        "fileSize": 17,
+        "caption": "Introduces the complexity waterfall, tactical tornados, and the cost of shallow modules (Chapters 1\u20134 primer)"
       },
       "slides": {
         "file": "meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 19
+        "fileSize": 19,
+        "caption": "Discussion deck: classitis, unknown unknowns, shallow vs. deep, and AI modularity debt"
       },
       "additional_material": [
         {
@@ -151,13 +155,15 @@
         "label": "Video Primer",
         "variant": "canonical",
         "duration": 180,
-        "fileSize": 11
+        "fileSize": 11,
+        "caption": "Establishes club goals, distributes copies of A Philosophy of Software Design, and aligns on zero-ceremony meeting format"
       },
       "slides": {
         "file": "meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 6
+        "fileSize": 6,
+        "caption": "Kickoff presentation: club cadence, reading plan, and discussion norms"
       },
       "additional_material": []
     },
@@ -176,13 +182,15 @@
         "label": "Video Primer",
         "variant": "canonical",
         "duration": 374,
-        "fileSize": 24
+        "fileSize": 24,
+        "caption": "Recaps deep vs. shallow modules and introduces the empirical evidence gauntlet: Parnas decomposition, coupling metrics, and the exception tax"
       },
       "slides": {
         "file": "meetings/meeting-03/slides/03-shattering-the-abstraction-illusion.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 12
+        "fileSize": 12,
+        "caption": "Discussion deck: Parnas decomposition, API usability tokens, Stripe versioning, Bavota coupling study, and the runtime tax evidence"
       },
       "additional_material": [
         {
@@ -255,13 +263,15 @@
         "label": "Video Primer",
         "variant": "canonical",
         "duration": 363,
-        "fileSize": 20
+        "fileSize": 20,
+        "caption": "Challenges the Clean Code orthodoxy and introduces Ousterhout\u2019s case for module depth over method brevity (Chapters 9\u201311 primer)"
       },
       "slides": {
         "file": "meetings/meeting-04/slides/04-the-complexity-romance.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 35
+        "fileSize": 35,
+        "caption": "Discussion deck: combining vs. separating, exception handling strategies, defining errors out of existence, and the Design it Twice principle"
       },
       "additional_material": [
         {
