@@ -1,16 +1,16 @@
-# Graph Report - actionable-philosophy-book-club  (2026-06-06)
+# Graph Report - actionable-philosophy-book-club  (2026-06-15)
 
 ## Corpus Check
-- 257 files · ~596,667 words
+- 264 files · ~748,505 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 4621 nodes · 6449 edges · 462 communities (364 shown, 98 thin omitted)
-- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 512 edges (avg confidence: 0.81)
+- 4736 nodes · 6618 edges · 467 communities (367 shown, 100 thin omitted)
+- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 506 edges (avg confidence: 0.81)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `947ed187`
+- Built from commit: `b8562f44`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -212,6 +212,7 @@
 - [[_COMMUNITY_Community 195|Community 195]]
 - [[_COMMUNITY_Community 196|Community 196]]
 - [[_COMMUNITY_Community 197|Community 197]]
+- [[_COMMUNITY_Community 198|Community 198]]
 - [[_COMMUNITY_Community 200|Community 200]]
 - [[_COMMUNITY_Community 201|Community 201]]
 - [[_COMMUNITY_Community 202|Community 202]]
@@ -393,14 +394,14 @@
 - [[_COMMUNITY_Community 389|Community 389]]
 - [[_COMMUNITY_Community 390|Community 390]]
 - [[_COMMUNITY_Community 391|Community 391]]
+- [[_COMMUNITY_Community 392|Community 392]]
 - [[_COMMUNITY_Community 393|Community 393]]
 - [[_COMMUNITY_Community 394|Community 394]]
 - [[_COMMUNITY_Community 395|Community 395]]
 - [[_COMMUNITY_Community 396|Community 396]]
 - [[_COMMUNITY_Community 397|Community 397]]
+- [[_COMMUNITY_Community 398|Community 398]]
 - [[_COMMUNITY_Community 399|Community 399]]
-- [[_COMMUNITY_Community 400|Community 400]]
-- [[_COMMUNITY_Community 401|Community 401]]
 - [[_COMMUNITY_Community 402|Community 402]]
 - [[_COMMUNITY_Community 403|Community 403]]
 - [[_COMMUNITY_Community 404|Community 404]]
@@ -450,11 +451,14 @@
 - [[_COMMUNITY_Community 448|Community 448]]
 - [[_COMMUNITY_Community 449|Community 449]]
 - [[_COMMUNITY_Community 450|Community 450]]
+- [[_COMMUNITY_Community 464|Community 464]]
+- [[_COMMUNITY_Community 465|Community 465]]
+- [[_COMMUNITY_Community 466|Community 466]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `_()` - 55 edges
 2. `Meeting 02 — Deep Modules & Complexity Sink` - 54 edges
-3. `APOSD Critique 2026-05-23` - 49 edges
+3. `APOSD Critique 2026-05-23` - 48 edges
 4. `Dashboard View` - 33 edges
 5. `Impeccable Paths Module` - 30 edges
 6. `Meeting 01: Deep Systems` - 29 edges
@@ -483,7 +487,7 @@
 - **Meeting content pipeline** —  [INFERRED]
 - **Security and styling constraints** —  [INFERRED]
 
-## Communities (462 total, 98 thin omitted)
+## Communities (467 total, 100 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.22
@@ -503,7 +507,7 @@ Nodes (13): asset-compressor/rename_asset.sh (planned update), npx impeccable au
 
 ### Community 4 - "Community 4"
 Cohesion: 0.09
-Nodes (24): buildAnnotationsForCapture(), buildPinElement(), captureAndEmit(), captureElementToBlob(), checkpointPayload(), collectFontCssText(), compileShader(), handleAccept() (+16 more)
+Nodes (25): buildAnnotationsForCapture(), buildPinElement(), captureAndEmit(), captureElementToBlob(), checkpointPayload(), collectFontCssText(), compileShader(), extractContext() (+17 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.09
@@ -514,8 +518,8 @@ Cohesion: 0.05
 Nodes (52): Bavota et al. Coupling Reading, Bavota coupling research, Block comment stripping, Tri-state CI exit codes, Default Jaccard threshold 0.10, DEFAULT_EXTENSIONS set, Directory walk filtering, Explicit coupling verdict (+44 more)
 
 ### Community 7 - "Community 7"
-Cohesion: 0.06
-Nodes (39): Adaptation Is Rethinking, Not Scaling, Responsive Breakpoints Strategy, Brand vs Product Motion Register, Natural Deceleration Easing Curves, Motion Timing Bands (100-800ms), prefers-reduced-motion Compliance, AI Slop Tells Detection, Five-Dimension Quality Scoring (0-4) (+31 more)
+Cohesion: 0.16
+Nodes (14): Adaptation Is Rethinking, Not Scaling, Responsive Breakpoints Strategy, Native Image Generation Capability (image_gen), Codex Visual Direction Flow (Steps A-F), WCAG Contrast Requirements (AA/AAA), Gate Compression Failure Mode, Production Bar (Definition of Done), Craft Steps 0-6 (Foundation through Present) (+6 more)
 
 ### Community 8 - "Community 8"
 Cohesion: 0.14
@@ -526,48 +530,48 @@ Cohesion: 0.10
 Nodes (26): CI Concurrency Group, Dependabot for GitHub Actions, DocumentFragment for Archive Render, Delegated pointerenter Prefetch Listener, Remove document.execCommand('copy') Fallback, Internal fetchMarkdownCached Path Validation, GitHub Actions SHA Pinning, Structural isSafeAssetPath Fix (+18 more)
 
 ### Community 10 - "Community 10"
-Cohesion: 0.09
-Nodes (35): Action Item — Review web application, Complexity Sink, Decorators (anti-pattern), Documentation as Litmus Test, Generality as Deletion, Information Hiding, Layered Abstraction, Pass-through Methods (+27 more)
+Cohesion: 0.07
+Nodes (41): Deep Module, Action Item — Review web application, Complexity Sink, Decorators (anti-pattern), Documentation as Litmus Test, Generality as Deletion, Information Hiding, Layered Abstraction (+33 more)
 
 ### Community 11 - "Community 11"
-Cohesion: 0.14
-Nodes (20): AbortController + Generation Counter, Deep Caching Abstraction (fetchMarkdown), IIFE Module Pattern, Tactical Tornado Risk, window.APBC Namespace (Proposed), APOSD Critique 2026-05-23, Non-Local Cleanup Lifecycle in video-player.js (P2), Internal Constants Exposed as Globals (P2) (+12 more)
+Cohesion: 0.12
+Nodes (26): Deep Caching Abstraction (fetchMarkdown), IIFE Module Pattern, Rigid Security Barrier (isSafePath), Tactical Tornado Risk, window.APBC Namespace (Proposed), APOSD Critique 2026-05-23, APOSD Audit-critique 2026-05-28 #1, Internal Constants Exposed as Globals (P2) (+18 more)
 
 ### Community 12 - "Community 12"
-Cohesion: 0.16
-Nodes (22): AI Shallow Fragmentation, AI and Structural Integrity, Classitis, Clean Code Heuristic, Complexity Allocator Role, Complexity Waterfall, The Cost of Speed, Deep Class Paradox (+14 more)
+Cohesion: 0.10
+Nodes (34): AI Shallow Fragmentation, AI and Structural Integrity, Classitis, Clean Code Heuristic, Complexity Allocator Role, Complexity Waterfall, Configuration Parameter Anti-Pattern, The Cost of Speed (+26 more)
 
 ### Community 13 - "Community 13"
 Cohesion: 0.17
 Nodes (16): .asset-meta CSS Class, tests/asset-meta.spec.js, buildPodcastRow(), buildSlidesRow(), buildVideoRow(), Asset Copy Registry Pattern, Duration · File Size Metadata, buildAdditionalRow (+8 more)
 
 ### Community 14 - "Community 14"
-Cohesion: 0.08
-Nodes (37): AbortController Concurrency, buildTableOfContents, _disableLink, DOMAIN enum, ensureDOMPurifyHooks, External Host Allowlist, fetchMarkdown, Collapsed Abstraction Layers in reader-loader.js (P1) (+29 more)
+Cohesion: 0.10
+Nodes (24): buildTableOfContents, ensureDOMPurifyHooks, External Host Allowlist, Collapsed Abstraction Layers in reader-loader.js (P1), Three Empty Stub Files in Build (P1), Office Online Viewer Origin, _scrollToElement, bindRetryButton() (+16 more)
 
 ### Community 15 - "Community 15"
 Cohesion: 0.06
 Nodes (7): TestDetectImportEdges, TestExtractNouns, TestHiddenCouplingDetection, TestJaccardOverlap, TestReportOutput, TestTokenization, TestUsageErrors
 
 ### Community 16 - "Community 16"
-Cohesion: 0.08
-Nodes (34): Meeting Agenda Section (4 checked items), AI-Assisted Era (context for book club), Complexity Sink (Well-Designed Module), Dashboard Navigation Button, ASCII File Tree Renderer (recordings/, resources/, slides/), Four Pillars of Deep Modules, Meeting 02 Key Takeaway (Complexity Sink), Concept: Low-Ceremony Approach (discussion outcome, M00) (+26 more)
+Cohesion: 0.09
+Nodes (31): Meeting Agenda Section (4 checked items), AI-Assisted Era (context for book club), Dashboard Navigation Button, ASCII File Tree Renderer (recordings/, resources/, slides/), Concept: Low-Ceremony Approach (discussion outcome, M00), The Complexity Governor (mp4), Meeting 00: Kickoff & Introductions, Meeting 00 Page (Reader view of meeting-00 README) (+23 more)
 
 ### Community 17 - "Community 17"
-Cohesion: 0.18
-Nodes (13): Algorithmic vs Integration Spectrum, Bowling Score Calculator Example, Bundling Approach (Strategic Design), Eisenhower's Planning Quote, Engine Block vs Leather Seats Analogy, Human Nature and Laziness, Microscope vs Landscape Painting Analogy, Psychological Safety of TDD (+5 more)
+Cohesion: 0.16
+Nodes (20): _applyMeetingMaterialsTree(), buildTableOfContents(), callOnce(), _disableLink(), ensureDOMPurifyHooks(), fetchMarkdown(), fetchStage(), _finalizeReaderContent() (+12 more)
 
 ### Community 18 - "Community 18"
-Cohesion: 0.11
-Nodes (23): AI Modularity Debt, APoSD vs Clean Code Repository, A Philosophy of Software Design, Book Title Banner (compact header on dashboard), Classitis and Shallow Modules, Clean Code Philosophy (Uncle Bob), The Complexity Case: Choose Your Path, Configuration Parameter Anti-Pattern (+15 more)
+Cohesion: 0.08
+Nodes (31): AI Modularity Debt, Code Audit (Red Flags Scanner), APoSD vs Clean Code Repository, Architectural Civil War Slides, A Philosophy of Software Design, Book Title Banner (compact header on dashboard), Classitis and Shallow Modules, Robert Martin's Clean Code (book) (+23 more)
 
 ### Community 19 - "Community 19"
-Cohesion: 0.11
-Nodes (26): 18-month ROI for design investment, 25 minutes of prep per meeting, AI bricklayer programmer, Change amplification, Deep module abstraction, Deep module gold standard, General-Purpose Components, LLM as pattern predictor (+18 more)
+Cohesion: 0.08
+Nodes (36): 18-month ROI for design investment, 25 minutes of prep per meeting, AI bricklayer programmer, Change amplification, Clean Code Fragmentation Crisis, Complexity governor role, Deep module abstraction, Deep module gold standard (+28 more)
 
 ### Community 20 - "Community 20"
-Cohesion: 0.11
-Nodes (26): Additional Resources Disclosure (1 Video · 3 Podcasts, etc.), AI Ownership of Structural Integrity, Classitis, Clean Code Paradox, Complexity Waterfall, Cost of Speed, Deep Class Paradox, Fragmentation Crisis (+18 more)
+Cohesion: 0.10
+Nodes (30): Additional Resources Disclosure (1 Video · 3 Podcasts, etc.), Action Item — Sign thank you card for books, AI Ownership of Structural Integrity, Classitis, Clean Code Paradox, Complexity Waterfall, Cost of Speed, Deep Class Paradox (+22 more)
 
 ### Community 21 - "Community 21"
 Cohesion: 0.09
@@ -578,8 +582,8 @@ Cohesion: 0.12
 Nodes (29): APoSD visual identity, impeccable skill, Product purpose (asset access), DEPRECATED_NAMES (v2.0, v2.1, v3.0), HARNESS_DIRS (.claude, .cursor, ...), SKILL_FINGERPRINTS (v2.x fallback), cleanSkillsLock, findProjectRoot (+21 more)
 
 ### Community 23 - "Community 23"
-Cohesion: 0.11
-Nodes (27): AI Ownership / Structural Integrity, Philosophical Tensions: Ousterhout vs YAGNI / Clean Code, Reader Article (Meeting 02 document content), Classitis (small functions heuristic critique), The Complexity Waterfall, The Cost of Speed, Deep Class Paradox (500-line vs 50-line), Fragmentation Crisis (AI-generated code modularity debt) (+19 more)
+Cohesion: 0.08
+Nodes (33): AI Ownership / Structural Integrity, Philosophical Tensions: Ousterhout vs YAGNI / Clean Code, Reader Article (Meeting 02 document content), Copy link to these session notes (button), Dashboard link with (press Esc) hint, Loading document state (Session Notes), Session Notes (header label), Classitis (small functions heuristic critique) (+25 more)
 
 ### Community 24 - "Community 24"
 Cohesion: 0.29
@@ -590,8 +594,8 @@ Cohesion: 0.09
 Nodes (24): validateEvent(), applyEvent() (Journal Reducer), Live Event-Type Vocabulary, acknowledgePendingEvent(), annotRoot, args, CONTEXT_DIR, { detectScript, sessionPath, livePath } (+16 more)
 
 ### Community 26 - "Community 26"
-Cohesion: 0.07
-Nodes (55): additional_material field, properties, required, type, items, type, patternProperties, type (+47 more)
+Cohesion: 0.06
+Nodes (57): additional_material field, properties, required, type, items, type, patternProperties, type (+49 more)
 
 ### Community 27 - "Community 27"
 Cohesion: 0.10
@@ -602,24 +606,24 @@ Cohesion: 0.15
 Nodes (25): cleanup(), clearScrollY(), clearSession(), copyToClipboard(), desc(), handleClick(), handleKeyDown(), handleMouseMove() (+17 more)
 
 ### Community 29 - "Community 29"
-Cohesion: 0.16
-Nodes (19): APOSD Audit-critique 2026-05-28 #1, Storage Module Mixes Three Concerns (P1), Storage Keys & Prefix Information Leakage (P2), Theme Storage Key Duplication (P2), getOnboardingDismissed, getOnboardingDismissed(), initOnboardingBanner(), setOnboardingDismissed() (+11 more)
+Cohesion: 0.31
+Nodes (9): AbortController + Generation Counter, Non-Local Cleanup Lifecycle in video-player.js (P2), Event Listener Leak in Video Player (P1), _clearExistingTracks(), _getVideoPlayerElements(), openVideoPlayer(), _setupResumeBar(), _tryLoadCaptionTrack() (+1 more)
 
 ### Community 30 - "Community 30"
 Cohesion: 0.07
 Nodes (26): 1. Simplicity Over Ceremony, 2. Action-Oriented Learning, 3. AI-Augmented Productivity, 4. Transparency and Async Collaboration, ⚖️ Core Values, Design Principles, Core Concepts, Glossary (+18 more)
 
 ### Community 31 - "Community 31"
-Cohesion: 0.14
-Nodes (21): Dashboard View, AI Prompts Template, Drafts Staging Area, Why Book Now Doc, Onboarding Guide, The Horizon Section, Welcome / Onboarding Banner, Dashboard State (02:18 UTC) (+13 more)
+Cohesion: 0.07
+Nodes (41): Site Footer (book club · 2026), Dashboard: Meeting 00 - The Kickoff (29 Apr 2026, Done), Dashboard: Meeting 01 - Deep Systems (13 May 2026, Done), Dashboard: Meeting 02 - Deep Modules & Complexity Sink (27 May 2026, Upcoming), Dashboard: Meeting 03 - Coming Soon (10 Jun 2026, Planned), Dashboard: Meeting 04 - Coming Soon (24 Jun 2026, Planned), Dashboard Page Snapshot, Dashboard View (+33 more)
 
 ### Community 32 - "Community 32"
 Cohesion: 0.27
 Nodes (10): aria-hidden="true" on Skeletons, Copilot (Author), Dashboard Skeleton, Loading Skeleton Design, Loading Skeleton Implementation Plan, Reader Outline Skeleton, Reader Article-Outline Skeleton, Refresh Stability Test Coverage (+2 more)
 
 ### Community 33 - "Community 33"
-Cohesion: 0.15
-Nodes (19): Typeset Command Overview, Typeset→Polish Handoff, Live-mode Signature Params (scale, steps), Modular Type Scale (Typeset), Readability Tuning (Typeset), typography.md Reference (Typeset), brand.md Reference (Typography), ALL-CAPS Letter-Spacing (+11 more)
+Cohesion: 0.12
+Nodes (25): Typography Refinement, Optical Adjustments (Negative Margin), 5-Size Type System (Typeset), Typeset Command Overview, Fluid Type via clamp (Typeset), Typeset→Polish Handoff, Live-mode Signature Params (scale, steps), Modular Type Scale (Typeset) (+17 more)
 
 ### Community 34 - "Community 34"
 Cohesion: 0.27
@@ -630,40 +634,40 @@ Cohesion: 0.25
 Nodes (9): window.ErrorHandler, Centralized Error Logging Pattern, openVideoPlayer(filePath, label), showToast(message), #toast-container Element, Toast Timing Constants, AbortController Per-Open Lifecycle, #video-player-overlay Element (+1 more)
 
 ### Community 36 - "Community 36"
-Cohesion: 0.12
-Nodes (23): APOSD Audit Snapshot 2026-05-23, APOSD Audit 2026-05-28 #1, Design Health Score Trend, ErrorHandler.warn() Pattern, Exception Discipline (audit dim 5), Information Duplication (audit dim 2), Interface Documentation (audit dim 3), Naming Quality (audit dim 4) (+15 more)
+Cohesion: 0.47
+Nodes (5): ErrorHandler.warn() Pattern, Nested IIFE in toast.js (P3), error(), showToast(), warn()
 
 ### Community 37 - "Community 37"
-Cohesion: 0.12
-Nodes (20): Abstraction Leak, Direct Buffers, Exception Throwing, FileChannel, Java InputStream, Java NIO Package, Java NIO Documentation, Leaky Abstractions (+12 more)
+Cohesion: 0.07
+Nodes (33): Abstraction Leak, Barroso 2026: Modern Ecosystem Complexity Synthesis, Walter Nascimento Barroso, BufferedInputStream vs FileChannel I/O Tradeoff, Direct Buffers, Exception as Control Flow Anti-Pattern, Exception Throwing, FileChannel (+25 more)
 
 ### Community 38 - "Community 38"
 Cohesion: 0.21
 Nodes (22): Playwright snapshot: Dashboard, light theme, initial load, Playwright snapshot: Dashboard, light theme, stable state, Playwright snapshot: Dashboard, dark theme, after toggle, Playwright snapshot: Dashboard, dark theme, stable state, Playwright snapshot: Dashboard, light theme, post-toggle-back state, Playwright snapshot: Dashboard, light theme, navigation refresh, Dashboard view (page type), KB link: AI Prompts (#p=templates/prompts/README.md) (+14 more)
 
 ### Community 39 - "Community 39"
-Cohesion: 0.16
-Nodes (21): Book: A Philosophy of Software Design by John Ousterhout, Clean Code, Clean-Code-versus-Deep-Software-Design-deep-dive.txt, AI agents and large context windows, Bundling methodology, Civil war in software architecture, 10-100x cost of missing comments, Deep methods (+13 more)
+Cohesion: 0.09
+Nodes (32): Book: A Philosophy of Software Design by John Ousterhout, Clean Code, Clean-Code-versus-Deep-Software-Design-deep-dive.txt, 440ms vs 561ms benchmark, AI agents and large context windows, Bundling methodology, Civil war in software architecture, Cognitive load (+24 more)
 
 ### Community 40 - "Community 40"
 Cohesion: 0.11
 Nodes (22): Visual Direction Probes, Project-Specific Personas, Prior Critique Pull, critique-storage.mjs Script, Shape Command Overview, Brief Form Selection (Compact/Full), Confirmation Gate, Design Brief Output (+14 more)
 
 ### Community 41 - "Community 41"
-Cohesion: 0.12
-Nodes (17): Deep Modules, Documentation as Design Litmus Test, Files.readString() Deep Module Anchor, House Moving / Tiny Boxes vs Giant Crate Analogy, Kent Beck, Universal Knowledge Management Trade-off, Line Counting as False Metric, Method Length Debate (+9 more)
+Cohesion: 0.24
+Nodes (19): buildAdditionalRow(), buildAdditionalSummary(), _buildAssetRow(), buildAssetRows(), _buildPlaceholder(), buildPodcastDisclosure(), buildResourceStrip(), buildSlidesRow() (+11 more)
 
 ### Community 42 - "Community 42"
 Cohesion: 0.22
 Nodes (14): Concept: Module as Complexity Sink (Key Takeaway, M02), Dashboard Page (book club home with Upcoming, Coming Up, Past, Knowledge Base), Dashboard Region: Coming Up (M03, M04 Planned), Dashboard Region: Knowledge Base (6 doc links), Dashboard Region: Past (M01 Deep Systems, M00 The Kickoff), Dashboard Region: Upcoming (Complexity Engineering, M02), Meeting 02: Complexity Engineering (27 May 2026, Upcoming), Meeting 03: Coming Soon (10 Jun 2026, Planned) (+6 more)
 
 ### Community 43 - "Community 43"
-Cohesion: 0.15
+Cohesion: 0.13
 Nodes (10): CI Check: Hash-Route Links Resolve to Files, CI Check: Image Size Gate (512KB), CI Check: Unregistered Meeting Directories, CI Check: Manifest JSON Schema, CI Check: .nojekyll Present, CI Check: Vendor Files Present, CI Job: deploy (GitHub Pages), CI Job: validate (+2 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.17
-Nodes (16): 60-Minute Agenda Template, Code Audit (Red Flags Scanner), Actionable Philosophy Book Club, Robert Martin's Clean Code (book), Coming Up Section (planned placeholders), Core Tension: Clean Code vs Deep Modules, Discussion Points Section, Future Planning (+8 more)
+Cohesion: 0.13
+Nodes (19): 60-Minute Agenda Template, Actionable Philosophy Book Club, Coming Up Section (planned placeholders), Complexity Sink (Well-Designed Module), Discussion Points Section, Four Pillars of Deep Modules, Future Planning, Meeting 02 Key Takeaway (Complexity Sink) (+11 more)
 
 ### Community 45 - "Community 45"
 Cohesion: 0.15
@@ -674,20 +678,20 @@ Cohesion: 0.27
 Nodes (19): Impeccable Paths Module, firstExisting(), getDesignSidecarCandidates(), getDesignSidecarPath(), getImpeccableDir(), getLegacyLiveAnnotationsDir(), getLegacyLiveConfigPath(), getLegacyLiveServerPath() (+11 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.13
-Nodes (19): ADRs for Tailwind, marked+DOMPurify, manifest, Comprehensive persona fixes implementation, docs/manifest.json, Dual storage resume (sessionStorage + localStorage), Enhanced asset-compressor metadata extraction, External JSON manifest (docs/manifest.json), formatDuration function, formatFileSize function (+11 more)
+Cohesion: 0.14
+Nodes (18): ADRs for Tailwind, marked+DOMPurify, manifest, Comprehensive persona fixes implementation, docs/manifest.json, Dual storage resume (sessionStorage + localStorage), Enhanced asset-compressor metadata extraction, External JSON manifest (docs/manifest.json), formatDuration function, formatFileSize function (+10 more)
 
 ### Community 48 - "Community 48"
-Cohesion: 0.12
-Nodes (18): Information Architecture & Flow Shape, Interaction States (8-state), Committed Color Strategy, Restrained Color Strategy, Empty States (Product), Register, Skeleton Loading States, Product Slop Test (+10 more)
+Cohesion: 0.11
+Nodes (18): Riley (Deliberate Stress Tester), Information Architecture & Flow Shape, Interaction States (8-state), Accessibility & Inclusion, Anti-references, Brand Personality, Design Principles, Empty States (Product) (+10 more)
 
 ### Community 49 - "Community 49"
-Cohesion: 0.18
-Nodes (12): Information density focus, .materials-panel file tree, .retry-btn error retry control, Routing & Navigation Suite, aria-busy is false after content loads, Compact file tree for Meeting Materials, Empty #p= shows dashboard, Hash route #a= is ignored (+4 more)
+Cohesion: 0.13
+Nodes (18): Information density focus, #dashboard-view DOM section, .materials-panel file tree, #reader-view DOM section, .retry-btn error retry control, Routing & Navigation Suite, 404 shows unavailable message, aria-busy is false after content loads (+10 more)
 
 ### Community 50 - "Community 50"
-Cohesion: 0.15
-Nodes (17): meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4, meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx, meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx, meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4, meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4, meetings/meeting-02/slides/02-the-complexity-case.pptx, meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4, meetings/meeting-02/resources/02-four-strategies.png (+9 more)
+Cohesion: 0.14
+Nodes (18): meetings/meeting-00/recordings/00-The-Complexity-Governor.mp4, meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx, meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx, meetings/meeting-01/recordings/01-The-Architects-of-Complexity.mp4, meetings/meeting-02/recordings/02-Clean-Code-Paradox-deep-dive.mp4, meetings/meeting-02/slides/02-the-complexity-case.pptx, meetings/meeting-02/recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4, meetings/meeting-02/resources/02-four-strategies.png (+10 more)
 
 ### Community 51 - "Community 51"
 Cohesion: 0.17
@@ -706,20 +710,20 @@ Cohesion: 0.12
 Nodes (17): live (interactive variant mode), CSP Shape Detector, Generated File Detector, Generated File Fallback Mode, Live Accept/Discard CLI, Browser Session State Factory, Action Picker (12 actions), Annotation Overlay (pins + strokes) (+9 more)
 
 ### Community 55 - "Community 55"
-Cohesion: 0.17
-Nodes (17): beginEditPin(), cancelEditingPin(), clearAnnotations(), extractContext(), finalizeEditingPin(), handleGo(), id8(), localCoords() (+9 more)
+Cohesion: 0.26
+Nodes (12): beginEditPin(), cancelEditingPin(), clearAnnotations(), finalizeEditingPin(), localCoords(), onAnnotDown(), onAnnotInputKey(), onAnnotMove() (+4 more)
 
 ### Community 56 - "Community 56"
-Cohesion: 0.12
-Nodes (28): buildAssetRows(), buildPPTXViewerURL(path), classifyAssetPath(path), Rigid Security Barrier (isSafePath), buildAdditionalSummary, buildResourceStrip, getViewerDestination(path), Raw Content Base URL (+20 more)
+Cohesion: 0.13
+Nodes (27): buildAssetRows(), buildPPTXViewerURL(path), classifyAssetPath(path), buildAdditionalSummary, buildResourceStrip, getViewerDestination(path), Raw Content Base URL, setRawContentBase(url) (+19 more)
 
 ### Community 57 - "Community 57"
-Cohesion: 0.24
-Nodes (9): prepareInitialViewFromHash(hash), _clearExistingTracks(), closeVideoPlayer(), _getVideoPlayerElements(), openVideoPlayer(), _setupResumeBar(), _tryLoadCaptionTrack(), _wireVideoEvents() (+1 more)
+Cohesion: 0.21
+Nodes (15): buildPPTXViewerURL(), _buildStorageKey(), classify(), _clearExistingTracks(), _clearVideoResumePosition(), _getRawContentBase(), _getSavedVideoResumeTime(), _getVideoPlayerElements() (+7 more)
 
 ### Community 58 - "Community 58"
-Cohesion: 0.22
-Nodes (18): aria-describedby KB cards, Asset permalinks design, comprehensive-persona-fixes supersedes personas-design, Comprehensive persona fixes design, Mobile section reordering, Onboarding banner repositioning, Onboarding guidance design, Alex (Impatient Power User) (+10 more)
+Cohesion: 0.26
+Nodes (16): aria-describedby KB cards, Asset permalinks design, comprehensive-persona-fixes supersedes personas-design, Comprehensive persona fixes design, Mobile section reordering, Onboarding banner repositioning, Onboarding guidance design, Alex (Impatient Power User) (+8 more)
 
 ### Community 59 - "Community 59"
 Cohesion: 0.25
@@ -742,20 +746,20 @@ Cohesion: 0.17
 Nodes (15): OrderStateManager Class, Explicit Coupling Pattern, Hidden Coupling Pattern, Identifier Tokenization, Vocabulary Audit Concept, Explicit Coupling Invoice Service, Explicit Coupling Order Service, Hidden Coupling Invoice Service (+7 more)
 
 ### Community 64 - "Community 64"
-Cohesion: 0.06
-Nodes (45): Action-Oriented Learning, ADR-0002: Single-Page Markdown Reader, ADR-0003: CI Environment Standardization, ADR-0004: Tailwind CSS, Agenda Link Conventions, AI-Augmented Productivity, AI Workflow Ideas, _applyMeetingMaterialsTree (+37 more)
+Cohesion: 0.19
+Nodes (15): ADR-0002: Single-Page Markdown Reader, Agenda Link Conventions, _applyMeetingMaterialsTree, Asset Link Format, asset-manifest.json (per-meeting provenance log), Content Contract, Content Security Sanitization, Meeting File Organization (+7 more)
 
 ### Community 65 - "Community 65"
-Cohesion: 0.13
-Nodes (21): Remove redundant color-scheme declaration, Remove dead marked.use options, Dependabot groups & automerge, dist/app.js, Footer inline style cleanup, .gitignore noise cleanup, H1 hierarchy fix (BP-15), index.html (+13 more)
+Cohesion: 0.17
+Nodes (16): Remove redundant color-scheme declaration, Dependabot groups & automerge, Footer inline style cleanup, .gitignore noise cleanup, H1 hierarchy fix (BP-15), index.html, Playwright manifest-rendering spec, mdCache FIFO eviction test (+8 more)
 
 ### Community 66 - "Community 66"
 Cohesion: 0.17
 Nodes (14): asset-compressor skill, AAC audio codec, main (compress_video), parse_args (compress_video), run_ffmpeg (compress_video), CRF 28 quality target, Floor, never round, durations, +faststart moov flag (+6 more)
 
 ### Community 67 - "Community 67"
-Cohesion: 0.21
-Nodes (12): Polish Checklist, Polish Command Overview, Design System Discovery, Drift Root Cause Classification, Micro-interactions & Transitions, Cosmetic vs Functional Triage, 150-250ms Motion Duration, Quieter Command Overview (+4 more)
+Cohesion: 0.15
+Nodes (14): Jordan (Confused First-Timer), Committed Color Strategy, Restrained Color Strategy, Color Refinement (Quieter), Quieter Command Overview, Quieter→Polish Handoff, Motion Reduction (Quieter), Tinted Grays (Warm/Cool) (+6 more)
 
 ### Community 68 - "Community 68"
 Cohesion: 0.11
@@ -770,11 +774,11 @@ Cohesion: 0.11
 Nodes (28): CSP Meta-Tag Patch Protocol, CSP Marker Attribute Convention, patchCspMeta(), resolveFiles(), validateConfig(), VISUAL_ACTIONS (Action Vocabulary), scanForDrift() (Drift-Heal Scanner), __dirname (+20 more)
 
 ### Community 71 - "Community 71"
-Cohesion: 0.18
-Nodes (12): Accessibility & inclusion goals, 60fps Animation Target, Core Web Vitals (LCP, FID/INP, CLS), Critical CSS Strategy, Optimize→Polish Handoff, Intersection Observer Pattern, JavaScript Bundle Reduction, Layout Thrashing Avoidance (+4 more)
+Cohesion: 0.13
+Nodes (19): Accessibility & inclusion goals, 60fps Animation Target, Core Web Vitals (LCP, FID/INP, CLS), Critical CSS Strategy, Optimize→Polish Handoff, Intersection Observer Pattern, JavaScript Bundle Reduction, Layout Thrashing Avoidance (+11 more)
 
 ### Community 72 - "Community 72"
-Cohesion: 0.28
+Cohesion: 0.25
 Nodes (12): Mixed HTML Construction Strategies (P2), buildPodcastDisclosure(), _hideEmptySection(), renderArchiveCards(), _renderCardBadge(), _renderCardHeader(), _renderCardList(), renderDraftCards() (+4 more)
 
 ### Community 73 - "Community 73"
@@ -790,24 +794,24 @@ Cohesion: 0.19
 Nodes (13): Static SPA (GitHub Pages), Asset-stage constraint (no populate before files exist), CI pipeline (validate → build → deploy smoke test), CSP policy (no unsafe-inline in script-src), CSS token system (--spectrum-1..6), Dashboard upcoming/archive renderers, Graphify knowledge-graph workflow, JS build chain (inline-manifest → concat → terser) (+5 more)
 
 ### Community 76 - "Community 76"
-Cohesion: 0.22
-Nodes (13): Concrete Coupling (anti-pattern), OOP Four Pillars series, Abstraction: Designing Systems That Don't Collapse Under Complexity (Walter Nascimento), Abstraction (OOP/design concept), Deep Modules (Ousterhout), Dependency Inversion Principle, Encapsulation (OOP concept), Information Hiding (Parnas decomposition) (+5 more)
+Cohesion: 0.15
+Nodes (17): Concrete Coupling (anti-pattern), OOP Four Pillars series, Abstraction: Designing Systems That Don't Collapse Under Complexity (Walter Nascimento), Abstraction (OOP/design concept), Deep Modules (Ousterhout), Dependency Inversion Principle, Encapsulation (OOP concept), Information Hiding (Parnas decomposition) (+9 more)
 
 ### Community 77 - "Community 77"
-Cohesion: 0.17
-Nodes (16): Agentic Workflow, Change Amplification, Cognitive Load, Complexity, Context Switch Heuristic, Deep Module, Dependency Graphs over Line Counts, AI Prompts (+8 more)
+Cohesion: 0.08
+Nodes (30): Agentic Workflow, Change Amplification, Cognitive Load, Complexity, Context Switch Heuristic, Deep Modules, Dependency Graphs over Line Counts, Documentation as Design Litmus Test (+22 more)
 
 ### Community 78 - "Community 78"
-Cohesion: 0.12
-Nodes (17): Site Footer (book club · 2026), Dashboard: Meeting 00 - The Kickoff (29 Apr 2026, Done), Dashboard: Meeting 01 - Deep Systems (13 May 2026, Done), Dashboard: Meeting 02 - Deep Modules & Complexity Sink (27 May 2026, Upcoming), Dashboard: Meeting 03 - Coming Soon (10 Jun 2026, Planned), Dashboard: Meeting 04 - Coming Soon (24 Jun 2026, Planned), Dashboard Page Snapshot, Design Principles Doc (+9 more)
+Cohesion: 0.15
+Nodes (13): Color Strategies (Restrained/Committed/Full/Drenched), UX Writing Clarity Principles, Generate Palette Before Mocks, Eight-Item Cognitive Load Checklist, Three Types of Cognitive Load, Working Memory ≤4 Items (Cowan, 2001), Alpha As Incomplete Palette, Dark Mode Surface Scale (lightness not shadow) (+5 more)
 
 ### Community 79 - "Community 79"
 Cohesion: 0.10
 Nodes (21): Meeting Materials File Tree (unlinked text variant), Choose Your Next Meeting link (resource), Deep module = complexity sink (meeting takeaway), Meeting Materials File Tree (with clickable links), 02-Clean-Code-Paradox-deep-dive.mp4, 02-clean-code-rots-codebase-deep-dive.m4a, 02-deep-modules-vs-small-functions-debate.m4a, 02-info-leaks-general-purpose-critique.m4a (+13 more)
 
 ### Community 80 - "Community 80"
-Cohesion: 0.33
-Nodes (7): Article aria-label after markdown load, Replace Shared currentFetch with Active Reader Controller, handleRoute function, isSafeRepoPath function, loadPage function, ## Meeting Materials heading trigger, sanitizeAnchor function
+Cohesion: 0.13
+Nodes (14): 1. Complexity is a "conservation of mass" problem, 2. Design is a psychological hurdle for "high achievers", 3. Abstractions are as much about "deleting" as they are about "creating", 4. Redundancy is a diagnostic tool for missing layers, Defensive Programming vs. Simplicity, Legacy System Migration, Non-Obvious Insights: The Complexity Romance, Ousterhout vs. Clean Code (The Fragmentation War) (+6 more)
 
 ### Community 81 - "Community 81"
 Cohesion: 0.17
@@ -862,28 +866,24 @@ Cohesion: 0.14
 Nodes (14): Base64 ZIP Artifact Template, CI Artifact (test-results/), devDependencies, caniuse-lite, dompurify, marked, @playwright/test, tailwindcss (+6 more)
 
 ### Community 94 - "Community 94"
-Cohesion: 0.27
-Nodes (11): Wrong Level of Abstraction / Redundant Abstraction, Complexity Sink (Ousterhout Quote), Daniel Lemire (software-performance author), Daniel Lemire blog homepage, Complexity part 4: Abstractions (Dmitrii Ivanov), Dmitrii Ivanov (Tech Blog author), Leaky Abstractions (pitfall), Premature Abstraction (pitfall) (+3 more)
+Cohesion: 0.20
+Nodes (14): Wrong Level of Abstraction / Redundant Abstraction, Awaiting Signal UI Placeholder, Complexity Sink (Ousterhout Quote), Daniel Lemire (software-performance author), ERR_CONNECTION_REFUSED Page (Localhost Down), Dashboard Snapshot (Awaiting Signal, no recordings), Daniel Lemire blog homepage, Complexity part 4: Abstractions (Dmitrii Ivanov) (+6 more)
 
 ### Community 95 - "Community 95"
-Cohesion: 0.20
-Nodes (11): Copy link to these session notes (button), Dashboard link with (press Esc) hint, Loading document state (Session Notes), Session Notes (header label), John Ousterhout (book author), A Philosophy of Software Design (book), Book header: A Philosophy of Software Design — John Ousterhout, Book header: A Philosophy of Software Design — John Ousterhout (+3 more)
+Cohesion: 0.13
+Nodes (19): APOSD Audit Snapshot 2026-05-23, APOSD Audit 2026-05-28 #1, Design Health Score Trend, Exception Discipline (audit dim 5), Information Duplication (audit dim 2), Interface Documentation (audit dim 3), Naming Quality (audit dim 4), Pass-Through Proliferation (audit dim 1) (+11 more)
 
 ### Community 96 - "Community 96"
-Cohesion: 0.15
-Nodes (13): Barroso 2026: Modern Ecosystem Complexity Synthesis, Walter Nascimento Barroso, BufferedInputStream vs FileChannel I/O Tradeoff, Exception as Control Flow Anti-Pattern, Java NIO Hardware Constraint Abstraction Collapse, Lemire 2022: Avoid Exception Throwing in Performance-Sensitive Code, Microservice Contract Evolution Ripple Effects, Reading PDF: Barroso Abstraction (+5 more)
+Cohesion: 0.20
+Nodes (12): Brand vs Product Motion Register, Natural Deceleration Easing Curves, Motion Timing Bands (100-800ms), prefers-reduced-motion Compliance, AI Slop Tells Detection, Five-Dimension Quality Scoring (0-4), P0-P3 Severity Classification, Anti-AI-Slop Bold Direction (+4 more)
 
 ### Community 97 - "Community 97"
 Cohesion: 0.18
 Nodes (11): Accessibility Resilience, Undo Over Confirm for Destructive Actions, Eight Interactive States, Focus Ring Design, Form Design (Placeholders vs Labels), Gesture Discoverability, Keyboard Navigation Patterns, Loading Patterns (Optimistic + Skeleton) (+3 more)
 
 ### Community 98 - "Community 98"
-Cohesion: 0.24
-Nodes (8): APoSD Design Audit, compress_pdf.py, Five-Phase Refactoring Plan, compress_pdf.sh script, Meeting Schema Validator, main(), parse_args(), Shell Thin Wrappers Pattern
-
-### Community 99 - "Community 99"
-Cohesion: 0.21
-Nodes (10): GraphifyPlugin Factory, Bash Knowledge-Graph Reminder, graphify-out/graph.json, Graphify Plugin Source, reminded Once-Flag, tool.execute.before Hook, OpenCode Config, Graphify Plugin Registration (+2 more)
+Cohesion: 0.32
+Nodes (6): APoSD Design Audit, compress_pdf.py, compress_pdf.sh script, main(), parse_args(), Shell Thin Wrappers Pattern
 
 ### Community 100 - "Community 100"
 Cohesion: 0.21
@@ -898,8 +898,8 @@ Cohesion: 0.23
 Nodes (8): OrderService Class, generateInvoice Function, notifyFulfillment Function, FulfillmentStatus, int, OrderState, OrderService, str
 
 ### Community 103 - "Community 103"
-Cohesion: 0.11
-Nodes (21): Allowed top-level directories, data-meeting.test.js, DOMAIN.REPO constant, Meeting.hasVideo, isSafePath function, loadSource helper function, Meeting constructor, STATUS enum (+13 more)
+Cohesion: 0.22
+Nodes (11): data-meeting.test.js, formatters.test.js, loadSource helper function, Meeting constructor, PROJECT_ROOT path resolution, test-helper.js, Meeting assets mapping, Meeting.hasVideo is status-aware (+3 more)
 
 ### Community 104 - "Community 104"
 Cohesion: 0.22
@@ -910,8 +910,8 @@ Cohesion: 0.05
 Nodes (37): 1. Read the screenshot (if present), 2. Wrap the element, 3. Load the action's reference, 4. Plan three variants: identity first, then mode, then axes, 5. Apply the freeform prompt (if present), 6. Write all variants in a single edit, 7. Parameters (composition-sized, 0–4 per variant), 8. Signal done (+29 more)
 
 ### Community 106 - "Community 106"
-Cohesion: 0.40
-Nodes (5): Weighted fuzzy scoring rules, In-memory tokenized meeting index, Command palette & reader navigation design, Reader arrow/J/K navigation, Shift+Enter opens in new tab
+Cohesion: 0.20
+Nodes (10): Remove dead marked.use options, dist/app.js, Weighted fuzzy scoring rules, In-memory tokenized meeting index, marked.use console warning on upgrade, onclick -> addEventListener migration, Command palette & reader navigation design, Reader arrow/J/K navigation (+2 more)
 
 ### Community 107 - "Community 107"
 Cohesion: 0.24
@@ -930,24 +930,24 @@ Cohesion: 0.24
 Nodes (10): @property CSS Custom Properties, OVERDRIVE Mode, OffscreenCanvas in Web Workers, Scroll-driven Animations (animation-timeline), Spring Physics Animation, @starting-style CSS Animation, View Transitions API, Web Animations API (+2 more)
 
 ### Community 111 - "Community 111"
-Cohesion: 0.18
-Nodes (12): Typography Refinement, Product Information Density, 4pt Base Spacing System, Self-Adjusting Grid (auto-fit minmax), Visual Hierarchy via Multiple Dimensions, Optical Adjustments (Negative Margin), Semantic Spacing Tokens, Shadow Elevation Scale (+4 more)
+Cohesion: 0.20
+Nodes (10): Product Information Density, Container Queries (Responsive), 4pt Base Spacing System, Self-Adjusting Grid (auto-fit minmax), Container Queries (Spatial), Visual Hierarchy via Multiple Dimensions, Semantic Spacing Tokens, Shadow Elevation Scale (+2 more)
 
 ### Community 112 - "Community 112"
 Cohesion: 0.19
 Nodes (17): Carbonize-Required Completion Protocol, completionAckForAcceptResult(), completionTypeForAcceptResult(), PER_REQUEST_TIMEOUT_MS (270_000), pollCli(), live-poll.mjs (Long-Poller CLI), HTTP + Server-Sent Events Pattern, Live Session Event Queue (in-memory) (+9 more)
 
 ### Community 113 - "Community 113"
-Cohesion: 0.22
-Nodes (11): DOMPurify sanitization, DOMPurify external link allowlist hook, routing.spec.js, Error path uses textContent, not innerHTML, External links allowlist enforced, img onerror payload blocked, No script elements in rendered content, Script tags are stripped (+3 more)
+Cohesion: 0.24
+Nodes (10): DOMPurify sanitization, DOMPurify external link allowlist hook, Error path uses textContent, not innerHTML, External links allowlist enforced, img onerror payload blocked, No script elements in rendered content, Script tags are stripped, svg onload payload blocked (+2 more)
 
 ### Community 114 - "Community 114"
 Cohesion: 0.33
 Nodes (9): BufferedInputStream (Java), ByteBuffer.allocateDirect, FileChannel (java.nio.channels), Boundary Leak Penalty, Direct Buffer Bypass, Implicit Heap Allocation / GC Pressure, 100x-at-10K-rps Penalty Threshold, Zero-Copy Bypass (+1 more)
 
 ### Community 115 - "Community 115"
-Cohesion: 0.22
-Nodes (9): Abstraction Cost, Abstraction in Programming, Design Trade-offs, Exception Handling Performance, Runtime Overhead, Runtime Tax Supplement, Topolog on Abstraction, Try/Catch Overhead (+1 more)
+Cohesion: 0.20
+Nodes (10): Abstraction Cost, Abstraction in Programming, Design Trade-offs, Exception Handling Performance, Lemire on Exception Performance, Runtime Overhead, Runtime Tax Supplement, Topolog on Abstraction (+2 more)
 
 ### Community 116 - "Community 116"
 Cohesion: 0.25
@@ -958,8 +958,8 @@ Cohesion: 0.31
 Nodes (9): Asset Naming Convention, m4a Audio-Only Compression, .podcast-badge CSS Class, Podcast Type Taxonomy, Podcasts & Resources Display Plan, rename_asset.sh Script, .resource-strip CSS Class, .resource-thumb CSS Class (+1 more)
 
 ### Community 118 - "Community 118"
-Cohesion: 0.17
-Nodes (13): Responsive Image Optimization, Progressive Enhancement (Overdrive), Content-Driven Breakpoints, Container Queries (Responsive), Mobile-First CSS, Picture Element for Art Direction, Pointer/Hover Capability Queries, env() Safe-Area Insets (+5 more)
+Cohesion: 0.25
+Nodes (9): Responsive Image Optimization, Progressive Enhancement (Overdrive), Content-Driven Breakpoints, Mobile-First CSS, Picture Element for Art Direction, Pointer/Hover Capability Queries, env() Safe-Area Insets, srcset with Width Descriptors (+1 more)
 
 ### Community 119 - "Community 119"
 Cohesion: 0.18
@@ -978,16 +978,16 @@ Cohesion: 0.29
 Nodes (5): { Meeting }, { formatDuration, formatFileSize }, { isSafePath, DOMAIN }, loadSource(), PROJECT_ROOT
 
 ### Community 123 - "Community 123"
-Cohesion: 0.14
-Nodes (15): The Kickoff (Meeting 00 short title), Meeting 01: Deep Systems, Reader Meeting 01 State 16:36:37, Reader Loading State 18:14:17, Reader Meeting 00 State 18:14:27, Past Meetings Section (archive cards), Podcast: Deep Modules vs Clean Code (AI Debate), Podcast: Strategic Software Design Deep Dive (+7 more)
+Cohesion: 0.24
+Nodes (14): AbortController Concurrency, _disableLink, DOMAIN enum, fetchMarkdown, handleRoute, initRouting, isSafePath, loadPage (+6 more)
 
 ### Community 124 - "Community 124"
 Cohesion: 0.29
-Nodes (8): 440ms vs 561ms benchmark, Cognitive load, Early-exit loop optimization, Entanglement risk, Index cards analogy, 3-4x performance slowdown from fragmentation, Thread-safe lock example, Tiny methods (2-4 lines)
+Nodes (10): callOnce, getOnboardingDismissed, initOnboardingBanner, localStorage Onboarding Persistence, Onboarding Banner, setOnboardingDismissed, getOnboardingDismissed(), initOnboardingBanner() (+2 more)
 
 ### Community 125 - "Community 125"
-Cohesion: 0.39
-Nodes (8): Action Item — Sign thank you card for books, Copy Link Button, Skip to Main Content Link, Live Status Region (aria-status), Synthesis Reader, Reader View — Meeting 01 Loaded, Reader View — Loading, Reader View — Loading Session Notes
+Cohesion: 0.25
+Nodes (9): Delete Duplicate handleRoute, GitHub Pages Origin / Subpath, P0 Critical Fixes Plan, RAW_CONTENT_BASE Constant, Service Worker Deployment Fix, Auto-Inject SW Cache Version from SHA, Service Worker Precache List, 'use strict' at Top of dist/app.js (+1 more)
 
 ### Community 126 - "Community 126"
 Cohesion: 0.06
@@ -1014,8 +1014,8 @@ Cohesion: 0.25
 Nodes (8): #archive-cards-container, aria-describedby accessibility pattern, manifest-rendering.spec.js, Manifest Rendering Test Suite, Draft meetings render in drafts section, Knowledge Base cards accessible descriptions, window.MEETINGS test hook, window.__TEST__ initialization flag
 
 ### Community 132 - "Community 132"
-Cohesion: 0.38
-Nodes (7): Clean Code Fragmentation Crisis, Complexity governor role, Ousterhout's Deep Modules, Four Pillars of Deep Modules, Small Functions Orthodoxy, Debate Recording: Deep Modules vs. Small Functions, Refresher Video: Complexity Governance & Four Pillars of Deep Modules
+Cohesion: 0.25
+Nodes (9): Allowed top-level directories, DOMAIN.REPO constant, isSafePath function, Path length limit (256 chars), Path traversal defense, path-validator.test.js, isSafePath rejects malicious paths, isSafePath accepts valid paths (+1 more)
 
 ### Community 133 - "Community 133"
 Cohesion: 0.33
@@ -1050,8 +1050,8 @@ Cohesion: 0.40
 Nodes (6): API Design Principles, API Design Supplement, API Usability, Jacopo Piccioni, Piccioni on API Usability, Principled API Design
 
 ### Community 141 - "Community 141"
-Cohesion: 0.40
-Nodes (6): Architectural Civil War Slides, Draft Materials Directory, Martin-John Debate Infographic, Clean Code vs Deep Software Design Deep Dive (m4a), Ousterhout vs Uncle Bob Critique (m4a), Ousterhout vs Uncle Bob Deep Dive (m4a)
+Cohesion: 0.22
+Nodes (8): Architecture Vocabulary, Build & Deployment, Core Terms, Data & State, Rejected Framings, Relationships, Security & Safety, UI & Interaction
 
 ### Community 142 - "Community 142"
 Cohesion: 0.08
@@ -1095,11 +1095,11 @@ Nodes (5): Chapter Summarization, Discussion Stimulation, Five Essential Questio
 
 ### Community 152 - "Community 152"
 Cohesion: 0.50
-Nodes (4): Awaiting Signal UI Placeholder, Upcoming Meeting State, ERR_CONNECTION_REFUSED Page (Localhost Down), Dashboard Snapshot (Awaiting Signal, no recordings)
+Nodes (6): scripts/inline-manifest.cjs, terser (bundler/minifier), CSP script-src 'self', dist/app.js (build output), src/_manifest.js (build-generated), src/00-setup.js .. src/14-test-hooks.js (14 numbered modules)
 
 ### Community 153 - "Community 153"
-Cohesion: 0.50
-Nodes (4): OrderService (refactored to depend on abstraction), PaymentGateway interface (PHP abstraction example), PaypalPaymentGateway implementation, StripePaymentGateway implementation
+Cohesion: 0.33
+Nodes (7): Action-Oriented Learning, AI-Augmented Productivity, AI Workflow Ideas, Design Principles, Drafts Staging Folder (meetings/drafts), Simplicity Over Ceremony, Transparency and Async Collaboration
 
 ### Community 155 - "Community 155"
 Cohesion: 0.50
@@ -1130,8 +1130,8 @@ Cohesion: 0.50
 Nodes (4): Central Theme / Argument Rule, Name What Is Missing, Supporting Ideas Identification, Tensions and Contradictions Finder
 
 ### Community 164 - "Community 164"
-Cohesion: 0.22
-Nodes (9): #dashboard-view DOM section, Hash router #p= convention, #reader-view DOM section, URL scheme blocklist, 404 shows unavailable message, Back-to-dashboard link returns to dashboard, #p= hash route loads reader, Invalid path stays on dashboard (+1 more)
+Cohesion: 0.20
+Nodes (12): Asset Copy Registry, Dashboard Manifest Field Reference, podcasts field (deprecated), resources field (deprecated), Knowledge Base Section, Meeting Manifest (data), Meeting Manifest JSON Schema, Meeting 04: TBD (Draft) (+4 more)
 
 ### Community 166 - "Community 166"
 Cohesion: 1.00
@@ -1169,6 +1169,10 @@ Nodes (3): globToRegex Duplication Across live-inject / live.mjs, globToRegex() 
 Cohesion: 1.00
 Nodes (3): Microinteractions and Animation, 100/300/500ms Duration Rule, Easing Curves (Avoid ease)
 
+### Community 175 - "Community 175"
+Cohesion: 0.25
+Nodes (8): Book Club Repository Bootstrap, Five-Phase Refactoring Plan, .gitkeep Directory Markers, Manifest Validation At Load, Meeting Schema Validator, MEETINGS Data Manifest, Meetings Directory Layout, Video Recap Terminology
+
 ### Community 177 - "Community 177"
 Cohesion: 0.10
 Nodes (19): Clean Up, Code Quality, Color & Contrast, Content & Copy, Design System Discovery, Edge Cases & Error States, Final Verification, Forms & Inputs (+11 more)
@@ -1180,6 +1184,10 @@ Nodes (18): Design Principles Score, Minor Observations, Overall Impression, [P0
 ### Community 179 - "Community 179"
 Cohesion: 0.67
 Nodes (3): Generality as Deletion, Somewhat General-Purpose Sweet Spot, YAGNI (You Ain't Gonna Need It)
+
+### Community 198 - "Community 198"
+Cohesion: 0.29
+Nodes (6): 1. When should functionality be combined into a single module versus being separated into multiple components?, 2. How does "module depth" conflict with the "Clean Code" movement's emphasis on short methods?, 3. Why is exception handling one of the primary drivers of software complexity?, 4. What does it mean to "define errors out of existence," and how do Unix and Windows file deletion illustrate this?, 5. What is the "Design it Twice" principle, and why does it overcome the "smart person" trap?, Five Essential Questions: The Complexity Romance
 
 ### Community 274 - "Community 274"
 Cohesion: 0.11
@@ -1194,8 +1202,8 @@ Cohesion: 0.11
 Nodes (18): Anti-Patterns, CSS Anchor Positioning, Destructive Actions: Undo > Confirm, Dropdown & Overlay Positioning, Fixed Positioning Fallback, Focus Rings: Do Them Right, Form Design: The Non-Obvious, Gesture Discoverability (+10 more)
 
 ### Community 277 - "Community 277"
-Cohesion: 0.20
-Nodes (12): APOSD Information Hiding, APOSD Validate at Construction, _initializeManifestState, loadManifest, Manifest Loader, Meeting class, Meeting Data Class, Playwright E2E Suite (+4 more)
+Cohesion: 0.18
+Nodes (14): APOSD Information Hiding, APOSD Validate at Construction, Meeting.hasVideo, _initializeManifestState, loadManifest, Manifest Loader, Meeting class, Meeting Data Class (+6 more)
 
 ### Community 278 - "Community 278"
 Cohesion: 0.11
@@ -1226,8 +1234,8 @@ Cohesion: 0.12
 Nodes (16): Avoid Redundant Copy, Confirmation Dialogs: Use Sparingly, Consistency: The Terminology Problem, Don't Blame the User, Empty States Are Opportunities, Error Message Templates, Error Messages: The Formula, Form Instructions (+8 more)
 
 ### Community 285 - "Community 285"
-Cohesion: 0.33
-Nodes (6): Architecture of Simplicity (Meeting 01 resource), Actionable Philosophy Book Club, Choose Your Adventure (Meeting 01 resource), John Ousterhout (A Philosophy of Software Design author), Meeting 00: The Kickoff (29 Apr 2026), Meeting 01: Deep Systems (13 May 2026)
+Cohesion: 0.39
+Nodes (8): ADR-0003: CI Environment Standardization, ADR-0004: Tailwind CSS, CI Workflow (validate + deploy), CSS Design Token Variables (:root), Node.js 22 (LTS pin), Playwright Validation, Tailwind CLI, Tailwind CSS v3.4.17
 
 ### Community 286 - "Community 286"
 Cohesion: 0.15
@@ -1270,8 +1278,8 @@ Cohesion: 0.13
 Nodes (14): APOSD Design Critique: `src/`, Design Principles Score, Minor Observations, Overall Impression, [P1 Major] Event Listener Leak in Video Player, [P2 Minor] Global Namespace Pollution in Manifests, [P2 Minor] Horizon/Drafts Conceptual & Naming Inconsistency, [P2 Minor] Information Leakage of Storage Keys & Prefix (+6 more)
 
 ### Community 296 - "Community 296"
-Cohesion: 0.60
-Nodes (5): callOnce, initOnboardingBanner, localStorage Onboarding Persistence, Onboarding Banner, setOnboardingDismissed
+Cohesion: 0.33
+Nodes (5): Error details, Instructions, Page snapshot, Test info, Test source
 
 ### Community 297 - "Community 297"
 Cohesion: 0.13
@@ -1354,8 +1362,8 @@ Cohesion: 0.15
 Nodes (12): Acceptance Criteria, Content wording registry, Data Flow, Decision, Design: Asset Copy Single Source of Truth, Error Handling, Migration Notes, Problem (+4 more)
 
 ### Community 317 - "Community 317"
-Cohesion: 0.10
-Nodes (21): AI as Future Mediator, Architectural Blueprints Analogy, Benchmark-Linked Comments, The Bike Ride Anecdote, Business Context / Why vs How, Code as Truth, Situations Where Comments Add Value, Comments Are Always Failures (+13 more)
+Cohesion: 0.06
+Nodes (34): AI as Future Mediator, Algorithmic vs Integration Spectrum, Architectural Blueprints Analogy, Benchmark-Linked Comments, The Bike Ride Anecdote, Bowling Score Calculator Example, Bundling Approach (Strategic Design), Business Context / Why vs How (+26 more)
 
 ### Community 319 - "Community 319"
 Cohesion: 0.17
@@ -1394,8 +1402,8 @@ Cohesion: 0.17
 Nodes (11): Approach, Architecture, CSS, Dashboard Skeleton, Data Flow, Error Handling, Goal, Loading Skeleton Design (+3 more)
 
 ### Community 328 - "Community 328"
-Cohesion: 0.18
-Nodes (10): AGENTS.md — Actionable Philosophy Book Club, Architecture, CI, CSP, graphify, Hard constraints, Key commands, Meeting README conventions (+2 more)
+Cohesion: 0.17
+Nodes (11): AGENTS.md — Actionable Philosophy Book Club, Architecture, Asset descriptions, CI, CSP, graphify, Hard constraints, Key commands (+3 more)
 
 ### Community 329 - "Community 329"
 Cohesion: 0.18
@@ -1478,8 +1486,8 @@ Cohesion: 0.25
 Nodes (8): ADR-0007: Command Palette Removed, Alternatives Considered, Consequences, Context, Decision, Rationale, Command Palette (removed feature), <datalist> Search Alternative
 
 ### Community 349 - "Community 349"
-Cohesion: 0.22
-Nodes (9): 1. Compress a File, 2. Capture Metadata, 3. Replace and Verify, Asset Compressor, Naming Convention, Quality Standards, Rename & Organize, Supported Formats (+1 more)
+Cohesion: 0.14
+Nodes (14): 1. Compress a File, 2. Capture Metadata, 3. Archive Source, 3. Replace and Verify, 4. Replace and Verify, 5. Compress an Image, Asset Compressor, Asset Descriptions (+6 more)
 
 ### Community 350 - "Community 350"
 Cohesion: 0.22
@@ -1494,8 +1502,8 @@ Cohesion: 0.22
 Nodes (8): APOSD Design Audit — src/, Design Health Score, Detailed Findings by Severity, P1 Major, P2 Minor, P3 Polish, Patterns & Systemic Issues, Positive Findings
 
 ### Community 354 - "Community 354"
-Cohesion: 0.25
-Nodes (9): Delete Duplicate handleRoute, GitHub Pages Origin / Subpath, P0 Critical Fixes Plan, RAW_CONTENT_BASE Constant, Service Worker Deployment Fix, Auto-Inject SW Cache Version from SHA, Service Worker Precache List, 'use strict' at Top of dist/app.js (+1 more)
+Cohesion: 0.29
+Nodes (6): ADR-0012: Copy Link Button Removed from Reader Header, Consequences, Context, Decision, Rationale, Copy Link Button (removed feature)
 
 ### Community 355 - "Community 355"
 Cohesion: 0.22
@@ -1530,8 +1538,8 @@ Cohesion: 0.32
 Nodes (8): CSP meta tag, CSP allows inline styles, Asset Behavior E2E Spec, Content Security Policy Spec, Playwright dashboard-xss spec, Playwright Last-Run JSON Artifact, Manifest Loaded Wait Helper, Test Isolation Init Script
 
 ### Community 363 - "Community 363"
-Cohesion: 0.50
-Nodes (6): scripts/inline-manifest.cjs, terser (bundler/minifier), CSP script-src 'self', dist/app.js (build output), src/_manifest.js (build-generated), src/00-setup.js .. src/14-test-hooks.js (14 numbered modules)
+Cohesion: 0.33
+Nodes (7): Article aria-label after markdown load, Replace Shared currentFetch with Active Reader Controller, handleRoute function, isSafeRepoPath function, loadPage function, ## Meeting Materials heading trigger, sanitizeAnchor function
 
 ### Community 364 - "Community 364"
 Cohesion: 0.29
@@ -1542,8 +1550,8 @@ Cohesion: 0.39
 Nodes (6): compress_video.py, compress_video.sh script, main(), parse_args(), Run ffmpeg command and output error logs on failure., run_ffmpeg()
 
 ### Community 366 - "Community 366"
-Cohesion: 0.25
-Nodes (7): Architecture vocabulary, Core domain terms, Data model, Domain Vocabulary (lazily maintained), Meeting structure, Skills, Testing
+Cohesion: 0.17
+Nodes (12): APoSD Concepts, Architecture vocabulary, Book Club Domain, Core domain terms, Data Model, Domain Vocabulary, Domain Vocabulary (lazily maintained), Flagged Ambiguities (+4 more)
 
 ### Community 367 - "Community 367"
 Cohesion: 0.25
@@ -1570,16 +1578,16 @@ Cohesion: 0.25
 Nodes (7): Stacked Resource Metadata Implementation Plan, Task 1: Add `.asset-meta` CSS, Task 2: Update `buildVideoRow` — convert inline metadata to `.asset-meta`, Task 3: Update `buildSlidesRow` — convert inline metadata to `.asset-meta`, Task 4: Update `buildPodcastRow` — move metadata out of `.asset-link-top` into `.asset-meta`, Task 5: Build `dist/app.js`, Task 6: Add test for `.asset-meta` in rendered output
 
 ### Community 373 - "Community 373"
-Cohesion: 0.25
-Nodes (7): Accessibility & Inclusion, Anti-references, Brand Personality, Design Principles, Product, Product Purpose, Users
+Cohesion: 0.48
+Nodes (5): initTheme(), isDarkTheme(), _persistThemePreference(), saveTheme(), setTheme()
 
 ### Community 374 - "Community 374"
 Cohesion: 0.25
 Nodes (7): Extract Flow, Step 1: Discover the Design System, Step 2: Identify Patterns, Step 3: Plan Extraction, Step 4: Extract & Enrich, Step 5: Migrate, Step 6: Document
 
 ### Community 375 - "Community 375"
-Cohesion: 0.32
-Nodes (8): buildDesignHeader(), fetchDesignSystem(), msgDiv(), renderDesignBody(), renderDesignChrome(), renderParsedMdCta(), renderStaleHint(), toggleDesignPanel()
+Cohesion: 0.20
+Nodes (12): buildDesignHeader(), fetchDesignSystem(), loadDetectScript(), msgDiv(), onDetectMessage(), renderDesignBody(), renderDesignChrome(), renderParsedMdCta() (+4 more)
 
 ### Community 376 - "Community 376"
 Cohesion: 0.25
@@ -1590,8 +1598,8 @@ Cohesion: 0.29
 Nodes (6): ADR 001: Choice of PowerPoint Viewer, Consequences, Context, Decision, Rationale, Status
 
 ### Community 378 - "Community 378"
-Cohesion: 0.29
-Nodes (6): ADR-0012: Copy Link Button Removed from Reader Header, Consequences, Context, Decision, Rationale, Copy Link Button (removed feature)
+Cohesion: 0.33
+Nodes (6): ADR-0011: Prose Section Separators — Whitespace Over Borders, Amendment (2026-05-18), Consequences, Context, Decision, Rationale
 
 ### Community 379 - "Community 379"
 Cohesion: 0.29
@@ -1602,8 +1610,8 @@ Cohesion: 0.33
 Nodes (7): bindRetryButton, escapeHTML, formatDuration, formatFileSize, Format Utilities, Retry UI, showRetryUI
 
 ### Community 383 - "Community 383"
-Cohesion: 0.18
-Nodes (13): Book Club Repository Bootstrap, Design Polish Audit Response, .gitkeep Directory Markers, Hash-Route SPA Router, Manifest Validation At Load, MEETINGS Data Manifest, Meetings Directory Layout, Onboarding Banner Reset (+5 more)
+Cohesion: 0.38
+Nodes (7): Design Polish Audit Response, Hash-Route SPA Router, Onboarding Banner Reset, preHandleRoute IIFE, Reader Table of Contents, Dynamic Skip Link Target, Typography System Stack
 
 ### Community 384 - "Community 384"
 Cohesion: 0.29
@@ -1622,8 +1630,8 @@ Cohesion: 0.29
 Nodes (6): 1. How does information hiding serve as the true foundation for software decomposition, and why does the flowchart approach to modularity fail as systems scale?, 2. What distinguishes semantic coupling from structural coupling, and what does empirical data reveal about which type dictates a developer's mental model?, 3. What are the specific ways abstractions fail, and how can usability tokens be used to systematically diagnose API friction?, 4. How does Stripe's "APIs as infrastructure" philosophy challenge conventional major-versioning schemes, and what mechanisms do they use to isolate volatility?, 5. Under what circumstances do elegant software abstractions break down at the CPU level, and what empirical evidence proves a runtime tax exists?, Five Essential Questions: The Empirical Reality Check
 
 ### Community 388 - "Community 388"
-Cohesion: 0.29
-Nodes (6): Action Items, Agenda (60 Minutes), Discussion Points, High-Level Summary, Meeting 04: [Topic TBD], Meeting Materials
+Cohesion: 0.31
+Nodes (9): Action Items, Agenda (60 Minutes), Discussion Points, ❓ Essential Questions, High-Level Summary, Meeting 04: The Complexity Romance, Meeting 04: [Topic TBD], Meeting Materials (+1 more)
 
 ### Community 389 - "Community 389"
 Cohesion: 0.29
@@ -1634,8 +1642,8 @@ Cohesion: 0.29
 Nodes (6): Distinguish canonical vs alternate video rows — Implementation Plan, Task 1: Add data attributes and aria-labels in buildAssetRows, Task 2: Add CSS tokens for visual accent, Task 3: Add data-alternate for podcastRows and aria-labels for accessibility, Task 4: Playwright E2E and accessibility checks, Task 5: Documentation & release notes
 
 ### Community 391 - "Community 391"
-Cohesion: 0.29
-Nodes (6): adapt, argumentHint, description, bolder, argumentHint, description
+Cohesion: 0.67
+Nodes (3): bolder, argumentHint, description
 
 ### Community 393 - "Community 393"
 Cohesion: 0.33
@@ -1647,7 +1655,7 @@ Nodes (6): ADR-0010: Manifest Loading Resilience, Consequences, Context, Decisio
 
 ### Community 395 - "Community 395"
 Cohesion: 0.33
-Nodes (6): ADR-0011: Prose Section Separators — Whitespace Over Borders, Amendment (2026-05-18), Consequences, Context, Decision, Rationale
+Nodes (6): Architecture of Simplicity (Meeting 01 resource), Actionable Philosophy Book Club, Choose Your Adventure (Meeting 01 resource), John Ousterhout (A Philosophy of Software Design author), Meeting 00: The Kickoff (29 Apr 2026), Meeting 01: Deep Systems (13 May 2026)
 
 ### Community 396 - "Community 396"
 Cohesion: 0.33
@@ -1656,18 +1664,6 @@ Nodes (6): ADR-0013: JS Extraction and Build Pipeline, Alternatives Considered, 
 ### Community 397 - "Community 397"
 Cohesion: 0.33
 Nodes (5): APOSD Critique — src/, Design Principles Score, Priority Issues, Questions to Consider, Tactical Tornado Verdict
-
-### Community 399 - "Community 399"
-Cohesion: 0.33
-Nodes (6): Keep Footer Visible in Reader View, navigateToDashboard(), setView(), Skip-Link Target Swap, Video Player Close Triggers, Video Player Module (video-player.js)
-
-### Community 400 - "Community 400"
-Cohesion: 0.40
-Nodes (5): initTheme(), setSessionStorageErrorHandler, setTheme(isDark, userInitiated), .theme-toggle-btn Elements, Toast Module (toast.js)
-
-### Community 401 - "Community 401"
-Cohesion: 0.33
-Nodes (5): JS-Injected Skeletons (Option 1), Loading Skeleton Goal, renderDashboardSkeleton(), sk-block CSS Class, Skeleton Out of Scope
 
 ### Community 402 - "Community 402"
 Cohesion: 0.33
@@ -1701,6 +1697,10 @@ Nodes (5): Loading Skeleton Implementation Plan, Task 1: Add the dashboard skele
 Cohesion: 0.33
 Nodes (5): Discussion: [Topic/Book Chapter], Key Themes, Practical Applications, Preparation, Questions for the Group
 
+### Community 410 - "Community 410"
+Cohesion: 0.29
+Nodes (7): Keep Footer Visible in Reader View, navigateToDashboard(), prepareInitialViewFromHash(hash), setView(), Skip-Link Target Swap, Video Player Close Triggers, Video Player Module (video-player.js)
+
 ### Community 411 - "Community 411"
 Cohesion: 0.40
 Nodes (4): ADR-0004: Tailwind CSS for Utility Styles, Alternatives Considered, Decision, Rationale
@@ -1723,7 +1723,7 @@ Nodes (4): Supplement 1: API Design & Information Hiding, The API Friction Check
 
 ### Community 416 - "Community 416"
 Cohesion: 0.40
-Nodes (5): Module Isolation by Concern, Resume Bar UI, Storage Helpers Module (storage.js), Periodic Progress Saver, Video Resume Position Persistence
+Nodes (5): initTheme(), setSessionStorageErrorHandler, setTheme(isDark, userInitiated), .theme-toggle-btn Elements, Toast Module (toast.js)
 
 ### Community 417 - "Community 417"
 Cohesion: 0.40
@@ -1734,8 +1734,8 @@ Cohesion: 0.40
 Nodes (4): File Map, Section / h2 Spacing Implementation Plan, Task 1: Update section and h2 spacing in index.html, Task 2: Update DESIGN.md
 
 ### Community 419 - "Community 419"
-Cohesion: 0.40
-Nodes (5): craft, argumentHint, description, live, argumentHint
+Cohesion: 0.29
+Nodes (6): craft, argumentHint, description, extract, argumentHint, description
 
 ### Community 420 - "Community 420"
 Cohesion: 0.40
@@ -1794,16 +1794,16 @@ Cohesion: 0.67
 Nodes (3): document, argumentHint, description
 
 ### Community 435 - "Community 435"
-Cohesion: 0.67
-Nodes (3): extract, argumentHint, description
+Cohesion: 0.50
+Nodes (4): Hash router #p= convention, routing.spec.js, URL scheme blocklist, Invalid path stays on dashboard
 
 ### Community 436 - "Community 436"
 Cohesion: 0.67
 Nodes (3): harden, argumentHint, description
 
 ### Community 437 - "Community 437"
-Cohesion: 0.67
-Nodes (3): layout, argumentHint, description
+Cohesion: 0.40
+Nodes (5): adapt, argumentHint, description, live, argumentHint
 
 ### Community 438 - "Community 438"
 Cohesion: 0.67
@@ -1833,6 +1833,18 @@ Nodes (3): shape, argumentHint, description
 Cohesion: 0.67
 Nodes (3): typeset, argumentHint, description
 
+### Community 464 - "Community 464"
+Cohesion: 0.33
+Nodes (5): JS-Injected Skeletons (Option 1), Loading Skeleton Goal, renderDashboardSkeleton(), sk-block CSS Class, Skeleton Out of Scope
+
+### Community 465 - "Community 465"
+Cohesion: 0.67
+Nodes (3): layout, argumentHint, description
+
+### Community 466 - "Community 466"
+Cohesion: 0.40
+Nodes (5): Module Isolation by Concern, Resume Bar UI, Storage Helpers Module (storage.js), Periodic Progress Saver, Video Resume Position Persistence
+
 ## Ambiguous Edges - Review These
 - `Three Standard Breakpoints (640/768/1024)` → `Discovery Interview (Phase 1)`  [AMBIGUOUS]
   .agents/skills/impeccable/reference/responsive-design.md · relation: conceptually_related_to
@@ -1860,9 +1872,9 @@ Nodes (3): typeset, argumentHint, description
   docs/adr/0010-manifest-fetch-resilience.md · relation: calls
 
 ## Knowledge Gaps
-- **1731 isolated node(s):** `DEPRECATED_NAMES`, `HARNESS_DIRS`, `SKILL_FINGERPRINTS`, `description`, `argumentHint` (+1726 more)
+- **1766 isolated node(s):** `DEPRECATED_NAMES`, `HARNESS_DIRS`, `SKILL_FINGERPRINTS`, `description`, `argumentHint` (+1761 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **98 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **100 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
