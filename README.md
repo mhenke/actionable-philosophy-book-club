@@ -1,6 +1,6 @@
-# 📖 Actionable Philosophy Book Club
+# Actionable Philosophy Book Club
 
-A low-friction repository for the **Actionable Philosophy Book Club**, focusing on software design philosophy and AI-assisted engineering.
+This repo hosts the Actionable Philosophy Book Club, where we read *A Philosophy of Software Design* and talk about how its ideas show up in AI-assisted engineering.
 
 ---
 
@@ -10,25 +10,27 @@ A low-friction repository for the **Actionable Philosophy Book Club**, focusing 
 
 ---
 
-## 🚀 Interactive Dashboard
-For the best experience, including mobile-optimized navigation, meeting agendas, and instant slide previews, visit our dashboard:
+## Interactive dashboard
 
-**[View the High-Fidelity Dashboard &rarr;](https://mhenke.github.io/actionable-philosophy-book-club/)**
+The dashboard is the easiest way to browse agendas, recordings, and slide previews on any device:
+
+**[View the dashboard &rarr;](https://mhenke.github.io/actionable-philosophy-book-club/)**
 
 ---
 
-## 📂 Repository at a Glance
+## What's in this repo
 
-*   **[`meetings/`](meetings/)**: Historical notes, slides, and video recaps for every session.
+*   **[`meetings/`](meetings/)**: Notes, slides, and video recaps from every session.
 *   **[`docs/`](docs/)**: Design principles, glossary, and architectural decisions.
 *   **[`templates/`](templates/)**: Scaffolding for new meetings and AI prompt templates.
-*   **[`skills/asset-compressor/`](skills/asset-compressor/)**: Custom AI tool for optimizing repository media.
-*   **[`skills/vocabulary-audit/`](skills/vocabulary-audit/)**: Skill for detecting hidden semantic coupling between services.
+*   **[`skills/asset-compressor/`](skills/asset-compressor/)**: Tool for shrinking PDFs, MP4s, PPTX files, and images before committing them.
+*   **[`skills/vocabulary-audit/`](skills/vocabulary-audit/)**: Tool for spotting hidden semantic coupling between services.
 
-## 🤖 AI-Assisted Workflows
-We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompts/) to extract insights, and the [Asset Compressor Skill](skills/asset-compressor/) to compress media files. Install skills via `npx skills add mhenke/actionable-philosophy-book-club`.
+## AI-assisted workflows
 
-## 💻 Local Development
+We use AI to do better work, not more busywork. Use the [prompt templates](templates/prompts/) to pull insights out of transcripts, and the [asset compressor skill](skills/asset-compressor/) to keep media files small. Install skills with `npx skills add mhenke/actionable-philosophy-book-club`.
+
+## Local development
 
 ### Build the JS bundle
 
@@ -36,66 +38,59 @@ We leverage AI to sharpen our craft. Use our [Prompt Templates](templates/prompt
 npm run build:js
 ```
 
-`dist/app.js` is a generated artifact (gitignored) — rebuild it after changing source files or manifest data.
+`dist/app.js` is generated from source and manifest data, so rebuild it after either one changes.
 
 ### Preview locally
+
 ```bash
-# Start a local web server (required for fetch() to work)
+# A local server is required because fetch() doesn't work with file:// URLs
 python3 -m http.server 8000
 
-# Open browser to http://localhost:8000
+# Then open http://localhost:8000
 ```
 
-> **Note:** `file://` URLs block fetch(). Use a local server instead. We also include a `.nojekyll` file in the root to ensure GitHub Pages correctly serves our single-page application without Jekyll processing.
+> **Note:** We include a `.nojekyll` file so GitHub Pages serves the single-page app without running Jekyll on it.
 
 ### Run tests
+
 ```bash
-# Install dependencies once
 npm install
-
-# Run all tests (starts server automatically)
 npm test
-
-# View test results
 npx playwright show-report
 ```
 
-Tests verify XSS prevention, path validation, routing, and caching behavior.
+Tests cover XSS prevention, path validation, routing, and caching.
 
-## 🛠 Contributing
-We value **content over ceremony**. See [CONTRIBUTING.md](CONTRIBUTING.md) for details on uploading materials and staying under the 50MB file limit.
+## Contributing
 
-### Managing Asset Metadata
-After adding or updating media files (videos, slides, podcasts, images), extract and update the manifest with file metadata:
+We care more about good content than perfect process. See [CONTRIBUTING.md](CONTRIBUTING.md) for how to upload materials and stay under the 50 MB file limit.
+
+### Updating asset metadata
+
+After adding or changing media files, run the metadata extractor to patch `docs/manifest.json`:
 
 ```bash
-# Extract duration and file size for all assets, patch docs/manifest.json
 python3 scripts/extract_metadata.py --patch docs/manifest.json
-
-# Rebuild the JS bundle to inline the updated manifest
 npm run build:js
 ```
 
-This updates the meetings manifest with:
-- **Duration** (seconds) for videos and audio files
-- **File size** (MB) for videos, slides, podcasts, and resource images
+This writes duration and file size into the manifest:
 
-The manifest data is inlined into `dist/app.js` at build time. The dashboard reads the inlined data synchronously — no fetch required.
+- **Video (MP4):** duration + fileSize
+- **Slides (PPTX):** fileSize
+- **Podcasts (M4A):** duration + fileSize
+- **Resources (PNG/JPG):** fileSize
 
-**Supported formats:**
-- Video (MP4): duration + fileSize
-- Slides (PPTX): fileSize
-- Podcasts (M4A): duration + fileSize
-- Resources (PNG/JPG): fileSize
+The dashboard reads this data straight from the built bundle, so no extra fetch is needed.
 
-See the [asset-compressor skill](skills/asset-compressor/) for full compression and metadata extraction capabilities. See the [vocabulary-audit skill](skills/vocabulary-audit/) for detecting hidden semantic coupling.
+See the [asset-compressor skill](skills/asset-compressor/) for compression and metadata extraction details, and the [vocabulary-audit skill](skills/vocabulary-audit/) if you want to check for hidden coupling.
 
-## 📐 Architecture Decision Records
+## Architecture decision records
 
-Key decisions affecting day-to-day contribution:
+Decisions that affect day-to-day contribution:
 
-- **[ADR-0002](docs/adr/0002-single-page-reader.md)** — Single-Page Reader Architecture
-- **[ADR-0008](docs/adr/0008-behavior-first-test-strategy.md)** — Behavior-First Test Strategy
-- **[ADR-0010](docs/adr/0010-manifest-fetch-resilience.md)** — Manifest Fetch Resilience
+- **[ADR-0002](docs/adr/0002-single-page-reader.md)**: Single-page reader architecture
+- **[ADR-0008](docs/adr/0008-behavior-first-test-strategy.md)**: Behavior-first test strategy
+- **[ADR-0010](docs/adr/0010-manifest-fetch-resilience.md)**: Manifest fetch resilience
 
 Full list: **[docs/adr/](docs/adr/)**

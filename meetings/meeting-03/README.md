@@ -4,7 +4,7 @@
 
 ## High-Level Summary
 
-Abstractions compress complexity. They do not eliminate it. This meeting pressure-tests John Ousterhout's design theories against concrete empirical data, hardware taxes, and organizational friction. Every reading and exercise has earned its place: zero academic filler, zero uncontextualized code blocks.
+Abstractions compress complexity; they do not make it vanish. This meeting tests John Ousterhout's design ideas against real data, hardware costs, and the friction organizations create around code. Each reading and exercise is there for a reason.
 
 **Total Reading: ~28 pp required + ~9 pp optional**
 

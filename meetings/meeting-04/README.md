@@ -4,7 +4,7 @@
 
 ## High-Level Summary
 
-We continue through the book, moving into Chapters 9–11 where Ousterhout tackles the tension between "different" and "better." This session examines why tiny functions can ruin software architecture, and whether the romance of simplicity is a design principle or a mirage.
+We continued into Chapters 9 to 11 of *A Philosophy of Software Design*, where Ousterhout takes on the tension between "different" and "better." The session looks at why tiny functions can wreck software architecture, and whether the romance of simplicity is a real design principle or a mirage.
 
 ## Agenda (60 Minutes)
 
@@ -23,7 +23,7 @@ We continue through the book, moving into Chapters 9–11 where Ousterhout tackl
 - [See full details in 04-essential-questions.md](04-essential-questions.md)
 
 ### 💡 Non-Obvious Insights
-- **Conservation of Complexity:** Subdividing a system shifts complexity to interfaces and coordination logic — it does not disappear.
+- **Conservation of Complexity:** Subdividing a system shifts complexity to interfaces and coordination logic; it does not disappear.
 - **The Ego Hurdle:** High achievers conflate speed with skill, making "Design it Twice" psychologically difficult.
 - **Design as Deletion:** Great abstractions eliminate entire categories of behavior rather than adding error paths.
 - **Redundancy as Diagnostic:** Repeated code patterns signal a missing abstraction layer, not just a DRY violation.

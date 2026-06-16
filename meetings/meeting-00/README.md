@@ -3,17 +3,17 @@
 **Date:** April 29, 2026
 
 ## High-Level Summary
-The inaugural kickoff for the Actionable Philosophy Book Club. We established our primary goals, distributed copies of "A Philosophy of Software Design," and aligned on a zero-ceremony framework for exploring architectural depth in an AI-assisted era.
+Our first session. We introduced ourselves, talked through what we wanted from the club, handed out copies of *A Philosophy of Software Design*, and agreed to keep the format low-ceremony.
 
 ## Agenda
 - [x] **Introductions:** Getting to know the members.
 - [x] **Book Club Goals:** Defining what we want to achieve.
 - [x] **Process Discussion:** Agreeing on how we want to conduct the meetings.
-- [x] **Book Distribution:** Handing out physical/digital copies of "A Philosophy of Software Design".
+- [x] **Book Distribution:** Handing out physical/digital copies of *A Philosophy of Software Design*.
 
 ## Discussion Points
-- Discussion on cadence and frequency.
-- Agreement on "low-ceremony" approach.
+- Cadence and frequency.
+- Agreed on a low-ceremony approach.
 
 ## Meeting Materials
 - [recordings/](recordings/)

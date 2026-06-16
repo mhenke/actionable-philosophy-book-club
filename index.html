@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
-    <meta name="description" content="Meeting notes, recordings, and session materials for A Philosophy of Software Design book club.">
+    <meta name="description" content="Session notes, recordings, and materials for the Actionable Philosophy Book Club.">
     <meta property="og:title" content="Actionable Philosophy Book Club">
-    <meta property="og:description" content="Meeting notes, recordings, and session materials for A Philosophy of Software Design.">
+    <meta property="og:description" content="Session notes, recordings, and materials for the Actionable Philosophy Book Club.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mhenke.github.io/actionable-philosophy-book-club/">
     <meta property="og:image" content="https://mhenke.github.io/actionable-philosophy-book-club/assets/social-preview.png">
@@ -54,8 +54,8 @@
             --materials-panel-bg: rgb(34 34 34 / 0.025);
             --rule-start: rgb(75 163 199 / 0.30);
             --rule-end:   rgb(72 189 184 / 0.06);
-            /* Backdrop token for modal overlays — keeps them in the token system */
-            --overlay-backdrop: rgba(0, 0, 0, 0.85);
+            /* Backdrop token for modal overlays — tinted navy instead of pure black */
+            --overlay-backdrop: rgba(13, 24, 38, 0.88);
         }
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -463,7 +463,7 @@
         .what-to-read-block {
             margin-bottom: 1.5rem;
             background: var(--wash-2);
-            border-left: 3px solid var(--spectrum-2);
+            border: 1px solid var(--border-low);
             border-radius: 0.5rem;
             padding: 1rem 1.25rem;
         }
@@ -603,6 +603,12 @@
             text-underline-offset: 2px;
             visibility: hidden;
         }
+
+        /* Knowledge Base tile wash variants — replaces inline style attributes */
+        .kb-tile-wash-4 { background: var(--wash-4); }
+        .kb-tile-wash-2 { background: var(--wash-2); }
+        .kb-icon-wash-4 { background: var(--wash-4-icon); }
+        .kb-icon-wash-2 { background: var(--wash-2-icon); }
         .onboarding-banner-close {
             cursor: pointer;
             background: none;
@@ -777,10 +783,10 @@
             --text-primary: #EEEEEE;
             --text-muted:   #B2B2B2;
             --card-bg:      #1C1C1E;
-            --border-low:   rgba(255, 255, 255, 0.08);
-            --prose-code-bg: rgba(255, 255, 255, 0.1);
-            --materials-panel-bg: rgba(255, 255, 255, 0.05);
-            --shadow-sticky: rgba(0, 0, 0, 0.5);
+            --border-low:   rgba(225, 240, 250, 0.08);
+            --prose-code-bg: rgba(225, 240, 250, 0.1);
+            --materials-panel-bg: rgba(225, 240, 250, 0.05);
+            --shadow-sticky: rgba(13, 24, 38, 0.5);
             --shadow-card-hover: rgba(99, 164, 226, 0.15);
             --btn-primary-text: var(--banner);
             
@@ -892,8 +898,8 @@
             <div id="onboarding-banner" class="hidden-view onboarding-banner mb-6">
                 <p>
                     <strong>New here?</strong>
-                    Watch primers, download slides, and explore discussion audio for each session.
-                    Start with the <a href="#p=docs/onboarding.md">Onboarding guide</a> in the Knowledge Base below.
+                    Each session has a primer video, slides, and discussion audio to dig into.
+                    The <a href="#p=docs/onboarding.md">Onboarding guide</a> below explains how the club works.
                 </p>
                 <button class="onboarding-banner-close" id="onboarding-dismiss" aria-label="Dismiss onboarding banner">
                     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -947,42 +953,42 @@
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 items-start">
                     <div class="w-full">
-                        <a href="#p=docs/onboarding.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-onboarding">
-                            <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></span>
+                        <a href="#p=docs/onboarding.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-onboarding">
+                            <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Onboarding</span>
-                            <span id="kb-desc-onboarding" class="sr-only">New member guide: how the club works, what to expect, and where to start</span>
+                            <span id="kb-desc-onboarding" class="sr-only">A quick start for new members: how meetings run, what to bring, and where to begin</span>
                         </a>
                         <p class="mt-2 text-center"><a href="#" id="restore-onboarding" class="onboarding-banner-link" aria-controls="onboarding-banner">Restore onboarding banner</a></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=docs/glossary.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-glossary">
-                            <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg></span>
+                        <a href="#p=docs/glossary.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-glossary">
+                            <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Glossary</span>
-                            <span id="kb-desc-glossary" class="sr-only">Key terms, concepts, and references from all sessions</span>
+                            <span id="kb-desc-glossary" class="sr-only">Terms, concepts, and references that come up across sessions</span>
                         </a>
                         <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=docs/design-principles.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-principles">
-                            <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" /></svg></span>
+                        <a href="#p=docs/design-principles.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-principles">
+                            <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
-                            <span id="kb-desc-principles" class="sr-only">Design heuristics and guiding principles behind the club's approach</span>
+                            <span id="kb-desc-principles" class="sr-only">Heuristics and principles that shape how we read and apply the book</span>
                         </a>
                         <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=docs/why-book-now.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4" style="background: var(--wash-4);" aria-describedby="kb-desc-why-book-now">
-                            <span class="icon-pill" style="background: var(--wash-4-icon);" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 111.086.797l-1.04 2.08a.75.75 0 001.085.798l.04-.02m-.086-5.603h.008v.008h-.008v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span>
+                        <a href="#p=docs/why-book-now.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-why-book-now">
+                            <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 111.086.797l-1.04 2.08a.75.75 0 001.085.798l.04-.02m-.086-5.603h.008v.008h-.008v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Why Book Now</span>
-                            <span id="kb-desc-why-book-now" class="sr-only">Why we are reading this book: core motivations and design tensions</span>
+                            <span id="kb-desc-why-book-now" class="sr-only">Why we picked this book and what design tensions we are chasing</span>
                         </a>
                         <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=templates/prompts/README.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2" style="background: var(--wash-2);" aria-describedby="kb-desc-prompts">
-                            <span class="icon-pill" style="background: var(--wash-2-icon);" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" /></svg></span>
+                        <a href="#p=templates/prompts/README.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2 kb-tile-wash-2" aria-describedby="kb-desc-prompts">
+                            <span class="icon-pill kb-icon-wash-2" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
-                            <span id="kb-desc-prompts" class="sr-only">Curated prompts for AI-assisted discussion and reflection</span>
+                            <span id="kb-desc-prompts" class="sr-only">Prompts we use to turn session transcripts into discussion material</span>
                         </a>
                         <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
@@ -1003,7 +1009,7 @@
                     </button>
 
                     <div class="flex items-center gap-4 min-w-0">
-                        <span id="reader-doc-label" class="text-[0.6875rem] swiss-light">Session Notes</span>
+                        <span id="reader-doc-label" class="text-[0.6875rem] swiss-light">Session notes</span>
                         <button id="theme-toggle-reader" class="theme-toggle-btn" aria-label="Toggle theme">
                             <svg class="sun-icon w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m11.314 11.314l.707.707M12 8a4 4 0 100 8 4 4 0 000-8z" />

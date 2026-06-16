@@ -3,7 +3,7 @@
 **Date:** May 27, 2026
 
 ## High-Level Summary
-A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design," focusing on deep modules as complexity sinks (selected as Path 2 during Meeting 01's wrap-up). The session concluded with the group selecting **Path 2: The Empirical Reality Check (Modernized)**. This reading bundle pauses the textbook to test Ousterhout's design theories against modern engineering data, historical foundations, measurable JVM behaviors, and hardware realities.
+We covered Chapters 5 to 8 of *A Philosophy of Software Design*, looking at deep modules as places where complexity gets absorbed so the rest of the system stays simple. At the end of the session we chose **Path 2: The Empirical Reality Check (Modernized)**. That means we are putting the textbook on pause to test Ousterhout's abstractions against real engineering data, the history that shaped them, JVM behavior we can measure, and the hardware underneath it all.
 
 ## Agenda (60 Minutes)
 1. [Video Primer](recordings/02-complexity-governance-the-four-pillars-of-deep-modules.mp4). **Refresher Video (5-10 min):** Why great modules take on complexity so the rest of the system stays simple.
@@ -31,7 +31,7 @@ A deep dive into Chapters 5 through 8 of "A Philosophy of Software Design," focu
 
 ## Path Chosen: The Empirical Reality Check
 
-The group selected Path 2 (with modifications) to test Ousterhout's abstractions against real-world evidence before continuing the textbook. The reading bundle includes:
+The group picked Path 2 (with modifications) so we could test Ousterhout's abstractions against evidence before going back to the textbook. The reading bundle includes:
 
 - **Parnas (1972):** *"On the Criteria To Be Used in Decomposing Systems into Modules"*, the original module/secrecy foundation (~9 pp)
 - **Piccioni et al. (2013):** *"An Empirical Study of API Usability"*, quantified cognitive load data (~6 pp)

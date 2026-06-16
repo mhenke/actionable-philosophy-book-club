@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['index.html', 'src/0*.js'],
+  content: ['index.html', 'src/**/*.js'],
   safelist: [
     'justify-between',
     'shrink-0',

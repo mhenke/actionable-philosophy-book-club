@@ -21,7 +21,7 @@ python3 -m http.server 8000   # local preview (fetch() requires HTTP)
 - **JS build chain**: `scripts/inline-manifest.cjs` reads `docs/manifest.json` → generates `src/_manifest.js`. Then terser concatenates all `src/*.js` (in the order listed in `package.json` `build:js` script) → `dist/app.js`.
 - **CSS**: Tailwind v3.4.17. Build output `dist/tailwind.css`. Color tokens are CSS vars (`--spectrum-1` through `--spectrum-6`), never hardcoded hex. CI checks freshness via `npm run build:css` + diff.
 - **Theme**: `src/theme-init.js` runs as blocking `<script>` in `<head>` to prevent FOUC. `src/theme.js` handles toggle/persistence.
-- **Reader**: `loadPage()` in `reader-loader.js` — fetches via `fetchMarkdown()` (20-entry LRU cache), parses with `marked`, sanitizes with `DOMPurify`, then rewrites links and builds file tree from `## Meeting Materials` heading.
+- **Reader**: `loadMarkdownPage()` in `reader.js` — fetches via `fetchMarkdown()` (20-entry LRU cache), parses with `marked`, sanitizes with `DOMPurify`, then rewrites links and builds file tree from `## Meeting Materials` heading.
 - **Dashboard**: `renderUpcomingMaterials()` + `renderArchiveCards()` in `dashboard.js` share `buildAssetRows()` in `assets.js`.
 - **Skills**: `skills/asset-compressor/` compresses PDF/MP4/PPTX. `skills/vocabulary-audit/` checks shared vocabulary between decoupled services.
 

@@ -3,22 +3,22 @@
 **Date:** May 13, 2026
 
 ## High-Level Summary
-A foundational deep dive into Chapters 1 through 4 of "A Philosophy of Software Design." This session explored the "Complexity Waterfall": identifying the symptoms of unknown unknowns and cognitive load, and established the critical distinction between tactical speed and strategic depth.
+We worked through Chapters 1 to 4 of *A Philosophy of Software Design* and focused on the "Complexity Waterfall": how unknown unknowns and cognitive load show up, and why tactical speed is different from strategic depth.
 
 ## Agenda (60 Minutes)
 1. [Video Primer](recordings/01-The-Architects-of-Complexity.mp4). **Refresher Video (5-10 min):** Visualizing the shallow vs. deep module gap.
 2. [Slides](slides/01-Architecting-Deep-Systems.pptx). **Discussion (30 min):** Core debate on "Classitis" and why small functions aren't always clean.
 3. **Wrap-up (Last 10 min):**
    - [Choose Your Adventure](resources/01-choose-your-adventure.png). **Future Planning:** Group selected Path 2 for Meeting 02's direction.
-   - **Retrospective:** Moving beyond tactical tornados in our PRs.
+   - **Retrospective:** Looking at where tactical speed shows up in our PRs.
 
 ## Discussion Points
 
 ### ❓ Essential Questions
-*   **The Complexity Waterfall:** How does it redefine the goal of a developer?
+*   **The Complexity Waterfall:** What does it change about a developer's real job?
 *   **Classitis:** Is the "Clean Code" heuristic of small functions actually hurting us?
 *   **The Tactical Tornado:** Why is this person rewarded in modern engineering cultures?
-*   **Unknown Unknowns:** How do we proactively eliminate the most dangerous symptom of complexity?
+*   **Unknown Unknowns:** How do we get rid of them before they hurt us?
 *   **AI Ownership:** Who owns "Structural Integrity" when LLMs write the implementation?
 *   [See full details in 01-essential-questions.md](01-essential-questions.md)
 

@@ -35,8 +35,6 @@ const PATH_MAX_LENGTH = 256;
 const _ASSET_ROOTS = new Set(['meetings', 'assets']);
 const _REPO_ROOTS = new Set(['meetings', 'docs', 'templates']);
 const DOMAIN = Object.freeze({ REPO: 'repo', ASSET: 'asset' });
-const REL_EXTERNAL = 'noopener noreferrer';
-const OFFICE_VIEWER_ORIGIN = 'https://view.officeapps.live.com';
 
 const _SANITIZE_OPTIONS = {
     FORBID_TAGS: ['style', 'iframe', 'form', 'object', 'embed'],
@@ -44,7 +42,7 @@ const _SANITIZE_OPTIONS = {
 };
 
 const _ALLOWED_EXTERNAL_HOSTS = (function() {
-    const officeHost = new URL(OFFICE_VIEWER_ORIGIN).hostname;
+    const officeHost = new URL(window.ExternalLinkConfig.OFFICE_VIEWER_ORIGIN).hostname;
     const otherHosts = 'mhenke\\.github\\.io|github\\.com|dl\\.acm\\.org|www\\.cs\\.colostate\\.edu|doi\\.org|bugcounting\\.net|dmtopolog\\.com|stripe\\.com|arxiv\\.org|pinzger\\.github\\.io|www\\.inf\\.usi\\.ch|lemire\\.me|docs\\.oracle\\.com|dev\\.to';
     return new RegExp('^https?:\\/\\/(' + officeHost + '|' + otherHosts + ')\\/', 'i');
 })();
@@ -134,10 +132,10 @@ function fetchMarkdown(path, signal) {
 function getViewerDestination(path) {
     var type = window.classify(path);
     if (type === 'slides') {
-        return { url: window.buildPPTXViewerURL(path), target: '_blank', rel: REL_EXTERNAL };
+        return { url: window.buildPPTXViewerURL(path), target: '_blank', rel: window.ExternalLinkConfig.REL };
     }
     if (type === 'image') {
-        return { url: path, target: '_blank', rel: REL_EXTERNAL };
+        return { url: path, target: '_blank', rel: window.ExternalLinkConfig.REL };
     }
     return { url: path };
 }
@@ -214,7 +212,7 @@ function ensureDOMPurifyHooks() {
                 return;
             }
             node.setAttribute('target', '_blank');
-            node.setAttribute('rel', REL_EXTERNAL);
+            node.setAttribute('rel', window.ExternalLinkConfig.REL);
         }
     });
 }
@@ -337,6 +335,20 @@ function _finalizeReaderContent(sanitized, path, anchorId) {
         var img = imgs[i];
         if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
         if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+    }
+
+    // Task-list checkboxes rendered by marked have no associated label.
+    // Derive an accessible name from the list item text so screen readers
+    // announce the checkbox purpose.
+    var taskCheckboxes = markdownContent.querySelectorAll('li input[type="checkbox"]');
+    for (var k = 0; k < taskCheckboxes.length; k++) {
+        var cb = taskCheckboxes[k];
+        if (cb.hasAttribute('aria-label')) continue;
+        var li = cb.closest('li');
+        if (li) {
+            var label = li.textContent.trim().replace(/\s+/g, ' ');
+            cb.setAttribute('aria-label', label);
+        }
     }
 
     rewriteContentLinks(markdownContent, path);

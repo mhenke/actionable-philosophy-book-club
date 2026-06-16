@@ -64,9 +64,9 @@ test('assets.js reads from ExternalLinkConfig.REL (not bare REL_EXTERNAL)', () =
     assert.ok(!/\bREL_EXTERNAL\b/.test(code), 'assets should not reference bare REL_EXTERNAL');
 });
 
-test('reader-loader.js reads from ExternalLinkConfig (not bare REL_EXTERNAL / OFFICE_VIEWER_ORIGIN)', () => {
-    const code = readSource('src/reader-loader.js');
-    assert.ok(/ExternalLinkConfig\./.test(code), 'reader-loader should reference ExternalLinkConfig');
-    assert.ok(!/\bREL_EXTERNAL\b/.test(code), 'reader-loader should not reference bare REL_EXTERNAL');
-    assert.ok(!/window\.OFFICE_VIEWER_ORIGIN\b/.test(code), 'reader-loader should not reference bare window.OFFICE_VIEWER_ORIGIN');
+test('reader.js reads from ExternalLinkConfig (not bare REL_EXTERNAL / OFFICE_VIEWER_ORIGIN)', () => {
+    const code = readSource('src/reader.js');
+    assert.ok(/ExternalLinkConfig\./.test(code), 'reader should reference ExternalLinkConfig');
+    assert.ok(!/\bREL_EXTERNAL\b/.test(code), 'reader should not reference bare REL_EXTERNAL');
+    assert.ok(!/window\.OFFICE_VIEWER_ORIGIN\b/.test(code), 'reader should not reference bare window.OFFICE_VIEWER_ORIGIN');
 });
