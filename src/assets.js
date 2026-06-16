@@ -24,10 +24,10 @@ function _buildAssetRow(config) {
 
     const iconPart = `<span class="icon-pill" style="background: ${config.iconBg};" aria-hidden="true">${config.icon}</span>`;
 
-    let labelPart = `<span class="asset-link-text">${config.label}</span>`;
-    if (config.badge) {
-        labelPart += ` <span class="podcast-badge" style="color:${config.badge.color}">${escapeHTML(config.badge.text)}</span>`;
-    }
+    const badgePart = config.badge
+        ? ` <span class="podcast-badge" style="color:${config.badge.color}">${escapeHTML(config.badge.text)}</span>`
+        : '';
+    const labelPart = `<span class="asset-link-text">${config.label}${badgePart}</span>`;
 
     const metaPart = config.meta ? `<span class="asset-meta">${config.meta}</span>` : '';
     const captionPart = config.caption ? `<span class="podcast-caption">${escapeHTML(config.caption)}</span>` : '';

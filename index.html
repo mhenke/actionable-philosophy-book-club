@@ -175,8 +175,7 @@
             color: var(--spectrum-2);
             min-height: 44px;
             transition: color 0.15s, opacity 0.1s, transform 0.1s;
-            flex: 0 0 auto;
-            width: 100%;
+            flex: 1 1 auto;
             min-width: 0;
         }
         .asset-link:hover  { color: var(--spectrum-1); }
@@ -199,9 +198,9 @@
             white-space: nowrap;
         }
         .asset-link-text {
-            flex: 0 1 auto;
+            flex: 1 1 auto;
             min-width: 0;
-            word-break: break-word;
+            word-break: normal;
             overflow-wrap: break-word;
         }
         .podcast-caption,
@@ -404,7 +403,6 @@
             border-radius: 2px;
             white-space: nowrap;
             flex-shrink: 0;
-            margin-left: auto;
         }
 
         /* Resource PNG thumbnail strip */
@@ -840,7 +838,7 @@
             }
             .podcast-badge {
                 margin-left: 0;
-                margin-top: 0.25rem;
+                margin-top: 0;
             }
             .podcast-disclosure summary {
                 flex-wrap: wrap;
@@ -850,9 +848,6 @@
             }
         }
         @media (min-width: 640px) {
-            .asset-link {
-                width: 50%;
-            }
             .materials-panel a {
                 width: 50%;
             }
