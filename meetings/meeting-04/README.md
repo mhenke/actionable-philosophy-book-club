@@ -45,3 +45,4 @@ We continued into Chapters 9 to 11 of *A Philosophy of Software Design*, where O
   - [04-the-complexity-romance.pptx](slides/04-the-complexity-romance.pptx)
 - [resources/](resources/)
   - [04-the-complexity-romance-infographic.png](resources/04-the-complexity-romance-infographic.png)
+  - [04-choose-your-next-adventure.webp](resources/04-choose-your-next-adventure.webp)
