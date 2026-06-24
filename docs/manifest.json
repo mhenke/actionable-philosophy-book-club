@@ -310,6 +310,11 @@
           "label": "Choose Your Next Adventure",
           "file": "meetings/meeting-04/resources/04-choose-your-next-adventure.webp",
           "fileSize": 0.4
+        },
+        {
+          "label": "The Complexity Romance",
+          "file": "meetings/meeting-04/resources/04-the-complexity-romance-infographic.webp",
+          "fileSize": 0.2
         }
       ]
     }
