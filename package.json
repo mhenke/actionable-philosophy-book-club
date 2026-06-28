@@ -13,9 +13,9 @@
     "test:links": "bash tests/check-links.sh"
   },
   "devDependencies": {
-    "@playwright/test": "^1.60.0",
+    "@playwright/test": "^1.61.1",
     "caniuse-lite": "^1.0.30001799",
-    "dompurify": "^3.4.10",
+    "dompurify": "^3.4.11",
     "marked": "^18.0.5",
     "tailwindcss": "3.4.17",
     "terser": "^5.48.0"
