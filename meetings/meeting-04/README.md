@@ -1,6 +1,6 @@
 # Meeting 04: The Complexity Romance
 
-**Date:** June 24, 2026
+**Date:** July 15, 2026
 
 ## High-Level Summary
 
