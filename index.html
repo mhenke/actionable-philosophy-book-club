@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; media-src 'self'; connect-src 'self'; frame-src https://view.officeapps.live.com; base-uri 'self'; form-action 'none';">
     <title>Actionable Philosophy Book Club Dashboard</title>
     <meta name="description" content="Session notes, recordings, and materials for the Actionable Philosophy Book Club.">
     <meta property="og:title" content="Actionable Philosophy Book Club">
@@ -16,9 +16,12 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="dist/tailwind.css?v=20260523">
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <script src="dist/theme-init.js"></script>
-    <style>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script src="dist/theme-init.js"></script>
+<style>
         :root {
             --surface:      #F7F7F7;
             --banner:       #222222;
@@ -34,6 +37,7 @@
             --spectrum-6:   #A8D8B9;
             --border-low:   rgb(34 34 34 / 0.06);
             --btn-primary-text: var(--white);
+            --z-toast: 50;
             /* Spectrum wash tokens — centralised tints used throughout */
             --wash-1: rgb(26 58 92 / 0.04);
             --wash-2: rgb(43 108 176 / 0.05);
@@ -64,6 +68,13 @@
             line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
+        .swiss-caps,
+        .prose h1,
+        .prose h2,
+        .prose h3 {
+            font-family: "Instrument Serif", serif;
+            font-weight: 400;
+        }
         :focus-visible {
             outline: 2px solid var(--spectrum-2);
             outline-offset: 2px;
@@ -72,7 +83,7 @@
         #markdown-content:focus { outline: none; }
         .swiss-caps {
             letter-spacing: -0.04em;
-            font-weight: 500;
+            font-weight: 400;
         }
         .swiss-light {
             letter-spacing: -0.01em;
@@ -276,10 +287,10 @@
                 scroll-margin-top: 8.5rem;
             }
         }
-        .prose h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; line-height: 1.3; margin-bottom: 1.5rem; color: var(--banner); }
+        .prose h1 { font-size: 1.5rem; font-weight: 400; letter-spacing: -0.025em; line-height: 1.3; margin-bottom: 1.5rem; color: var(--banner); }
         @media (min-width: 768px) { .prose h1 { font-size: 1.875rem; } }
-        .prose h2 { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.2em; margin-top: 3.5rem; margin-bottom: 1.5rem; color: var(--banner); }
-        .prose h3 { font-size: 1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--banner); }
+        .prose h2 { font-size: 0.8125rem; font-weight: 400; letter-spacing: 0.2em; margin-top: 3.5rem; margin-bottom: 1.5rem; color: var(--banner); }
+        .prose h3 { font-size: 1rem; font-weight: 400; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--banner); }
 
         .prose p { font-size: 1.0625rem; line-height: 1.7; margin-bottom: 1.5rem; color: var(--text-primary); text-wrap: pretty; }
         /* Restore bullets — Tailwind preflight resets list-style to none */
@@ -533,7 +544,7 @@
             bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 9999;
+            z-index: var(--z-toast);
             pointer-events: none;
         }
         .toast {
@@ -921,11 +932,8 @@
             </section>
 
             <!-- Drafts -->
-            <section aria-labelledby="section-draft" class="mt-20 hidden-view">
-                <h2 id="section-draft" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-4 flex items-center gap-4">
-                    Coming Up
-                    <span class="spectrum-rule"></span>
-                </h2>
+            <section aria-labelledby="section-draft" class="mt-16 hidden-view">
+                <h2 id="section-draft" class="text-[1.25rem] font-semibold text-muted mb-4">Coming Up</h2>
                 <div class="grid gap-5 md:gap-8" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));" id="draft-cards-container">
                     <!-- Draft cards rendered by JavaScript -->
                 </div>
@@ -933,10 +941,7 @@
 
             <!-- Archive -->
             <section aria-labelledby="section-archive" class="mt-20 hidden-view">
-                <h2 id="section-archive" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-4 flex items-center gap-4">
-                    Past
-                    <span class="spectrum-rule"></span>
-                </h2>
+                <h2 id="section-archive" class="text-[1.25rem] font-semibold text-muted mb-4">Past</h2>
 
                 <div class="grid gap-5 md:gap-8" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));" id="archive-cards-container" data-asset-container>
                     <!-- Cards rendered by JavaScript -->
@@ -944,51 +949,51 @@
             </section>
 
             <!-- Knowledge Base -->
-            <section aria-labelledby="section-kb" class="mt-20 hidden-view">
+            <section aria-labelledby="section-kb" class="mt-24 hidden-view">
                 <div class="flex items-center mb-4 gap-4">
                     <h2 id="section-kb" class="text-[0.6875rem] font-semibold uppercase tracking-[0.35em] text-muted mb-0">Knowledge Base</h2>
                     <span class="spectrum-rule"></span>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 items-start">
                     <div class="w-full">
-                        <a href="#p=docs/onboarding.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-onboarding">
+                        <a href="#p=docs/onboarding.md" class="card w-full p-5 flex flex-col items-start text-left min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-onboarding">
                             <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Onboarding</span>
                             <span id="kb-desc-onboarding" class="sr-only">A quick start for new members: how meetings run, what to bring, and where to begin</span>
                         </a>
-                        <p class="mt-2 text-center"><a href="#" id="restore-onboarding" class="onboarding-banner-link" aria-controls="onboarding-banner">Restore onboarding banner</a></p>
+                        <p class="mt-2 text-left"><a href="#" id="restore-onboarding" class="onboarding-banner-link" aria-controls="onboarding-banner">Restore onboarding banner</a></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=docs/glossary.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-glossary">
+                        <a href="#p=docs/glossary.md" class="card w-full p-5 flex flex-col items-start text-left min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-glossary">
                             <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Glossary</span>
                             <span id="kb-desc-glossary" class="sr-only">Terms, concepts, and references that come up across sessions</span>
                         </a>
-                        <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
+                        <p class="mt-2 text-left" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=docs/design-principles.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-principles">
+                        <a href="#p=docs/design-principles.md" class="card w-full p-5 flex flex-col items-start text-left min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-principles">
                             <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Principles</span>
                             <span id="kb-desc-principles" class="sr-only">Heuristics and principles that shape how we read and apply the book</span>
                         </a>
-                        <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
+                        <p class="mt-2 text-left" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=docs/why-book-now.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-why-book-now">
+                        <a href="#p=docs/why-book-now.md" class="card w-full p-5 flex flex-col items-start text-left min-h-[80px] group border-t-2 border-spectrum-4 kb-tile-wash-4" aria-describedby="kb-desc-why-book-now">
                             <span class="icon-pill kb-icon-wash-4" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 111.086.797l-1.04 2.08a.75.75 0 001.085.798l.04-.02m-.086-5.603h.008v.008h-.008v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-1 group-hover:text-spectrum-2 transition-colors">Why Book Now</span>
                             <span id="kb-desc-why-book-now" class="sr-only">Why we picked this book and what design tensions we are chasing</span>
                         </a>
-                        <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
+                        <p class="mt-2 text-left" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
                     <div class="w-full">
-                        <a href="#p=templates/prompts/README.md" class="card w-full p-5 flex flex-col items-center justify-center text-center min-h-[80px] group border-t-2 border-spectrum-2 kb-tile-wash-2" aria-describedby="kb-desc-prompts">
+                        <a href="#p=templates/prompts/README.md" class="card w-full p-5 flex flex-col items-start text-left min-h-[80px] group border-t-2 border-spectrum-2 kb-tile-wash-2" aria-describedby="kb-desc-prompts">
                             <span class="icon-pill kb-icon-wash-2" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" /></svg></span>
                             <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-spectrum-2 group-hover:text-spectrum-1 transition-colors">AI Prompts</span>
                             <span id="kb-desc-prompts" class="sr-only">Prompts we use to turn session transcripts into discussion material</span>
                         </a>
-                        <p class="mt-2 text-center" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
+                        <p class="mt-2 text-left" aria-hidden="true"><span class="kb-tile-spacer">Restore onboarding banner</span></p>
                     </div>
                 </div>
             </section>
