@@ -45,4 +45,3 @@ We continue with Chapters 11–15 of *A Philosophy of Software Design*, where Ou
   - 📊 [05-the-lost-wisdom-of-software-design.pptx](slides/05-the-lost-wisdom-of-software-design.pptx) — The Art of Comments: comment philosophy, naming as design, and balancing precision with intuition
 - [resources/](resources/)
   - [05-essential-documentation-philosophy.webp](resources/05-essential-documentation-philosophy.webp) — Documentation philosophy infographic
-  - [05-essential-documentation-philosophy.png](resources/05-essential-documentation-philosophy.png) — Documentation philosophy infographic (PNG fallback)
