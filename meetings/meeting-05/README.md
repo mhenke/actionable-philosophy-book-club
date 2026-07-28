@@ -42,6 +42,6 @@ We continue with Chapters 12–15 of *A Philosophy of Software Design*. Ousterho
   - [05-self-documenting-code-critique.m4a](recordings/05-self-documenting-code-critique.m4a)
   - [05-self-documenting-code-debate.m4a](recordings/05-self-documenting-code-debate.m4a)
 - [slides/](slides/)
-  - [05-the-lost-wisdom-of-software-design.pptx](slides/05-the-lost-wisdom-of-software-design.pptx)
+  - [05-the-art-of-comments-slides.pptx](slides/05-the-art-of-comments-slides.pptx)
 - [resources/](resources/)
   - [05-essential-documentation-philosophy.webp](resources/05-essential-documentation-philosophy.webp)

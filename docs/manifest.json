@@ -336,11 +336,11 @@
         "caption": "Chapters 12–15: comments, naming, and concluding design principles"
       },
       "slides": {
-        "file": "meetings/meeting-05/slides/05-the-lost-wisdom-of-software-design.pptx",
+        "file": "meetings/meeting-05/slides/05-the-art-of-comments-slides.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 41,
-        "caption": "The Art of Comments: comment philosophy, naming as design, and balancing precision with intuition"
+        "fileSize": 40,
+        "caption": "The Art of Comments: anime-style post-apocalyptic exploration of comments, naming, and documentation across chapters 12-15"
       },
       "additional_material": [
         {
