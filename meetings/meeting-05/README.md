@@ -4,7 +4,7 @@
 
 ## High-Level Summary
 
-We continue with Chapters 12–15 of *A Philosophy of Software Design*, where Ousterhout shifts focus to the quieter side of software design: comments, naming, and the concluding principles that tie the book together. The session explores why good comments are a design tool, not just documentation.
+We continue with Chapters 12–15 of *A Philosophy of Software Design*. Ousterhout covers comments, naming, and the closing principles of the book. The main question: when are comments a design tool, not just documentation?
 
 ## Agenda (60 Minutes)
 
@@ -15,19 +15,19 @@ We continue with Chapters 12–15 of *A Philosophy of Software Design*, where Ou
 ## Discussion Points
 
 ### ❓ Essential Questions
-- **The "Failure" vs. "Abstraction" Debate:** Robert Martin argues comments are "failures"; Ousterhout says they're essential to abstraction. Where does the expressive-code philosophy fail?
-- **The Obviousness Litmus Test:** How can a team establish a shared standard for what needs a comment without falling into the "Comment Repeats Code" trap?
-- **Megasyllabic Names vs. Shorter Names with Comments:** Does moving documentation into long names reduce cognitive load, or just retype the documentation at every invocation?
+- **The "Failure" vs. "Abstraction" Debate:** Robert Martin says comments are "failures"; Ousterhout says they're essential to abstraction. Where does the expressive-code approach stop working?
+- **The Obviousness Litmus Test:** How does a team agree on what needs a comment without just repeating the code in words?
+- **Megasyllabic Names vs. Shorter Names with Comments:** Does moving documentation into long names reduce cognitive load, or just make developers retype the same documentation at every call site?
 - **Comments-First as a Scaffolding Tool:** If a method is "Hard to Describe" in a comment, is that a documentation failure or a design failure?
-- **Balancing Precision and Intuition:** Which causes more "unknown unknowns"—missing low-level detail or missing high-level rationale?
+- **Balancing Precision and Intuition:** Which causes more surprises: missing low-level detail or missing high-level rationale?
 - [See full details in 05-essential-questions.md](05-essential-questions.md)
 
 ### 💡 Non-Obvious Insights
-- **Abstraction is impossible without prose:** Code describes *how*; only comments can explain the *why* that defines a module's contract.
-- **Comments are a diagnostic "Canary" for bad design:** If you can't describe a method simply, the abstraction is broken.
-- **The "Time Pressure" excuse is a mathematical myth:** Code + comments is ~10% of dev time; comments-first can actually speed up development.
-- **Obviousness is defined by the reader, not the author:** If a first-time reader finds it confusing, it *is* complex.
-- **High-level comments should prioritize "How we got here":** The best implementation comments explain rationale, not just behavior.
+- **Abstraction is impossible without prose:** Code shows how; comments show why. Without them, readers re-derive your abstractions by scanning implementation details.
+- **Comments are a diagnostic for bad design:** If you can't describe a method simply, the abstraction is probably broken.
+- **The "Time Pressure" excuse doesn't hold up:** Code plus comments takes roughly 10% of dev time. Writing comments first can actually speed things up.
+- **Obviousness is defined by the reader, not the author:** If a first-time reader finds it confusing, it's complex.
+- **High-level comments should explain "how we got here":** The best implementation comments explain reasoning, not just behavior.
 - [See full details in 05-non-obvious-insights.md](05-non-obvious-insights.md)
 
 ## Action Items
@@ -45,4 +45,3 @@ We continue with Chapters 12–15 of *A Philosophy of Software Design*, where Ou
   - [05-the-lost-wisdom-of-software-design.pptx](slides/05-the-lost-wisdom-of-software-design.pptx)
 - [resources/](resources/)
   - [05-essential-documentation-philosophy.webp](resources/05-essential-documentation-philosophy.webp)
-  - [05-essential-documentation-philosophy.png](resources/05-essential-documentation-philosophy.png)
