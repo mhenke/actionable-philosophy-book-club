@@ -45,6 +45,9 @@ Thumbs.db
 # Screenshot dev scripts output
 /tmp/screenshot*.png
 
+# Book folder
+docs/book/
+
 # PDF reading resources (downloaded from external URLs in README)
 *.pdf
 

@@ -1,0 +1,13 @@
+# Meeting 05: Non-Obvious Insights
+
+## Chapters 12–15: A Philosophy of Software Design
+
+1. **Abstraction is impossible without prose:** A method's signature (names and types) is almost always an incomplete abstraction because it cannot capture essential information like expected string formats, side effects, or boundary conditions. While code describes *how* a system works, only human-language comments can effectively explain the *why*—the intent and conceptual framework that defines a module's "contract" with its callers. Relying solely on "self-documenting code" forces readers to re-derive abstractions by scanning implementation details, which is a fundamental failure of modular design.
+
+2. **Comments are a diagnostic "Canary" for bad design:** Writing comments first acts as a design tool rather than just a recording of work; if a method or variable is difficult to describe simply, it is a "red flag" that the underlying abstraction is likely fuzzy or broken. Complexity is often easier to spot in prose than in code; if you cannot describe a method completely without a long and complicated comment, it indicates that the method is "shallow" and has not successfully hidden its implementation.
+
+3. **The "Time Pressure" excuse is a mathematical myth:** Developers often claim they lack the time to document code, yet typing both code and comments together typically accounts for only about 10% of total development time. Because writing comments *before* code helps stabilize abstractions earlier in the process, the "comments-first" workflow can actually *speed up* development by reducing the number of code revisions needed once implementation begins.
+
+4. **Obviousness is defined exclusively by the reader, not the author:** A fundamental rule of design is that "complexity is in the eye of the reader"; if a person reading your code for the first time finds it confusing, you must accept that the code *is* complex, regardless of how clear it seems to you as the author. Authors naturally lose perspective because they are too intimate with their own solutions; true "obviousness" is achieved only when a reader can make a correct "quick guess" about behavior without having to think very hard.
+
+5. **High-level comments should prioritize "How we got here":** While low-level comments provide precision (such as units or invariants), the most insightful implementation comments provide intuition by explaining the rationale behind code blocks or the conditions under which they are most likely to be invoked. A great higher-level comment provides a "conceptual framework" that allows a reader to ignore low-level details while naturally deducing how specific code statements relate to the overall system goal.

@@ -250,13 +250,12 @@
     {
       "id": "meeting-04",
       "session": "Meeting 04",
-      "date": "15 Jul 2026",
+      "date": "22 Jul 2026",
       "title": "The Complexity Romance",
-      "status": "upcoming",
+      "status": "done",
       "color": "spectrum-2",
       "wash": "--wash-2",
       "keyTakeaway": "Depth minimizes dependencies; fragmentation maximizes them. Never sacrifice architectural depth for short methods — build deep modules that hide complexity behind simple interfaces.",
-      "whatToRead": "Chapters 9–11 of A Philosophy of Software Design",
       "readmeUrl": "meetings/meeting-04/README.md",
       "video": {
         "file": "meetings/meeting-04/recordings/04-the-dogma-disruption-unlearning-clean-code.mp4",
@@ -315,6 +314,45 @@
           "label": "The Complexity Romance",
           "file": "meetings/meeting-04/resources/04-the-complexity-romance-infographic.webp",
           "fileSize": 0.2
+        }
+      ]
+    },
+    {
+      "id": "meeting-05",
+      "session": "Meeting 05",
+      "date": "5 Aug 2026",
+      "title": "The Art of Comments",
+      "status": "upcoming",
+      "color": "spectrum-3",
+      "wash": "--wash-3",
+      "whatToRead": "Chapters 12–15 of A Philosophy of Software Design",
+      "readmeUrl": "meetings/meeting-05/README.md",
+      "video": null,
+      "slides": null,
+      "additional_material": [
+        {
+          "label": "Comments as Abstraction Deep Dive",
+          "file": "meetings/meeting-05/recordings/05-comments-as-abstraction-deep-dive.m4a",
+          "category": "deep-dive",
+          "duration": 1278,
+          "fileSize": 39,
+          "caption": "Why comments are essential to abstraction, the four excuses debunked, and comments as a diagnostic canary for bad design"
+        },
+        {
+          "label": "Comments Brief Overview",
+          "file": "meetings/meeting-05/recordings/05-comments-brief.m4a",
+          "category": "brief",
+          "duration": 118,
+          "fileSize": 4,
+          "caption": "Quick overview of the 5 essential questions and non-obvious insights from chapters 12-15"
+        },
+        {
+          "label": "Comments Critique",
+          "file": "meetings/meeting-05/recordings/05-comments-critique.m4a",
+          "category": "critique",
+          "duration": 1149,
+          "fileSize": 35,
+          "caption": "Challenging Ousterhout's positions: is 'comments are essential' too strong in an era of TypeScript? Is 'obviousness' subjective?"
         }
       ]
     }
