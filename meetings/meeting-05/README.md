@@ -37,12 +37,12 @@ We continue with Chapters 12–15 of *A Philosophy of Software Design*, where Ou
 - [05-essential-questions.md](05-essential-questions.md)
 - [05-non-obvious-insights.md](05-non-obvious-insights.md)
 - [recordings/](recordings/)
-  - 🎬 [05-legacy-ruins-primer.mp4](recordings/05-legacy-ruins-primer.mp4) 4m 36s · 18MB — Chapters 12–15: comments, naming, and concluding design principles
-  - 🔬 [05-names-and-comments-deep-dive.m4a](recordings/05-names-and-comments-deep-dive.m4a) 19m 31s · 9MB — Deep dive into how naming and comments shape software design beyond surface-level documentation
-  - 🔍 [05-self-documenting-code-critique.m4a](recordings/05-self-documenting-code-critique.m4a) 14m 32s · 7MB — Challenging the self-documenting code myth: when comments are essential and when they're noise
-  - ⚔️ [05-self-documenting-code-debate.m4a](recordings/05-self-documenting-code-debate.m4a) 24m 39s · 12MB — Structured debate on whether self-documenting code can replace comments in modern codebases
+  - [05-legacy-ruins-primer.mp4](recordings/05-legacy-ruins-primer.mp4)
+  - [05-names-and-comments-deep-dive.m4a](recordings/05-names-and-comments-deep-dive.m4a)
+  - [05-self-documenting-code-critique.m4a](recordings/05-self-documenting-code-critique.m4a)
+  - [05-self-documenting-code-debate.m4a](recordings/05-self-documenting-code-debate.m4a)
 - [slides/](slides/)
-  - 📊 [05-the-lost-wisdom-of-software-design.pptx](slides/05-the-lost-wisdom-of-software-design.pptx) — The Art of Comments: comment philosophy, naming as design, and balancing precision with intuition
+  - [05-the-lost-wisdom-of-software-design.pptx](slides/05-the-lost-wisdom-of-software-design.pptx)
 - [resources/](resources/)
-  - [05-essential-documentation-philosophy.webp](resources/05-essential-documentation-philosophy.webp) — Documentation philosophy infographic
-  - [05-essential-documentation-philosophy.png](resources/05-essential-documentation-philosophy.png) — Documentation philosophy infographic (PNG fallback)
+  - [05-essential-documentation-philosophy.webp](resources/05-essential-documentation-philosophy.webp)
+  - [05-essential-documentation-philosophy.png](resources/05-essential-documentation-philosophy.png)
