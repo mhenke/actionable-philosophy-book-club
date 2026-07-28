@@ -4,7 +4,7 @@
 
 ## High-Level Summary
 
-We continue with Chapters 11–15 of *A Philosophy of Software Design*, where Ousterhout shifts focus to the quieter side of software design: comments, naming, and the concluding principles that tie the book together. The session explores why good comments are a design tool, not just documentation.
+We continue with Chapters 12–15 of *A Philosophy of Software Design*, where Ousterhout shifts focus to the quieter side of software design: comments, naming, and the concluding principles that tie the book together. The session explores why good comments are a design tool, not just documentation.
 
 ## Agenda (60 Minutes)
 
