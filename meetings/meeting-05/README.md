@@ -38,6 +38,7 @@ We continue with Chapters 12–15 of *A Philosophy of Software Design*. Ousterho
 - [05-non-obvious-insights.md](05-non-obvious-insights.md)
 - [recordings/](recordings/)
   - [05-legacy-ruins-primer.mp4](recordings/05-legacy-ruins-primer.mp4)
+  - [05-the-great-abstraction-debate-alternate.mp4](recordings/05-the-great-abstraction-debate-alternate.mp4) 6m 24s · 18MB — A debate on whether abstraction is a complexity sink or a complexity tax.
   - [05-names-and-comments-deep-dive.m4a](recordings/05-names-and-comments-deep-dive.m4a)
   - [05-self-documenting-code-critique.m4a](recordings/05-self-documenting-code-critique.m4a)
   - [05-self-documenting-code-debate.m4a](recordings/05-self-documenting-code-debate.m4a)

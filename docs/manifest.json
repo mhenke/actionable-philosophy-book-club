@@ -384,6 +384,16 @@
           "file": "meetings/meeting-05/resources/05-obviousness-litmus-test.webp",
           "fileSize": 0.1,
           "caption": "Infographic mapping the obviousness litmus test for deciding what deserves a comment."
+        },
+        {
+          "label": "The Great Abstraction Debate",
+          "file": "meetings/meeting-05/recordings/05-the-great-abstraction-debate-alternate.mp4",
+          "category": "alternate",
+          "variant": "alternate",
+          "source_filename": "The_Great_Abstraction_Debate.mp4",
+          "duration": 384,
+          "fileSize": 18,
+          "caption": "A head-to-head debate on whether abstraction compresses complexity or merely relocates it, contrasting deep-module discipline with abstraction-skeptical critique."
         }
       ]
     }
