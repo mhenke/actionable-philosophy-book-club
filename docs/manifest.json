@@ -336,11 +336,11 @@
         "caption": "Chapters 12–15: comments, naming, and concluding design principles"
       },
       "slides": {
-        "file": "meetings/meeting-05/slides/05-the-art-of-comments-slides.pptx",
+        "file": "meetings/meeting-05/slides/05-the-architecture-of-prose-slides.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 40,
-        "caption": "The Art of Comments: anime-style post-apocalyptic exploration of comments, naming, and documentation across chapters 12-15"
+        "fileSize": 33,
+        "caption": "The Architecture of Prose: slide deck on clarity of expression and written structure as a lens for software design and commenting practice."
       },
       "additional_material": [
         {
@@ -371,6 +371,19 @@
           "label": "Essential Documentation Philosophy",
           "file": "meetings/meeting-05/resources/05-essential-documentation-philosophy.webp",
           "fileSize": 0.5
+        },
+        {
+          "label": "The Art of Comments (Original Deck)",
+          "file": "meetings/meeting-05/resources/05-the-art-of-comments-slides.pptx",
+          "category": "alternate",
+          "fileSize": 40,
+          "caption": "Original Meeting 05 slide deck, retained as an alternate presentation."
+        },
+        {
+          "label": "The Obviousness Litmus Test",
+          "file": "meetings/meeting-05/resources/05-obviousness-litmus-test.webp",
+          "fileSize": 0.1,
+          "caption": "Infographic mapping the obviousness litmus test for deciding what deserves a comment."
         }
       ]
     }
