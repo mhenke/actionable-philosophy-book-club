@@ -38,6 +38,7 @@ We close the book with Chapters 16 to 22 of *A Philosophy of Software Design*. T
 - [06-essential-questions.md](06-essential-questions.md)
 - [06-non-obvious-insights.md](06-non-obvious-insights.md)
 - [recordings/](recordings/)
+  - 🎬 [06-the-strategic-finale-primer.mp4](recordings/06-the-strategic-finale-primer.mp4) 6m 21s · 16MB — Anime summer festival finale, story arc through Chapters 16 to 22, refresher before discussion
   - 🔬 [06-staying-strategic-deep-dive.m4a](recordings/06-staying-strategic-deep-dive.m4a) 24m 00s · 22MB — Deep dive on strategic repair vs tactical patches, why consistency is leverage, and what makes code nonobvious — Pair, List vs ArrayList, event-driven handlers, and a main that never exits
   - ⚔️ [06-complexity-trends-debate.m4a](recordings/06-complexity-trends-debate.m4a) 23m 46s · 22MB — Debate on whether interface vs implementation inheritance, agile and TDD increments, and patterns or getters add complexity while looking helpful
   - 🔍 [06-consistency-obviousness-critique.m4a](recordings/06-consistency-obviousness-critique.m4a) 18m 18s · 17MB — Critique of the Buffer critical-path halve and the prominence test for what matters
