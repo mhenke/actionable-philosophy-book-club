@@ -38,11 +38,12 @@ We close the book with Chapters 16 to 22. The question is how the investment min
 - [06-essential-questions.md](06-essential-questions.md)
 - [06-non-obvious-insights.md](06-non-obvious-insights.md)
 - [recordings/](recordings/)
-  - 🎬 [06-the-strategic-finale-primer.mp4](recordings/06-the-strategic-finale-primer.mp4) 6m 21s · 16MB — Anime summer festival finale, story arc through Chapters 16 to 22
-  - 🔬 [06-staying-strategic-deep-dive.m4a](recordings/06-staying-strategic-deep-dive.m4a) 24m 00s · 22MB — Strategic repair, consistency as leverage, and what makes code nonobvious
-  - ⚔️ [06-complexity-trends-debate.m4a](recordings/06-complexity-trends-debate.m4a) 23m 46s · 22MB — Whether trends like agile, TDD, and patterns help or hurt complexity
-  - 🔍 [06-consistency-obviousness-critique.m4a](recordings/06-consistency-obviousness-critique.m4a) 18m 18s · 17MB — The Buffer critical-path halve and deciding what matters
+  - [06-the-strategic-finale-primer.mp4](recordings/06-the-strategic-finale-primer.mp4)
+  - [06-staying-strategic-deep-dive.m4a](recordings/06-staying-strategic-deep-dive.m4a)
+  - [06-complexity-trends-debate.m4a](recordings/06-complexity-trends-debate.m4a)
+  - [06-consistency-obviousness-critique.m4a](recordings/06-consistency-obviousness-critique.m4a)
 - [resources/](resources/)
-  - 🖼️ [06-samurai-debate-next-session.webp](resources/06-samurai-debate-next-session.webp) · 06-samurai-debate-next-session.png fallback — Samurai garden preview for the extra session after the book
+  - [06-samurai-debate-next-session.webp](resources/06-samurai-debate-next-session.webp)
+  - [06-samurai-debate-next-session.png](resources/06-samurai-debate-next-session.png)
 - [slides/](slides/)
-  - 📊 [06-the-strategic-finale-anime-festival.pptx](slides/06-the-strategic-finale-anime-festival.pptx) — 17 slides, each essential question verbatim on its own discussion slide
+  - [06-the-strategic-finale-anime-festival.pptx](slides/06-the-strategic-finale-anime-festival.pptx)
