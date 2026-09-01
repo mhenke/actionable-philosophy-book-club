@@ -45,3 +45,4 @@ We close the book with Chapters 16 to 22 of *A Philosophy of Software Design*. T
 - [resources/](resources/)
   - 🖼️ [06-samurai-debate-next-session.webp](resources/06-samurai-debate-next-session.webp) · 06-samurai-debate-next-session.png fallback — Anime samurai garden preview for the extra session after the book; both YouTubes and the GitHub debate housed in Meeting 06
 - [slides/](slides/)
+  - 📊 [06-the-strategic-finale-anime-festival.pptx](slides/06-the-strategic-finale-anime-festival.pptx) — Anime summer festival finale, 17 slides setting up each essential question before showing it verbatim on its own discussion slide, closing with all five insights together
