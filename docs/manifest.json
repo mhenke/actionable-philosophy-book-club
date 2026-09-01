@@ -415,7 +415,13 @@
         "fileSize": 16,
         "caption": "Anime summer festival finale — story arc through Chapters 16 to 22, refresher before discussion"
       },
-      "slides": null,
+      "slides": {
+        "file": "meetings/meeting-06/slides/06-the-strategic-finale-anime-festival.pptx",
+        "label": "Slides",
+        "variant": "canonical",
+        "fileSize": 29,
+        "caption": "Anime summer festival finale, 17 slides, setup then discussion: each essential question verbatim on its own slide, insights together, book arc through the festival scene."
+      },
       "additional_material": [
         {
           "label": "Staying Strategic, Consistency, and Obviousness",
@@ -447,7 +453,8 @@
           "fileSize": 0.2,
           "caption": "Anime — Matt, Bob, and John as samurai in a cherry blossom garden. Extra session after the book: both YouTubes and the GitHub debate, preview housed in Meeting 06"
         }
-      ]
+      ],
+      "keyTakeaway": "A well-made module takes on hard choices inside so the rest of the system can stay simple, and when that is missing the cost shows up everywhere as extra checks, leaked details, and harder names."
     }
   ]
 }

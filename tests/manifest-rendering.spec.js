@@ -8,6 +8,8 @@ test.describe('Manifest Rendering', () => {
         await page.goto('/');
         const titles = await page.locator('#archive-cards-container .card h3').allTextContents();
         expect(titles).toEqual([
+            'The Art of Comments',
+            'The Complexity Romance',
             'The Empirical Reality Check',
             'Complexity Engineering',
             'Deep Systems',
