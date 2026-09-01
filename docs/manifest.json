@@ -322,10 +322,9 @@
       "session": "Meeting 05",
       "date": "5 Aug 2026",
       "title": "The Art of Comments",
-      "status": "upcoming",
+      "status": "done",
       "color": "spectrum-3",
       "wash": "--wash-3",
-      "whatToRead": "Chapters 12–15 of A Philosophy of Software Design",
       "readmeUrl": "meetings/meeting-05/README.md",
       "video": {
         "file": "meetings/meeting-05/recordings/05-legacy-ruins-primer.mp4",
@@ -394,6 +393,46 @@
           "duration": 384,
           "fileSize": 18,
           "caption": "A head-to-head debate on whether abstraction compresses complexity or merely relocates it, contrasting deep-module discipline with abstraction-skeptical critique."
+        }
+      ],
+      "keyTakeaway": "Code without a reason to exist forces every reader to rebuild the idea that the code was meant to carry."
+    },
+    {
+      "id": "meeting-06",
+      "session": "Meeting 06",
+      "date": "16 Sep 2026",
+      "title": "The Strategic Finale",
+      "status": "upcoming",
+      "color": "spectrum-4",
+      "wash": "--wash-4",
+      "whatToRead": "Chapters 16–22 of A Philosophy of Software Design (docs/final-16-22.pdf) — also indexed in the club NotebookLM",
+      "readmeUrl": "meetings/meeting-06/README.md",
+      "video": null,
+      "slides": null,
+      "additional_material": [
+        {
+          "label": "Staying Strategic, Consistency, and Obviousness",
+          "file": "meetings/meeting-06/recordings/06-staying-strategic-deep-dive.m4a",
+          "category": "deep-dive",
+          "duration": 1440,
+          "fileSize": 44.2,
+          "caption": "Deep dive on Ch.16 strategic repair, Ch.17 consistency as cognitive leverage, and Ch.18 obviousness — Pair, List vs ArrayList, event-driven handlers, and main that never exits"
+        },
+        {
+          "label": "Do Modern Trends Help or Hurt Complexity?",
+          "file": "meetings/meeting-06/recordings/06-complexity-trends-debate.m4a",
+          "category": "debate",
+          "duration": 1426,
+          "fileSize": 43.8,
+          "caption": "Debate on Ch.19 trends — interface vs implementation inheritance, agile and TDD as tactical increments, design patterns and getters and setters"
+        },
+        {
+          "label": "Performance, What Matters, and the Return on Good Design",
+          "file": "meetings/meeting-06/recordings/06-consistency-obviousness-critique.m4a",
+          "category": "critique",
+          "duration": 1098,
+          "fileSize": 33.7,
+          "caption": "Critique of Ch.20 to 22 — critical-path design, the RAMCloud Buffer 8.8 to 4.75 ns Halving, measure before and after, and the taste to decide what matters"
         }
       ]
     }
