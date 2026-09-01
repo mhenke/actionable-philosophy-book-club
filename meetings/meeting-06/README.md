@@ -1,6 +1,6 @@
 # Meeting 06: The strategic finale
 
-**Date:** September 16, 2026
+**Date:** September 2, 2026
 
 ## High-level summary
 
