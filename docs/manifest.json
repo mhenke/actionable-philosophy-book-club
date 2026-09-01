@@ -415,7 +415,7 @@
           "file": "meetings/meeting-06/recordings/06-staying-strategic-deep-dive.m4a",
           "category": "deep-dive",
           "duration": 1440,
-          "fileSize": 44.2,
+          "fileSize": 22,
           "caption": "Deep dive on Ch.16 strategic repair, Ch.17 consistency as cognitive leverage, and Ch.18 obviousness — Pair, List vs ArrayList, event-driven handlers, and main that never exits"
         },
         {
@@ -423,7 +423,7 @@
           "file": "meetings/meeting-06/recordings/06-complexity-trends-debate.m4a",
           "category": "debate",
           "duration": 1426,
-          "fileSize": 43.8,
+          "fileSize": 22,
           "caption": "Debate on Ch.19 trends — interface vs implementation inheritance, agile and TDD as tactical increments, design patterns and getters and setters"
         },
         {
@@ -431,7 +431,7 @@
           "file": "meetings/meeting-06/recordings/06-consistency-obviousness-critique.m4a",
           "category": "critique",
           "duration": 1098,
-          "fileSize": 33.7,
+          "fileSize": 17,
           "caption": "Critique of Ch.20 to 22 — critical-path design, the RAMCloud Buffer 8.8 to 4.75 ns Halving, measure before and after, and the taste to decide what matters"
         },
         {
