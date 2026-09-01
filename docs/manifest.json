@@ -407,7 +407,14 @@
       "wash": "--wash-4",
       "whatToRead": "Chapters 16–22 of A Philosophy of Software Design (docs/final-16-22.pdf) — also indexed in the club NotebookLM",
       "readmeUrl": "meetings/meeting-06/README.md",
-      "video": null,
+      "video": {
+        "file": "meetings/meeting-06/recordings/06-the-strategic-finale-primer.mp4",
+        "label": "Video Primer",
+        "variant": "canonical",
+        "duration": 381,
+        "fileSize": 44.1,
+        "caption": "Anime summer festival finale, story arc through Chapters 16 to 22, refresher before discussion"
+      },
       "slides": null,
       "additional_material": [
         {
