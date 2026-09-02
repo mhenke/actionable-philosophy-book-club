@@ -13,9 +13,8 @@ This skill provides automated workflows for shrinking large media files common i
 
 - **PDF**: Uses Ghostscript with `/ebook` settings.
 - **MP4/Video**: Uses FFmpeg with x264/AAC and 720p scaling.
-- **PPTX**: Re-compresses the OOXML package with maximum ZIP compression.
+- **PPTX**: Recompresses images in `ppt/media/*` (256-color adaptive palette, same dimensions) then re-zips at max ZIP level 9.
 - **PNG/Image**: Full-resolution WebP (quality 70) + 50%-scale PNG fallback. Uses ImageMagick `convert` for PNG and FFmpeg for WebP.
-
 
 ## Staging Folder
 
@@ -83,7 +82,7 @@ The webp must be under 512KB (CI gate). The PNG fallback can exceed 512KB — on
 - Images: Full-resolution WebP at quality 70 (primary), 50%-scale PNG at quality 80 (fallback). WebP must be under 512KB.
 - Videos are scaled to a maximum height of 720p.
 - PDFs use 150dpi (/ebook) settings.
-- PPTX compression currently focuses on package-level ZIP optimization.
+- PPTX: images in `ppt/media/*` are recompressed via 256-color adaptive palette at same dimensions (pick smallest vs RGBA optimize, never inflate), then OOXML is re-zipped at ZIP level 9.
 
 ## Naming Convention
 

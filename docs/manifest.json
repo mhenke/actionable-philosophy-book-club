@@ -40,7 +40,7 @@
         "file": "meetings/meeting-02/slides/02-the-complexity-case.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 34,
+        "fileSize": 8,
         "caption": "Pass-through methods, decorators, general-purpose vs. YAGNI, path voting"
       },
       "additional_material": [
@@ -101,7 +101,7 @@
         "file": "meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 19,
+        "fileSize": 8,
         "caption": "Classitis, unknown unknowns, shallow vs. deep, AI modularity debt"
       },
       "additional_material": [
@@ -162,7 +162,7 @@
         "file": "meetings/meeting-00/slides/00-Strategic-Design-for-the-AI-Era.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 6,
+        "fileSize": 3,
         "caption": "Cadence, reading plan, discussion norms"
       },
       "additional_material": []
@@ -269,7 +269,7 @@
         "file": "meetings/meeting-04/slides/04-the-complexity-romance.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 35,
+        "fileSize": 8,
         "caption": "Combining vs. separating, exception handling, defining errors away, Design it Twice"
       },
       "additional_material": [
@@ -338,7 +338,7 @@
         "file": "meetings/meeting-05/slides/05-the-architecture-of-prose-slides.pptx",
         "label": "Slides",
         "variant": "canonical",
-        "fileSize": 33,
+        "fileSize": 8,
         "caption": "The Architecture of Prose: slide deck on clarity of expression and written structure as a lens for software design and commenting practice."
       },
       "additional_material": [
@@ -375,7 +375,7 @@
           "label": "The Art of Comments (Original Deck)",
           "file": "meetings/meeting-05/resources/05-the-art-of-comments-slides.pptx",
           "category": "alternate",
-          "fileSize": 40,
+          "fileSize": 9,
           "caption": "Original Meeting 05 slide deck, retained as an alternate presentation."
         },
         {
