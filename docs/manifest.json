@@ -34,7 +34,7 @@
         "variant": "canonical",
         "duration": 189,
         "fileSize": 31,
-        "caption": "Information hiding, layered abstraction, pulling complexity downward (Chapters 5–8)"
+        "caption": "Information hiding, layered abstraction, pulling complexity downward (Chapters 5\u20138)"
       },
       "slides": {
         "file": "meetings/meeting-02/slides/02-the-complexity-case.pptx",
@@ -95,7 +95,7 @@
         "variant": "canonical",
         "duration": 287,
         "fileSize": 17,
-        "caption": "Complexity waterfall, tactical tornados, shallow modules (Chapters 1–4)"
+        "caption": "Complexity waterfall, tactical tornados, shallow modules (Chapters 1\u20134)"
       },
       "slides": {
         "file": "meetings/meeting-01/slides/01-Architecting-Deep-Systems.pptx",
@@ -176,7 +176,7 @@
       "color": "spectrum-1",
       "wash": "--wash-1",
       "readmeUrl": "meetings/meeting-03/README.md",
-      "keyTakeaway": "Abstraction layers are a bet — the question is whether they compress complexity or merely relocate it where the linters can't see.",
+      "keyTakeaway": "Abstraction layers are a bet \u2014 the question is whether they compress complexity or merely relocate it where the linters can't see.",
       "video": {
         "file": "meetings/meeting-03/recordings/03-surviving-system-rot.mp4",
         "label": "Video Primer",
@@ -255,7 +255,7 @@
       "status": "done",
       "color": "spectrum-2",
       "wash": "--wash-2",
-      "keyTakeaway": "Depth minimizes dependencies; fragmentation maximizes them. Never sacrifice architectural depth for short methods — build deep modules that hide complexity behind simple interfaces.",
+      "keyTakeaway": "Depth minimizes dependencies; fragmentation maximizes them. Never sacrifice architectural depth for short methods \u2014 build deep modules that hide complexity behind simple interfaces.",
       "readmeUrl": "meetings/meeting-04/README.md",
       "video": {
         "file": "meetings/meeting-04/recordings/04-the-dogma-disruption-unlearning-clean-code.mp4",
@@ -263,7 +263,7 @@
         "variant": "canonical",
         "duration": 363,
         "fileSize": 20,
-        "caption": "Clean Code orthodoxy vs. module depth (Chapters 9–11)"
+        "caption": "Clean Code orthodoxy vs. module depth (Chapters 9\u201311)"
       },
       "slides": {
         "file": "meetings/meeting-04/slides/04-the-complexity-romance.pptx",
@@ -332,7 +332,7 @@
         "variant": "canonical",
         "duration": 276,
         "fileSize": 18,
-        "caption": "Chapters 12–15: comments, naming, and concluding design principles"
+        "caption": "Chapters 12\u201315: comments, naming, and concluding design principles"
       },
       "slides": {
         "file": "meetings/meeting-05/slides/05-the-architecture-of-prose-slides.pptx",
@@ -402,10 +402,9 @@
       "session": "Meeting 06",
       "date": "2 Sep 2026",
       "title": "The Strategic Finale",
-      "status": "upcoming",
+      "status": "done",
       "color": "spectrum-4",
       "wash": "--wash-4",
-      "whatToRead": "Chapters 16–22 of A Philosophy of Software Design",
       "readmeUrl": "meetings/meeting-06/README.md",
       "video": {
         "file": "meetings/meeting-06/recordings/06-the-strategic-finale-primer.mp4",
@@ -413,7 +412,7 @@
         "variant": "canonical",
         "duration": 400,
         "fileSize": 17,
-        "caption": "The Iterative Path — refresher video for Chapters 16 to 22"
+        "caption": "The Iterative Path \u2014 refresher video for Chapters 16 to 22"
       },
       "slides": {
         "file": "meetings/meeting-06/slides/06-the-strategic-finale-anime-festival.pptx",
@@ -429,7 +428,7 @@
           "category": "deep-dive",
           "duration": 1440,
           "fileSize": 22,
-          "caption": "Deep dive on Ch.16 strategic repair, Ch.17 consistency as cognitive leverage, and Ch.18 obviousness — Pair, List vs ArrayList, event-driven handlers, and main that never exits"
+          "caption": "Deep dive on Ch.16 strategic repair, Ch.17 consistency as cognitive leverage, and Ch.18 obviousness \u2014 Pair, List vs ArrayList, event-driven handlers, and main that never exits"
         },
         {
           "label": "Do Modern Trends Help or Hurt Complexity?",
@@ -437,7 +436,7 @@
           "category": "debate",
           "duration": 1426,
           "fileSize": 22,
-          "caption": "Debate on Ch.19 trends — interface vs implementation inheritance, agile and TDD as tactical increments, design patterns and getters and setters"
+          "caption": "Debate on Ch.19 trends \u2014 interface vs implementation inheritance, agile and TDD as tactical increments, design patterns and getters and setters"
         },
         {
           "label": "Performance, What Matters, and the Return on Good Design",
@@ -445,16 +444,62 @@
           "category": "critique",
           "duration": 1098,
           "fileSize": 17,
-          "caption": "Critique of Ch.20 to 22 — critical-path design, the RAMCloud Buffer 8.8 to 4.75 ns Halving, measure before and after, and the taste to decide what matters"
+          "caption": "Critique of Ch.20 to 22 \u2014 critical-path design, the RAMCloud Buffer 8.8 to 4.75 ns Halving, measure before and after, and the taste to decide what matters"
         },
         {
-          "label": "The Samurai Debate — Extra Session Preview",
+          "label": "The Samurai Debate \u2014 Extra Session Preview",
           "file": "meetings/meeting-06/resources/06-samurai-debate-next-session.webp",
           "fileSize": 0.2,
-          "caption": "Anime — Matt, Bob, and John as samurai in a cherry blossom garden. Extra session after the book: both YouTubes and the GitHub debate, preview housed in Meeting 06"
+          "caption": "Anime \u2014 Matt, Bob, and John as samurai in a cherry blossom garden. Extra session after the book: both YouTubes and the GitHub debate, preview housed in Meeting 06"
         }
       ],
       "keyTakeaway": "A well-made module takes on hard choices inside so the rest of the system can stay simple, and when that is missing the cost shows up everywhere as extra checks, leaked details, and harder names."
+    },
+    {
+      "id": "meeting-07",
+      "session": "Meeting 07",
+      "date": "TBD",
+      "title": "The Samurai Debate",
+      "status": "done",
+      "color": "spectrum-1",
+      "wash": "--wash-1",
+      "whatToRead": "Two videos (Matt Pocock + Uncle Bob LIVE) and the John vs Bob GitHub debate \u2014 refresher video to follow, deck and podcasts live now",
+      "readmeUrl": "meetings/meeting-07/README.md",
+      "video": null,
+      "slides": {
+        "file": "meetings/meeting-07/slides/07-the-strategic-samurai-anime-garden.pptx",
+        "label": "Slides",
+        "variant": "canonical",
+        "fileSize": 8,
+        "caption": "Anime cherry blossom garden \u2014 16 slides, setup then discussion: 5 essentials verbatim on PAUSE FOR OPEN DISCUSSION slides, insights together, rich 3-bullet scaffolding"
+      },
+      "additional_material": [
+        {
+          "label": "Deep modules vs short methods \u2014 PrimeGenerator and entanglement",
+          "file": "meetings/meeting-07/recordings/07-deep-modules-vs-small-functions-deep-dive.m4a",
+          "category": "deep-dive",
+          "duration": 1372,
+          "fileSize": 43,
+          "caption": "Pocock specs-to-code garbage, GitHub 8 tiny methods hiding conjoined multiplesOfPrimeFactors, 3-4x slowdown, entanglement tax"
+        },
+        {
+          "label": "Strategic vs tactical in the age of agents \u2014 scaffolding vs steering",
+          "file": "meetings/meeting-07/recordings/07-strategic-vs-tactical-debate.m4a",
+          "category": "debate",
+          "duration": 1502,
+          "fileSize": 47,
+          "caption": "TDD Three Laws vs bundling, fiddle until it looks right, Specifier\u2192Coder\u2192Cleaner\u2192Hardener\u2192QA, CRAP and mutation scaffolding"
+        },
+        {
+          "label": "The AI complexity frontier \u2014 where fundamentals still defend",
+          "file": "meetings/meeting-07/recordings/07-ai-complexity-frontier-critique.m4a",
+          "category": "critique",
+          "duration": 731,
+          "fileSize": 23,
+          "caption": "Critique of what the 3 sources leave uncovered \u2014 garbage entropy, Grill Me and ubiquitous language, deep interfaces for safe delegation"
+        }
+      ],
+      "keyTakeaway": "When generation is fast, depth and scaffolding matter more \u2014 we pay in small steps or in larger abstractions, but the reader decides."
     }
   ]
 }
