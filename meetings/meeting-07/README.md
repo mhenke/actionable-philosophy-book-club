@@ -1,9 +1,14 @@
 # Meeting 07: The Samurai Debate
 
-**Date:** TBD
+**Date:** 16 Sep 2026
+
+**What to Read:**
+- 🎥 [LIVE: Uncle Bob on Software Fundamentals in the Age of AI](https://www.youtube.com/watch?v=zcLPGC-tvgk) — scaffolding over steering, 5-agent gauntlet, CRAP/mutation, fiddle mindset
+- 🎥 [Matt Pocock — Software Fundamentals Matter More Than Ever](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s) — specs-to-code → garbage, Grill Me, ubiquitous language, deep modules for delegation
+- 💻 [GitHub: johnousterhout/aposd-vs-clean-code](https://github.com/johnousterhout/aposd-vs-clean-code) — PrimeGenerator 8 tiny methods → 3-4x slowdown, entanglement, megasyllabic names, comments vs prose
+- 🎥 [Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies](https://www.youtube.com/watch?v=3Vlk6hCWBw0) — the two authors in conversation, conversational companion to the GitHub thread
 
 ## High-Level Summary
-
 An extra session after the book — not new chapters. Three samurai in a cherry blossom garden: Matt Pocock ("Software Fundamentals Matter More Than Ever"), Uncle Bob live in the bathrobe ("Software Fundamentals in the Age of AI"), and the John Ousterhout vs Uncle Bob GitHub debate (`aposd-vs-clean-code`). A 5-to-6-minute anime refresher tells the arc — specs-to-code degrading to garbage, deep vs shallow modules through PrimeGenerator, the 5-agent scaffolding gauntlet — then the deck stages five debates where the group decides how to keep code obvious as generation speeds up.
 
 ## Agenda (60 Minutes)

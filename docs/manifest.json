@@ -458,12 +458,12 @@
     {
       "id": "meeting-07",
       "session": "Meeting 07",
-      "date": "TBD",
+      "date": "16 Sep 2026",
       "title": "The Samurai Debate",
       "status": "upcoming",
       "color": "spectrum-1",
       "wash": "--wash-1",
-      "whatToRead": "Two videos (Matt Pocock + Uncle Bob LIVE) and the John vs Bob GitHub debate \u2014 refresher video to follow, deck and podcasts live now",
+      "whatToRead": "Watch before we meet: [LIVE: Uncle Bob on Software Fundamentals in the Age of AI](https://www.youtube.com/watch?v=zcLPGC-tvgk) \u00b7 [Matt Pocock \u2014 Software Fundamentals Matter More Than Ever](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s) \u00b7 [Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies](https://www.youtube.com/watch?v=3Vlk6hCWBw0) \u00b7 [GitHub: johnousterhout/aposd-vs-clean-code](https://github.com/johnousterhout/aposd-vs-clean-code)",
       "readmeUrl": "meetings/meeting-07/README.md",
       "video": {
         "file": "meetings/meeting-07/recordings/07-samurai-refresher.mp4",

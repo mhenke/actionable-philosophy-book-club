@@ -75,30 +75,37 @@ function renderMeetingCard(meeting, { status }) {
         const materials = hasContent
             ? primaryRows.join('') + resourceStrip
             : '<p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted">Materials available closer to the meeting.</p>';
-
         const whatToRead = meeting.whatToRead
             ? `<div class="what-to-read-block">
                                 <p class="what-to-read-label"><span aria-hidden="true">📖</span> What to Read</p>
-                                <p class="what-to-read-text">${escapeHTML(meeting.whatToRead)}</p>
+                                <p class="what-to-read-text">${sanitizeWhatToRead(meeting.whatToRead)}</p>
                             </div>`
             : '';
-
         const takeaway = meeting.keyTakeaway
             ? `<div class="mb-6">
                                 <p class="text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-muted mb-3">Key Takeaway</p>
                                 <p class="text-base leading-relaxed" style="color:var(--text-primary)">${escapeHTML(meeting.keyTakeaway)}</p>
                             </div>`
             : '';
-
         const cta = meeting.readmeUrl
             ? `<a href="#p=${escapeHTML(meeting.readmeUrl)}" class="meeting-notes-link btn btn-primary py-4 text-[0.9375rem]">Meeting Notes <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 ml-3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg></a>`
             : '';
-
         const disclosure = buildPodcastDisclosure(additionalRows, additionalSummary);
 
         return { header, materials, whatToRead, takeaway, cta, disclosure };
     }
 
+/** Minimal sanitizer for What to Read: escape, then linkify http(s) and markdown [text](url). Only http(s) allowed, others stripped. */
+function sanitizeWhatToRead(s) {
+    const esc = escapeHTML(s);
+    let out = esc.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    out = out.replace(/(https?:\/\/[^\s<]+)/g, (m) => {
+        if (out.indexOf('href="' + m) !== -1) return m;
+        return '<a href="' + m + '" target="_blank" rel="noopener">' + m + '</a>';
+    });
+    out = out.replace(/\n/g, '<br>');
+    return out;
+}
     // Archive
     const header = _renderCardHeader(meeting, {
         badgeText: 'Done',
