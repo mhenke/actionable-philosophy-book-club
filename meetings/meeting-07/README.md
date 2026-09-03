@@ -3,10 +3,10 @@
 **Date:** 16 Sep 2026
 
 **What to Read:**
-- LIVE: Uncle Bob on Software Fundamentals in the Age of AI ([YouTube](https://www.youtube.com/watch?v=zcLPGC-tvgk)) — how he keeps AI agents from thrashing when the code gets messy
-- Matt Pocock — Software Fundamentals Matter More Than Ever ([YouTube](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s)) — why specs that go straight to code rot into garbage, and what he practices instead
-- GitHub: johnousterhout/aposd-vs-clean-code ([repo](https://github.com/johnousterhout/aposd-vs-clean-code)) — the PrimeGenerator thread where short methods, entanglement and naming get argued in code
-- Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies ([YouTube](https://www.youtube.com/watch?v=3Vlk6hCWBw0)) — the same two authors, in conversation rather than comments
+- [LIVE: Uncle Bob on Software Fundamentals in the Age of AI](https://www.youtube.com/watch?v=zcLPGC-tvgk): how he keeps AI agents from thrashing when the code gets messy
+- [Matt Pocock, Software Fundamentals Matter More Than Ever](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s): why specs that go straight to code rot into garbage, and what he does instead
+- [johnousterhout/aposd-vs-clean-code](https://github.com/johnousterhout/aposd-vs-clean-code): the PrimeGenerator thread where short methods, entanglement and naming get argued in code
+- [Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies](https://www.youtube.com/watch?v=3Vlk6hCWBw0): the same two authors in conversation rather than comments
 
 ## High-Level Summary
 An extra session after the book ,  not new chapters. Three samurai in a cherry blossom garden: Matt Pocock ("Software Fundamentals Matter More Than Ever"), Uncle Bob live in the bathrobe ("Software Fundamentals in the Age of AI"), and the John Ousterhout vs Uncle Bob GitHub debate (`aposd-vs-clean-code`). A 5-to-6-minute anime refresher tells the arc ,  specs-to-code degrading to garbage, deep vs shallow modules through PrimeGenerator, the 5-agent scaffolding gauntlet ,  then the deck stages five debates where the group decides how to keep code obvious as generation speeds up.

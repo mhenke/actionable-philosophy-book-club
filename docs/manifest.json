@@ -463,7 +463,7 @@
       "status": "upcoming",
       "color": "spectrum-1",
       "wash": "--wash-1",
-      "whatToRead": "Watch before we meet: [LIVE: Uncle Bob on Software Fundamentals in the Age of AI](https://www.youtube.com/watch?v=zcLPGC-tvgk) \u00b7 [Matt Pocock \u2014 Software Fundamentals Matter More Than Ever](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s) \u00b7 [Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies](https://www.youtube.com/watch?v=3Vlk6hCWBw0) \u00b7 [GitHub: johnousterhout/aposd-vs-clean-code](https://github.com/johnousterhout/aposd-vs-clean-code)",
+      "whatToRead": "Watch before we meet:\n[LIVE: Uncle Bob on Software Fundamentals in the Age of AI](https://www.youtube.com/watch?v=zcLPGC-tvgk): how he keeps AI agents from thrashing when the code gets messy\n[Matt Pocock, Software Fundamentals Matter More Than Ever](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s): why specs that go straight to code rot into garbage, and what he does instead\n[johnousterhout/aposd-vs-clean-code](https://github.com/johnousterhout/aposd-vs-clean-code): the PrimeGenerator thread where short methods, entanglement and naming get argued in code\n[Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies](https://www.youtube.com/watch?v=3Vlk6hCWBw0): the same two authors in conversation rather than comments",
       "readmeUrl": "meetings/meeting-07/README.md",
       "video": {
         "file": "meetings/meeting-07/recordings/07-samurai-refresher.mp4",
