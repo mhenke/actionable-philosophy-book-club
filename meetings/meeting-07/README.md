@@ -3,19 +3,19 @@
 **Date:** 16 Sep 2026
 
 **What to Read:**
-- 🎥 [LIVE: Uncle Bob on Software Fundamentals in the Age of AI](https://www.youtube.com/watch?v=zcLPGC-tvgk) — scaffolding over steering, 5-agent gauntlet, CRAP/mutation, fiddle mindset
-- 🎥 [Matt Pocock — Software Fundamentals Matter More Than Ever](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s) — specs-to-code → garbage, Grill Me, ubiquitous language, deep modules for delegation
-- 💻 [GitHub: johnousterhout/aposd-vs-clean-code](https://github.com/johnousterhout/aposd-vs-clean-code) — PrimeGenerator 8 tiny methods → 3-4x slowdown, entanglement, megasyllabic names, comments vs prose
-- 🎥 [Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies](https://www.youtube.com/watch?v=3Vlk6hCWBw0) — the two authors in conversation, conversational companion to the GitHub thread
+- LIVE: Uncle Bob on Software Fundamentals in the Age of AI ([YouTube](https://www.youtube.com/watch?v=zcLPGC-tvgk)) — how he keeps AI agents from thrashing when the code gets messy
+- Matt Pocock — Software Fundamentals Matter More Than Ever ([YouTube](https://www.youtube.com/watch?v=v4F1gFy-hqg&t=6s)) — why specs that go straight to code rot into garbage, and what he practices instead
+- GitHub: johnousterhout/aposd-vs-clean-code ([repo](https://github.com/johnousterhout/aposd-vs-clean-code)) — the PrimeGenerator thread where short methods, entanglement and naming get argued in code
+- Bonus: John Ousterhout and Uncle Bob Discuss Their Philosophies ([YouTube](https://www.youtube.com/watch?v=3Vlk6hCWBw0)) — the same two authors, in conversation rather than comments
 
 ## High-Level Summary
-An extra session after the book — not new chapters. Three samurai in a cherry blossom garden: Matt Pocock ("Software Fundamentals Matter More Than Ever"), Uncle Bob live in the bathrobe ("Software Fundamentals in the Age of AI"), and the John Ousterhout vs Uncle Bob GitHub debate (`aposd-vs-clean-code`). A 5-to-6-minute anime refresher tells the arc — specs-to-code degrading to garbage, deep vs shallow modules through PrimeGenerator, the 5-agent scaffolding gauntlet — then the deck stages five debates where the group decides how to keep code obvious as generation speeds up.
+An extra session after the book ,  not new chapters. Three samurai in a cherry blossom garden: Matt Pocock ("Software Fundamentals Matter More Than Ever"), Uncle Bob live in the bathrobe ("Software Fundamentals in the Age of AI"), and the John Ousterhout vs Uncle Bob GitHub debate (`aposd-vs-clean-code`). A 5-to-6-minute anime refresher tells the arc ,  specs-to-code degrading to garbage, deep vs shallow modules through PrimeGenerator, the 5-agent scaffolding gauntlet ,  then the deck stages five debates where the group decides how to keep code obvious as generation speeds up.
 
 ## Agenda (60 Minutes)
 
-- **Refresher Video (5-10 min):** Anime cherry blossom garden — the three samurai, petals drifting, the story only; no questions or insights on screen.
+- **Refresher Video (5-10 min):** Anime cherry blossom garden ,  the three samurai, petals drifting, the story only; no questions or insights on screen.
 - **The Crucible (35 min):** Structured debate working through John and Bob's GitHub discussion, Matt's fundamentals talk, and Uncle Bob LIVE, using the samurai deck (5 essentials verbatim on their own slides).
-- **Wrap-up (10 min):** Close the arc at the lantern and decide what to carry forward — glossary, scaffolding, or deeper interfaces.
+- **Wrap-up (10 min):** Close the arc at the lantern and decide what to carry forward ,  glossary, scaffolding, or deeper interfaces.
 
 ## Discussion Points
 
@@ -25,7 +25,7 @@ An extra session after the book — not new chapters. Three samurai in a cherry 
 - **Strategic vs tactical with agents:** What scaffolding check would have caught a cheap tactical fix before it decayed the design?
 - **Comments and names:** When is a comment the missing fact the reader needs vs a failure to express it?
 - **Testing that earns its keep:** What does coverage that actually affords a refactor look like?
-- **What the book leaves out → the AI frontier:** Glossary, scaffolding, or deeper interfaces — what must we fix first?
+- **What the book leaves out → the AI frontier:** Glossary, scaffolding, or deeper interfaces ,  what must we fix first?
 - [See full details in 07-essential-questions.md](07-essential-questions.md)
 
 ### 💡 Non-Obvious Insights
@@ -40,7 +40,7 @@ An extra session after the book — not new chapters. Three samurai in a cherry 
 ## Action Items
 
 - [ ] Watch the two videos (Matt Pocock + Uncle Bob LIVE) and skim the `aposd-vs-clean-code` GitHub thread before the session
-- [ ] Bring one file where the samurai would disagree — PrimeGenerator-style classitis vs deep-module hiding
+- [ ] Bring one file where the samurai would disagree ,  PrimeGenerator-style classitis vs deep-module hiding
 
 ## Meeting Materials
 

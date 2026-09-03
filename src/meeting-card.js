@@ -97,8 +97,12 @@ function renderMeetingCard(meeting, { status }) {
 
 /** Minimal sanitizer for What to Read: escape, then linkify http(s) and markdown [text](url). Only http(s) allowed, others stripped. */
 function sanitizeWhatToRead(s) {
-    const esc = escapeHTML(s);
-    let out = esc.replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    // linkify markdown [text](https://url) BEFORE escaping, keep urls raw
+    let out = String(s).replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    // escape remaining text outside links: split on <a ...> and escape interstices
+    const parts = out.split(/(<a [^>]*>[^<]*<\/a>)/g);
+    out = parts.map((p, i) => (i % 2 === 0 ? escapeHTML(p) : p)).join('');
+    // linkify bare https:// that weren't markdown
     out = out.replace(/(https?:\/\/[^\s<]+)/g, (m) => {
         if (out.indexOf('href="' + m) !== -1) return m;
         return '<a href="' + m + '" target="_blank" rel="noopener">' + m + '</a>';
