@@ -460,12 +460,19 @@
       "session": "Meeting 07",
       "date": "TBD",
       "title": "The Samurai Debate",
-      "status": "done",
+      "status": "upcoming",
       "color": "spectrum-1",
       "wash": "--wash-1",
       "whatToRead": "Two videos (Matt Pocock + Uncle Bob LIVE) and the John vs Bob GitHub debate \u2014 refresher video to follow, deck and podcasts live now",
       "readmeUrl": "meetings/meeting-07/README.md",
-      "video": null,
+      "video": {
+        "file": "meetings/meeting-07/recordings/07-samurai-refresher.mp4",
+        "label": "Refresher",
+        "variant": "canonical",
+        "duration": 328,
+        "fileSize": 48,
+        "caption": "Anime cherry blossom garden \u2014 3 samurai as guides: Pocock specs-to-code garbage, GitHub PrimeGenerator showdown, Bob LIVE scaffolding gauntlet, prose vs megasyllabic names"
+      },
       "slides": {
         "file": "meetings/meeting-07/slides/07-the-strategic-samurai-anime-garden.pptx",
         "label": "Slides",
