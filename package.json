@@ -17,7 +17,7 @@
     "caniuse-lite": "^1.0.30001799",
     "dompurify": "^3.4.10",
     "marked": "^18.0.5",
-    "tailwindcss": "3.4.17",
+    "tailwindcss": "4.3.3",
     "terser": "^5.48.0"
   }
 }
